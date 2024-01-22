@@ -1,0 +1,21 @@
+{
+  "folders": [
+    {
+      "name": "ROOT",
+      "path": "../"
+    },
+    {
+      "name": "apps/etl",
+      "path": "../apps/etl"
+    },
+    {
+      "name": "apps/static-api",
+      "path": "../apps/static-api"
+    },
+		{
+      "name": "apps/svelte-webapp",
+      "path": "../apps/svelte-webapp"
+    },
+  ],
+  "settings": {}
+}
