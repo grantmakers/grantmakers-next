@@ -17,5 +17,11 @@
       "path": "../apps/svelte-webapp"
     },
   ],
-  "settings": {}
+  "settings": {},
+  "extensions": {
+    "recommendations": [
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+    ]
+  }
 }
