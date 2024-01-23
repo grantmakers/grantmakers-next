@@ -1,0 +1,22 @@
+# dependencies - this is handled at root
+/node_modules
+
+# wrangler tmp
+.wrangler
+
+# testing
+/coverage
+
+# production
+/build
+
+# Env variables
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.dev.vars
+
+# Misc
+.DS_Store
+npm-debug.log*
