@@ -1,5 +1,9 @@
 {
   "[svelte]": {
     "editor.defaultFormatter": "svelte.svelte-vscode"
-  }
+  },
+  // "[javascript][html][typescript]": {
+  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
+  // },
+  "cSpell.words": ["pcss"]
 }

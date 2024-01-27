@@ -17,7 +17,10 @@
       "path": "../apps/svelte-webapp"
     },
   ],
-  "settings": {},
+  "settings": {
+    "prettier.enable": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "extensions": {
     "recommendations": [
       "esbenp.prettier-vscode",
