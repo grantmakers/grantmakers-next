@@ -13,7 +13,7 @@ jobs:
       - name: NodeJS setup
         uses: actions/setup-node@v3
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
       - name: Install dependencies
         run: npm install
       # Testing Turborepo - probably overkill - NPM Workspaces would work just fine as well
@@ -31,8 +31,8 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: 'grantmakers-next-poc-svelte-webapp-v0'
-          workingDirectory: './apps/web'
-          directory: '.svelte-kit/cloudflare'
+          projectName: "grantmakers-next-poc-svelte-webapp-v0"
+          workingDirectory: "./apps/web"
+          directory: ".svelte-kit/cloudflare"
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          wranglerVersion: '3'
+          wranglerVersion: "3"
