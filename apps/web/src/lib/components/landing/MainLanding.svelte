@@ -5,6 +5,7 @@
   import LogoMark from '../shared/LogoMark.svelte';
   import Features from './sections/Features.svelte';
   import Stats from './sections/Stats.svelte';
+  import StatsSearches from './sections/StatsSearches.svelte';
   // import Testimonial from './sections/Testimonial.svelte';
   // import AllTestimonials from './sections/AllTestimonials.svelte';
   import PartnerLogos from './sections/PartnerLogos.svelte';
@@ -148,6 +149,10 @@
       <Stats />
     </div>
 
+    <div class="relative isolate mt-32 bg-white px-6 sm:mt-56 lg:px-8">
+      <StatsSearches />
+    </div>
+
     <!-- Testimonial section -->
     <!-- <div class="relative z-10 mt-32 bg-gray-900 pb-20 sm:mt-56 sm:pb-24 xl:pb-0">
       <Testimonial />
@@ -206,8 +211,8 @@
     <div class="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8 lg:py-32">
       <div class="xl:grid xl:grid-cols-3 xl:gap-8">
         <LogoMark />
-        <div class="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
-          <div class="md:grid md:grid-cols-2 md:gap-8">
+        <div class="mt-16 grid grid-cols-1 gap-8 xl:col-span-2 xl:mt-0">
+          <div class="md:grid md:grid-cols-3 md:gap-8">
             <!-- The Project -->
             <div>
               <h3 class="text-sm font-semibold leading-6 text-white">The Project</h3>
@@ -239,43 +244,45 @@
                 </ul>
               </div>
             </div>
-          </div>
 
-          <div class="md:grid md:grid-cols-2 md:gap-8">
-            <!-- Search -->
-            <div>
-              <h3 class="text-sm font-semibold leading-6 text-white">Search</h3>
-              <ul class="mt-6 space-y-4">
-                {#each footerNavigation.search as item}
-                  <li>
-                    <a href={item.href} class="text-sm leading-6 text-gray-300 hover:text-white">
-                      {item.name}
-                    </a>
-                  </li>
-                {/each}
-              </ul>
-            </div>
-
-            <!-- Legal -->
             <div class="mt-10 md:mt-0">
-              <h3 class="text-sm font-semibold leading-6 text-white">Legal</h3>
-              <ul class="mt-6 space-y-4">
-                {#each footerNavigation.legal as item}
-                  {#if item.name === 'Privacy'}
-                    <PrivacyPolicy />
-                  {:else}
+              <!-- Search -->
+              <div>
+                <h3 class="text-sm font-semibold leading-6 text-white">Search</h3>
+                <ul class="mt-6 space-y-4">
+                  {#each footerNavigation.search as item}
                     <li>
                       <a href={item.href} class="text-sm leading-6 text-gray-300 hover:text-white">
                         {item.name}
                       </a>
                     </li>
-                  {/if}
-                {/each}
-              </ul>
+                  {/each}
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="flex items-center justify-between bg-black px-4 py-2 lg:px-6">
+      <div class="text-sm text-gray-500">
+        All content is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/"
+          >Creative Commons Attribution-ShareAlike 4.0 International License</a
+        >, except Grantmakers.io logo (all rights reserved Chad Kruse)
+      </div>
+      <ul class="flex items-center gap-6">
+        {#each footerNavigation.legal as item}
+          {#if item.name === 'Privacy'}
+            <PrivacyPolicy />
+          {:else}
+            <li>
+              <a href={item.href} class="text-sm leading-6 text-gray-300 hover:text-white">
+                {item.name}
+              </a>
+            </li>
+          {/if}
+        {/each}
+      </ul>
     </div>
   </footer>
 </div>

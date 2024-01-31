@@ -9,7 +9,7 @@
       class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-center lg:gap-y-0"
     >
       <div class="lg:row-start-2 lg:max-w-md">
-        <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">The perfect companion to Instrumentl and FDO.</h2>
+        <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">The perfect springboard to Instrumentl and FDO.</h2>
         <p class="mt-6 text-lg leading-8 text-gray-300">
           <!-- eslint-disable-next-line -->
           {@html trustedAnecdote}
