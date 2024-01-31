@@ -42,15 +42,15 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
   console.log('EIN:', params.ein);
   // console.log('Profile data:', data); // This works
 
-  // const images = import.meta.glob('../../../../lib/assets/images/icons-letters/png/**/*.png');
+  // const images = import.meta.glob('../../../../lib/assets/images/icons-letters/svg/**/*.svg');
   // console.log(images);
-  // const fetchImage = images[`../../../../lib/assets/images/icons-letters/png/${firstLetter}.png`];
+  // const fetchImage = images[`../../../../lib/assets/images/icons-letters/svg/${firstLetter}.svg`];
   // const image = await fetchImage();
   // if (!image) throw error(404, 'Not found');
   // console.log('Target image:', image);
 
   // Prefetch the image on the server
-  // await fetch(`../../../../lib/assets/images/icons-letters/png/${firstLetter}.png`);
+  // await fetch(`../../../../lib/assets/images/icons-letters/svg/${firstLetter}.svg`);
 
   console.log('Server title:', title);
   console.log('Server Description:', description);

@@ -54,7 +54,7 @@
   }
 
   onMount(async () => {
-    avatarImageModule = await import(`../../assets/images/icons-letters/png/${firstLetter}.png`);
+    avatarImageModule = await import(`../../assets/images/icons-letters/svg/${firstLetter}.svg`);
     console.log(avatarImageModule);
     // @ts-expect-error: Need to properly type Module, from Vite? SvelteKit?
     avatarImage = avatarImageModule ? avatarImageModule?.default : '/logo.svg';
@@ -633,7 +633,7 @@
                   {#if grants && grants[0]}
                     <!-- Median -->
                     {#if grants.length > 7}
-                      <h6 class="m-0 mb-1 flex w-full items-center gap-1 text-xs font-thin uppercase leading-tight text-grantmakers-blue">
+                      <h6 class="text-grantmakers-blue m-0 mb-1 flex w-full items-center gap-1 text-xs font-thin uppercase leading-tight">
                         Median
                         <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
                         <path
@@ -685,7 +685,7 @@
 
                     <!-- Smallest -->
                     <h6
-                      class="m-0 mb-1 mt-2 flex w-full items-center justify-center gap-1 text-xs font-thin uppercase leading-tight text-grantmakers-blue"
+                      class="text-grantmakers-blue m-0 mb-1 mt-2 flex w-full items-center justify-center gap-1 text-xs font-thin uppercase leading-tight"
                     >
                       <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
                         <path
