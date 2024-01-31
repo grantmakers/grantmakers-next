@@ -10,7 +10,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       # Not currently needed, but will in near future
-      - uses: actions/setup-node@v3
+      - name: NodeJS setup
+        uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
       - name: Install dependencies
@@ -21,6 +22,10 @@ jobs:
         run: npx turbo run lint --filter=web
       - name: Build
         run: npx turbo run build --filter=web
+        env:
+          WORKER_URL: ${{ secrets.WORKER_URL }}
+          PROFILES_API_ENDPOINT: ${{ secrets.PROFILES_API_ENDPOINT }}
+          AUTH_PRIVATE_KEY: ${{ secrets.AUTH_PRIVATE_KEY }}
       - name: Publish
         uses: cloudflare/pages-action@1
         with:
