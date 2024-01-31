@@ -1,4 +1,4 @@
-name = "static-api-v1-poc0"
+name = "api-v1-poc0"
 main = "src/index.ts"
 compatibility_date = "2023-12-18"
 

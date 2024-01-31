@@ -1,12 +1,11 @@
 {
-  "name": "static-api",
+  "name": "api",
   "version": "0.0.1",
   "private": true,
-
   "scripts": {
     "deploy": "wrangler deploy",
     "dev": "wrangler dev",
-		"prod": "wrangler dev --remote",
+    "prod": "wrangler dev --remote",
     "start": "wrangler dev"
   },
   "devDependencies": {
