@@ -470,7 +470,6 @@
     <!-- Main -->
     <div class="mx-auto w-full px-6 py-6 text-slate-500">
       <!-- Foundation header -->
-      <!-- Enable background image via 'bg-abstract' class -->
       <div
         class="shadow-blur relative flex min-w-0 flex-auto flex-col overflow-hidden break-words rounded-2xl border-0 bg-white bg-clip-border bg-center p-4 backdrop-blur"
       >
@@ -634,7 +633,7 @@
                   {#if grants && grants[0]}
                     <!-- Median -->
                     {#if grants.length > 7}
-                      <h6 class="m-0 mb-1 flex w-full items-center gap-1 text-xs font-thin uppercase leading-tight text-grantmakers-blue">
+                      <h6 class="text-grantmakers-blue m-0 mb-1 flex w-full items-center gap-1 text-xs font-thin uppercase leading-tight">
                         Median
                         <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
                         <path
@@ -686,7 +685,7 @@
 
                     <!-- Smallest -->
                     <h6
-                      class="m-0 mb-1 mt-2 flex w-full items-center justify-center gap-1 text-xs font-thin uppercase leading-tight text-grantmakers-blue"
+                      class="text-grantmakers-blue m-0 mb-1 mt-2 flex w-full items-center justify-center gap-1 text-xs font-thin uppercase leading-tight"
                     >
                       <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
                         <path

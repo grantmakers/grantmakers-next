@@ -11,9 +11,6 @@ const config = {
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
-      backgroundImage: {
-        abstract: "url('/bg-abstract.png')",
-      },
       colors: {
         'grantmakers-orange': '#c54e00',
         'grantmakers-blue': '#607d8b',

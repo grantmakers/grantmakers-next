@@ -2,8 +2,6 @@
   import '@fontsource/inter';
   import '../app.pcss';
 
-  export const prerender = true;
-
   export let title: string;
   export let description: string;
 </script>
