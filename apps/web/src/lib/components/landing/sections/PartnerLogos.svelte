@@ -1,5 +1,5 @@
 <script lang="ts">
-  import algoliaLogo from '$lib/assets/images/algolia.png';
+  import algoliaLogo from '$lib/assets/images/algolia.svg';
 </script>
 
 <!-- Set grid-cols-x to number of logos. Template used: grid-cols-4 sm:grid-cols-6 sm:gap-x-10 -->

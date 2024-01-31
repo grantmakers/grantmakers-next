@@ -1,6 +1,6 @@
 <script lang="ts">
   import { anecdote as trustedAnecdote } from '@utils/trustedConstants';
-  import marketImg from '$lib/assets/images/market.png';
+  import marketImg from '$lib/assets/images/market.webp';
 </script>
 
 <div class="mx-auto mt-32 max-w-7xl sm:mt-56 sm:px-6 lg:px-8">

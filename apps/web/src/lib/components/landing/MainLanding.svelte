@@ -1,7 +1,7 @@
 <script lang="ts">
   // import DevLinks from '$lib/components/landing/DevLinks.svelte';
   import { Bars3 } from 'svelte-heros-v2';
-  import screenshot from '$lib/assets/images/screenshot.png';
+  import screenshot from '$lib/assets/images/screenshot.webp';
   import LogoMark from '../shared/LogoMark.svelte';
   import Features from './sections/Features.svelte';
   import Stats from './sections/Stats.svelte';
