@@ -2,29 +2,26 @@
   "folders": [
     {
       "name": "ROOT",
-      "path": "../"
+      "path": "../",
     },
     {
       "name": "apps/etl",
-      "path": "../apps/etl"
+      "path": "../apps/etl",
     },
     {
-      "name": "apps/static-api",
-      "path": "../apps/static-api"
+      "name": "apps/api",
+      "path": "../apps/api",
     },
-		{
-      "name": "apps/svelte-webapp",
-      "path": "../apps/svelte-webapp"
+    {
+      "name": "apps/web",
+      "path": "../apps/web",
     },
   ],
   "settings": {
     "prettier.enable": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "extensions": {
-    "recommendations": [
-      "esbenp.prettier-vscode",
-      "dbaeumer.vscode-eslint",
-    ]
-  }
+    "recommendations": ["esbenp.prettier-vscode", "dbaeumer.vscode-eslint"],
+  },
 }
