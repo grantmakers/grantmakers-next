@@ -27,8 +27,8 @@ module.exports = {
       parserOptions: {
         parser: '@typescript-eslint/parser',
       },
-      // HACK A likely bug in eslint-plugin-svelte or an @svelte package is causing app.html to get flagged - low priority
-      ignorePatterns: ['**/app.html'],
     },
   ],
+  // HACK A likely bug in eslint-plugin-svelte or an @svelte package is causing app.html to get flagged - low priority
+  ignorePatterns: ['**/app.html'],
 };

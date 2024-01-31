@@ -1,0 +1,45 @@
+// import adapter from '@sveltejs/adapter-auto';
+import adapter from '@sveltejs/adapter-cloudflare';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
+  // Consult https://kit.svelte.dev/docs/integrations#preprocessors
+  // for more information about preprocessors
+  preprocess: [vitePreprocess({})],
+
+  kit: {
+    // adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
+    // If your environment is not supported or you settled on a specific environment, switch out the adapter.
+    // See https://kit.svelte.dev/docs/adapters for more information about adapters.
+    // adapter: adapter(),
+    adapter: adapter({
+      routes: {
+        include: ['/*'],
+        exclude: ['<all>'],
+      },
+    }),
+    alias: {
+      '@shared': '../../shared/*', // Monorepo 'shared' directory
+      '@utils': './src/lib/utils', // Svelte utils
+    },
+    csp: {
+      mode: 'auto',
+      directives: {
+        'script-src': ['self', 'https://cdn.iubenda.com'], // Hashes will be added automatically
+        'style-src': ['self', 'unsafe-inline', 'https://cdn.iubenda.com'], // Include 'unsafe-inline' for inline styles
+        'frame-src': ['https://www.iubenda.com'],
+        'connect-src': ['self'],
+        'default-src': ['none'],
+        'img-src': ['self', 'https://images.unsplash.com', 'https://cdn.iubenda.com', 'https://tailwindui.com'], // Added Unsplash domain
+        'font-src': ['self', 'data:'],
+        'object-src': ['none'],
+        'base-uri': ['none'],
+        'form-action': ['self'],
+        'frame-ancestors': ['none'],
+      },
+    },
+  },
+};
+
+export default config;
