@@ -26,7 +26,7 @@ const config = {
     csp: {
       mode: 'auto',
       directives: {
-        'script-src': ['self', 'https://static.cloudflareinsights.com', 'https://cdn.iubenda.com'], // Hashes will be added automatically
+        'script-src': ['self', 'https://static.cloudflareinsights.com', 'https://cloudflareinsights.com', 'https://cdn.iubenda.com'], // Hashes will be added automatically
         'style-src': ['self', 'unsafe-inline', 'https://cdn.iubenda.com'], // Include 'unsafe-inline' for inline styles
         'frame-src': ['https://www.iubenda.com'],
         'connect-src': ['self'],
