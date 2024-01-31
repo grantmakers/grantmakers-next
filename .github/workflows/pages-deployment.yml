@@ -32,5 +32,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: 'grantmakers-next-poc-svelte-webapp-v0'
+          workingDirectory: './apps/web'
           directory: '.svelte-kit/cloudflare'
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          wranglerVersion: '3'
