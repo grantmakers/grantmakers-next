@@ -215,13 +215,13 @@
           <div class="md:grid md:grid-cols-3 md:gap-8">
             <!-- The Project -->
             <div>
-              <h3 class="text-sm font-semibold leading-6 text-white">The Project</h3>
+              <div class="font-semibold leading-6 text-white">The Project</div>
               <!-- a11y Explanation: This is helpful in the context of a mobile menu as part of a slide-out -->
               <!-- eslint-disable-next-line jsx-a11y/no-redundant-roles -->
               <ul role="list" class="mt-6 space-y-4">
                 {#each footerNavigation.project as item}
                   <li>
-                    <a href={item.href} class="text-sm leading-6 text-gray-300 hover:text-white">
+                    <a href={item.href} class="leading-6 text-gray-300 hover:text-white">
                       {item.name}
                     </a>
                   </li>
@@ -232,11 +232,11 @@
             <div class="mt-10 md:mt-0">
               <!-- Get Involved -->
               <div>
-                <h3 class="text-sm font-semibold leading-6 text-white">Get Involved</h3>
+                <div class="font-semibold leading-6 text-white">Get Involved</div>
                 <ul class="mt-6 space-y-4">
                   {#each footerNavigation.getInvolved as item}
                     <li>
-                      <a href={item.href} class="text-sm leading-6 text-gray-300 hover:text-white">
+                      <a href={item.href} class="leading-6 text-gray-300 hover:text-white">
                         {item.name}
                       </a>
                     </li>
@@ -248,11 +248,11 @@
             <div class="mt-10 md:mt-0">
               <!-- Search -->
               <div>
-                <h3 class="text-sm font-semibold leading-6 text-white">Search</h3>
+                <div class="font-semibold leading-6 text-white">Search</div>
                 <ul class="mt-6 space-y-4">
                   {#each footerNavigation.search as item}
                     <li>
-                      <a href={item.href} class="text-sm leading-6 text-gray-300 hover:text-white">
+                      <a href={item.href} class="leading-6 text-gray-300 hover:text-white">
                         {item.name}
                       </a>
                     </li>
@@ -264,8 +264,8 @@
         </div>
       </div>
     </div>
-    <div class="flex items-center justify-between bg-black px-4 py-2 lg:px-6">
-      <div class="text-sm text-gray-500">
+    <div class="flex items-center justify-between gap-4 bg-gray-700 px-4 py-2 lg:px-6">
+      <div class="text-sm text-gray-300">
         All content is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/"
           >Creative Commons Attribution-ShareAlike 4.0 International License</a
         >, except Grantmakers.io logo (all rights reserved Chad Kruse)
@@ -273,7 +273,9 @@
       <ul class="flex items-center gap-6">
         {#each footerNavigation.legal as item}
           {#if item.name === 'Privacy'}
-            <PrivacyPolicy />
+            <li>
+              <PrivacyPolicy />
+            </li>
           {:else}
             <li>
               <a href={item.href} class="text-sm leading-6 text-gray-300 hover:text-white">
