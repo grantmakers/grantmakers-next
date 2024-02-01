@@ -163,7 +163,7 @@
     </div> -->
 
     <!-- Market Dynamics -->
-    <div class="relative z-10 mt-32 bg-gray-900 pb-20 sm:mt-56 sm:pb-24 xl:pb-0">
+    <div class="mx-auto mt-32 max-w-7xl sm:mt-56 sm:px-6 lg:px-8">
       <Market />
     </div>
 
