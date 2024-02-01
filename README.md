@@ -4,8 +4,10 @@ Grantmakers.io is a free, open source project built to help nonprofits utilize t
 
 Grantmakers NEXT is a complete rebuild of the project.
 
-✅ Non-commercial: No money changes hands  
-✅ Forever free: Architected to prioritize low overhead and maintenance
+### The important things have stayed the same
+
+✅ Non-commercial  
+✅ Forever free
 
 ## Monorepo overview
 
