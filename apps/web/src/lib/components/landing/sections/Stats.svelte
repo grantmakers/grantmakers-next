@@ -10,17 +10,21 @@
         </p>
       </div>
       <dl class="mt-16 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center lg:grid-cols-3">
-        <div class="flex flex-col bg-white/5 p-8">
+        <div class="flex flex-col justify-center bg-white/5 p-8">
           <dt class="text-sm font-semibold leading-6 text-gray-300">Cost of access</dt>
           <dd class="order-first text-3xl font-semibold tracking-tight text-white">$0</dd>
         </div>
-        <div class="flex flex-col bg-white/5 p-8">
+        <div class="flex flex-col justify-center bg-white/5 p-8">
           <dt class="text-sm font-semibold leading-6 text-gray-300">Annual budget</dt>
           <dd class="order-first text-3xl font-semibold tracking-tight text-white">$200</dd>
         </div>
-        <div class="flex flex-col bg-white/5 p-8">
+        <div class="flex flex-col justify-center bg-white/5 p-8">
           <dt class="text-sm font-semibold leading-6 text-gray-300">Retained by sector</dt>
-          <dd class="order-first text-3xl font-semibold tracking-tight text-white">$2.9M</dd>
+          <dd
+            class="order-first inline-block bg-gradient-to-r from-indigo-100 to-indigo-400 bg-clip-text text-5xl font-semibold tracking-tight text-transparent"
+          >
+            $2.9M
+          </dd>
         </div>
       </dl>
     </div>
