@@ -247,8 +247,8 @@
       </div>
     </div>
     <div class="flex items-center justify-between gap-4 bg-gray-700 px-4 py-2 lg:px-6">
-      <div class="hidden text-sm text-gray-300 lg:flex lg:flex-col">
-        All content is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/"
+      <div class="hidden text-sm text-gray-300 lg:flex">
+        All content is licensed under a&nbsp;<a href="http://creativecommons.org/licenses/by-sa/4.0/"
           >Creative Commons Attribution-ShareAlike 4.0 International License</a
         >, except Grantmakers.io logo (all rights reserved Chad Kruse)
       </div>
