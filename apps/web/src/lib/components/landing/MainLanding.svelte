@@ -1,5 +1,6 @@
 <script lang="ts">
   // import DevLinks from '$lib/components/landing/DevLinks.svelte';
+  import { Bars3 } from 'svelte-heros-v2';
   import screenshot from '$lib/assets/images/screenshot.webp';
   import LogoMark from '../shared/LogoMark.svelte';
   import Features from './sections/Features.svelte';
@@ -13,12 +14,29 @@
   import BottomCTA from './sections/BottomCTA.svelte';
   import { features, footerNavigation, articleLinks } from '@utils/trustedConstants';
   import PrivacyPolicy from './sections/PrivacyPolicy.svelte';
+
+  let mobileMenuOpen = false;
+  function toggleMobileMenu() {
+    mobileMenuOpen = !mobileMenuOpen;
+  }
 </script>
 
 <div class="bg-white">
   <header class="absolute inset-x-0 top-0 z-50">
-    <nav class="flex items-center justify-end p-6 lg:px-8" aria-label="Global">
-      <div class="flex lg:flex-1 lg:justify-end">
+    <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+      <!-- Mobile menu trigger -->
+      <div class="flex lg:hidden">
+        <button>a</button>
+        <button
+          type="button"
+          class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400"
+          on:click={toggleMobileMenu}
+        >
+          <span class="sr-only">Open main menu</span>
+          <Bars3 class="size-6" />
+        </button>
+      </div>
+      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
         <LogoMark />
       </div>
     </nav>
@@ -43,7 +61,7 @@
       </div>
 
       <!-- Primary message -->
-      <div class="mx-auto max-w-7xl px-6 pb-24 pt-32 sm:pb-32 lg:flex lg:flex-col lg:px-8 lg:py-36">
+      <div class="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:flex-col lg:px-8 lg:py-36">
         <div class="mx-auto max-w-2xl shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
           <div class="text-left">
             <h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">
