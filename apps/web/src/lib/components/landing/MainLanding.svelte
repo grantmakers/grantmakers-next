@@ -5,8 +5,8 @@
   import Features from './sections/Features.svelte';
   import Stats from './sections/Stats.svelte';
   import StatsSearches from './sections/StatsSearches.svelte';
-  // import Testimonial from './sections/Testimonial.svelte';
-  // import AllTestimonials from './sections/AllTestimonials.svelte';
+  import Testimonial from './sections/Testimonial.svelte';
+  import AllTestimonials from './sections/AllTestimonials.svelte';
   import PartnerLogos from './sections/PartnerLogos.svelte';
   import PillLink from '../shared/PillLink.svelte';
   import Market from './sections/Market.svelte';
@@ -136,13 +136,13 @@
     </div>
 
     <!-- Testimonial section -->
-    <!-- <div class="relative z-10 mt-32 bg-gray-900 pb-20 sm:mt-56 sm:pb-24 xl:pb-0">
+    <div class="relative z-10 mt-32 bg-gray-900 pb-20 sm:mt-56 sm:pb-24 xl:pb-0">
       <Testimonial />
     </div>
 
     <div class="relative z-10 mt-32 bg-gray-900 pb-20 sm:mt-56 sm:pb-24 xl:pb-0">
       <AllTestimonials />
-    </div> -->
+    </div>
 
     <!-- Market Dynamics -->
     <div class="mx-auto mt-32 max-w-7xl sm:mt-56 sm:px-6 lg:px-8">
