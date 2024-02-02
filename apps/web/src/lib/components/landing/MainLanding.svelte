@@ -80,7 +80,7 @@
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="mx-auto max-w-2xl sm:text-center">
           <div class="text-base font-semibold leading-7 text-indigo-600">Announcing</div>
-          <h1 class="mt-4 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-6xl dark:text-white">
+          <h1 class="mt-4 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-6xl">
             Grantmakers <span class="bg-gradient-to-r from-indigo-600 to-indigo-300 bg-clip-text text-transparent">NEXT</span>
           </h1>
           <p class="mt-6 p-2 text-lg leading-8 text-gray-600 lg:p-6">
@@ -188,7 +188,7 @@
   <!-- Footer -->
   <footer class="bg-gray-900" aria-labelledby="footer-heading">
     <!-- HACK -->
-    <hr class="h-px border-0 bg-gray-900 py-8 dark:bg-gray-700" />
+    <hr class="h-px border-0 bg-gray-900 py-8" />
     <h2 id="footer-heading" class="sr-only">Footer</h2>
     <div class="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8 lg:py-32">
       <div class="xl:grid xl:grid-cols-3 xl:gap-8">

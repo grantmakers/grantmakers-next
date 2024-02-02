@@ -509,7 +509,7 @@
           </div>
           <!-- Right-side Foundation Box -->
           <div class="mx-auto mt-4 w-full max-w-full px-3 sm:my-auto sm:mr-0 md:w-1/2 md:flex-none">
-            <div class="flex grow gap-x-3 rounded-xl bg-yellow-50 px-4 py-3 dark:bg-zinc-800">
+            <div class="flex grow gap-x-3 rounded-xl bg-yellow-50 px-4 py-3">
               <div class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gray-100">
                 <Clock variation="solid" />
               </div>
