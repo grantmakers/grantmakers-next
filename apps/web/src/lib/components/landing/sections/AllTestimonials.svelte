@@ -24,13 +24,13 @@
     },
     right: {
       quote: 'I am the Development Manager for a nonprofit in Orange County, CA and I use this site often - thank you!',
-      name: 'Bethany Johnson',
+      name: 'Susan Johnson',
       title: 'Development Manager',
       image: sj,
     },
     bottomLeft: {
-      quote: 'Thanks to your wonderful website, The Patchwork Project has received another grant!!! Thank you!!!!!',
-      name: 'Jody Johnston',
+      quote: 'Thanks to your wonderful website, Misfit Acres Inc has received another grant!!! Thank you!!!!!',
+      name: 'Jody Thisted',
       title: 'President',
       image: jt,
     },
