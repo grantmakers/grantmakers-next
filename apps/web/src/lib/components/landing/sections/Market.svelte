@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { anecdote as trustedAnecdote } from '@utils/trustedConstants';
   import marketImg from '$lib/assets/images/market.webp';
 </script>
 
@@ -9,10 +8,6 @@
   >
     <div class="lg:row-start-2 lg:max-w-md">
       <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">The perfect springboard to Instrumentl and FDO.</h2>
-      <p class="mt-6 text-lg leading-8 text-gray-300">
-        <!-- eslint-disable-next-line -->
-        {@html trustedAnecdote}
-      </p>
     </div>
     <!-- src="https://tailwindui.com/img/component-images/dark-project-app-screenshot.png" -->
     <img
@@ -35,7 +30,7 @@
             </svg>
             Grantmakers.io.
           </dt>
-          <dd class="inline">Simple, fast, accessible access to the IRS 990-PF dataset. Lightning fast search by Algolia.</dd>
+          <dd class="inline">Quickly and thoroughly explore the IRS 990-PF dataset with Algolia's lightning-fast, real-time search.</dd>
         </div>
         <div class="relative">
           <dt class="ml-9 inline-block font-semibold text-white">
