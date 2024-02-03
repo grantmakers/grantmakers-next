@@ -18,7 +18,7 @@
     },
     left: {
       quote: "Thank you so very much - this is a truly amazing service!!! I'm searching for grants for a small non profit in SF. 🙂",
-      name: 'Rosemary Lunt',
+      name: 'Rosalie Lack',
       title: 'Strategy & Engagement',
       image: rl,
     },
