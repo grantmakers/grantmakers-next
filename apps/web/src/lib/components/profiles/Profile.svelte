@@ -1,4 +1,6 @@
 <script lang="ts">
+  import SummaryBoxHeaderBadge from './SummaryBoxHeaderBadge.svelte';
+  import SummaryBoxHeader from './SummaryBoxHeader.svelte';
   import { onMount } from 'svelte';
   import Banner from './Banner.svelte';
   import NavSearch from '../search/Nav.svelte';
@@ -9,7 +11,8 @@
   import { upperFirstLetter } from '@utils/names';
   import chatgptIcon from '$lib/assets/images/chatgpt.svg';
   import claudeIcon from '$lib/assets/images/claude.svg';
-  import { Clock, Sparkles } from 'svelte-heros-v2';
+  import irsLogo from '$lib/assets/images/irs-logo.png';
+  import { Clock, Sparkles, CheckCircle, XCircle } from 'svelte-heros-v2';
   import { convertToCapitalCase } from '@shared/functions/formatters/names';
   import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/grants';
 
@@ -31,6 +34,8 @@
     is_likely_staffed: isStaffed,
   } = profile;
 
+  console.log(JSON.stringify(profile));
+
   const DEFAULT_AVATAR = 'default.png';
   const firstLetter = upperFirstLetter(organization_name);
   const aiImgDetails = {
@@ -43,11 +48,8 @@
   let sourceName: 'chatgpt' | 'claude';
   let currentAiIconDetails: { src: string; width: number; height: number; maxHeightClass: string };
   let formattedTaxPeriodEnd: string;
-  let firstTwoGrantPurposeStatementsAreSame: boolean;
   let grantsMedianIndex: number;
   let medianGrantName: string;
-
-  let now = () => new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
   function isAiImgDetailsKey(key: string): key is keyof typeof aiImgDetails {
     return key === 'chatgpt' || key === 'claude';
@@ -55,7 +57,6 @@
 
   onMount(async () => {
     avatarImageModule = await import(`../../assets/images/icons-letters/svg/${firstLetter}.svg`);
-    console.log(avatarImageModule);
     // @ts-expect-error: Need to properly type Module, from Vite? SvelteKit?
     avatarImage = avatarImageModule ? avatarImageModule?.default : '/logo.svg';
     sourceName = aiSummarySource?.startsWith('chatgpt') ? 'chatgpt' : 'claude';
@@ -69,7 +70,6 @@
       grantsMedianIndex = Math.floor(profile.grant_count / 2);
       let medianGrantNameUnformatted = grants[grantsMedianIndex].name;
       medianGrantName = convertToCapitalCase(medianGrantNameUnformatted);
-      firstTwoGrantPurposeStatementsAreSame = profile.grant_count >= 2 ? grants[0].purpose === grants[1].purpose : false;
     }
   });
 </script>
@@ -308,6 +308,8 @@
             <span class="ease-soft pointer-events-none ml-1 opacity-100 duration-300">Financials</span>
           </a>
         </li>
+
+        <!-- Search Profile Items -->
         <li class="mt-4 w-full">
           <h6 class="ml-2 pl-6 text-xs font-bold uppercase leading-tight opacity-60">Your Search Profile</h6>
         </li>
@@ -491,18 +493,18 @@
           <div class="my-auto w-auto max-w-full flex-none px-3">
             <div class="h-full">
               <h5 class="mb-1">{organization_name}</h5>
-              <p class="mb-0 text-sm font-semibold leading-normal">
+              <p class="mb-0 text-sm font-normal leading-normal">
                 <strong class="text-slate-700">
                   {profile.city},
                   {profile.is_foreign && profile.state === 'Foreign' ? profile.country : profile.state}
                 </strong>
-                <Dot />
                 {#if profile.website}
+                  <Dot />
                   <a href={profile.website} target="_blank" rel="noopener noreferrer">
                     {profile.website_verbatim?.toLowerCase()}
                   </a>
-                {:else}
-                  {profile.website_verbatim}
+                  <!-- {:else}
+                  {profile.website_verbatim} -->
                 {/if}
               </p>
             </div>
@@ -520,9 +522,7 @@
                 </div>
                 <p class="my-0 mt-0.5 text-sm/6">
                   This profile is based on the foundation's latest IRS Form 990-PF tax filing. The data is freely available to the general
-                  public via <a href="https://apps.irs.gov/app/eos/" target="_blank" rel="noopener noreferrer">IRS.gov</a>. Learn more.
-                  <!-- Grantmakers.io makes reading tax filings fun again. -->
-                  <!-- <a href="/" class="font-bold hover:text-black">Understand its limits <span aria-hidden="true">→</span></a> -->
+                  public via <a href="https://apps.irs.gov/app/eos/" target="_blank" rel="noopener noreferrer">IRS.gov</a>.
                 </p>
               </div>
             </div>
@@ -532,6 +532,7 @@
 
       <!-- Main content -->
       <div class="removable mx-auto mt-4 w-full pb-6">
+        <!-- Summary Boxes -->
         <div class="-mx-3 grid grid-cols-1 lg:grid-cols-3">
           <!-- Box 1 -->
           <div class="lg-max:mt-6 mb-4 w-full max-w-full px-3">
@@ -616,35 +617,38 @@
             <!-- Grant History -->
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-white p-4 pb-0">
-                <div class="flex items-center justify-between align-middle">
-                  <h6 class="mb-0">Grant Highlights</h6>
-                  <h6 class="m-0 text-xs font-bold uppercase leading-tight text-slate-500">
-                    {#if filings}
-                      <span
-                        class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
-                        >Tax year {filings[0]?.tax_year}</span
-                      >
-                    {/if}
-                  </h6>
-                </div>
+                <SummaryBoxHeader headerText={'Grant Highlights'}>
+                  {#if filings}
+                    <span
+                      class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-100/75"
+                      >Tax year {filings[0]?.tax_year}</span
+                    >
+                  {/if}
+                </SummaryBoxHeader>
               </div>
-              <div class="flex-auto p-4">
+              <div class="mb-6 flex h-full flex-col justify-between p-4">
                 <ul class="mb-0 flex flex-col rounded-lg pl-0">
                   {#if grants && grants[0]}
                     <!-- Median -->
                     {#if grants.length > 7}
-                      <h6 class="m-0 mb-1 flex w-full items-center gap-1 text-xs font-thin uppercase leading-tight text-grantmakers-blue">
-                        Median
-                        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
-                        <path
-                          fill-rule="evenodd"
-                          d="M4.5 12a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Zm6 0a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Zm6 0a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z"
-                          clip-rule="evenodd"
-                        />
-                      </svg> -->
-                      </h6>
+                      {#each grants.slice(0, 1) as grant, i}
+                        <li class="relative block rounded-t-lg border-0 bg-white px-2 py-2 text-sm leading-6">
+                          <h3 class="mb-0 flex items-center justify-between text-sm font-normal tracking-normal text-slate-700">
+                            <div class="mr-4 overflow-hidden text-ellipsis whitespace-nowrap">
+                              {i + 1 + ') ' + convertToCapitalCase(grant.name)}
+                            </div>
+                            <div>
+                              {grant.amount.toLocaleString('en-US', {
+                                style: 'currency',
+                                currency: 'USD',
+                                maximumFractionDigits: 0,
+                              })}
+                            </div>
+                          </h3>
+                        </li>
+                      {/each}
 
-                      <li class="relative block rounded-lg border bg-zinc-100 p-2 text-sm leading-6">
+                      <li class="relative block rounded-lg bg-zinc-100 p-2 text-sm leading-6">
                         <div class="mb-0 flex items-center justify-between text-sm font-normal tracking-normal text-slate-700">
                           <div class="mr-4 overflow-hidden text-ellipsis whitespace-nowrap">
                             {grantsMedianIndex})&nbsp;{medianGrantName}
@@ -662,41 +666,13 @@
                         </div> -->
                       </li>
                     {/if}
-                    <!-- <h6 class="text-grantmakers-blue m-0 mb-1 flex w-full items-center gap-1 text-xs font-thin uppercase leading-tight">
-                      Largest
-                    </h6> -->
-                    <!-- Top 3 -->
-                    {#each grants.slice(0, 2) as grant, i}
-                      <li class="relative block rounded-t-lg border-0 bg-white px-0 py-0 text-sm leading-6">
-                        <h3 class="flex items-center justify-between text-sm font-normal tracking-normal text-slate-700">
-                          <div class="mr-4 overflow-hidden text-ellipsis whitespace-nowrap">
-                            {i + 1 + ') ' + convertToCapitalCase(grant.name)}
-                          </div>
-                          <div>
-                            {grant.amount.toLocaleString('en-US', {
-                              style: 'currency',
-                              currency: 'USD',
-                              maximumFractionDigits: 0,
-                            })}
-                          </div>
-                        </h3>
-                      </li>
-                    {/each}
 
                     <!-- Smallest -->
-                    <h6
-                      class="m-0 mb-1 mt-2 flex w-full items-center justify-center gap-1 text-xs font-thin uppercase leading-tight text-grantmakers-blue"
-                    >
-                      <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
-                        <path
-                          fill-rule="evenodd"
-                          d="M4.5 12a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Zm6 0a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Zm6 0a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z"
-                          clip-rule="evenodd"
-                        />
-                      </svg> -->
-                    </h6>
-                    {#each grants.slice(-2) as grant, i}
-                      <li class="relative block rounded-t-lg border-0 bg-white px-0 py-0 text-sm leading-6">
+                    <!-- <h6
+                      class="text-grantmakers-blue m-0 mb-1 mt-2 flex w-full items-center justify-center gap-1 text-xs font-thin uppercase leading-tight"
+                    ></h6> -->
+                    {#each grants.slice(-1) as grant, i}
+                      <li class="relative block rounded-t-lg border-0 bg-white px-2 py-2 text-sm leading-6">
                         <h3 class="flex items-center justify-between text-sm font-normal tracking-normal text-slate-700">
                           <div class="mr-4 overflow-hidden text-ellipsis whitespace-nowrap">
                             {profile.grant_count + (i + 1 - 2) + ') ' + convertToCapitalCase(grant.name)}
@@ -713,14 +689,13 @@
                     {/each}
                   {/if}
                 </ul>
-                <!-- <Stats /> -->
-                <h6 class="mt-6 text-xs font-bold uppercase leading-tight text-slate-500">Year ended {formattedTaxPeriodEnd}</h6>
-                <ul class="mb-0 flex flex-col rounded-lg pl-0">
-                  <li class="relative flex items-center gap-2 rounded-t-lg border-0 bg-white px-0 py-2 text-sm">
-                    <div class="text-3xl">{profile.grant_count}</div>
-                    <div>grants</div>
-                  </li>
-                </ul>
+                <div class="flex justify-center">
+                  <button
+                    type="button"
+                    class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-50"
+                    >View All Grants</button
+                  >
+                </div>
               </div>
             </div>
           </div>
@@ -730,135 +705,85 @@
             <!-- Fast Facts -->
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-white p-4 pb-0">
-                <h6 class="mb-0">Fast Facts</h6>
-              </div>
-              <div class="flex-auto p-4">
-                <h6 class="text-xs font-bold uppercase leading-tight text-slate-500">
-                  As of {now()}
-                </h6>
-                <ul class="mb-0 flex flex-col rounded-lg pl-0">
-                  <li class="relative block rounded-t-lg border-b bg-white px-0 py-2 text-inherit">
-                    <h3 class="flex items-center text-sm font-normal tracking-normal {isRecognized ? 'text-green-500' : 'text-rose-500'}">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
-                        <path
-                          fill-rule="evenodd"
-                          d="M12.516 2.17a.75.75 0 0 0-1.032 0 11.209 11.209 0 0 1-7.877 3.08.75.75 0 0 0-.722.515A12.74 12.74 0 0 0 2.25 9.75c0 5.942 4.064 10.933 9.563 12.348a.749.749 0 0 0 .374 0c5.499-1.415 9.563-6.406 9.563-12.348 0-1.39-.223-2.73-.635-3.985a.75.75 0 0 0-.722-.516l-.143.001c-2.996 0-5.717-1.17-7.734-3.08Zm3.094 8.016a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
-                          clip-rule="evenodd"
-                        ></path>
-                      </svg>
-                      <span class="ml-3 text-slate-500"
-                        >{isRecognized ? 'EIN is currently recognized by the IRS' : 'EIN no longer recognized by the IRS'}</span
-                      >
-                    </h3>
-                  </li>
-                  <li class="mt-4">
-                    <h6 class="text-xs font-bold uppercase leading-tight text-slate-500">
-                      As of {formattedTaxPeriodEnd}
-                    </h6>
-                  </li>
-                  <!-- Pre-selected orgs only? -->
-                  <li class="relative block rounded-t-lg border-0 bg-white px-0 py-2 text-inherit">
-                    <h3 class="flex items-center text-sm font-normal tracking-normal {!noUnsolicited ? 'text-green-500' : 'text-rose-500'}">
-                      {#if !noUnsolicited}
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
-                          <path
-                            d="M18 1.5c2.9 0 5.25 2.35 5.25 5.25v3.75a.75.75 0 0 1-1.5 0V6.75a3.75 3.75 0 1 0-7.5 0v3a3 3 0 0 1 3 3v6.75a3 3 0 0 1-3 3H3.75a3 3 0 0 1-3-3v-6.75a3 3 0 0 1 3-3h9v-3c0-2.9 2.35-5.25 5.25-5.25Z"
-                          />
-                        </svg>
+                <SummaryBoxHeader headerText={'Approachability'}>
+                  <SummaryBoxHeaderBadge variant={isRecognized ? 'positive' : 'negative'}>
+                    EO<span class="mx-0.5">
+                      {#if isRecognized}
+                        <CheckCircle variation="solid" size="12" />
                       {:else}
+                        <XCircle variation="solid" size="12" />
+                      {/if}
+                    </span>BMF
+                  </SummaryBoxHeaderBadge>
+                </SummaryBoxHeader>
+              </div>
+              <div class="mb-6 flex h-full flex-col justify-between p-4">
+                <div>
+                  <ul class="mb-0 flex flex-col rounded-lg py-2">
+                    <!-- Pre-selected orgs only? -->
+                    <li class="relative block rounded-t-lg border-0 bg-white px-0 py-1 text-inherit">
+                      <h3
+                        class="flex items-center text-sm font-normal tracking-normal {!noUnsolicited ? 'text-green-500' : 'text-rose-500'}"
+                      >
+                        {#if !noUnsolicited}
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
+                            <path
+                              d="M18 1.5c2.9 0 5.25 2.35 5.25 5.25v3.75a.75.75 0 0 1-1.5 0V6.75a3.75 3.75 0 1 0-7.5 0v3a3 3 0 0 1 3 3v6.75a3 3 0 0 1-3 3H3.75a3 3 0 0 1-3-3v-6.75a3 3 0 0 1 3-3h9v-3c0-2.9 2.35-5.25 5.25-5.25Z"
+                            />
+                          </svg>
+                        {:else}
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
+                            <path
+                              fill-rule="evenodd"
+                              d="M12 1.5a5.25 5.25 0 0 0-5.25 5.25v3a3 3 0 0 0-3 3v6.75a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3v-6.75a3 3 0 0 0-3-3v-3c0-2.9-2.35-5.25-5.25-5.25Zm3.75 8.25v-3a3.75 3.75 0 1 0-7.5 0v3h7.5Z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        {/if}
+                        <span class="ml-3 text-slate-500"
+                          >{noUnsolicited ? 'Pre-selected applicants only' : 'Possibly accepts unsolicited applications'}</span
+                        >
+                      </h3>
+                    </li>
+
+                    <!-- Is staffed? -->
+                    <li class="relative block rounded-t-lg border-0 bg-white px-0 py-1 text-inherit">
+                      <h3 class="flex items-center text-sm font-normal tracking-normal {isStaffed ? 'text-green-500' : 'text-rose-500'}">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
                           <path
                             fill-rule="evenodd"
-                            d="M12 1.5a5.25 5.25 0 0 0-5.25 5.25v3a3 3 0 0 0-3 3v6.75a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3v-6.75a3 3 0 0 0-3-3v-3c0-2.9-2.35-5.25-5.25-5.25Zm3.75 8.25v-3a3.75 3.75 0 1 0-7.5 0v3h7.5Z"
+                            d="M8.25 6.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM15.75 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM2.25 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM6.31 15.117A6.745 6.745 0 0 1 12 12a6.745 6.745 0 0 1 6.709 7.498.75.75 0 0 1-.372.568A12.696 12.696 0 0 1 12 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 0 1-.372-.568 6.787 6.787 0 0 1 1.019-4.38Z"
                             clip-rule="evenodd"
-                          />
+                          ></path>
+                          <path
+                            d="M5.082 14.254a8.287 8.287 0 0 0-1.308 5.135 9.687 9.687 0 0 1-1.764-.44l-.115-.04a.563.563 0 0 1-.373-.487l-.01-.121a3.75 3.75 0 0 1 3.57-4.047ZM20.226 19.389a8.287 8.287 0 0 0-1.308-5.135 3.75 3.75 0 0 1 3.57 4.047l-.01.121a.563.563 0 0 1-.373.486l-.115.04c-.567.2-1.156.349-1.764.441Z"
+                          ></path>
                         </svg>
-                      {/if}
-                      <span class="ml-3 text-slate-500"
-                        >{noUnsolicited ? 'Preference for pre-selected applicants only' : 'Possibly accepts unsolicited applications'}</span
-                      >
-                    </h3>
-                  </li>
 
-                  <!-- Is staffed? -->
-                  <li class="relative block rounded-t-lg border-0 bg-white px-0 py-2 text-inherit">
-                    <h3 class="flex items-center text-sm font-normal tracking-normal {isStaffed ? 'text-green-500' : 'text-rose-500'}">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
-                        <path
-                          fill-rule="evenodd"
-                          d="M8.25 6.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM15.75 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM2.25 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM6.31 15.117A6.745 6.745 0 0 1 12 12a6.745 6.745 0 0 1 6.709 7.498.75.75 0 0 1-.372.568A12.696 12.696 0 0 1 12 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 0 1-.372-.568 6.787 6.787 0 0 1 1.019-4.38Z"
-                          clip-rule="evenodd"
-                        ></path>
-                        <path
-                          d="M5.082 14.254a8.287 8.287 0 0 0-1.308 5.135 9.687 9.687 0 0 1-1.764-.44l-.115-.04a.563.563 0 0 1-.373-.487l-.01-.121a3.75 3.75 0 0 1 3.57-4.047ZM20.226 19.389a8.287 8.287 0 0 0-1.308-5.135 3.75 3.75 0 0 1 3.57 4.047l-.01.121a.563.563 0 0 1-.373.486l-.115.04c-.567.2-1.156.349-1.764.441Z"
-                        ></path>
-                      </svg>
-
-                      <span class="ml-3 text-slate-500"
-                        >{isStaffed ? 'The foundation is likely staffed' : 'The foundation is not likely staffed'}</span
-                      >
-                    </h3>
-                  </li>
-
-                  <li class="relative block rounded-t-lg border-0 bg-white px-0 py-2 text-inherit">
-                    <h3
-                      class="flex items-center text-sm font-normal tracking-normal {!firstTwoGrantPurposeStatementsAreSame
-                        ? 'text-green-500'
-                        : 'text-rose-500'}"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
-                        <path
-                          fill-rule="evenodd"
-                          d="M7.502 6h7.128A3.375 3.375 0 0 1 18 9.375v9.375a3 3 0 0 0 3-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 0 0-.673-.05A3 3 0 0 0 15 1.5h-1.5a3 3 0 0 0-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6ZM13.5 3A1.5 1.5 0 0 0 12 4.5h4.5A1.5 1.5 0 0 0 15 3h-1.5Z"
-                          clip-rule="evenodd"
-                        />
-                        <path
-                          fill-rule="evenodd"
-                          d="M3 9.375C3 8.339 3.84 7.5 4.875 7.5h9.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 0 1 3 20.625V9.375Zm9.586 4.594a.75.75 0 0 0-1.172-.938l-2.476 3.096-.908-.907a.75.75 0 0 0-1.06 1.06l1.5 1.5a.75.75 0 0 0 1.116-.062l3-3.75Z"
-                          clip-rule="evenodd"
-                        />
-                      </svg>
-
-                      <span class="ml-3 text-slate-500"
-                        >{isStaffed ? 'Descriptive grant purpose statements' : 'Summary grant purpose statements'}</span
-                      >
-                    </h3>
-                  </li>
-                </ul>
-
-                <!-- Fit Criteria -->
-                <!-- <h6 class="mt-6 text-xs font-bold uppercase leading-tight text-slate-500">Fit Criteria</h6>
-                <ul class="mb-0 flex flex-col rounded-lg pl-0">
-                  <li class="relative block rounded-t-lg border-0 bg-white px-0 py-2 text-inherit">
-                    <div class="mb-0.5 block min-h-6 pl-0">
-                      <input
-                        id="launches projects"
-                        class="mt-0.54 rounded-10 duration-250 ease-soft-in-out after:rounded-circle after:shadow-soft-2xl after:duration-250 checked:after:translate-x-5.25 relative float-left ml-auto h-5 w-10 cursor-pointer appearance-none border border-solid border-gray-200 bg-slate-800/10 bg-none bg-contain bg-left bg-no-repeat align-top transition-all after:absolute after:top-px after:h-4 after:w-4 after:translate-x-px after:bg-white after:content-[''] checked:border-slate-800/95 checked:bg-slate-800/95 checked:bg-none checked:bg-right"
-                        type="checkbox"
-                      />
-                      <label
-                        for="launches projects"
-                        class="mb-0 ml-4 w-4/5 cursor-pointer select-none overflow-hidden text-ellipsis whitespace-nowrap text-sm font-normal text-slate-500"
-                        >Grant size fit</label
-                      >
+                        <span class="ml-3 text-slate-500"
+                          >{isStaffed ? 'The foundation is likely staffed' : 'The foundation is not likely staffed'}</span
+                        >
+                      </h3>
+                    </li>
+                  </ul>
+                  <div class="py-2">
+                    <div class="rounded-lg bg-zinc-100 p-4 text-sm font-light">
+                      <div class="flex items-center">
+                        <div class="text-xs">
+                          Items are pulled directly from a historical IRS tax filing. Be mindful of this major limitation.
+                        </div>
+                        <img src={irsLogo} class="h-6 w-12" alt="IRS Logo" />
+                      </div>
                     </div>
-                  </li>
-                  <li class="relative block border-0 bg-white px-0 py-2 text-inherit">
-                    <div class="mb-0.5 block min-h-6 pl-0">
-                      <input
-                        id="product updates"
-                        class="mt-0.54 rounded-10 duration-250 ease-soft-in-out after:rounded-circle after:shadow-soft-2xl after:duration-250 checked:after:translate-x-5.25 relative float-left ml-auto h-5 w-10 cursor-pointer appearance-none border border-solid border-gray-200 bg-slate-800/10 bg-none bg-contain bg-left bg-no-repeat align-top transition-all after:absolute after:top-px after:h-4 after:w-4 after:translate-x-px after:bg-white after:content-[''] checked:border-slate-800/95 checked:bg-slate-800/95 checked:bg-none checked:bg-right"
-                        type="checkbox"
-                        checked=""
-                      />
-                      <label
-                        for="product updates"
-                        class="mb-0 ml-4 w-4/5 cursor-pointer select-none overflow-hidden text-ellipsis whitespace-nowrap text-sm font-normal text-slate-500"
-                        >Mission fit</label
-                      >
-                    </div>
-                  </li>
-                </ul> -->
+                  </div>
+                </div>
+                <div class="flex justify-center">
+                  <button
+                    type="button"
+                    class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-50"
+                    >View Application Guidelines</button
+                  >
+                </div>
               </div>
             </div>
           </div>
@@ -885,10 +810,10 @@
                   {#each people.slice(0, 5) as person}
                     <li>{person.name}</li>
                     <!-- <Person
-                                  key={person?.name?.toLowerCase()}
-                                  person={person}
-                                  index={index}
-                                  isLast={index === $index - 1} /> -->
+                      key={person?.name?.toLowerCase()}
+                      person={person}
+                      index={index}
+                      isLast={index === $index - 1} /> -->
                   {/each}
                 {/if}
                 {#if people?.length > 5}

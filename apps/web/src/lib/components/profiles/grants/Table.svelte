@@ -1,6 +1,7 @@
 <script lang="ts">
   import DOMPurify from 'dompurify';
   import type { GrantsArray } from '@shared/typings/grantmakers/grants';
+  import { firstLetter } from '@utils/names';
   export let grants: GrantsArray;
 
   const { sanitize } = DOMPurify;
@@ -31,27 +32,40 @@
                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Grantee</th>
                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Purpose</th>
                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Location</th>
-                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Role</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Year</th>
                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
                   <span class="sr-only">Edit</span>
                 </th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
-              {#each grants as grant}
+              {#each grants as grant, i}
                 <tr>
                   <td class="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
                     <div class="flex items-center">
                       <div class="h-11 w-11 flex-shrink-0">
-                        <img
-                          class="h-11 w-11 rounded-full"
-                          src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                          alt=""
-                        />
+                        <span class="inline-flex">
+                          <!-- <div class="flex h-6 w-6 items-center justify-center rounded-full bg-slate-300 text-slate-700">
+                            <div class="text-lg font-semibold">{i + 1}</div>
+                          </div> -->
+
+                          <img
+                            class="h-11 w-11 rounded-full opacity-50"
+                            src={`../../icons-letters/svg/${firstLetter(grant.name)}.svg`}
+                            alt=""
+                          />
+                        </span>
                       </div>
                       <div class="ml-4">
                         <div class="font-medium text-gray-900">{grant.name}</div>
-                        <div class="mt-1 text-gray-500">lindsay.walton@example.com</div>
+                        <div class="mt-1 text-indigo-700">
+                          {#if i === 0 || i / 4 === 1}
+                            <span
+                              class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
+                              >New</span
+                            >
+                          {/if}
+                        </div>
                       </div>
                     </div>
                   </td>
@@ -60,15 +74,13 @@
                     <div class="mt-1 text-gray-500">{@html sanitize(grant.purpose)}</div>
                   </td>
                   <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                    <span
-                      class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
-                      >Active</span
-                    >
+                    {grant.city},
+                    {grant.is_foreign && grant.state === 'Foreign' ? grant.country : grant.state}
                   </td>
-                  <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">Member</td>
-                  <td class="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                    <a href="/foo" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay Walton</span></a>
-                  </td>
+                  <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">{grant.tax_year}</td>
+                  <!-- <td class="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                    <a href="/foo" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, {grant.name}</span></a>
+                  </td> -->
                 </tr>
               {/each}
             </tbody>
