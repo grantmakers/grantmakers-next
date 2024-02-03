@@ -1,7 +1,7 @@
 <!-- cspell:disable -->
 <script lang="ts">
-  import srOrgLogo from '$lib/assets/images/testimonials/wh-logo.jpg';
-  import sr from '$lib/assets/images/testimonials/sr.jpg';
+  import srOrgLogo from '$lib/assets/images/testimonials/wh-logo-alt.png';
+  import sr from '$lib/assets/images/testimonials/sr-alt.jpg';
   import sg from '$lib/assets/images/testimonials/sg.jpg';
   import rl from '$lib/assets/images/testimonials/rl.jpg';
   import sj from '$lib/assets/images/testimonials/sj.jpg';
@@ -11,7 +11,7 @@
     main: {
       quote:
         'As a brand new grantwriter for a smaller area, your site has helped me tremendously. Being able to see the numbers and not have to dig really helps me see the big picture. Thanks so much!',
-      name: 'Steven Roscoe',
+      name: 'S. Roscoe',
       title: 'Grant Writer',
       image: sr,
       logo: srOrgLogo,
@@ -35,8 +35,8 @@
       image: jt,
     },
     bottomRight: {
-      quote: 'This is an awesome tool - we are very small non profit near Chicago and we are broadening our donor base and grant base',
-      name: 'Sally Galtieri',
+      quote: 'This is an awesome tool - we are a very small non profit near Chicago, and we are broadening our donor base and grant base.',
+      name: 'S. Galtieri',
       title: 'Founder',
       image: sg,
     },
