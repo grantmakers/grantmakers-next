@@ -32,7 +32,7 @@
   </div>
   <div class="relative mx-auto max-w-7xl py-24 sm:py-32 lg:px-8 lg:py-40">
     <div class="px-6 md:ml-auto md:w-2/3 md:pl-16 lg:w-1/2 lg:pl-24 lg:pr-0 xl:pl-32">
-      <h2 class="text-base font-semibold leading-7 tracking-normal text-indigo-400">Building together</h2>
+      <h2 class="text-base font-semibold leading-7 tracking-normal text-indigo-400">Coming Soon</h2>
       <p class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Grantmakers NEXT</p>
       <p class="mt-6 text-base leading-7 text-gray-300">
         Grantmakers.io thrives on feedback and insights from our nonprofit community of fundraisers. If you're one of the hundreds of

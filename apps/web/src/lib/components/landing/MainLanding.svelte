@@ -10,9 +10,11 @@
   import PartnerLogos from './sections/PartnerLogos.svelte';
   import PillLink from '../shared/PillLink.svelte';
   import Market from './sections/Market.svelte';
+  import Education from './sections/Education.svelte';
   import BottomCTA from './sections/BottomCTA.svelte';
   import { features, footerNavigation, articleLinks } from '@utils/trustedConstants';
   import PrivacyPolicy from './sections/PrivacyPolicy.svelte';
+  import ClosingStatement from './sections/ClosingStatement.svelte';
 </script>
 
 <div class="bg-white">
@@ -140,14 +142,21 @@
       <Testimonial />
     </div>
 
-    <div class="relative z-10 mt-32 bg-white pb-20 sm:mt-56 sm:pb-24 xl:pb-0">
-      <AllTestimonials />
+    <!-- Education -->
+    <div class="mx-auto mt-32 max-w-7xl sm:mt-56 sm:px-6 lg:px-8">
+      <Education />
     </div>
 
     <!-- Market Dynamics -->
     <div class="mx-auto mt-32 max-w-7xl sm:mt-56 sm:px-6 lg:px-8">
       <Market />
     </div>
+
+    <div class="relative z-10 mt-32 bg-white pb-20 sm:mt-56 sm:pb-24 xl:pb-0">
+      <AllTestimonials />
+    </div>
+
+    <ClosingStatement />
 
     <!-- Partners section -->
     <div class="relative isolate mt-32 bg-white px-6 sm:mt-56 lg:px-8">
