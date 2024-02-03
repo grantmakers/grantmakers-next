@@ -2,8 +2,7 @@
   "[svelte]": {
     "editor.defaultFormatter": "svelte.svelte-vscode"
   },
-  // "[javascript][html][typescript]": {
-  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
-  // },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
   "cSpell.words": ["pcss"]
 }
