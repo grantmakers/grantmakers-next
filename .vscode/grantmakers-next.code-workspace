@@ -22,6 +22,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "extensions": {
-    "recommendations": ["esbenp.prettier-vscode", "dbaeumer.vscode-eslint"],
+    "recommendations": ["dbaeumer.vscode-eslint"],
   },
 }
