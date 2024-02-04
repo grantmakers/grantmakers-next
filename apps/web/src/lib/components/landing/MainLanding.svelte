@@ -1,4 +1,6 @@
 <script lang="ts">
+  import Footer from '../footer/Footer.svelte';
+
   // import DevLinks from '$lib/components/landing/DevLinks.svelte';
   import screenshot from '$lib/assets/images/screenshot.webp';
   import LogoMark from '../shared/LogoMark.svelte';
@@ -12,8 +14,7 @@
   import Market from './sections/Market.svelte';
   import Education from './sections/Education.svelte';
   import BottomCTA from './sections/BottomCTA.svelte';
-  import { features, footerNavigation, articleLinks } from '@utils/trustedConstants';
-  import PrivacyPolicy from './sections/PrivacyPolicy.svelte';
+  import { features, articleLinks } from '@utils/trustedConstants';
   import ClosingStatement from './sections/ClosingStatement.svelte';
 </script>
 
@@ -195,87 +196,5 @@
   </main>
 
   <!-- Footer -->
-  <footer class="bg-gray-900" aria-labelledby="footer-heading">
-    <!-- HACK -->
-    <hr class="h-px border-0 bg-gray-900 py-8" />
-    <h2 id="footer-heading" class="sr-only">Footer</h2>
-    <div class="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8 lg:py-32">
-      <div class="xl:grid xl:grid-cols-3 xl:gap-8">
-        <LogoMark />
-        <div class="mt-16 grid grid-cols-1 gap-8 xl:col-span-2 xl:mt-0">
-          <div class="md:grid md:grid-cols-3 md:gap-8">
-            <!-- The Project -->
-            <div>
-              <div class="font-semibold leading-6 text-white">The Project</div>
-              <!-- a11y Explanation: This is helpful in the context of a mobile menu as part of a slide-out -->
-              <!-- eslint-disable-next-line jsx-a11y/no-redundant-roles -->
-              <ul role="list" class="mt-6 space-y-4">
-                {#each footerNavigation.project as item}
-                  <li>
-                    <a href={item.href} class="leading-6 text-gray-300 hover:text-white">
-                      {item.name}
-                    </a>
-                  </li>
-                {/each}
-              </ul>
-            </div>
-
-            <div class="mt-10 md:mt-0">
-              <!-- Get Involved -->
-              <div>
-                <div class="font-semibold leading-6 text-white">Get Involved</div>
-                <ul class="mt-6 space-y-4">
-                  {#each footerNavigation.getInvolved as item}
-                    <li>
-                      <a href={item.href} class="leading-6 text-gray-300 hover:text-white">
-                        {item.name}
-                      </a>
-                    </li>
-                  {/each}
-                </ul>
-              </div>
-            </div>
-
-            <div class="mt-10 md:mt-0">
-              <!-- Search -->
-              <div>
-                <div class="font-semibold leading-6 text-white">Search</div>
-                <ul class="mt-6 space-y-4">
-                  {#each footerNavigation.search as item}
-                    <li>
-                      <a href={item.href} class="leading-6 text-gray-300 hover:text-white">
-                        {item.name}
-                      </a>
-                    </li>
-                  {/each}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="flex items-center justify-between gap-4 bg-gray-700 px-4 py-2 lg:px-6">
-      <div class="hidden text-sm text-gray-300 lg:flex">
-        All content is licensed under a&nbsp;<a href="http://creativecommons.org/licenses/by-sa/4.0/"
-          >Creative Commons Attribution-ShareAlike 4.0 International License</a
-        >, except Grantmakers.io logo (all rights reserved Chad Kruse)
-      </div>
-      <ul class="flex items-center gap-6">
-        {#each footerNavigation.legal as item}
-          {#if item.name === 'Privacy'}
-            <li>
-              <PrivacyPolicy />
-            </li>
-          {:else}
-            <li>
-              <a href={item.href} class="text-sm leading-6 text-gray-300 hover:text-white">
-                {item.name}
-              </a>
-            </li>
-          {/if}
-        {/each}
-      </ul>
-    </div>
-  </footer>
+  <Footer></Footer>
 </div>
