@@ -12,6 +12,7 @@
     "moduleDetection": "force",
     "moduleResolution": "NodeNext",
     "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": false,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
