@@ -31,7 +31,7 @@ const config = {
         'frame-src': ['https://www.iubenda.com'],
         'connect-src': ['self', 'https://cloudflareinsights.com'],
         'default-src': ['none'],
-        'img-src': ['self', 'https://images.unsplash.com', 'https://cdn.iubenda.com', 'https://tailwindui.com'], // Added Unsplash domain
+        'img-src': ['self', 'data:', 'https://images.unsplash.com', 'https://cdn.iubenda.com', 'https://tailwindui.com'], // Added Unsplash domain
         'font-src': ['self', 'data:'],
         'object-src': ['none'],
         'base-uri': ['none'],
