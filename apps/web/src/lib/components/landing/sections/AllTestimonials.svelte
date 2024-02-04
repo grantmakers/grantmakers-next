@@ -2,7 +2,7 @@
 <script lang="ts">
   import srOrgLogo from '$lib/assets/images/testimonials/wh-logo-alt.png';
   import sr from '$lib/assets/images/testimonials/sr-alt.jpg';
-  import sg from '$lib/assets/images/testimonials/sg-alt.jpg';
+  import sg from '$lib/assets/images/testimonials/sg.jpg';
   import rl from '$lib/assets/images/testimonials/rl.jpg';
   import sj from '$lib/assets/images/testimonials/sj.jpg';
   import jt from '$lib/assets/images/testimonials/jt.jpg';
@@ -36,7 +36,7 @@
     },
     bottomRight: {
       quote: 'This is an awesome tool - we are a very small non profit near Chicago, and we are broadening our donor base and grant base.',
-      name: 'S. Galtieri',
+      name: 'Sally Guglielmo',
       title: 'Founder',
       image: sg,
     },
