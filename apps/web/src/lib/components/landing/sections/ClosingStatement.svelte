@@ -1,3 +1,9 @@
+<script lang="ts">
+  import viewport from '$lib/utils/useViewportAction';
+
+  let textInView = false;
+</script>
+
 <div class="bg-gray-900">
   <div class="relative isolate pt-14">
     <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
@@ -8,7 +14,19 @@
     </div>
     <div class="py-24 sm:py-32 lg:pb-40">
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <div class="mx-auto max-w-2xl text-center">
+        <div
+          use:viewport
+          on:enterViewport={() => {
+            textInView = true;
+          }}
+          on:exitViewport={() => {
+            textInView = false;
+          }}
+          class="mx-auto max-w-2xl text-center {textInView
+            ? 'opacity-1 translate-y-0'
+            : 'translate-y-4 opacity-0'} pointer-events-none transform-gpu duration-500 ease-in-out"
+        >
+          <!-- class="translate-y-6 transform text-center opacity-0 transition-opacity" -->
           <h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">IRS 990-PF.<br />Plain and Simple.</h1>
           <p class="mt-6 text-lg leading-8 text-gray-300">
             Open, unfettered access to a critical grants information source for nonprofits.
