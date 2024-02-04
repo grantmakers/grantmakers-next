@@ -24,7 +24,7 @@
           </p>
         </div>
       </div>
-      <div class="col-end-1 w-16 lg:row-span-4 lg:w-96">
+      <div class="col-end-1 w-full lg:row-span-4 lg:w-96">
         <a href="https://events.toledolibrary.org/event/9313900" target="_blank" rel="noopener noreferrer">
           <img class="rounded-xl bg-indigo-50 lg:rounded-3xl" src={image} alt="" />
         </a>

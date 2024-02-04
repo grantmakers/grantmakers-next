@@ -19,7 +19,7 @@
 
 <div class="bg-white">
   <header class="absolute inset-x-0 top-0 z-50">
-    <nav class="flex items-center justify-end p-6 lg:px-8" aria-label="Global">
+    <nav class="flex items-center justify-start p-6 md:justify-end lg:px-8" aria-label="Global">
       <div class="">
         <LogoMark />
       </div>
