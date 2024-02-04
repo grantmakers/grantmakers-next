@@ -2,10 +2,10 @@
 <script lang="ts">
   import srOrgLogo from '$lib/assets/images/testimonials/wh-logo-alt.png';
   import sr from '$lib/assets/images/testimonials/sr-alt.jpg';
-  import sg from '$lib/assets/images/testimonials/sg.jpg';
-  import rl from '$lib/assets/images/testimonials/rl.jpg';
-  import sj from '$lib/assets/images/testimonials/sj.jpg';
-  import jt from '$lib/assets/images/testimonials/jt.jpg';
+  import sg from '$lib/assets/images/testimonials/sg.webp';
+  import rl from '$lib/assets/images/testimonials/rl.webp';
+  import sj from '$lib/assets/images/testimonials/sj.webp';
+  import jt from '$lib/assets/images/testimonials/jt.webp';
 
   const testimonials = {
     main: {

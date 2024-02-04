@@ -5,13 +5,8 @@
    */
   import MainLanding from '$lib/components/landing/MainLanding.svelte';
   import Layout from './+layout.svelte';
-  import { meta } from '@utils/trustedConstants';
-
-  const {
-    defaults: { title, description },
-  } = meta;
 </script>
 
-<Layout {title} {description}>
+<Layout>
   <MainLanding />
 </Layout>

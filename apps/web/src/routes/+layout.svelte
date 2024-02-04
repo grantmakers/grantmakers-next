@@ -1,9 +1,11 @@
 <script lang="ts">
   import '@fontsource/inter';
   import '../app.pcss';
+  import { meta } from '@utils/trustedConstants';
 
-  export let title: string;
-  export let description: string;
+  const {
+    defaults: { title, description },
+  } = meta;
 </script>
 
 <svelte:head>
