@@ -20,6 +20,19 @@
   "settings": {
     "prettier.enable": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tokenColorCustomizations": {
+      "[Monokai]": {
+        "textMateRules": [
+          {
+            "settings": {
+              "foreground": "#66D9EF",
+              "fontStyle": "italic",
+            },
+            "scope": "entity.name.type.class",
+          },
+        ],
+      },
+    },
   },
   "extensions": {
     "recommendations": ["dbaeumer.vscode-eslint"],
