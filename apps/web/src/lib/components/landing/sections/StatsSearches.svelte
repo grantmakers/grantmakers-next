@@ -1,7 +1,7 @@
 <script>
   import CountUp from '$lib/components/shared/CountUp.svelte';
-  const counterStart = 8600726;
-  const counterEnd = 8600858;
+  const counterStart = 8629726;
+  const counterEnd = 8672858;
 </script>
 
 <div class="mx-auto mt-32 max-w-7xl bg-white sm:mt-56 sm:px-6 lg:px-8">
