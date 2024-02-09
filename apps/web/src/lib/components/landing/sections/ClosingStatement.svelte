@@ -2,9 +2,21 @@
   import viewport from '$lib/utils/useViewportAction';
 
   let textInView = false;
+
+  const textAnimationInitClasses = 'opacity-0 translate-y-4';
+  const textAnimationClasses = 'opacity-1 translate-y-0';
 </script>
 
-<div class="bg-gray-900" data-sveltekit-preload-code="eager">
+<div
+  use:viewport
+  on:enterViewport={() => {
+    if (!textInView) {
+      textInView = true;
+    }
+  }}
+  class="bg-gray-900"
+  data-sveltekit-preload-code="eager"
+>
   <div class="relative isolate pt-14">
     <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
       <div
@@ -15,15 +27,9 @@
     <div class="py-24 sm:py-32 lg:pb-40">
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div
-          use:viewport
-          on:enterViewport={() => {
-            if (!textInView) {
-              textInView = true;
-            }
-          }}
-          class="mx-auto max-w-2xl text-center {textInView ? 'opacity-1 translate-y-0' : (
-            'translate-y-4 opacity-0'
-          )} pointer-events-none transform-gpu duration-500 ease-in-out"
+          class="mx-auto max-w-2xl text-center will-change-scroll {textInView ? textAnimationClasses : (
+            textAnimationInitClasses
+          )} pointer-events-none duration-500 ease-in-out"
         >
           <h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">IRS 990-PF.<br />Plain and Simple.</h1>
           <p class="mt-6 text-lg leading-8 text-gray-300">
