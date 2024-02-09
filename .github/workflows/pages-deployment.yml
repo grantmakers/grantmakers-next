@@ -13,11 +13,13 @@ jobs:
       - name: NodeJS setup
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: '.nvmrc'
       - name: Install dependencies
         run: npm install
       # Testing Turborepo - probably overkill - NPM Workspaces would work just fine as well
       # v0 POC target web app only
+      - name: Disable Turborepo Telemetry
+        run: npx turbo telemetry disable
       - name: Lint
         run: npx turbo run lint --filter=web
       - name: Build
@@ -31,8 +33,8 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          workingDirectory: "./apps/web"
-          directory: ".svelte-kit/cloudflare"
+          workingDirectory: './apps/web'
+          directory: '.svelte-kit/cloudflare'
           projectName: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          wranglerVersion: "3"
+          wranglerVersion: '3'
