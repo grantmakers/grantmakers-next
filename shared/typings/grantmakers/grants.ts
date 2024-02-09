@@ -17,11 +17,11 @@ export interface GrantmakersExtractedDataObj {
   financial_stats?: any; // TODO
   filings: Filing[]; // TODO Ensure flows through new additions to monorepo
   part_v: PartV | null;
-  website: WebsiteObj["website"];
-  website_good_crowdsource_candidate: WebsiteObj["goodCrowdsourceCandidate"]; // TASK Remove from script. This is no longer needed.
-  website_is_an_email: WebsiteObj["websiteIsAnEmail"];
-  website_verbatim: WebsiteObj["verbatim"];
-  website_modified: WebsiteObj["websiteWasModified"];
+  website: WebsiteObj['website'];
+  website_good_crowdsource_candidate: WebsiteObj['goodCrowdsourceCandidate']; // TASK Remove from script. This is no longer needed.
+  website_is_an_email: WebsiteObj['websiteIsAnEmail'];
+  website_verbatim: WebsiteObj['verbatim'];
+  website_modified: WebsiteObj['websiteWasModified'];
   is_foreign: boolean;
   street: string;
   street2: string | null;
@@ -37,7 +37,7 @@ export interface GrantmakersExtractedDataObj {
   eobmf_recognized_exempt: boolean;
   eobmf_ruling_date: string | undefined; // yyyymm
   is_likely_staffed: boolean;
-  has_website: WebsiteObj["filingHasValidWebsite"];
+  has_website: WebsiteObj['filingHasValidWebsite'];
   has_charitable_activities: boolean;
   charitable_activities_count: number;
   charitable_activities_are_restatement_of_grants: boolean; // TASK Is this still useful?
@@ -79,25 +79,25 @@ export interface PartV {
   LiableSection4942TaxInd: boolean;
 
   // Yearly fields - can range from Yr1 to Yr5
-  "AdjustedQlfyDistriYr1Amt?": number;
-  "NetVlNoncharitableAssetsYr1Amt?": number;
-  "DistributionYr1Rt?": number;
+  'AdjustedQlfyDistriYr1Amt?': number;
+  'NetVlNoncharitableAssetsYr1Amt?': number;
+  'DistributionYr1Rt?': number;
   // yearly cont'd
-  "AdjustedQlfyDistriYr2Amt?": number;
-  "NetVlNoncharitableAssetsYr2Amt?": number;
-  "DistributionYr2Rt?": number;
+  'AdjustedQlfyDistriYr2Amt?': number;
+  'NetVlNoncharitableAssetsYr2Amt?': number;
+  'DistributionYr2Rt?': number;
   // yearly cont'd
-  "AdjustedQlfyDistriYr3Amt?": number;
-  "NetVlNoncharitableAssetsYr3Amt?": number;
-  "DistributionYr3Rt?": number;
+  'AdjustedQlfyDistriYr3Amt?': number;
+  'NetVlNoncharitableAssetsYr3Amt?': number;
+  'DistributionYr3Rt?': number;
   // yearly cont'd
-  "AdjustedQlfyDistriYr4Amt?": number;
-  "NetVlNoncharitableAssetsYr4Amt?": number;
-  "DistributionYr4Rt?": number;
+  'AdjustedQlfyDistriYr4Amt?': number;
+  'NetVlNoncharitableAssetsYr4Amt?': number;
+  'DistributionYr4Rt?': number;
   // yearly cont'd
-  "AdjustedQlfyDistriYr5Amt?": number;
-  "NetVlNoncharitableAssetsYr5Amt?": number;
-  "DistributionYr5Rt?": number;
+  'AdjustedQlfyDistriYr5Amt?': number;
+  'NetVlNoncharitableAssetsYr5Amt?': number;
+  'DistributionYr5Rt?': number;
 
   // Remaining fields
   TotalDistributionRt: number;
@@ -118,8 +118,8 @@ export interface AllOrgNamesObj {
 
 export interface EobmfOrgNamesObj {
   name: string;
-  ico: string | "";
-  sort_name: string | "";
+  ico: string | '';
+  sort_name: string | '';
   formatted: string;
 }
 
@@ -167,10 +167,21 @@ export interface CharitableActivity {
 export type PeopleArray = Person[];
 
 export interface Person {
-  name: string;
+  name: string | PersonNameWithAttributes | LegacyPersonNameWithAttributes;
   title: string;
   hours: number;
   compensation: number;
+}
+
+interface PersonNameWithAttributes {
+  '#text': string;
+  attributes: any;
+}
+
+interface LegacyPersonNameWithAttributes {
+  // prettier-ignore
+  _: string;
+  attributes: any;
 }
 
 export type GrantsArray = Grant[] | null; // This is normalized: Filings with only 1 grant will be normalized to be have one grant in an array
@@ -207,6 +218,6 @@ export interface GrantsApplicationContactAddress {
   street2: string | null;
   city: string;
   state: string;
-  country: "US" | string;
+  country: 'US' | string;
   zip: string;
 }

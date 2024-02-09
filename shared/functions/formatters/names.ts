@@ -18,6 +18,7 @@ export function convertToCapitalCase(str: string): string {
    * Pf: Private foundation or Permanent Fund
    */
   // TODO Handle "U/a/d"
+  // prettier-ignore
   const specialWords = [
     "fka",
     "fbo",
@@ -37,9 +38,7 @@ export function convertToCapitalCase(str: string): string {
 
   // Function to handle special word capitalization
   function capitalizeSpecialWords(word: string) {
-    return specialWords.includes(word.toLowerCase())
-      ? word.toUpperCase()
-      : capitalizeFirstLetter(word);
+    return specialWords.includes(word.toLowerCase()) ? word.toUpperCase() : capitalizeFirstLetter(word);
   }
 
   // Function to capitalize the first letter of a word
@@ -50,7 +49,7 @@ export function convertToCapitalCase(str: string): string {
   // Function to capitalize hyphenated names
   function capitalizeHyphenated(word: string) {
     return word
-      .split("-")
+      .split('-')
       .map((part) => {
         // Check if the part is a special word
         if (specialWords.includes(part.toLowerCase())) {
@@ -58,29 +57,29 @@ export function convertToCapitalCase(str: string): string {
         }
         return capitalizeFirstLetter(part);
       })
-      .join("-");
+      .join('-');
   }
 
   // Check if the string is in uppercase
   if (str === str.toUpperCase()) {
     return str
       .toLowerCase()
-      .split(" ")
+      .split(' ')
       .map((word) => {
         // Handle the 'C/O' case
-        if (word.toLowerCase().includes("c/o")) {
+        if (word.toLowerCase().includes('c/o')) {
           return word;
         }
 
         // Handle hyphenated names and special words
-        if (word.includes("-")) {
+        if (word.includes('-')) {
           return capitalizeHyphenated(word);
         }
 
         // Handle non-hyphenated special words and normal words
         return capitalizeSpecialWords(word);
       })
-      .join(" ");
+      .join(' ');
   }
 
   return str;
