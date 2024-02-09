@@ -27,6 +27,9 @@ out/
 build
 dist
 
+# Mocks
+shared/mocks
+
 
 # Debug
 npm-debug.log*

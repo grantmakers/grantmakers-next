@@ -1,10 +1,12 @@
 <script lang="ts">
+  import People from './People.svelte';
+
   import SummaryBoxHeaderBadge from './SummaryBoxHeaderBadge.svelte';
   import SummaryBoxHeader from './SummaryBoxHeader.svelte';
   import { onMount } from 'svelte';
   import Banner from './Banner.svelte';
   import NavSearch from '../search/Nav.svelte';
-  import Table from './grants/Table.svelte';
+  import GrantsTable from './grants/GrantsTable.svelte';
   import Dot from '../shared/icons/Dot.svelte';
   import ArrowRight from '../shared/icons/ArrowRight.svelte';
   import { formatDate } from '$lib/utils/dates';
@@ -793,37 +795,14 @@
           <div class="lg-max:mt-6 mb-4 w-full max-w-full px-3">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-white p-4 pb-0">
-                <Table {grants} />
+                <GrantsTable {grants} />
               </div>
             </div>
           </div>
         </div>
         <div class="-mx-3 grid grid-cols-1">
           <!-- People -->
-          <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
-            <div class="mb-0 rounded-t-2xl border-b-0 bg-white p-4 pb-0">
-              <h6 class="mb-0">People</h6>
-            </div>
-            <div class="flex-auto p-4">
-              <ul class="mb-0 flex flex-col rounded-lg pl-0">
-                {#if people}
-                  {#each people.slice(0, 5) as person}
-                    <li>{person.name}</li>
-                    <!-- <Person
-                      key={person?.name?.toLowerCase()}
-                      person={person}
-                      index={index}
-                      isLast={index === $index - 1} /> -->
-                  {/each}
-                {/if}
-                {#if people?.length > 5}
-                  <li class="relative mb-2 flex items-center rounded-t-lg border-0 bg-white px-0 py-2 text-inherit">
-                    <div class="text-xs">{`view ${people.length - 5} more...`}</div>
-                  </li>
-                {/if}
-              </ul>
-            </div>
-          </div>
+          <People {people} />
         </div>
       </div>
     </div>

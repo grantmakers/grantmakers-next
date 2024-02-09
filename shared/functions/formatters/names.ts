@@ -1,3 +1,4 @@
+import { Person } from '../../typings/grantmakers/grants';
 export function convertToCapitalCase(str: string): string {
   /**
    * Capitalize non-profit specific words
@@ -83,4 +84,16 @@ export function convertToCapitalCase(str: string): string {
   }
 
   return str;
+}
+
+export function normalizePerson(person: Person): Person {
+  if (typeof person.name === 'string') {
+    return person;
+  } else if ('_' in person.name) {
+    return { ...person, name: person.name['_'] };
+  } else if ('#text' in person.name) {
+    return { ...person, name: person.name['#text'] };
+  } else {
+    return { ...person, name: '' }; // Fallback case
+  }
 }
