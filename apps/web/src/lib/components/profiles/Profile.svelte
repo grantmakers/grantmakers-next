@@ -36,8 +36,6 @@
     is_likely_staffed: isStaffed,
   } = profile;
 
-  console.log(JSON.stringify(profile));
-
   const DEFAULT_AVATAR = 'default.png';
   const firstLetter = upperFirstLetter(organization_name);
   const aiImgDetails = {
