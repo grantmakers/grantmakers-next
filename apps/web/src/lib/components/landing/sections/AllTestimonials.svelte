@@ -1,7 +1,7 @@
 <!-- cspell:disable -->
 <script lang="ts">
-  import srOrgLogo from '$lib/assets/images/testimonials/wh-logo-alt.png';
-  import sr from '$lib/assets/images/testimonials/sr-alt.jpg';
+  import gbOrgLogo from '$lib/assets/images/testimonials/gb-logo.webp';
+  import gb from '$lib/assets/images/testimonials/gb.webp';
   import sg from '$lib/assets/images/testimonials/sg.webp';
   import rl from '$lib/assets/images/testimonials/rl.webp';
   import sj from '$lib/assets/images/testimonials/sj.webp';
@@ -10,11 +10,11 @@
   const testimonials = {
     main: {
       quote:
-        'As a brand new grantwriter for a smaller area, your site has helped me tremendously. Being able to see the numbers and not have to dig really helps me see the big picture. Thanks so much!',
-      name: 'S. Roscoe',
-      title: 'Grant Writer',
-      image: sr,
-      logo: srOrgLogo,
+        'You are amazing for doing this, especially now when so many non-profits can use the help but can’t afford research people or pay for access to the Foundation Center.',
+      name: 'Gavin Berger',
+      title: 'Board of Trustees',
+      image: gb,
+      logo: gbOrgLogo,
     },
     left: {
       quote: "Thank you so very much - this is a truly amazing service!!! I'm searching for grants for a small non profit in SF. 🙂",
