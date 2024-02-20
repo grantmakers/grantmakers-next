@@ -157,7 +157,9 @@
       <AllTestimonials />
     </div>
 
-    <ClosingStatement />
+    <div class="relative z-10 mt-20 bg-white pb-20 sm:mt-56 sm:pb-24 xl:pb-0">
+      <ClosingStatement />
+    </div>
 
     <!-- Partners section -->
     <div class="relative isolate mt-32 bg-white px-6 sm:mt-56 lg:px-8">
