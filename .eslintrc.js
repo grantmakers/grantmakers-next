@@ -1,4 +1,5 @@
-// This configuration only applies to the package manager root.
+// This configuration only applies to the Turborepo root.
+// It extends the core config defined in /library.js, to handle any Typescript files in /shared
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
   ignorePatterns: ['apps/**', 'packages/**'],
@@ -7,9 +8,5 @@ module.exports = {
   parserOptions: {
     project: true,
   },
-  rules: {
-    'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': 'error',
-    // ... rest
-  },
+  plugins: ['@typescript-eslint'],
 };
