@@ -174,7 +174,7 @@ export interface Person {
 }
 
 interface PersonNameWithAttributes {
-  '#text': string;
+  text: string;
   attributes: any;
 }
 

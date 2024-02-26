@@ -90,8 +90,8 @@ export function normalizePerson(person: Person): Person {
     return person;
   } else if ('_' in person.name) {
     return { ...person, name: person.name['_'] };
-  } else if ('#text' in person.name) {
-    return { ...person, name: person.name['#text'] };
+  } else if ('text' in person.name) {
+    return { ...person, name: person.name['text'] };
   } else {
     return { ...person, name: '' }; // Fallback case
   }
