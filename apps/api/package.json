@@ -3,10 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "start": "wrangler dev",
+    "dev": "wrangler dev --port 8787",
+    "prod": "wrangler dev --port 8787 --remote",
     "deploy": "wrangler deploy",
-    "dev": "wrangler dev",
-    "prod": "wrangler dev --remote",
-    "start": "wrangler dev"
+    "mock-deploy": "wrangler deploy --dry-run"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231218.0",
