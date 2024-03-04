@@ -37,7 +37,6 @@
   } = profile;
 
   const DEFAULT_AVATAR = 'default.png';
-  const firstLetter = upperFirstLetter(organization_name);
   const aiImgDetails = {
     chatgpt: { src: chatgptIcon, width: 280, height: 54, maxHeightClass: 'max-h-6' },
     claude: { src: claudeIcon, width: 280, height: 54, maxHeightClass: 'max-h-6' },
@@ -56,6 +55,7 @@
   }
 
   onMount(async () => {
+    const firstLetter = upperFirstLetter(organization_name);
     avatarImageModule = await import(`../../assets/images/icons-letters/svg/${firstLetter}.svg`);
     // @ts-expect-error: Need to properly type Module, from Vite? SvelteKit?
     avatarImage = avatarImageModule ? avatarImageModule?.default : '/logo.svg';
