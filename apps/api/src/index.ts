@@ -26,7 +26,7 @@ export default {
     /**
      * Profiles handler
      */
-    const profilesEndpoint = '/api/v1/profiles/';
+    const profilesEndpoint = '/api/v1/profiles';
 
     if (url.pathname.startsWith(profilesEndpoint)) {
       return apiRouter.handle(request, env);
