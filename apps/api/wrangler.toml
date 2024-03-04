@@ -3,7 +3,7 @@ main = "src/index.ts"
 compatibility_date = "2023-12-18"
 
 [[r2_buckets]]
-binding = "STATIC_API_V1"
+binding = "API_V1_POC0"
 bucket_name = "${R2_BUCKET_NAME}"
 
 # Necessary secrets:

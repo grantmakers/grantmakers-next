@@ -13,8 +13,8 @@ import { isValidEin } from './utils/validators';
 // eslint-disable-next-line new-cap
 const router = Router();
 
-const endpointProfilesIndex = "/api/profiles/v1";
-const endpointGetProfileObject = "/api/profiles/v1/:ein";
+const endpointProfilesIndex = '/api/v1/profiles';
+const endpointGetProfileObject = '/api/v1/profiles/:ein';
 
 // Use itty-router's chain feature to define all handlers
 router

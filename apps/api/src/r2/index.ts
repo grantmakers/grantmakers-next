@@ -1,6 +1,6 @@
 /* global Env */
 export async function fetchR2Object(env: Env, key: string): Promise<Response> {
-  const profile = await env.STATIC_API_V1.get(key);
+  const profile = await env.API_V1_POC0.get(key);
 
   if (!profile) {
     return new Response('Profile Not Found', { status: 404 });
