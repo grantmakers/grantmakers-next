@@ -9,9 +9,6 @@ const {
 
 export const load: PageServerLoad = async ({ params, fetch }) => {
   const ein = params.ein;
-  // const response = await fetch('/api/endpoint');
-  // const data = await response.json();
-  // const data = profile; // Access directly from the imported mock object
   const fetchProfile = async (ein: string): Promise<GrantmakersExtractedDataObj> => {
     const url = WORKER_URL + PROFILES_API_ENDPOINT + '/';
     console.log('Constructed R2 fetch URL:', url + ein);
