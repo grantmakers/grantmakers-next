@@ -26,7 +26,7 @@ const config = {
     csp: {
       mode: 'auto',
       directives: {
-        'script-src': ['self', 'https://static.cloudflareinsights.com', 'https://cdn.iubenda.com', 'unsafe-inline'], // The unsafe-inline requirement is for Zaraz, a known CF issue required for now - Hashes will be added automatically
+        'script-src': ['self', 'https://static.cloudflareinsights.com', 'https://cdn.iubenda.com', 'unsafe-eval'], // The unsafe-eval requirement is for Zaraz, a known CF issue required for now - Hashes will be added automatically
         'style-src': ['self', 'unsafe-inline', 'https://cdn.iubenda.com'], // Include 'unsafe-inline' for inline styles
         'frame-src': ['https://www.iubenda.com'],
         'connect-src': ['self', 'https://cloudflareinsights.com'],
