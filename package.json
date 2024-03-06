@@ -2,7 +2,7 @@
   "name": "grantmakers-next",
   "private": true,
   "scripts": {
-    "build": "turbo build",
+    "build": "turbo build --cache-dir=.turbo",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
