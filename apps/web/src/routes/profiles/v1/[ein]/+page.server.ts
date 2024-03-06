@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/grants';
-import { WORKER_URL, PROFILES_API_ENDPOINT, AUTH_PRIVATE_KEY } from '$env/static/private';
+import { WORKER_URL, PROFILES_API_ENDPOINT, AUTH_PRIVATE_KEY, WAF_AUTH_VERIFY_KEY } from '$env/static/private';
 import { meta } from '@utils/trustedConstants';
 
 const {
@@ -21,7 +21,8 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
       const workerResponse = await fetch(url + ein, {
         method: 'GET',
         headers: {
-          'X-Custom-Auth-Key': AUTH_PRIVATE_KEY, // Use AUTH_PRIVATE_KEY from environment
+          'X-Custom-Auth-Key': AUTH_PRIVATE_KEY,
+          'X-WAF-Auth-Verify': WAF_AUTH_VERIFY_KEY,
         },
       });
 
