@@ -7,7 +7,9 @@
     "dev": "wrangler dev --port 8787",
     "prod": "wrangler dev --port 8787 --remote",
     "deploy": "wrangler deploy",
-    "mock-deploy": "wrangler deploy --dry-run"
+    "mock-deploy": "wrangler deploy --dry-run",
+    "lint": "prettier --check . && eslint .",
+    "format": "prettier --write ."
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231218.0",

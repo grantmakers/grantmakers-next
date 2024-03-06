@@ -1,8 +1,10 @@
 .DS_Store
 node_modules
 /build
+/.wrangler
 /.svelte-kit
 /package
+.dev.vars
 .env
 .env.*
 !.env.example
