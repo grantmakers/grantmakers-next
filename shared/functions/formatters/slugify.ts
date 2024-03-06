@@ -12,7 +12,7 @@ export function slugify(string: string): string {
   // Slugify only handles characters, not substrings
   // Thus, need to define a preprocessor to process HTML entities
   // Note: This is now captured upstream in the ETL. Including here to handle legacy edge cases.
-  const cleaned = string.replace('&amp;', '&');
+  const cleaned = string.replaceAll('&amp;', '&');
 
   const slug = npmSlugify(cleaned, options);
   console.log(slug);
