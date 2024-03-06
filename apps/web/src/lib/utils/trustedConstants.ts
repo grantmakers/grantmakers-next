@@ -7,7 +7,7 @@ export interface EachFAQ {
 export const meta = {
   defaults: {
     title: 'Grantmakers.io - A Community Project',
-    description: 'Quickly find data on 135,000 grantmaking institutions in the US. A free, open source project.',
+    description: 'Quickly find data on 145,000 grantmaking institutions in the US. A free, open source project.',
   },
 };
 
