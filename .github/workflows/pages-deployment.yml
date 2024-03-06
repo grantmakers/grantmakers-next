@@ -10,15 +10,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Cache turbo build setup
-        uses: actions/cache@v4
-        with:
-          path: .turbo
-          key: ${{ runner.os }}-turbo-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-turbo-
+      # TODO Add cacheing + task skipping when:
+      # Build durations become lengthy - current builds are <30 seconds
+      # Build minutes reaching 2000 min quotas - currently using <5%
+      # Cloudflare Pages reaching 500x deploy quota - currently using <1%
+      # Not needed currently - Cache and diff checks take longer than full workflow completion
+      # https://turbo.build/repo/docs/core-concepts/caching
+      # https://turbo.build/repo/docs/core-concepts/monorepos/skipping-tasks
 
-      # Not currently needed, but will in near future
+      # - name: Cache turbo build setup
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: .turbo
+      #     key: ${{ runner.os }}-turbo-${{ github.sha }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-turbo-
+
       - name: NodeJS setup
         uses: actions/setup-node@v4
         with:
@@ -28,16 +35,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Testing Turborepo - probably overkill - NPM Workspaces would work just fine as well
-      # v0 POC target web app only
       - name: Disable Turborepo Telemetry
         run: npx turbo telemetry disable
 
-      # Only need to build web - Cloudflare Wrangler handles API build downstream
-
       - name: Lint
-        run: npx turbo run lint --filter=web
+        run: npx turbo run lint
 
+      # Wrangler handles the API build downstream
+      # Thus, only need to build the web app
       - name: Build
         run: npx turbo run build --filter=web
         env:
