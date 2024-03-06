@@ -9,20 +9,35 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Cache turbo build setup
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
       # Not currently needed, but will in near future
       - name: NodeJS setup
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
+
       - name: Install dependencies
         run: npm install
+
       # Testing Turborepo - probably overkill - NPM Workspaces would work just fine as well
       # v0 POC target web app only
       - name: Disable Turborepo Telemetry
         run: npx turbo telemetry disable
+
+      # Only need to build web - Cloudflare Wrangler handles API build downstream
+
       - name: Lint
         run: npx turbo run lint --filter=web
+
       - name: Build
         run: npx turbo run build --filter=web
         env:
@@ -30,6 +45,7 @@ jobs:
           PROFILES_API_ENDPOINT: ${{ secrets.PROFILES_API_ENDPOINT }}
           AUTH_PRIVATE_KEY: ${{ secrets.AUTH_PRIVATE_KEY }}
           WAF_AUTH_VERIFY_KEY: ${{secrets.WAF_AUTH_VERIFY_KEY }}
+
       - name: Publish Webapp
         uses: cloudflare/pages-action@1
         with:
@@ -40,6 +56,7 @@ jobs:
           projectName: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           wranglerVersion: '3'
+
       - name: Publish API
         uses: cloudflare/wrangler-action@v3
         with:
