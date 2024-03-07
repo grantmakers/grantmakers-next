@@ -1,5 +1,5 @@
-import { Person } from '../../typings/grantmakers/grants';
-export function convertToCapitalCase(str: string): string {
+import type { Person } from '../../typings/grantmakers/grants';
+const convertToCapitalCase = (str: string): string => {
   /**
    * Capitalize non-profit specific words
    * fka: Formerly known as
@@ -83,9 +83,9 @@ export function convertToCapitalCase(str: string): string {
   }
 
   return str;
-}
+};
 
-export function normalizePerson(person: Person): Person {
+const normalizePerson = (person: Person): Person => {
   if (typeof person.name === 'string') {
     return person;
   } else if ('_' in person.name) {
@@ -95,4 +95,7 @@ export function normalizePerson(person: Person): Person {
   } else {
     return { ...person, name: '' }; // Fallback case
   }
-}
+};
+
+// ESM export
+export { convertToCapitalCase, normalizePerson };

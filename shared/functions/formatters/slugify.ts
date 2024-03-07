@@ -1,6 +1,6 @@
 import { default as npmSlugify } from 'slugify';
 
-export function slugify(string: string): string {
+const slugify = (string: string): string => {
   const options = {
     replacement: '-',
     remove: undefined,
@@ -17,4 +17,6 @@ export function slugify(string: string): string {
   const slug = npmSlugify(cleaned, options);
   console.log(slug);
   return slug;
-}
+};
+
+export { slugify };
