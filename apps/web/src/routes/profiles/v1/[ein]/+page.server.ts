@@ -6,7 +6,7 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
   const ein = params.ein;
   const fetchProfile = async (ein: string): Promise<GrantmakersExtractedDataObj> => {
     const url = WORKER_URL + PROFILES_API_ENDPOINT + '/';
-    console.log(`Fetching profile for ${ein} ata ${url + ein}`);
+    console.log(`Fetching profile for ${ein} at ${url + ein}`);
 
     try {
       const workerResponse = await fetch(url + ein, {
