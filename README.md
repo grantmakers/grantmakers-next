@@ -10,7 +10,7 @@
     <br />
     utilize the incredible IRS electronic 990-PF dataset.
     <br />
-    <a href="https://github.com/grantmakers/grantmakers-next/"><strong>next.grantmakers.io »</strong></a>
+    <a href="https://next.grantmakers.io"><strong>next.grantmakers.io »</strong></a>
     <br />
     <br />
     <a href="https://github.com/grantmakers/grantmakers-next/tree/main/apps/web">SvelteKit App</a>
