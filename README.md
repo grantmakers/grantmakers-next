@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="next.grantmakers.io">
+  <a href="https://next.grantmakers.io">
     <img src="./apps/web/static/logo.svg" alt="Logo" width="80" height="80">
   </a>
 
@@ -59,16 +59,16 @@ The superpower behind Grantmakers.io's popularity is a JAMstack integration with
 
 The most used feature on Grantmakers.io is the ability to search through the millions of grant descriptions contained in the IRS 990-PF dataset. The integration provides fully-faceted live search, allowing nonprofit fundraisers to quickly conduct prospect research into an important resource. All at no cost, no paywall, and no login.
 
-<a href="https://github.com/grantmakers/grantmakers-next/"><strong>Try it out »</strong></a>
+<a href="https://www.grantmakers.io/search/grants/"><strong>Try it out »</strong></a>
 <br />
 
-In addition to the full dataset grants search, Algolia Instantsearch is embedded on all ~110k foundation profiles. Over the years, some foundations have even referred grantseekers, to this embedded search in lieu of building their own grants database search experiences.
+In addition to the full dataset grants search, Algolia Instantsearch is embedded on all ~110k foundation profiles. Over the years, some foundations have even referred grantseekers to this embedded search in lieu of building their own grants database search experiences.
 
 > Algolia provides the live search experience nonprofits have long deserved.
 
 # This Monorepo
 
-Note: This repo was published early in the rebuild process to a) develop in the open, and b) provide example code for developers exploring the modern JS tooling and frameworks the project uses, including Turborepo, Svelte, SvelteKit, Cloudflare Pages, Cloudflare Workers, Cloudflare R2, and MongoDB Atlas Serverless.
+Note: This repo was published early in the rebuild process to a) develop in the open, and b) provide reference code for other developers exploring the modern JS tooling and frameworks the project uses, including Turborepo, Svelte, SvelteKit, Cloudflare Pages, Cloudflare Workers, Cloudflare R2, and MongoDB Atlas Serverless.
 
 ### System Design
 
@@ -80,14 +80,12 @@ Instructions coming soon.
 
 ## Grantmakers.io 1.0 Architecture
 
-The original system design of Grantmakers.io used...
+**Key architectural premise**: Static site generation was viable since tax filing data only refreshes annually.
 
 Jekyll  
 Github Pages  
 Algolia Instantsearch  
 MongoDB on Google Compute Engine
-
-The core system design thesis: tax filings only change once a year
 
 The Grantmakers.io project was an early adopter of JAMstack. The 1-2 hour Jekyll builds for the ~100k pages and ~150k redirects were offloaded to a CI free tier on CodeShip. The original ETL pipelines were semi-automated using Google Cloud Platform. GCP was used primarily for compute and storage, with it's underrated Transfer Service powering the data sync to the public IRS AWS .
 
