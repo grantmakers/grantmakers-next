@@ -87,7 +87,7 @@ Github Pages
 Algolia Instantsearch  
 MongoDB on Google Compute Engine
 
-The Grantmakers.io project was an early adopter of JAMstack. The 1-2 hour Jekyll builds for the ~100k pages and ~150k redirects were offloaded to a CI free tier on CodeShip. The original ETL pipelines were semi-automated using Google Cloud Platform. GCP was used primarily for compute and storage, with it's underrated Transfer Service powering the data sync to the public IRS AWS .
+The Grantmakers.io project was an early adopter of JAMstack. The 1-2 hour Jekyll builds for the ~100k pages and ~150k redirects were offloaded to a CI free tier on CodeShip. The original ETL pipelines were semi-automated using Google Cloud Platform. GCP was used primarily for compute and storage, with it's underrated Transfer Service powering the data sync to the public IRS AWS bucket.
 
 > In 2021, the IRS ceased publishing the data to its public AWS S3 bucket, publishing instead directly on IRS.gov.
 
