@@ -68,7 +68,11 @@ In addition to the full dataset grants search, Algolia Instantsearch is embedded
 
 # This Monorepo
 
-Note: This repo was published early in the rebuild process to a) develop in the open, and b) provide reference code for other developers exploring the modern JS tooling and frameworks the project uses, including Turborepo, Svelte, SvelteKit, Cloudflare Pages, Cloudflare Workers, Cloudflare R2, and MongoDB Atlas Serverless.
+Note: This public repo is a work in progress. It was published early in the rebuild process to a) develop in the open, and b) provide reference code for other developers exploring the modern JS tooling and frameworks the project uses, including Turborepo, Svelte, SvelteKit, Cloudflare Pages, Cloudflare Workers, Cloudflare R2, and MongoDB Atlas Serverless.
+
+## Grantmakers.io NEXT Architecture
+
+**Key architectural premise**: Leverage best-in-class abstractions to minimize upfront software engineering and ongoing maintenance
 
 ### System Design
 
