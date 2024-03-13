@@ -72,7 +72,7 @@ Note: This public repo is a work in progress. It was published early in the rebu
 
 ## Grantmakers.io NEXT Architecture
 
-**Key architectural premise**: Leverage best-in-class abstractions to minimize upfront software engineering and ongoing maintenance
+**Key architectural premise**: Leverage best-in-class abstractions to minimize upfront software engineering and ongoing maintenance.
 
 ### System Design
 
@@ -82,9 +82,11 @@ Diagram coming soon.
 
 Instructions coming soon.
 
-## Grantmakers.io 1.0 Architecture
+## Legacy Architecture
 
 **Key architectural premise**: Static site generation was viable since tax filing data only refreshes annually.
+
+The legacy Jekyll application is located here: [https://github.com/grantmakers/grantmakers.github.io](https://github.com/grantmakers/grantmakers.github.io)
 
 Jekyll  
 Github Pages  
