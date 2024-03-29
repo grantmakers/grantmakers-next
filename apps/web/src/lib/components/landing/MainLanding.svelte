@@ -79,7 +79,7 @@
     </div>
 
     <!-- Grantmakers NEXT announcement -->
-    <div class="mt-12 sm:mt-24">
+    <div class="mt-12 sm:mt-24" id="announcement">
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="mx-auto max-w-2xl sm:text-center">
           <div class="text-base font-semibold leading-7 text-indigo-600">Announcing</div>
@@ -130,30 +130,30 @@
     </div>
 
     <!-- Stats -->
-    <div class="relative z-10 mt-32 bg-gray-900 pb-20 sm:mt-56 sm:pb-24 xl:pb-0">
+    <div id="impact" class="relative z-10 mt-32 bg-gray-900 pb-20 sm:mt-56 sm:pb-24 xl:pb-0">
       <Stats />
     </div>
 
-    <div class="relative isolate mt-32 bg-white px-6 sm:mt-56 lg:px-8">
+    <div id="searches" class="relative isolate mt-32 bg-white px-6 sm:mt-56 lg:px-8">
       <StatsSearches />
     </div>
 
     <!-- Testimonial section -->
-    <div class="relative z-10 mt-32 bg-white pb-20 sm:mt-56 sm:pb-24 xl:pb-0">
+    <div id="testimonial" class="relative z-10 mt-32 bg-white pb-20 sm:mt-56 sm:pb-24 xl:pb-0">
       <Testimonial />
     </div>
 
     <!-- Education -->
-    <div class="mx-auto mt-32 max-w-7xl sm:mt-56 sm:px-6 lg:px-8">
+    <div id="education" class="mx-auto mt-32 max-w-7xl sm:mt-56 sm:px-6 lg:px-8">
       <Education />
     </div>
 
     <!-- Market Dynamics -->
-    <div class="mx-auto mt-32 max-w-7xl sm:mt-56 sm:px-6 lg:px-8">
+    <div id="market" class="mx-auto mt-32 max-w-7xl sm:mt-56 sm:px-6 lg:px-8">
       <Market />
     </div>
 
-    <div class="relative z-10 mt-32 bg-white pb-20 sm:mt-56 sm:pb-24 xl:pb-0">
+    <div id="testimonials" class="relative z-10 mt-32 bg-white pb-20 sm:mt-56 sm:pb-24 xl:pb-0">
       <AllTestimonials />
     </div>
 
@@ -162,7 +162,7 @@
     </div>
 
     <!-- Partners section -->
-    <div class="relative isolate mt-32 bg-white px-6 sm:mt-56 lg:px-8">
+    <div id="our-friends" class="relative isolate mt-32 bg-white px-6 sm:mt-56 lg:px-8">
       <div class="absolute inset-x-0 -top-3 -z-10 transform-gpu overflow-hidden px-36 blur-3xl" aria-hidden="true"></div>
       <div class="mx-auto max-w-2xl text-center lg:max-w-4xl">
         <h2 class="text-base font-semibold leading-7 text-indigo-600">Thank 🙏 You</h2>
