@@ -4,7 +4,7 @@
   import { firstLetter } from '@utils/names';
   export let grants: GrantsArray;
 
-  const { sanitize } = DOMPurify;
+  const sanitize = DOMPurify.sanitize;
 </script>
 
 <!-- px-4 sm:px-6 lg:px-8 -->
