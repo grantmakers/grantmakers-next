@@ -6,7 +6,7 @@ workers_dev = false
 
 [[r2_buckets]]
 binding = "API_V1_POC0"
-bucket_name = "tmp-deploy-test-rzy2ugx"
+bucket_name = "grantmakers-static-api-v1-poc0"
 
 # Necessary secrets:
 # - AUTH_PRIVATE_KEY
