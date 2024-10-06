@@ -97,5 +97,21 @@ const normalizePerson = (person: Person): Person => {
   }
 };
 
+const extractFirstLetter = (organization_name: string): string => {
+  if (organization_name.startsWith('The ')) {
+    const parts = organization_name.split(' ');
+    return parts[1]?.[0] || '';
+  }
+
+  return organization_name[0] || '';
+};
+
+const upperFirstLetter = (name: string) => extractFirstLetter(name).toUpperCase();
+
 // ESM export
-export { convertToCapitalCase, normalizePerson };
+export {
+  convertToCapitalCase,
+  normalizePerson,
+  extractFirstLetter,
+  upperFirstLetter,
+};
