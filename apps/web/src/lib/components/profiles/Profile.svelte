@@ -1,21 +1,20 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import People from './People.svelte';
-
   import SummaryBoxHeaderBadge from './SummaryBoxHeaderBadge.svelte';
   import SummaryBoxHeader from './SummaryBoxHeader.svelte';
-  import { onMount } from 'svelte';
   import Banner from './Banner.svelte';
   import NavSearch from '../search/Nav.svelte';
   import GrantsTable from './grants/GrantsTable.svelte';
   import Dot from '../shared/icons/Dot.svelte';
   import ArrowRight from '../shared/icons/ArrowRight.svelte';
   import { formatDate } from '$lib/utils/dates';
-  import { upperFirstLetter } from '@utils/names';
+  import { upperFirstLetter } from '@shared/functions/formatters/names';
+  import { humanizeCurrency, humanizeNumber } from '@shared/functions/formatters/numbers';
   import chatgptIcon from '$lib/assets/images/chatgpt.svg';
   import claudeIcon from '$lib/assets/images/claude.svg';
   import irsLogo from '$lib/assets/images/irs-logo.png';
   import { Clock, Sparkles, CheckCircle, XCircle } from 'svelte-heros-v2';
-  import { convertToCapitalCase } from '@shared/functions/formatters/names';
   import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/grants';
 
   type ImageModule = {
@@ -47,30 +46,32 @@
   let sourceName: 'chatgpt' | 'claude';
   let currentAiIconDetails: { src: string; width: number; height: number; maxHeightClass: string };
   let formattedTaxPeriodEnd: string;
-  let grantsMedianIndex: number;
-  let medianGrantName: string;
 
   function isAiImgDetailsKey(key: string): key is keyof typeof aiImgDetails {
     return key === 'chatgpt' || key === 'claude';
   }
 
   onMount(async () => {
+    /**
+     * Handle generic letter avatars
+     */
     const firstLetter = upperFirstLetter(organization_name);
     avatarImageModule = await import(`../../assets/images/icons-letters/svg/${firstLetter}.svg`);
     // @ts-expect-error: Need to properly type Module, from Vite? SvelteKit?
     avatarImage = avatarImageModule ? avatarImageModule?.default : '/logo.svg';
+
+    /**
+     * Handle AI Summary logos
+     */
     sourceName = aiSummarySource?.startsWith('chatgpt') ? 'chatgpt' : 'claude';
     if (isAiImgDetailsKey(sourceName)) {
       currentAiIconDetails = aiImgDetails[sourceName];
     }
 
+    /**
+     * Misc formatting helpers
+     */
     formattedTaxPeriodEnd = formatDate(filings[0].tax_period);
-
-    if (profile.grant_count > 0 && grants) {
-      grantsMedianIndex = Math.floor(profile.grant_count / 2);
-      let medianGrantNameUnformatted = grants[grantsMedianIndex].name;
-      medianGrantName = convertToCapitalCase(medianGrantNameUnformatted);
-    }
   });
 </script>
 
@@ -553,7 +554,6 @@
                 </div>
               </div>
               <div class="flex-auto p-4">
-                <!-- TODO Add blank state for no aiSummary -->
                 {#if aiSummary}
                   <p class="text-sm leading-normal">{aiSummary}</p>
                 {:else}
@@ -627,74 +627,25 @@
                 </SummaryBoxHeader>
               </div>
               <div class="mb-6 flex h-full flex-col justify-between p-4">
-                <ul class="mb-0 flex flex-col rounded-lg pl-0">
-                  {#if grants && grants[0]}
-                    <!-- Median -->
-                    {#if grants.length > 7}
-                      {#each grants.slice(0, 1) as grant, i}
-                        <li class="relative block rounded-t-lg border-0 bg-white px-2 py-2 text-sm leading-6">
-                          <h3 class="mb-0 flex items-center justify-between text-sm font-normal tracking-normal text-slate-700">
-                            <div class="mr-4 overflow-hidden text-ellipsis whitespace-nowrap">
-                              {i + 1 + ') ' + convertToCapitalCase(grant.name)}
-                            </div>
-                            <div>
-                              {grant.amount.toLocaleString('en-US', {
-                                style: 'currency',
-                                currency: 'USD',
-                                maximumFractionDigits: 0,
-                              })}
-                            </div>
-                          </h3>
-                        </li>
-                      {/each}
-
-                      <li class="relative block rounded-lg bg-zinc-100 p-2 text-sm leading-6">
-                        <div class="mb-0 flex items-center justify-between text-sm font-normal tracking-normal text-slate-700">
-                          <div class="mr-4 overflow-hidden text-ellipsis whitespace-nowrap">
-                            {grantsMedianIndex})&nbsp;{medianGrantName}
-                          </div>
-                          <div>
-                            {grants[grantsMedianIndex]?.amount?.toLocaleString('en-US', {
-                              style: 'currency',
-                              currency: 'USD',
-                              maximumFractionDigits: 0,
-                            })}
-                          </div>
-                        </div>
-                        <!-- <div class="text-slate-500">
-                          {grants[grantsMedianIndex]?.purpose}
-                        </div> -->
-                      </li>
-                    {/if}
-
-                    <!-- Smallest -->
-                    <!-- <h6
-                      class="text-grantmakers-blue m-0 mb-1 mt-2 flex w-full items-center justify-center gap-1 text-xs font-thin uppercase leading-tight"
-                    ></h6> -->
-                    {#each grants.slice(-1) as grant, i}
-                      <li class="relative block rounded-t-lg border-0 bg-white px-2 py-2 text-sm leading-6">
-                        <h3 class="flex items-center justify-between text-sm font-normal tracking-normal text-slate-700">
-                          <div class="mr-4 overflow-hidden text-ellipsis whitespace-nowrap">
-                            {profile.grant_count + (i + 1 - 2) + ') ' + convertToCapitalCase(grant.name)}
-                          </div>
-                          <div>
-                            {grant.amount.toLocaleString('en-US', {
-                              style: 'currency',
-                              currency: 'USD',
-                              maximumFractionDigits: 0,
-                            })}
-                          </div>
-                        </h3>
-                      </li>
-                    {/each}
-                  {/if}
-                </ul>
-                <div class="flex justify-center">
-                  <button
-                    type="button"
-                    class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-50"
-                    >View All Grants</button
-                  >
+                <div>
+                  <ul class="mb-0 flex flex-col rounded-lg py-2">
+                    <li class="relative block rounded-t-lg border-0 bg-white px-0 py-1 text-inherit">
+                      <h3 class="flex items-center text-sm font-normal tracking-normal">
+                        <span class="ml-6 flex items-center justify-center h-6 w-6 text-2xl font-semibold text-gray-700"
+                          >{humanizeNumber(profile.grant_count)}</span
+                        >
+                        <span class="ml-6 text-slate-500">Grants made in {filings[0]?.tax_year}</span>
+                      </h3>
+                    </li>
+                    <li class="relative block rounded-t-lg border-0 bg-white px-0 py-1 text-inherit">
+                      <h3 class="flex items-center text-sm font-normal tracking-normal">
+                        <span class="ml-6 flex items-center justify-center h-6 w-6 text-2xl font-semibold text-gray-700"
+                          >{humanizeCurrency(profile.grant_max)}</span
+                        >
+                        <span class="ml-6 text-slate-500">Largest Grant</span>
+                      </h3>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -792,8 +743,12 @@
         <div class="-mx-3 grid grid-cols-1">
           <div class="lg-max:mt-6 mb-4 w-full max-w-full px-3">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
-              <div class="mb-0 rounded-t-2xl border-b-0 bg-white p-4 pb-0">
-                <GrantsTable {grants} />
+              <div class="mb-0 rounded-2xl border-b-0 bg-white p-4 pb-0">
+                {#if profile}
+                  <GrantsTable {grants} />
+                {:else}
+                  Unable to find an available free source of grants data :(
+                {/if}
               </div>
             </div>
           </div>
