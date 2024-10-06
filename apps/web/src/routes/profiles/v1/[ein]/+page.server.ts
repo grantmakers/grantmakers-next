@@ -2,37 +2,39 @@ import type { PageServerLoad } from './$types';
 import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/grants';
 import { WORKER_URL, PROFILES_API_ENDPOINT, AUTH_PRIVATE_KEY, WAF_AUTH_VERIFY_KEY } from '$env/static/private';
 
-export const load: PageServerLoad = async ({ params, fetch }) => {
-  const ein = params.ein;
-  const fetchProfile = async (ein: string): Promise<GrantmakersExtractedDataObj> => {
-    const url = WORKER_URL + PROFILES_API_ENDPOINT + '/';
-    console.log(`Fetching profile for ${ein} at ${url + ein}`);
+const remoteUrl = WORKER_URL + PROFILES_API_ENDPOINT + '/';
 
-    try {
-      const workerResponse = await fetch(url + ein, {
-        method: 'GET',
-        headers: {
-          'X-Custom-Auth-Key': AUTH_PRIVATE_KEY,
-          'X-WAF-Auth-Verify': WAF_AUTH_VERIFY_KEY,
-        },
-      });
+const fetchRemoteProfile = async (ein: string, url: string): Promise<GrantmakersExtractedDataObj> => {
+  console.log(`Fetching profile for ${ein} at ${url + ein}`);
+  const response = await fetch(url + ein, {
+    method: 'GET',
+    headers: {
+      'X-Custom-Auth-Key': AUTH_PRIVATE_KEY,
+      'X-WAF-Auth-Verify': WAF_AUTH_VERIFY_KEY,
+    },
+  });
 
-      if (!workerResponse.ok) {
-        throw new Error(`Error fetching data: ${workerResponse.statusText}`);
-      }
+  if (!response.ok) {
+    throw new Error(`Error fetching data: ${response.statusText}`);
+  }
 
-      const profileData = await workerResponse.json();
-      return profileData;
-    } catch (error) {
-      // TODO: Handle the error appropriately
-      console.error('Error in fetchProfile:', error);
-      throw error; // Re-throwing the error after logging it
-    }
-  };
+  return await response.json();
+};
 
-  const profile = fetchProfile(ein);
+const getProfile = async (ein: string): Promise<GrantmakersExtractedDataObj> => {
+  return await fetchRemoteProfile(ein, remoteUrl);
+};
 
-  return {
-    foundationData: { profile },
-  };
+export const load: PageServerLoad = async ({ params }) => {
+  const { ein } = params;
+
+  try {
+    const profile = await getProfile(ein);
+    return {
+      foundationData: { profile },
+    };
+  } catch (error) {
+    console.error('Error in load function:', error);
+    throw error;
+  }
 };
