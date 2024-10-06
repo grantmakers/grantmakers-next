@@ -14,7 +14,7 @@
 </script>
 
 <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
-  <div class="mb-0 rounded-t-2xl border-b-0 bg-white p-4 pb-0">
+  <div class="mb-0 rounded-2xl border-b-0 bg-white p-4 pb-0">
     <h6 class="mb-0">People</h6>
   </div>
   <div class="flex-auto p-4">

@@ -799,8 +799,10 @@
           </div>
         </div>
         <div class="-mx-3 grid grid-cols-1">
-          <!-- People -->
-          <People {people} />
+          <div class="lg-max:mt-6 mb-4 w-full max-w-full px-3">
+            <!-- People -->
+            <People {people} />
+          </div>
         </div>
       </div>
     </div>
