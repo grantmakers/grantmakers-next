@@ -1,6 +1,7 @@
 {
   "name": "grantmakers-next",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "turbo build --cache-dir=.turbo",
     "dev": "turbo dev",

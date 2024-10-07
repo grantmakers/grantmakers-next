@@ -1,9 +1,10 @@
 {
   "name": "@repo/prettier-config",
   "version": "0.0.0",
+  "type": "module",
   "private": true,
   "files": [
-    "base.js"
+    "base.cjs"
   ],
   "devDependencies": {
     "prettier": "^3.1.1"

@@ -21,6 +21,7 @@ module.exports = {
   },
   ignorePatterns: [
     // Ignore dotfiles
+    '.*.cjs',
     '.*.js',
     'node_modules/',
     'dist/',
@@ -34,5 +35,6 @@ module.exports = {
     // Consider: https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/src/configs/recommended.ts
     '@typescript-eslint/no-unused-vars': 'error',
     'no-unused-vars': 'off',
+    'eol-last': ['error', 'always']
   },
 };

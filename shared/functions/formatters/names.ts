@@ -1,4 +1,4 @@
-import type { Person } from '../../typings/grantmakers/grants';
+import type { Person } from '../../typings/grantmakers/grants.ts';
 const convertToCapitalCase = (str: string): string => {
   /**
    * Capitalize non-profit specific words
