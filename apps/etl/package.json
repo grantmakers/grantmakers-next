@@ -1,0 +1,9 @@
+{
+  "name": "etl",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "mongodb": "^6.9.0"
+  }
+}
