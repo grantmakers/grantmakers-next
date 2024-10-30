@@ -4,6 +4,27 @@ import { WORKER_URL, PROFILES_API_ENDPOINT, AUTH_PRIVATE_KEY, WAF_AUTH_VERIFY_KE
 
 const remoteUrl = WORKER_URL + PROFILES_API_ENDPOINT + '/';
 
+function validateEnvVars() {
+  const envVars = {
+    WORKER_URL,
+    PROFILES_API_ENDPOINT,
+    AUTH_PRIVATE_KEY,
+    WAF_AUTH_VERIFY_KEY
+  };
+
+  for (const [key, value] of Object.entries(envVars)) {
+    if (typeof value !== 'string') {
+      throw new Error(`Environment variable ${key} is not a string. Got: ${typeof value}`);
+    }
+    if (!value) {
+      throw new Error(`Environment variable ${key} is empty`);
+    }
+  }
+
+  console.log('Validated environment variables:', Object.keys(envVars));
+  return true;
+}
+
 const fetchRemoteProfile = async (ein: string, url: string): Promise<GrantmakersExtractedDataObj> => {
   console.log(`Fetching profile for ${ein} at ${url + ein}`);
   const response = await fetch(url + ein, {
@@ -26,6 +47,7 @@ const getProfile = async (ein: string): Promise<GrantmakersExtractedDataObj> => 
 };
 
 export const load: PageServerLoad = async ({ params }) => {
+  validateEnvVars();
   const { ein } = params;
 
   try {
