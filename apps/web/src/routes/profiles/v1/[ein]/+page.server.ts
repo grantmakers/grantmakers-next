@@ -9,7 +9,7 @@ function validateEnvVars() {
     WORKER_URL,
     PROFILES_API_ENDPOINT,
     AUTH_PRIVATE_KEY,
-    WAF_AUTH_VERIFY_KEY
+    WAF_AUTH_VERIFY_KEY,
   };
 
   for (const [key, value] of Object.entries(envVars)) {
