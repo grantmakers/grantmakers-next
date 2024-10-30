@@ -97,6 +97,18 @@ const normalizePerson = (person: Person): Person => {
   }
 };
 
+const slugify = (text: string): string => {
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')           // Replace spaces with -
+    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+    .replace(/^-+/, '')             // Trim - from start of text
+    .replace(/-+$/, '');            // Trim - from end of text
+};
+
 const extractFirstLetter = (organization_name: string): string => {
   if (organization_name.startsWith('The ')) {
     const parts = organization_name.split(' ');
@@ -112,6 +124,7 @@ const upperFirstLetter = (name: string) => extractFirstLetter(name).toUpperCase(
 export {
   convertToCapitalCase,
   normalizePerson,
+  slugify,
   extractFirstLetter,
   upperFirstLetter,
 };

@@ -1,0 +1,123 @@
+<script lang="ts">
+  import { onMount } from 'svelte';
+  import { humanizeCurrency } from '@shared/functions/formatters/numbers';
+  import { Chart, BarController, CategoryScale, LinearScale, BarElement, Title, Tooltip } from 'chart.js';
+  import Divider from '$lib/components/shared/Divider.svelte';
+
+  Chart.register(BarController, CategoryScale, LinearScale, BarElement, Title, Tooltip);
+
+  export let year1: {
+    assets: number;
+    distributions: number;
+    contributions: number;
+  };
+  export let orgCurrentTaxYear: string;
+  export let formattedTaxPeriodEnd: string;
+  export let chartsColorPrimary = '#607d8b';
+  export let chartsColorSecondary = '#c54e00';
+  export let chartsColorTertiary = '#009688';
+
+  let canvas: HTMLCanvasElement;
+  let chart: Chart;
+
+  onMount(() => {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Assets EOY', 'Distributions', 'Contributions'],
+        datasets: [
+          {
+            data: [year1.assets, year1.distributions, year1.contributions],
+            backgroundColor: [chartsColorPrimary, chartsColorSecondary, chartsColorTertiary],
+          },
+        ],
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: `Latest Available Tax Filing`,
+          },
+          legend: {
+            display: false,
+          },
+          tooltip: {
+            callbacks: {
+              label: (context) => {
+                return new Intl.NumberFormat('en-US', {
+                  style: 'currency',
+                  currency: 'USD',
+                  minimumFractionDigits: 0,
+                }).format(context.raw as number);
+              },
+            },
+          },
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
+            ticks: {
+              callback: (value) => {
+                return humanizeCurrency(value as number);
+              },
+            },
+          },
+          y: {
+            grid: {
+              display: false,
+            },
+          },
+        },
+      },
+    });
+
+    return () => {
+      chart.destroy();
+    };
+  });
+</script>
+
+<div class="p-4">
+  <div class="flex flex-col gap-4">
+    <div class="flex flex-col items-start">
+      <dl class="text-2xl flex flex-row w-full justify-around items-center">
+        <div class="p-2 flex flex-col items-center gap-2">
+          <dt class="text-sm leading-normal text-inherit flex flex-row items-center gap-1">
+            <span class="rounded-md bg-grantmakers-blue w-3 h-2"></span>
+            Assets
+          </dt>
+          <dd class=" text-slate-700">{humanizeCurrency(year1.assets)}</dd>
+        </div>
+
+        <div class="p-2 flex flex-col items-center gap-2">
+          <dt class="text-sm leading-normal text-inherit flex flex-row items-center gap-1">
+            <span class="rounded-md bg-grantmakers-orange w-3 h-2"></span>
+            Distributions
+          </dt>
+          <dd class=" text-slate-700">{humanizeCurrency(year1.distributions)}</dd>
+        </div>
+
+        <div class="p-2 flex flex-col items-center gap-2">
+          <dt class="text-sm leading-normal text-inherit flex flex-row items-center gap-1">
+            <span class="rounded-md bg-grantmakers-green w-3 h-2"></span>
+            Contributions
+          </dt>
+          <dd class=" text-slate-700">{humanizeCurrency(year1.contributions)}</dd>
+        </div>
+      </dl>
+    </div>
+    <Divider />
+    <div class="w-full">
+      <canvas bind:this={canvas}></canvas>
+    </div>
+    <Divider />
+    <p class="flex justify-end text-xs gap-1">
+      Tax Year {orgCurrentTaxYear} ended {formattedTaxPeriodEnd ? formattedTaxPeriodEnd : 'N/A'}
+    </p>
+  </div>
+</div>

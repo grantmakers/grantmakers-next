@@ -1,21 +1,28 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import People from './People.svelte';
-  import SummaryBoxHeaderBadge from './SummaryBoxHeaderBadge.svelte';
   import SummaryBoxHeader from './SummaryBoxHeader.svelte';
   import Banner from './Banner.svelte';
   import NavSearch from '../search/Nav.svelte';
+  import HandDrawnBorder from '../shared/HandDrawnBorder.svelte';
   import GrantsTable from './grants/GrantsTable.svelte';
+  import Eyes from '../shared/icons/Eyes.svelte';
   import Dot from '../shared/icons/Dot.svelte';
-  import ArrowRight from '../shared/icons/ArrowRight.svelte';
-  import { formatDate } from '$lib/utils/dates';
+  import { formatTaxPeriodDate, formatDateToMonthYear, formatTaxYear, isOutdatedISOString } from '@shared/functions/formatters/dates';
   import { upperFirstLetter } from '@shared/functions/formatters/names';
-  import { humanizeCurrency, humanizeNumber } from '@shared/functions/formatters/numbers';
-  import chatgptIcon from '$lib/assets/images/chatgpt.svg';
-  import claudeIcon from '$lib/assets/images/claude.svg';
+  import { humanizeCurrency, humanizeNumber, formatEin } from '@shared/functions/formatters/numbers';
+  // import chatgptIcon from '$lib/assets/images/chatgpt.svg';
+  // import claudeIcon from '$lib/assets/images/claude.svg';
+  import logo from '$lib/assets/images/logo.svg';
   import irsLogo from '$lib/assets/images/irs-logo.png';
-  import { Clock, Sparkles, CheckCircle, XCircle } from 'svelte-heros-v2';
+  import { Sparkles, LockOpen, LockClosed, UserGroup, GlobeAlt } from 'svelte-heros-v2';
   import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/grants';
+  import Bar from './charts/BarGrantsSnapshot.svelte';
+  import ApplicationGuidelines from './guidelines/ApplicationGuidelines.svelte';
+  import Tip from './alerts/Tip.svelte';
+  // import Blink from '../shared/icons/Blink.svelte';
+  import BarFinancialTrends from './charts/BarFinancialTrends.svelte';
+  import BarFinancialOverview from './charts/BarFinancialOverview.svelte';
 
   type ImageModule = {
     default: string;
@@ -23,33 +30,53 @@
 
   export let profile: GrantmakersExtractedDataObj;
 
+  const aiSummaries: { [key: string]: string } = {
+    // The Plant Memorial uses the Claude prompt but in Google AI Studio with Gemini Pro 002
+    '010131950':
+      'The Plant Memorial Home functions as a private operating foundation, primarily serving as a direct provider of elder care services rather than a traditional grantmaker. Their consistent, hyperlocal giving demonstrates a deep commitment to their immediate community in Maine, specifically focused on subsidized assisted living. They champion practical solutions to the challenges faced by their residents and are unlikely to fund untested programs. Given their operating nature and limited staff, their engagement style is likely transactional rather than relationship-driven. Building a connection with key decision-makers will be essential for any external organization seeking collaboration, though funding opportunities are extremely limited given their focused mission. Their primary value is ensuring the well-being of the elderly they serve directly, viewing their role as a direct service provider.',
+    // This suggest the Claude prompt needs to adjusting...they don't donate to nonprofits directly, which is cool, time to move on
+    '611913297':
+      "Every Org is a supplementary funder, acting as a facilitator rather than a primary grantmaker. Their giving supports a wide range of organizations, suggesting an openness to diverse approaches and a willingness to fund newer, less established ventures. Their online platform indicates a preference for streamlined, tech-forward interactions. While relationship-building might not be their primary focus, their emphasis on accessibility suggests a commitment to empowering both nonprofits and donors. Every Org's mission centers on democratizing philanthropy, indicating a belief in the power of collective giving to solve global problems. They envision their role as a catalyst for change, providing the infrastructure for a more generous world. The best approach is likely through their online platform, highlighting a project's alignment with their values of accessibility and broad impact.",
+    '832856275':
+      'Expa Org appears to be a supplementary funder, providing substantial but infrequent grants. Their giving pattern suggests a preference for established organizations and initiatives, demonstrated by grants marked as “general support” or “operating support,” rather than early-stage, high-risk ventures. While their grant amounts are significant, their limited staff suggests a streamlined, potentially transaction-focused approach. This likely means cultivating a relationship with key decision-makers is crucial. Geographically focused on their local community and select national partners, Expa Org prioritizes organizations within their network. Their funding choices indicate a commitment to strengthening core organizational capacity and enabling existing programs to scale, playing a supportive role in fostering growth within specific organizations. Direct and concise communication about a project’s alignment with their chosen grantees’ missions and demonstrable impact will likely be most effective.',
+    '810718077':
+      "The Thierer Family Foundation, based in Chicago, IL, primarily supports organizations located in the Chicago metropolitan area, though some grants extend to other US locations. The foundation has a website, http://thiererfamilyfoundation.org, and appears to have paid staff. While tax filings indicate the foundation only funds pre-selected organizations, further research may be warranted. Giving appears to focus on basic needs, arts & culture, healthcare, and education. Grants range from $1,000 to $165,500, with many grants clustering in the $5,000-$50,000 range and a small number exceeding $50,000. Nonprofits in the Chicago area working in the aforementioned program areas could be a good fit, but should be prepared for additional cultivation given the foundation's history of primarily supporting a smaller, set group of organizations.",
+    '510381959':
+      'The Harnisch Family Foundation, Inc. is a private foundation supporting primarily charitable purposes. In 2022, they awarded 69 grants ranging from $1,000 to $275,000, with most grants clustered between $1,000 and $49,999. Grantmaking appears to focus on organizations serving women and girls, media/film, and racial equity. The foundation has a history of grantmaking with over 700 grants distributed over multiple years. Geographic giving appears to be national, though New York and California receive a higher volume of funding. With assets of roughly $8.7 million, the foundation appears to be staffed, and lists contact information for grant applications on their website, http://www.thehf.org. Nonprofits focused on issues impacting women and girls, particularly those engaged in media and/or racial equity work, may find pursuing funding to be worthwhile.',
+    '131684331':
+      'The Ford Foundation is a large, staffed private foundation with assets exceeding $16 billion (2022). Their website, http://www.fordfoundation.org, offers additional information. The foundation supports a variety of causes, but a significant portion of grants appears to be dedicated to social justice initiatives, arts, and international development. Grants range from $75 to over $16 million, with a median grant amount of $100,000. While many grants fall within the $100,000 - $999,999 range, a considerable number are designated as "Matching Gift," suggesting an employee matching program. Excluding these, general operating support is frequently provided. The foundation\'s programs, including the BUILD program, Global Fellowship program, and Art for Justice, constitute a major part of their grantmaking. Geographically, while the foundation supports organizations across the U.S. and internationally, higher concentrations of funding are directed to organizations in New York and the greater Washington D.C. area. Nonprofits working in social justice, particularly those focused on combating inequality, along with arts organizations and international development groups, appear to be the best fit for pursuing further research. The provided application instructions on the tax form indicate an open application process.',
+  };
+
   let {
-    aiSummary,
-    aiSummarySource,
+    // aiSummary,
+    // aiSummarySource,
     organization_name,
     filings,
     grants,
     people,
-    eobmf_recognized_exempt: isRecognized,
-    grants_to_preselected_only: noUnsolicited,
     is_likely_staffed: isStaffed,
+    has_website: hasWebsite,
+    grants_facets: grantsFacets,
+    grants_to_preselected_only: noUnsolicited,
+    grants_current_year_top_20: grantsTop20,
+    grants_all_years_top_20: grantsAllYearsTop20,
   } = profile;
 
   const DEFAULT_AVATAR = 'default.png';
-  const aiImgDetails = {
-    chatgpt: { src: chatgptIcon, width: 280, height: 54, maxHeightClass: 'max-h-6' },
-    claude: { src: claudeIcon, width: 280, height: 54, maxHeightClass: 'max-h-6' },
-  };
+  // const aiImgDetails = {
+  //   chatgpt: { src: chatgptIcon, width: 280, height: 54, maxHeightClass: 'max-h-6' },
+  //   claude: { src: claudeIcon, width: 280, height: 54, maxHeightClass: 'max-h-6' },
+  // };
 
   let avatarImageModule: Promise<ImageModule> | undefined;
   let avatarImage: string;
-  let sourceName: 'chatgpt' | 'claude';
-  let currentAiIconDetails: { src: string; width: number; height: number; maxHeightClass: string };
+  // let sourceName: 'chatgpt' | 'claude';
+  // let currentAiIconDetails: { src: string; width: number; height: number; maxHeightClass: string };
   let formattedTaxPeriodEnd: string;
 
-  function isAiImgDetailsKey(key: string): key is keyof typeof aiImgDetails {
-    return key === 'chatgpt' || key === 'claude';
-  }
+  // function isAiImgDetailsKey(key: string): key is keyof typeof aiImgDetails {
+  //   return key === 'chatgpt' || key === 'claude';
+  // }
 
   onMount(async () => {
     /**
@@ -63,15 +90,15 @@
     /**
      * Handle AI Summary logos
      */
-    sourceName = aiSummarySource?.startsWith('chatgpt') ? 'chatgpt' : 'claude';
-    if (isAiImgDetailsKey(sourceName)) {
-      currentAiIconDetails = aiImgDetails[sourceName];
-    }
+    // sourceName = aiSummarySource?.startsWith('chatgpt') ? 'chatgpt' : 'claude';
+    // if (isAiImgDetailsKey(sourceName)) {
+    //   currentAiIconDetails = aiImgDetails[sourceName];
+    // }
 
     /**
      * Misc formatting helpers
      */
-    formattedTaxPeriodEnd = formatDate(filings[0].tax_period);
+    formattedTaxPeriodEnd = formatTaxPeriodDate(filings[0].tax_period);
   });
 </script>
 
@@ -87,7 +114,7 @@
       <a href="/" class="group m-0 block flex-shrink-0 whitespace-nowrap px-8 py-2 text-sm text-slate-700">
         <div class="flex items-center">
           <div>
-            <img src="/logo.svg" class="inline-block h-9 w-9 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
+            <img src={logo} class="inline-block h-9 w-9 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
           </div>
           <div class="ml-1 flex items-center">
             <span class="text-sm font-medium text-gray-700 group-hover:text-gray-900">Grantmakers.io</span>
@@ -95,18 +122,17 @@
         </div>
       </a>
     </div>
+    <!-- Side Navigation -->
     <div class="block max-h-screen w-auto grow basis-full items-center overflow-auto">
       <ul class="mb-0 flex flex-col pl-0">
         <!-- Overview Nav -->
         <li class="mt-0.5 w-full">
           <a
             class="shadow-soft-xl ease-nav-brand mx-4 my-0 flex items-center whitespace-nowrap rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition-colors"
-            href="/foo"
+            href="#overview"
             aria-label="Overview"
           >
-            <div
-              class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-gradient-to-tl from-purple-700 to-pink-500 bg-center stroke-0 text-center xl:p-2.5"
-            >
+            <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-slate-700 text-center xl:p-2.5">
               <svg
                 width="12px"
                 height="12px"
@@ -142,7 +168,7 @@
         <li class="mt-0.5 w-full">
           <a
             class="ease-nav-brand mx-4 my-0 flex items-center whitespace-nowrap px-4 py-2.5 text-sm transition-colors"
-            href="/foo"
+            href="#grants"
             aria-label="Grants"
           >
             <div
@@ -183,7 +209,7 @@
         <li class="mt-0.5 w-full">
           <a
             class="ease-nav-brand mx-4 my-0 flex items-center whitespace-nowrap px-4 py-2.5 text-sm transition-colors"
-            href="/foo"
+            href="#people"
             aria-label="People"
           >
             <div
@@ -224,7 +250,7 @@
         <li class="mt-0.5 w-full">
           <a
             class="ease-nav-brand mx-4 my-0 flex items-center whitespace-nowrap px-4 py-2.5 text-sm transition-colors"
-            href="/foo"
+            href="#guidelines"
             aria-label="Guidelines"
           >
             <div
@@ -269,7 +295,7 @@
         <li class="mt-0.5 w-full">
           <a
             class="ease-nav-brand mx-4 my-0 flex items-center whitespace-nowrap px-4 py-2.5 text-sm transition-colors"
-            href="/foo"
+            href="#financials"
             aria-label="Financials"
           >
             <div
@@ -311,7 +337,7 @@
         </li>
 
         <!-- Search Profile Items -->
-        <li class="mt-4 w-full">
+        <!-- <li class="mt-4 w-full">
           <h6 class="ml-2 pl-6 text-xs font-bold uppercase leading-tight opacity-60">Your Search Profile</h6>
         </li>
         <li class="mt-0.5 w-full">
@@ -434,33 +460,34 @@
             </div>
             <span class="ease-soft pointer-events-none ml-1 opacity-100 duration-300">Geographic Focus</span>
           </a>
-        </li>
+        </li> -->
       </ul>
     </div>
   </aside>
 
-  <!-- Main Content -->
+  <!-- Main Wrapper -->
   <div class="ease-soft-in-out relative h-full max-h-screen rounded-xl transition-all duration-200 xl:ml-64" id="panel">
+    <!-- Top Nav -->
     <nav
       class="duration-250 ease-soft-in relative mx-6 flex flex-wrap items-center justify-between rounded-2xl px-0 py-2 shadow-none transition-all lg:flex-nowrap lg:justify-start"
       id="navbarTop"
       data-navbar-scroll="true"
     >
       <div class="flex-wrap-inherit mx-auto flex w-full items-center justify-between px-4 py-1">
-        <!-- Breadcrumbs wrapper -->
+        <!-- Breadcrumbs -->
         <nav>
           <ol class="mr-12 flex flex-wrap rounded-lg bg-transparent pt-1 sm:mr-16">
             <li class="text-sm leading-normal">
-              <a class="text-slate-700 opacity-50" href="/foo">Foundation Profiles</a>
+              <a class="text-slate-700 opacity-50" href="/profiles">Foundation Profiles</a>
             </li>
             <li
               class="pl-2 text-sm capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/']"
               aria-current="page"
             >
-              IRS Form 990PF
+              {organization_name}
             </li>
           </ol>
-          <!-- <h6 class="mb-0 font-bold capitalize">A historic snapshot as of tax year { formattedTaxYear }</h6> -->
+          <!-- <h6 class="mb-0 font-bold capitalize">A historic snapshot as of tax year {profile.tax_year}</h6> -->
         </nav>
 
         <!-- Search -->
@@ -470,293 +497,386 @@
       </div>
     </nav>
 
-    <!-- Main -->
+    <!-- Main Content -->
     <div class="mx-auto w-full px-6 py-6 text-slate-500">
+      <!-- Alert -->
+      <div class="relative top-2 z-20 mx-auto w-full lg:w-12/12">
+        <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
+          <SummaryBoxHeader headerText={'IRS Form 990-PF'}>
+            <img src={irsLogo} alt="IRS logo" class="w-full max-h-6" />
+          </SummaryBoxHeader>
+        </div>
+      </div>
+
       <!-- Foundation header -->
       <div
         class="shadow-blur relative flex min-w-0 flex-auto flex-col overflow-hidden break-words rounded-2xl border-0 bg-white bg-clip-border bg-center p-4 backdrop-blur"
       >
-        <div class="-mx-3 flex flex-wrap items-center">
-          <div class="w-auto max-w-full flex-none px-3">
-            <div
-              class="ease-soft-in-out size-18 relative inline-flex items-center justify-center rounded-xl text-base text-white transition-all duration-200"
-            >
-              <!-- src={foundationIcon()} -->
-              <img
-                src={typeof avatarImage === 'string' ? avatarImage : `/${DEFAULT_AVATAR}`}
-                alt="Foundation First Initial Icon"
-                class="shadow-soft-sm size-20 w-full rounded-xl"
-                width="74"
-                height="74"
-              />
-            </div>
-          </div>
-          <div class="my-auto w-auto max-w-full flex-none px-3">
-            <div class="h-full">
-              <h5 class="mb-1">{organization_name}</h5>
-              <p class="mb-0 text-sm font-normal leading-normal">
-                <strong class="text-slate-700">
-                  {profile.city},
-                  {profile.is_foreign && profile.state === 'Foreign' ? profile.country : profile.state}
-                </strong>
-                {#if profile.website}
-                  <Dot />
-                  <a href={profile.website} target="_blank" rel="noopener noreferrer">
-                    {profile.website_verbatim?.toLowerCase()}
-                  </a>
-                  <!-- {:else}
-                  {profile.website_verbatim} -->
-                {/if}
-              </p>
-            </div>
-          </div>
-          <!-- Right-side Foundation Box -->
-          <div class="mx-auto mt-4 w-full max-w-full px-3 sm:my-auto sm:mr-0 md:w-1/2 md:flex-none">
-            <div class="flex grow gap-x-3 rounded-xl bg-yellow-50 px-4 py-3">
-              <div class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gray-100">
-                <Clock variation="solid" />
+        <div class="-mx-3 flex flex-wrap items-center justify-between">
+          <!-- Left side -->
+          <div class="flex items-start space-x-4">
+            <!-- Icon -->
+            <div class="w-auto max-w-full flex-none px-3">
+              <div
+                class="ease-soft-in-out size-18 relative inline-flex items-center justify-center rounded-xl text-base text-white transition-all duration-200"
+              >
+                <img
+                  src={typeof avatarImage === 'string' ? avatarImage : `/${DEFAULT_AVATAR}`}
+                  alt="Foundation First Initial Icon"
+                  class="shadow-soft-sm size-20 w-full rounded-xl"
+                  width="74"
+                  height="74"
+                />
               </div>
-              <div>
-                <div class="flex-items my-0 flex justify-between text-sm/6">
-                  <div><strong class="dark:text-zinc-200">Historical Data</strong></div>
-                  <div>Fiscal year {formattedTaxPeriodEnd}</div>
-                </div>
-                <p class="my-0 mt-0.5 text-sm/6">
-                  This profile is based on the foundation's latest IRS Form 990-PF tax filing. The data is freely available to the general
-                  public via <a href="https://apps.irs.gov/app/eos/" target="_blank" rel="noopener noreferrer">IRS.gov</a>.
+            </div>
+            <!-- Name -->
+            <div class="my-auto w-auto max-w-full flex-none px-3 relative">
+              <div class="h-full">
+                <h5 class="mb-1">{organization_name}</h5>
+                <p class="mb-0 text-sm font-normal leading-normal">
+                  <strong class="text-slate-700">
+                    {profile.city},
+                    {profile.is_foreign && profile.state === 'Foreign' ? profile.country : profile.state}
+                  </strong>
+                  {#if profile.has_website}
+                    <Dot />
+                    <a href={profile.website} target="_blank" rel="noopener noreferrer">
+                      {profile.website_verbatim?.toLowerCase()}
+                    </a>
+                  {/if}
                 </p>
               </div>
             </div>
           </div>
+
+          <!-- Right side of box: metadata -->
+          <div class="mr-2 grid grid-cols-2 gap-x-4 gap-y-1 text-right">
+            <span class="inline-flex text-sm items-center justify-end">EIN</span>
+            <span
+              class="inline-flex items-center justify-center rounded-md bg-blue-50 px-2 py-1 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10"
+              >{formatEin(profile.ein)}</span
+            >
+            <span class="inline-flex text-sm items-center justify-end">IRS Status</span>
+            {#if profile.eobmf_recognized_exempt && profile.eobmf_ruling_date}
+              <span
+                class="inline-flex items-center justify-center rounded-md bg-green-50 px-2 py-1 text-sm font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
+                >Since {formatTaxPeriodDate(profile.eobmf_ruling_date)}</span
+              >
+            {:else}
+              <span
+                class="inline-flex items-center justify-center rounded-md bg-yellow-50 px-2 py-1 text-sm font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20"
+                >Unknown</span
+              >
+            {/if}
+            <span class="inline-flex text-sm items-center justify-end">Data Valid as of</span>
+            {#if !isOutdatedISOString(profile.last_updated_irs)}
+              <span
+                class="inline-flex items-center justify-center rounded-md bg-green-50 px-2 py-1 text-sm font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
+                >FYE {formattedTaxPeriodEnd}</span
+              >
+            {:else}
+              <span
+                class="inline-flex items-center justify-center rounded-md bg-yellow-50 px-2 py-1 text-sm font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20"
+                >FYE {formattedTaxPeriodEnd}</span
+              >
+            {/if}
+          </div>
         </div>
       </div>
 
-      <!-- Main content -->
-      <div class="removable mx-auto mt-4 w-full pb-6">
-        <!-- Summary Boxes -->
-        <div class="-mx-3 grid grid-cols-1 lg:grid-cols-3">
+      <!-- AI Summary -->
+      <div class="mt-4 shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+        <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
+          <SummaryBoxHeader headerText={'Summary'} />
+        </div>
+        <div class="flex-auto p-4 justify-center items-start space-x-2">
+          {#if aiSummaries[profile.ein]}
+            <p class="text-sm">{aiSummaries[profile.ein]}</p>
+          {:else}
+            <div class="rounded-lg border-2 border-dashed border-gray-300 p-6">
+              <div class="flex flex-col items-center text-sm text-gray-500">
+                <Sparkles variation="solid" />
+                <h2 class="mt-2 text-base font-semibold leading-6 text-gray-900">AI Summaries</h2>
+                <p class="mt-1">Grantmakers.io extracts key data while AI packages it easy to digest summaries</p>
+              </div>
+            </div>
+          {/if}
+        </div>
+      </div>
+
+      <!-- Core Body Sections -->
+      <div class="mx-auto mt-4 w-full pb-6">
+        <!-- Snapshot Boxes -->
+        <div class="-mx-3 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 mb-4">
           <!-- Box 1 -->
-          <div class="lg-max:mt-6 mb-4 w-full max-w-full px-3">
-            <!-- Summary -->
-            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
-              <div class="mb-0 rounded-t-2xl border-b-0 bg-white p-4 pb-0">
-                <div class="flex w-full flex-row items-center justify-between">
-                  <h6 class="mb-0">Summary</h6>
-                  {#if aiSummarySource && currentAiIconDetails}
-                    <img
-                      src={currentAiIconDetails.src}
-                      class={`relative ${currentAiIconDetails?.maxHeightClass} w-full basis-0 text-sm text-white`}
-                      alt={`${sourceName} logo`}
-                      width={currentAiIconDetails.width}
-                      height={currentAiIconDetails.height}
-                    />
-                  {/if}
+          <div class="lg-max:mt-6 h-full w-full max-w-full px-3">
+            <div class="flex flex-col h-full">
+              <!-- Summary -->
+              <div class="shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+                <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
+                  <SummaryBoxHeader headerText={'Overview'} />
+                </div>
+
+                <div class="flex-auto p-4">
+                  <!-- Core stats -->
+                  <dl class="p-2 grid grid-cols-1 overflow-hidden rounded-lg bg-white">
+                    <div class="flex flex-row w-full justify-around items-center">
+                      <dl class="text-2xl flex flex-row w-full justify-around">
+                        <div class="p-2 flex flex-col items-center justify-end">
+                          <dd class="font-bold text-slate-700">{humanizeCurrency(profile.assets)}</dd>
+                          <dt class="text-sm leading-normal text-inherit">Assets</dt>
+                        </div>
+                        <div class="p-2 flex flex-col items-center justify-end">
+                          <dd class="font-bold text-slate-700 flex flex-row items-center">
+                            <div class="rounded inline m-1 p-2 {!noUnsolicited ? 'bg-green-500' : 'bg-yellow-500'}">
+                              {#if !noUnsolicited}
+                                <LockOpen variation="solid" class="text-white h-4 w-4" />
+                              {:else}
+                                <LockClosed variation="solid" class="text-white h-4 w-4" />
+                              {/if}
+                            </div>
+                            <div class="rounded inline m-1 p-2 {isStaffed ? 'bg-green-500' : 'bg-yellow-500'}">
+                              <UserGroup variation="solid" class="text-white h-4 w-4" />
+                            </div>
+                            <div class="rounded inline m-1 p-2 {hasWebsite ? 'bg-green-500' : 'bg-yellow-500'}">
+                              <GlobeAlt variation="solid" class="text-white h-4 w-4" />
+                            </div>
+                          </dd>
+                          <dt class="text-sm leading-normal text-inherit">Approachability</dt>
+                        </div>
+                      </dl>
+                    </div>
+                  </dl>
                 </div>
               </div>
-              <div class="flex-auto p-4">
-                {#if aiSummary}
-                  <p class="text-sm leading-normal">{aiSummary}</p>
-                {:else}
-                  <div class="rounded-lg border-2 border-dashed border-gray-300 p-6">
-                    <div class="flex flex-col items-center text-sm text-gray-500">
-                      <Sparkles variation="solid" />
-                      <h2 class="mt-2 text-base font-semibold leading-6 text-gray-900">AI Summaries</h2>
-                      <p class="mt-1">Grantmakers.io extracts key data while AI packages it easy to digest summaries</p>
-                      <a class="mt-1" href="/profiles/v1/510381959">View an example <ArrowRight /></a>
-                    </div>
-                  </div>
-                {/if}
 
-                <!-- Foundation Metadata -->
-                <ul class="mb-0 mt-4 flex flex-col rounded-lg pl-0">
-                  <li class="flex justify-between rounded-t-lg border-0 bg-white px-4 py-2 pl-0 pt-0 text-sm leading-normal text-inherit">
-                    <div>
-                      <strong class="text-slate-700">EIN</strong>
-                    </div>
-                    <div>
-                      {profile.ein}
-                    </div>
-                  </li>
-                  <li class="flex justify-between border-0 border-t-0 bg-white px-4 py-2 pl-0 text-sm leading-normal text-inherit">
-                    <div>
-                      <strong class="text-slate-700">Website</strong>
-                    </div>
-                    <div>
-                      {#if profile.website}
-                        <a href={profile.website} target="_blank">
-                          {profile.website_verbatim?.toLowerCase()}
-                        </a>
-                      {:else}
-                        {profile.website_verbatim}
+              <!-- Data Source -->
+              <div class="mt-4 min-w-0 shadow-soft-xl grow relative flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+                <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
+                  <SummaryBoxHeader headerText={'Data Source'}>
+                    <img src={irsLogo} alt="IRS logo" class="w-full max-h-6" />
+                  </SummaryBoxHeader>
+                </div>
+
+                <div class="flex-auto items-center space-y-2 p-4 bg-white rounded-b-2xl">
+                  <div class="flex flex-col gap-0 p-2">
+                    <!-- <img src={irsLogo} alt="IRS logo" class="h-6 w-auto" /> -->
+                    <p class="text-sm text-slate-700 font-bold">IRS Form 990-PF</p>
+                    <p class="flex flex-row gap-2 items-start text-sm text-slate-700">Available to the general public at IRS.gov.</p>
+                  </div>
+
+                  <hr class="border-1" />
+
+                  <div class="p-2 text-sm text-slate-700">
+                    <div class="flex flex-row items-center justify-between">
+                      <div>
+                        <div class="font-bold">Latest Available Filing</div>
+                        <div>Tax Year {formatTaxYear(profile.filings[0].tax_year)} ended {formattedTaxPeriodEnd ?? 'N/A'}</div>
+                        <div>Published by the IRS {formatDateToMonthYear(profile.last_updated_irs) ?? 'N/A'}</div>
+                      </div>
+                      {#if isOutdatedISOString(profile.last_updated_irs)}
+                        <div>
+                          <Eyes />
+                        </div>
                       {/if}
                     </div>
-                  </li>
-                  <li class="flex justify-between border-0 border-t-0 bg-white px-4 py-2 pl-0 text-sm leading-normal text-inherit">
-                    <div>
-                      <strong class="text-slate-700">Tax Year End</strong>
-                    </div>
-                    <div>
-                      {formattedTaxPeriodEnd}
-                    </div>
-                  </li>
-                  <li class="flex justify-between border-0 border-t-0 bg-white px-4 py-2 pl-0 text-sm leading-normal text-inherit">
-                    <div>
-                      <strong class="text-slate-700">IRS Ruling Date</strong>
-                    </div>
-                    <div class="text-right">
-                      {profile.eobmf_ruling_date ? formatDate(profile.eobmf_ruling_date) : 'N/A'}
-                    </div>
-                  </li>
-                </ul>
+                  </div>
+
+                  <!-- <Tip
+                    title="Remember"
+                    message="The data represents past activity and may not reflect current foundation priorities."
+                    includeLogo
+                  /> -->
+                </div>
               </div>
             </div>
           </div>
 
           <!-- Box 2 -->
-          <div class="lg-max:mt-6 mb-4 w-full max-w-full px-3">
+          <div class="lg-max:mt-6 h-full w-full max-w-full px-3">
             <!-- Grant History -->
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
-              <div class="mb-0 rounded-t-2xl border-b-0 bg-white p-4 pb-0">
-                <SummaryBoxHeader headerText={'Grant Highlights'}>
-                  {#if filings}
-                    <span
-                      class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-100/75"
-                      >Tax year {filings[0]?.tax_year}</span
-                    >
-                  {/if}
-                </SummaryBoxHeader>
+              <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
+                <SummaryBoxHeader headerText={'Grants Snapshot'} />
               </div>
-              <div class="mb-6 flex h-full flex-col justify-between p-4">
-                <div>
-                  <ul class="mb-0 flex flex-col rounded-lg py-2">
-                    <li class="relative block rounded-t-lg border-0 bg-white px-0 py-1 text-inherit">
-                      <h3 class="flex items-center text-sm font-normal tracking-normal">
-                        <span class="ml-6 flex items-center justify-center h-6 w-6 text-2xl font-semibold text-gray-700"
-                          >{humanizeNumber(profile.grant_count)}</span
-                        >
-                        <span class="ml-6 text-slate-500">Grants made in {filings[0]?.tax_year}</span>
-                      </h3>
-                    </li>
-                    <li class="relative block rounded-t-lg border-0 bg-white px-0 py-1 text-inherit">
-                      <h3 class="flex items-center text-sm font-normal tracking-normal">
-                        <span class="ml-6 flex items-center justify-center h-6 w-6 text-2xl font-semibold text-gray-700"
-                          >{humanizeCurrency(profile.grant_max)}</span
-                        >
-                        <span class="ml-6 text-slate-500">Largest Grant</span>
-                      </h3>
-                    </li>
-                  </ul>
-                </div>
+              <div class="flex h-full flex-col items-start p-4">
+                <dl class="text-2xl flex flex-row w-full justify-around items-center">
+                  <div class="p-2 flex flex-col items-center">
+                    <dd class="font-bold text-slate-700">{humanizeNumber(profile.grant_count)}</dd>
+                    <dt class="text-sm leading-normal text-inherit">Grants</dt>
+                  </div>
+                  <div class="inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="h-12 border-r border-slate-200"></div>
+                  </div>
+
+                  <HandDrawnBorder>
+                    <div
+                      class="p-6 flex flex-col items-center rounded-full relative z-10"
+                      class:bg-indigo-50={profile.grant_median >= 100000}
+                      class:bg-slate-50={profile.grant_median < 100000}
+                    >
+                      <dd class="font-bold text-slate-700">
+                        {humanizeCurrency(profile.grant_median)}
+                      </dd>
+                      <dt class="text-sm leading-normal text-inherit">Median</dt>
+                    </div>
+                  </HandDrawnBorder>
+                  <div class="inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="h-12 border-r border-slate-200"></div>
+                  </div>
+                  <div class="p-2 flex flex-col items-center">
+                    <dd class="text-slate-700 text-lg">
+                      {humanizeCurrency(profile.grant_max)} - {humanizeCurrency(profile.grant_min)}
+                    </dd>
+                    <dt class="text-sm leading-normal text-inherit">Range</dt>
+                  </div>
+                </dl>
+                <div class="mt-4 font-bold text-slate-700 text-sm">Grant Clusters</div>
+                {#if grantsFacets}
+                  <Bar rawData={grantsFacets[0].facets.amount} />
+                {:else}
+                  <p>Not enough data</p>
+                {/if}
               </div>
             </div>
           </div>
 
           <!-- Box 3 -->
-          <div class="lg-max:mt-6 mb-4 w-full max-w-full px-3">
-            <!-- Fast Facts -->
+          <div class="lg-max:mt-6 h-full w-full max-w-full px-3">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
-              <div class="mb-0 rounded-t-2xl border-b-0 bg-white p-4 pb-0">
-                <SummaryBoxHeader headerText={'Approachability'}>
-                  <SummaryBoxHeaderBadge variant={isRecognized ? 'positive' : 'negative'}>
-                    EO<span class="mx-0.5">
-                      {#if isRecognized}
-                        <CheckCircle variation="solid" size="12" />
-                      {:else}
-                        <XCircle variation="solid" size="12" />
-                      {/if}
-                    </span>BMF
-                  </SummaryBoxHeaderBadge>
-                </SummaryBoxHeader>
+              <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
+                <SummaryBoxHeader headerText={'People'} />
               </div>
-              <div class="mb-6 flex h-full flex-col justify-between p-4">
-                <div>
-                  <ul class="mb-0 flex flex-col rounded-lg py-2">
-                    <!-- Pre-selected orgs only? -->
-                    <li class="relative block rounded-t-lg border-0 bg-white px-0 py-1 text-inherit">
-                      <h3
-                        class="flex items-center text-sm font-normal tracking-normal {!noUnsolicited ? 'text-green-500' : 'text-rose-500'}"
-                      >
-                        {#if !noUnsolicited}
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
-                            <path
-                              d="M18 1.5c2.9 0 5.25 2.35 5.25 5.25v3.75a.75.75 0 0 1-1.5 0V6.75a3.75 3.75 0 1 0-7.5 0v3a3 3 0 0 1 3 3v6.75a3 3 0 0 1-3 3H3.75a3 3 0 0 1-3-3v-6.75a3 3 0 0 1 3-3h9v-3c0-2.9 2.35-5.25 5.25-5.25Z"
-                            />
-                          </svg>
-                        {:else}
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
-                            <path
-                              fill-rule="evenodd"
-                              d="M12 1.5a5.25 5.25 0 0 0-5.25 5.25v3a3 3 0 0 0-3 3v6.75a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3v-6.75a3 3 0 0 0-3-3v-3c0-2.9-2.35-5.25-5.25-5.25Zm3.75 8.25v-3a3.75 3.75 0 1 0-7.5 0v3h7.5Z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                        {/if}
-                        <span class="ml-3 text-slate-500"
-                          >{noUnsolicited ? 'Pre-selected applicants only' : 'Possibly accepts unsolicited applications'}</span
-                        >
-                      </h3>
-                    </li>
-
-                    <!-- Is staffed? -->
-                    <li class="relative block rounded-t-lg border-0 bg-white px-0 py-1 text-inherit">
-                      <h3 class="flex items-center text-sm font-normal tracking-normal {isStaffed ? 'text-green-500' : 'text-rose-500'}">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
-                          <path
-                            fill-rule="evenodd"
-                            d="M8.25 6.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM15.75 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM2.25 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM6.31 15.117A6.745 6.745 0 0 1 12 12a6.745 6.745 0 0 1 6.709 7.498.75.75 0 0 1-.372.568A12.696 12.696 0 0 1 12 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 0 1-.372-.568 6.787 6.787 0 0 1 1.019-4.38Z"
-                            clip-rule="evenodd"
-                          ></path>
-                          <path
-                            d="M5.082 14.254a8.287 8.287 0 0 0-1.308 5.135 9.687 9.687 0 0 1-1.764-.44l-.115-.04a.563.563 0 0 1-.373-.487l-.01-.121a3.75 3.75 0 0 1 3.57-4.047ZM20.226 19.389a8.287 8.287 0 0 0-1.308-5.135 3.75 3.75 0 0 1 3.57 4.047l-.01.121a.563.563 0 0 1-.373.486l-.115.04c-.567.2-1.156.349-1.764.441Z"
-                          ></path>
-                        </svg>
-
-                        <span class="ml-3 text-slate-500"
-                          >{isStaffed ? 'The foundation is likely staffed' : 'The foundation is not likely staffed'}</span
-                        >
-                      </h3>
-                    </li>
-                  </ul>
-                  <div class="py-2">
-                    <div class="rounded-lg bg-zinc-100 p-4 text-sm font-light">
-                      <div class="flex items-center">
-                        <div class="text-xs">
-                          Items are pulled directly from a historical IRS tax filing. Be mindful of this major limitation.
-                        </div>
-                        <img src={irsLogo} class="h-6 w-12" alt="IRS Logo" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="flex justify-center">
-                  <button
-                    type="button"
-                    class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-50"
-                    >View Application Guidelines</button
-                  >
-                </div>
-              </div>
+              <People {people} taxPeriod={formattedTaxPeriodEnd} />
             </div>
           </div>
         </div>
+
+        <!-- Hello Message -->
+        <div class="flex flex-row items-start justify-center gap-2 mt-2 mb-4 p-4">
+          <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
+          <div>Grantmakers.io is an open source project for our friends in the nonprofit community</div>
+        </div>
+
         <!-- Grants -->
         <div class="-mx-3 grid grid-cols-1">
           <div class="lg-max:mt-6 mb-4 w-full max-w-full px-3">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
-              <div class="mb-0 rounded-2xl border-b-0 bg-white p-4 pb-0">
-                {#if profile}
-                  <GrantsTable {grants} />
+              <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
+                <SummaryBoxHeader headerText={'Grants'} />
+              </div>
+              <div>
+                {#if grantsFacets}
+                  <GrantsTable
+                    grants={grants || grantsTop20 || grantsAllYearsTop20}
+                    grantCount={profile.grant_count_all_years}
+                    filingsAvailable={profile.filings.length}
+                  />
                 {:else}
-                  Unable to find an available free source of grants data :(
+                  <div class="p-6">Unable to find an available free source of grants data</div>
                 {/if}
               </div>
             </div>
           </div>
         </div>
-        <div class="-mx-3 grid grid-cols-1">
+
+        <!-- About & Guidelines Sections -->
+        <div class="-mx-3 grid grid-cols-1 md:grid-cols-2">
+          <!-- Guidelines -->
           <div class="lg-max:mt-6 mb-4 w-full max-w-full px-3">
-            <!-- People -->
-            <People {people} />
+            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+              <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
+                <SummaryBoxHeader headerText={'Application Guidelines'} anchorText={'guidelines'}
+                  ><img src={irsLogo} alt="IRS logo" class="w-full max-h-6" /></SummaryBoxHeader
+                >
+              </div>
+              <ApplicationGuidelines
+                website={hasWebsite ? profile.website : null}
+                websiteIsEmail={profile.website_is_an_email}
+                grantsToPreselectedOnly={profile.grants_to_preselected_only}
+                applicationInfo={profile.grants_application_info}
+                applicationDeadlines={profile.grants_application_deadlines}
+                applicationRestrictions={profile.grants_application_restrictions}
+                applicationContact={profile.grants_application_contact}
+              />
+            </div>
+          </div>
+
+          <!-- About -->
+          <div class="lg-max:mt-6 mb-4 w-full max-w-full px-3 text-slate-700">
+            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+              <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
+                <SummaryBoxHeader headerText={'About Grantmakers.io'}>
+                  <img src={logo} alt="Grantmakers.io logo" class="w-full max-h-6" />
+                </SummaryBoxHeader>
+              </div>
+              <div class="flex flex-col gap-6 p-6">
+                <p>
+                  Grantmakers.io is a free community project ensuring nonprofits unfettered access to the public IRS dataset of Form 990 tax
+                  filings.
+                </p>
+                <div>
+                  <div class="uppercase text-sm font-bold text-slate-500">Data is Verbatim</div>
+                  <p>
+                    The project pulls from an open dataset published by the IRS. Data is presented exactly as found in the tax filings.
+                    Misspellings and cut off words are common as is the use of ALLCAPS.
+                  </p>
+                </div>
+                <div>
+                  <div class="uppercase text-sm font-bold text-slate-500">Historical Data</div>
+                  <p>
+                    Be mindful of the limitations of using historical data in your research - the data represents past activity and may not
+                    reflect current foundation priorities.
+                  </p>
+                </div>
+                <p>
+                  <span class="inline-flex gap-1 text-slate-500 hover:underline hover:cursor-pointer"
+                    >Read more<a href="https://www.grantmakers.io/about/">about the project.</a></span
+                  >
+                </p>
+
+                <Tip
+                  message="Grantmakers.io is not affiliated, associated, authorized, endorsed by, or in any way officially connected with any
+                  foundation appearing on the site."
+                  includeLogo
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Financial Sections -->
+        <div class="-mx-3 grid grid-cols-1 md:grid-cols-2">
+          <!-- Financial Overview -->
+          <div class="lg-max:mt-6 mb-4 w-full max-w-full px-3">
+            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+              <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
+                <SummaryBoxHeader headerText={'Financial Overview'} anchorText={'financials'} />
+              </div>
+              <div class="p-4">
+                <BarFinancialOverview
+                  year1={profile.financial_stats[0]}
+                  orgCurrentTaxYear={profile.financial_stats[0].tax_year}
+                  {formattedTaxPeriodEnd}
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Financial Trends -->
+          <div class="lg-max:mt-6 mb-4 w-full max-w-full px-3">
+            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+              <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
+                <SummaryBoxHeader headerText={'Financial Trends'} anchorText={'financial trends'} />
+              </div>
+              <div class="p-4 grow">
+                <BarFinancialTrends
+                  orgFinancialStats={profile.financial_stats}
+                  lastUpdatedByIrs={profile.last_updated_irs}
+                  {formattedTaxPeriodEnd}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -767,7 +887,6 @@
         <div class="-mx-3 flex flex-wrap items-center lg:justify-between">
           <div class="mb-6 mt-0 w-full max-w-full shrink-0 px-3 lg:mb-0 lg:w-1/2 lg:flex-none">
             <div class="text-size-sm text-center leading-normal text-slate-500 lg:text-left">
-              <!-- <i class="fa fa-heart" aria-hidden="true"></i> -->
               © 2024, made with ❤️ and ☕ by
               <a href="https://www.chadkruse.com" class="font-semibold text-slate-700" target="_blank">Chad Kruse</a>
             </div>

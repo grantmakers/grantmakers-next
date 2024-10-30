@@ -25,10 +25,20 @@ const currencyFormatter = new Intl.NumberFormat(LOCALE, {
   maximumFractionDigits: 0
 });
 
+const percentageFormatter = new Intl.NumberFormat(LOCALE, {
+  style: 'percent',
+  minimumFractionDigits: 1,
+  maximumFractionDigits: 1
+});
+
 const humanReadableFormatter = new Intl.NumberFormat(LOCALE, {
   notation: 'compact',
   compactDisplay: 'short'
 });
+
+export function formatEin(string: string): string {
+  return string.replace(/(\d{2})/, '$1-')
+}
 
 export function formatNumber(num: number): string {
   return numberFormatter.format(num);
@@ -36,6 +46,10 @@ export function formatNumber(num: number): string {
 
 export function formatToCurrency(num: number): string {
   return currencyFormatter.format(num);
+}
+
+export function formatPercentage(num: number): string {
+  return percentageFormatter.format(num);
 }
 
 export function humanizeNumber(num: number): string {

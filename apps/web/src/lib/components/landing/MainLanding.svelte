@@ -1,7 +1,5 @@
 <script lang="ts">
   import Footer from '../footer/Footer.svelte';
-
-  // import DevLinks from '$lib/components/landing/DevLinks.svelte';
   import screenshot from '$lib/assets/images/screenshot.webp';
   import LogoMark from '../shared/LogoMark.svelte';
   import Features from './sections/Features.svelte';

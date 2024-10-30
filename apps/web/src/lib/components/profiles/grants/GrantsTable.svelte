@@ -3,17 +3,21 @@
   import DOMPurify from 'isomorphic-dompurify';
   import { ExclamationCircle } from 'svelte-heros-v2';
   import type { GrantsArray } from '@shared/typings/grantmakers/grants';
+  import { humanizeNumber } from '@shared/functions/formatters/numbers';
   export let grants: GrantsArray | null = null;
+  export let grantCount: number | null = null;
+  export let filingsAvailable: number | null = null;
 
   const sanitize = DOMPurify.sanitize;
 
-  const grantSummary = `TODO Add grant summary info`;
+  const showGrantsCount = 5;
+
+  const grantSummary = `Showing the <span class="font-bold">largest ${humanizeNumber(showGrantsCount)}</span> grants <br>among <span class="font-bold">${grantCount ? humanizeNumber(grantCount) : 'N/A'}</span> grants<br>made across <span class="font-bold">${filingsAvailable} years</span> <br>of available tax filings.`;
 </script>
 
 <div>
   <div class="sm:flex sm:items-center">
-    <div class="sm:flex-auto">
-      <h1 class="text-base font-semibold leading-6 text-gray-900">Grants</h1>
+    <div class="sm:flex-auto w-1/2">
       <!-- eslint-disable-next-line svelte/no-at-html-tags -->
       <div class="mt-2 px-3 text-sm text-gray-700">{@html sanitize(grantSummary)}</div>
     </div>
@@ -33,7 +37,7 @@
           </thead>
           <tbody class="divide-y divide-gray-200 bg-white">
             {#if grants}
-              {#each grants as grant}
+              {#each grants.slice(0, showGrantsCount) as grant}
                 <GrantRow {grant} />
               {/each}
             {:else}
