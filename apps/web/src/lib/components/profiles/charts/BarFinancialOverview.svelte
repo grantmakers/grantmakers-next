@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { humanizeCurrency } from '@shared/functions/formatters/numbers';
-  import { Chart, BarController, CategoryScale, LinearScale, BarElement, Title, Tooltip } from 'chart.js';
   import Divider from '$lib/components/shared/Divider.svelte';
+  import type { Chart } from 'chart.js';
 
-  Chart.register(BarController, CategoryScale, LinearScale, BarElement, Title, Tooltip);
+
 
   export let year1: {
     assets: number;
@@ -17,13 +17,18 @@
   export let chartsColorSecondary = '#c54e00';
   export let chartsColorTertiary = '#009688';
 
-  let canvas: HTMLCanvasElement;
+  let chartCanvas: HTMLCanvasElement;
   let chart: Chart;
 
-  onMount(() => {
-    const ctx = canvas.getContext('2d');
+  onMount(async () => {
+    if (!chartCanvas) return;
+
+    const ctx = chartCanvas.getContext('2d');
     if (!ctx) return;
 
+    const { Chart, BarController, CategoryScale, LinearScale, BarElement, Title, Tooltip } = await import('chart.js');
+
+    Chart.register(BarController, CategoryScale, LinearScale, BarElement, Title, Tooltip);
     chart = new Chart(ctx, {
       type: 'bar',
       data: {
@@ -75,11 +80,13 @@
         },
       },
     });
-
-    return () => {
-      chart.destroy();
-    };
   });
+
+  onDestroy(() => {
+    if (chart) {
+      chart.destroy();
+    }
+  })
 </script>
 
 <div class="p-4">
@@ -113,7 +120,7 @@
     </div>
     <Divider />
     <div class="w-full">
-      <canvas bind:this={canvas}></canvas>
+      <canvas bind:this={chartCanvas}></canvas>
     </div>
     <Divider />
     <p class="flex justify-end text-xs gap-1">

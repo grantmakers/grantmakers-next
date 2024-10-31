@@ -1,24 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { onDestroy } from 'svelte';
   import skeleton from '$lib/assets/images/blank-chart-trends.jpg';
   import { humanizeCurrency } from '@shared/functions/formatters/numbers';
   import { formatFullDate } from '@shared/functions/formatters/dates';
-  import {
-    Chart,
-    BarController,
-    LineController,
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    LineElement,
-    PointElement,
-    Title,
-    Tooltip,
-    Legend,
-  } from 'chart.js';
   import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/grants';
   import Divider from '$lib/components/shared/Divider.svelte';
   import { ChartBarSquare } from 'svelte-heros-v2';
+  import type { Chart } from 'chart.js';
 
   export let orgFinancialStats: GrantmakersExtractedDataObj['financial_stats'];
   export let lastUpdatedByIrs: string;
@@ -31,20 +20,34 @@
   const contributions = orgFinancialStats.map((value: Stats) => value.contributions).reverse();
   const years = orgFinancialStats.map((value: Stats) => value.tax_year).reverse();
 
-  Chart.register(BarController, LineController, CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend);
-
-  export let chartsColorPrimary = '#607d8b'; // Feel free to adjust colors
+  export let chartsColorPrimary = '#607d8b';
   export let chartsColorSecondary = '#c54e00';
   export let chartsColorTertiary = '#009688';
 
-  let canvas: HTMLCanvasElement;
+  let chartCanvas: HTMLCanvasElement;
   let chart: Chart;
 
-  function initializeChart() {
-    if (!canvas) return;
+  async function initializeChart() {
+    if (!chartCanvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = chartCanvas.getContext('2d');
     if (!ctx) return;
+
+    const {
+      Chart,
+      BarController,
+      LineController,
+      CategoryScale,
+      LinearScale,
+      BarElement,
+      LineElement,
+      PointElement,
+      Title,
+      Tooltip,
+      Legend,
+    } = await import('chart.js');
+
+    Chart.register(BarController, LineController, CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend);
 
     chart = new Chart(ctx, {
       type: 'bar',
@@ -111,18 +114,16 @@
     });
   }
 
-  onMount(() => {
+  onMount(async() => {
     // Only initialize charts if there's enough data
     if (orgFinancialStats && orgFinancialStats.length > 1) {
       initializeChart();
     }
-
-    return () => {
-      if (chart) {
-        chart.destroy();
-      }
-    };
   });
+
+  onDestroy(() => {
+    chart.destroy();
+  })
 </script>
 
 <div class="p-4 h-full">
@@ -142,7 +143,7 @@
     <Divider />
     {#if orgFinancialStats && orgFinancialStats.length > 1}
       <div class="w-full">
-        <canvas bind:this={canvas}></canvas>
+        <canvas bind:this={chartCanvas}></canvas>
       </div>
       <Divider />
       <p class="flex justify-end text-xs gap-1">

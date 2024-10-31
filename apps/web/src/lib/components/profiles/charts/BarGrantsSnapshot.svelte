@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { Chart, registerables } from 'chart.js';
+  import { onMount, onDestroy } from 'svelte';
+  import type { Chart } from 'chart.js';
 
   export let rawData;
 
@@ -85,18 +85,37 @@
     return processedData;
   }
 
-  Chart.register(...registerables);
-
   let chartCanvas: HTMLCanvasElement;
+  let chart: Chart;
 
   const data = prepareAndReduceChartData(rawData);
 
-  onMount(() => {
+  onMount(async () => {
+    if (!chartCanvas) return;
+
     const ctx = chartCanvas.getContext('2d');
-    if (!ctx) {
-      // TODO Handle null scenario
-      return;
-    }
+    if (!ctx) return;
+
+    const {  
+      Chart,
+      BarController,
+      CategoryScale,
+      LinearScale,
+      BarElement,
+      Title,
+      Tooltip,
+      Legend
+    } = await import('chart.js')
+    Chart.register(
+      BarController,
+      CategoryScale,
+      LinearScale,
+      BarElement,
+      Title,
+      Tooltip,
+      Legend
+    );
+    
     const colorPalette = ['#c54e00', '#e65c00', '#607d8b', '#7891a1', '#009688', '#00b3a1'];
 
     const getColorForRange = (range: string) => {
@@ -108,7 +127,7 @@
       return colorPalette[5];
     };
 
-    new Chart(ctx, {
+    chart = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: data.map((d: GrantRange) => d.displayRange),
@@ -157,6 +176,12 @@
       },
     });
   });
+
+  onDestroy(() => {
+    if (chart) {
+      chart.destroy();
+    }
+  })
 </script>
 
 <div class="w-full min-h-[400px] max-h-[600px]">
