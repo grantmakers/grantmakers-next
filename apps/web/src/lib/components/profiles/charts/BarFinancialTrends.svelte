@@ -47,7 +47,18 @@
       Legend,
     } = await import('chart.js');
 
-    Chart.register(BarController, LineController, CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend);
+    Chart.register(
+      BarController,
+      LineController,
+      CategoryScale,
+      LinearScale,
+      BarElement,
+      LineElement,
+      PointElement,
+      Title,
+      Tooltip,
+      Legend,
+    );
 
     chart = new Chart(ctx, {
       type: 'bar',
@@ -114,7 +125,7 @@
     });
   }
 
-  onMount(async() => {
+  onMount(async () => {
     // Only initialize charts if there's enough data
     if (orgFinancialStats && orgFinancialStats.length > 1) {
       initializeChart();
@@ -123,19 +134,19 @@
 
   onDestroy(() => {
     chart.destroy();
-  })
+  });
 </script>
 
-<div class="p-4 h-full">
-  <div class="flex flex-col items-center h-full gap-4">
+<div class="h-full p-4">
+  <div class="flex h-full flex-col items-center gap-4">
     <div class="flex flex-col items-start">
-      <dl class="text-2xl flex flex-row w-full justify-around items-center">
-        <div class="p-2 flex flex-col items-center gap-2">
-          <dt class="text-sm leading-normal text-inherit flex flex-row items-center gap-1">Tax Filings Available</dt>
+      <dl class="flex w-full flex-row items-center justify-around text-2xl">
+        <div class="flex flex-col items-center gap-2 p-2">
+          <dt class="flex flex-row items-center gap-1 text-sm leading-normal text-inherit">Tax Filings Available</dt>
           <dd class="text-slate-700">{orgFinancialStats.length}</dd>
         </div>
-        <div class="p-2 flex flex-col items-center gap-2">
-          <dt class="text-sm leading-normal text-inherit flex flex-row items-center gap-1">Last Updated by IRS</dt>
+        <div class="flex flex-col items-center gap-2 p-2">
+          <dt class="flex flex-row items-center gap-1 text-sm leading-normal text-inherit">Last Updated by IRS</dt>
           <dd class="text-slate-700">{formatFullDate(lastUpdatedByIrs)}</dd>
         </div>
       </dl>
@@ -146,7 +157,7 @@
         <canvas bind:this={chartCanvas}></canvas>
       </div>
       <Divider />
-      <p class="flex justify-end text-xs gap-1">
+      <p class="flex justify-end gap-1 text-xs">
         Tax Year {orgFinancialStats[0].tax_year} ended {formattedTaxPeriodEnd ? formattedTaxPeriodEnd : 'N/A'}
       </p>
     {:else}
@@ -154,7 +165,7 @@
         <img src={skeleton} alt="Financial Overview Placeholder" class="h-full w-full object-cover" />
 
         <div class="absolute inset-0 flex items-center justify-center">
-          <div class="flex items-center gap-4 text-slate-600 bg-white lg:mx-4 px-8 py-4 shadow-xl">
+          <div class="flex items-center gap-4 bg-white px-8 py-4 text-slate-600 shadow-xl lg:mx-4">
             <ChartBarSquare variation="solid" class="h-16 w-16 text-slate-500" />
             <p>Trends will appear as more tax filings become available</p>
           </div>

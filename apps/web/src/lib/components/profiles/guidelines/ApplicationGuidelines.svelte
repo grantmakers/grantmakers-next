@@ -29,7 +29,7 @@
   {#if grantsToPreselectedOnly}
     <div class="mb-4">
       <div class="flex items-center gap-4">
-        <div class="bg-red-600 text-white p-2 rounded-full">
+        <div class="rounded-full bg-red-600 p-2 text-white">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
               stroke-linecap="round"
@@ -51,7 +51,7 @@
     <div class="space-y-4">
       <div class="flex items-start gap-4">
         <div
-          class="bg-slate-500 text-white p-2 rounded-full tooltip-trigger"
+          class="tooltip-trigger rounded-full bg-slate-500 p-2 text-white"
           data-tooltip="The form in which applications should be submitted and information and materials they should include Line 2b"
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -65,25 +65,25 @@
         </div>
         <div>
           <span class="font-bold text-slate-700">Instructions</span>
-          <p class="text-slate-700 text-sm">{applicationInfo}</p>
+          <p class="text-sm text-slate-700">{applicationInfo}</p>
         </div>
       </div>
 
       <div class="flex items-start gap-4">
-        <div class="bg-slate-500 text-white p-2 rounded-full tooltip-trigger" data-tooltip="Any submission deadlines Line 2c">
+        <div class="tooltip-trigger rounded-full bg-slate-500 p-2 text-white" data-tooltip="Any submission deadlines Line 2c">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
         <div>
           <span class="font-bold text-slate-700">Deadlines</span>
-          <p class="text-slate-700 text-sm">{applicationDeadlines}</p>
+          <p class="text-sm text-slate-700">{applicationDeadlines}</p>
         </div>
       </div>
 
       <div class="flex items-start gap-4">
         <div
-          class="bg-slate-500 text-white p-2 rounded-full tooltip-trigger"
+          class="tooltip-trigger rounded-full bg-slate-500 p-2 text-white"
           data-tooltip="Any restrictions or limitations on awards, such as by geographical areas, charitable fields, kinds of institutions, or other factors Line 2d"
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -92,7 +92,7 @@
         </div>
         <div>
           <span class="font-bold text-slate-700">Restrictions</span>
-          <p class="text-slate-700 text-sm">{applicationRestrictions}</p>
+          <p class="text-sm text-slate-700">{applicationRestrictions}</p>
         </div>
       </div>
 
@@ -101,7 +101,7 @@
 
         <div class="flex items-start gap-4">
           <div
-            class="bg-slate-500 text-white p-2 rounded-full tooltip-trigger"
+            class="tooltip-trigger rounded-full bg-slate-500 p-2 text-white"
             data-tooltip="The name, address, and telephone number or e-mail address of the person to whom applications should be addressed Line 2a"
           >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -116,7 +116,7 @@
           <div>
             <span class="font-bold text-slate-700">Contact</span>
             {#if applicationContact.name}
-              <div class="text-slate-700 text-sm">
+              <div class="text-sm text-slate-700">
                 <p>{applicationContact.name}</p>
                 {#if applicationContact.email}
                   <p class="text-gray-600">

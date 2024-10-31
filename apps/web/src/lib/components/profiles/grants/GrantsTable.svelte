@@ -17,7 +17,7 @@
 
 <div>
   <div class="sm:flex sm:items-center">
-    <div class="sm:flex-auto w-1/2">
+    <div class="w-1/2 sm:flex-auto">
       <!-- eslint-disable-next-line svelte/no-at-html-tags -->
       <div class="mt-2 px-3 text-sm text-gray-700">{@html sanitize(grantSummary)}</div>
     </div>
@@ -42,7 +42,7 @@
               {/each}
             {:else}
               <tr>
-                <td colspan="5" class="px-3 py-4 text-sm flex items-center gap-2">
+                <td colspan="5" class="flex items-center gap-2 px-3 py-4 text-sm">
                   <ExclamationCircle variation="solid" />
                   No grants available for this foundation
                 </td>
@@ -52,7 +52,7 @@
           <tfoot>
             <tr>
               <td colspan="5" class="mt-2 max-w-sm text-sm text-gray-700">
-                <p class="mt-8 mb-4 text-justify">Grants to be paid out in the future are not included.</p>
+                <p class="mb-4 mt-8 text-justify">Grants to be paid out in the future are not included.</p>
               </td>
             </tr>
           </tfoot>

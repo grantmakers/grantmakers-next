@@ -500,10 +500,10 @@
     <!-- Main Content -->
     <div class="mx-auto w-full px-6 py-6 text-slate-500">
       <!-- Alert -->
-      <div class="relative top-2 z-20 mx-auto w-full lg:w-12/12">
+      <div class="lg:w-12/12 relative top-2 z-20 mx-auto w-full">
         <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
           <SummaryBoxHeader headerText={'IRS Form 990-PF'}>
-            <img src={irsLogo} alt="IRS logo" class="w-full max-h-6" />
+            <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" />
           </SummaryBoxHeader>
         </div>
       </div>
@@ -530,7 +530,7 @@
               </div>
             </div>
             <!-- Name -->
-            <div class="my-auto w-auto max-w-full flex-none px-3 relative">
+            <div class="relative my-auto w-auto max-w-full flex-none px-3">
               <div class="h-full">
                 <h5 class="mb-1">{organization_name}</h5>
                 <p class="mb-0 text-sm font-normal leading-normal">
@@ -551,12 +551,12 @@
 
           <!-- Right side of box: metadata -->
           <div class="mr-2 grid grid-cols-2 gap-x-4 gap-y-1 text-right">
-            <span class="inline-flex text-sm items-center justify-end">EIN</span>
+            <span class="inline-flex items-center justify-end text-sm">EIN</span>
             <span
               class="inline-flex items-center justify-center rounded-md bg-slate-50 px-2 py-1 text-sm font-medium text-slate-700 ring-1 ring-inset ring-slate-700/10"
               >{formatEin(profile.ein)}</span
             >
-            <span class="inline-flex text-sm items-center justify-end">IRS Status</span>
+            <span class="inline-flex items-center justify-end text-sm">IRS Status</span>
             {#if profile.eobmf_recognized_exempt && profile.eobmf_ruling_date}
               <span
                 class="inline-flex items-center justify-center rounded-md bg-green-50 px-2 py-1 text-sm font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
@@ -568,7 +568,7 @@
                 >Unknown</span
               >
             {/if}
-            <span class="inline-flex text-sm items-center justify-end">Data Valid as of</span>
+            <span class="inline-flex items-center justify-end text-sm">Data Valid as of</span>
             {#if !isOutdatedISOString(profile.last_updated_irs)}
               <span
                 class="inline-flex items-center justify-center rounded-md bg-green-50 px-2 py-1 text-sm font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
@@ -585,11 +585,11 @@
       </div>
 
       <!-- AI Summary -->
-      <div class="mt-4 shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+      <div class="shadow-soft-xl relative mt-4 flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
         <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
           <SummaryBoxHeader headerText={'Summary'} />
         </div>
-        <div class="flex-auto p-4 justify-center items-start space-x-2">
+        <div class="flex-auto items-start justify-center space-x-2 p-4">
           {#if aiSummaries[profile.ein]}
             <p class="text-sm">{aiSummaries[profile.ein]}</p>
           {:else}
@@ -607,10 +607,10 @@
       <!-- Core Body Sections -->
       <div class="mx-auto mt-4 w-full pb-6">
         <!-- Snapshot Boxes -->
-        <div class="-mx-3 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 mb-4">
+        <div class="-mx-3 mb-4 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
           <!-- Box 1 -->
           <div class="lg-max:mt-6 h-full w-full max-w-full px-3">
-            <div class="flex flex-col h-full">
+            <div class="flex h-full flex-col">
               <!-- Summary -->
               <div class="shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
                 <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
@@ -619,27 +619,27 @@
 
                 <div class="flex-auto p-4">
                   <!-- Core stats -->
-                  <dl class="p-2 grid grid-cols-1 overflow-hidden rounded-lg bg-white">
-                    <div class="flex flex-row w-full justify-around items-center">
-                      <dl class="text-2xl flex flex-row w-full justify-around">
-                        <div class="p-2 flex flex-col items-center justify-end">
+                  <dl class="grid grid-cols-1 overflow-hidden rounded-lg bg-white p-2">
+                    <div class="flex w-full flex-row items-center justify-around">
+                      <dl class="flex w-full flex-row justify-around text-2xl">
+                        <div class="flex flex-col items-center justify-end p-2">
                           <dd class="font-bold text-slate-700">{humanizeCurrency(profile.assets)}</dd>
                           <dt class="text-sm leading-normal text-inherit">Assets</dt>
                         </div>
-                        <div class="p-2 flex flex-col items-center justify-end">
-                          <dd class="font-bold text-slate-700 flex flex-row items-center">
-                            <div class="rounded inline m-1 p-2 {!noUnsolicited ? 'bg-green-500' : 'bg-yellow-500'}">
+                        <div class="flex flex-col items-center justify-end p-2">
+                          <dd class="flex flex-row items-center font-bold text-slate-700">
+                            <div class="m-1 inline rounded p-2 {!noUnsolicited ? 'bg-green-500' : 'bg-yellow-500'}">
                               {#if !noUnsolicited}
-                                <LockOpen variation="solid" class="text-white h-4 w-4" />
+                                <LockOpen variation="solid" class="h-4 w-4 text-white" />
                               {:else}
-                                <LockClosed variation="solid" class="text-white h-4 w-4" />
+                                <LockClosed variation="solid" class="h-4 w-4 text-white" />
                               {/if}
                             </div>
-                            <div class="rounded inline m-1 p-2 {isStaffed ? 'bg-green-500' : 'bg-yellow-500'}">
-                              <UserGroup variation="solid" class="text-white h-4 w-4" />
+                            <div class="m-1 inline rounded p-2 {isStaffed ? 'bg-green-500' : 'bg-yellow-500'}">
+                              <UserGroup variation="solid" class="h-4 w-4 text-white" />
                             </div>
-                            <div class="rounded inline m-1 p-2 {hasWebsite ? 'bg-green-500' : 'bg-yellow-500'}">
-                              <GlobeAlt variation="solid" class="text-white h-4 w-4" />
+                            <div class="m-1 inline rounded p-2 {hasWebsite ? 'bg-green-500' : 'bg-yellow-500'}">
+                              <GlobeAlt variation="solid" class="h-4 w-4 text-white" />
                             </div>
                           </dd>
                           <dt class="text-sm leading-normal text-inherit">Approachability</dt>
@@ -651,18 +651,18 @@
               </div>
 
               <!-- Data Source -->
-              <div class="mt-4 min-w-0 shadow-soft-xl grow relative flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+              <div class="shadow-soft-xl relative mt-4 min-w-0 grow flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
                 <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                   <SummaryBoxHeader headerText={'Data Source'}>
-                    <img src={irsLogo} alt="IRS logo" class="w-full max-h-6" />
+                    <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" />
                   </SummaryBoxHeader>
                 </div>
 
-                <div class="flex-auto items-center space-y-2 p-4 bg-white rounded-b-2xl">
+                <div class="flex-auto items-center space-y-2 rounded-b-2xl bg-white p-4">
                   <div class="flex flex-col gap-0 p-2">
                     <!-- <img src={irsLogo} alt="IRS logo" class="h-6 w-auto" /> -->
-                    <p class="text-sm text-slate-700 font-bold">IRS Form 990-PF</p>
-                    <p class="flex flex-row gap-2 items-start text-sm text-slate-700">Available to the general public at IRS.gov.</p>
+                    <p class="text-sm font-bold text-slate-700">IRS Form 990-PF</p>
+                    <p class="flex flex-row items-start gap-2 text-sm text-slate-700">Available to the general public at IRS.gov.</p>
                   </div>
 
                   <hr class="border-1" />
@@ -700,18 +700,18 @@
                 <SummaryBoxHeader headerText={'Grants Snapshot'} />
               </div>
               <div class="flex h-full flex-col items-start p-4">
-                <dl class="text-2xl flex flex-row w-full justify-around items-center">
-                  <div class="p-2 flex flex-col items-center">
+                <dl class="flex w-full flex-row items-center justify-around text-2xl">
+                  <div class="flex flex-col items-center p-2">
                     <dd class="font-bold text-slate-700">{humanizeNumber(profile.grant_count)}</dd>
                     <dt class="text-sm leading-normal text-inherit">Grants</dt>
                   </div>
-                  <div class="inset-0 flex items-center justify-center pointer-events-none">
+                  <div class="pointer-events-none inset-0 flex items-center justify-center">
                     <div class="h-12 border-r border-slate-200"></div>
                   </div>
 
                   <HandDrawnBorder>
                     <div
-                      class="p-6 flex flex-col items-center rounded-full relative z-10"
+                      class="relative z-10 flex flex-col items-center rounded-full p-6"
                       class:bg-indigo-50={profile.grant_median >= 100000}
                       class:bg-slate-50={profile.grant_median < 100000}
                     >
@@ -721,17 +721,17 @@
                       <dt class="text-sm leading-normal text-inherit">Median</dt>
                     </div>
                   </HandDrawnBorder>
-                  <div class="inset-0 flex items-center justify-center pointer-events-none">
+                  <div class="pointer-events-none inset-0 flex items-center justify-center">
                     <div class="h-12 border-r border-slate-200"></div>
                   </div>
-                  <div class="p-2 flex flex-col items-center">
-                    <dd class="text-slate-700 text-lg">
+                  <div class="flex flex-col items-center p-2">
+                    <dd class="text-lg text-slate-700">
                       {humanizeCurrency(profile.grant_max)} - {humanizeCurrency(profile.grant_min)}
                     </dd>
                     <dt class="text-sm leading-normal text-inherit">Range</dt>
                   </div>
                 </dl>
-                <div class="mt-4 font-bold text-slate-700 text-sm">Grant Clusters</div>
+                <div class="mt-4 text-sm font-bold text-slate-700">Grant Clusters</div>
                 {#if grantsFacets}
                   <Bar rawData={grantsFacets[0].facets.amount} />
                 {:else}
@@ -753,7 +753,7 @@
         </div>
 
         <!-- Hello Message -->
-        <div class="flex flex-row items-start justify-center gap-2 mt-2 mb-4 p-4">
+        <div class="mb-4 mt-2 flex flex-row items-start justify-center gap-2 p-4">
           <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
           <div>Grantmakers.io is an open source project for our friends in the nonprofit community</div>
         </div>
@@ -787,7 +787,7 @@
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                 <SummaryBoxHeader headerText={'Application Guidelines'} anchorText={'guidelines'}
-                  ><img src={irsLogo} alt="IRS logo" class="w-full max-h-6" /></SummaryBoxHeader
+                  ><img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" /></SummaryBoxHeader
                 >
               </div>
               <ApplicationGuidelines
@@ -807,7 +807,7 @@
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                 <SummaryBoxHeader headerText={'About Grantmakers.io'}>
-                  <img src={logo} alt="Grantmakers.io logo" class="w-full max-h-6" />
+                  <img src={logo} alt="Grantmakers.io logo" class="max-h-6 w-full" />
                 </SummaryBoxHeader>
               </div>
               <div class="flex flex-col gap-6 p-6">
@@ -816,21 +816,21 @@
                   filings.
                 </p>
                 <div>
-                  <div class="uppercase text-sm font-bold text-slate-500">Data is Verbatim</div>
+                  <div class="text-sm font-bold uppercase text-slate-500">Data is Verbatim</div>
                   <p>
                     The project pulls from an open dataset published by the IRS. Data is presented exactly as found in the tax filings.
                     Misspellings and cut off words are common as is the use of ALLCAPS.
                   </p>
                 </div>
                 <div>
-                  <div class="uppercase text-sm font-bold text-slate-500">Historical Data</div>
+                  <div class="text-sm font-bold uppercase text-slate-500">Historical Data</div>
                   <p>
                     Be mindful of the limitations of using historical data in your research - the data represents past activity and may not
                     reflect current foundation priorities.
                   </p>
                 </div>
                 <p>
-                  <span class="inline-flex gap-1 text-slate-500 hover:underline hover:cursor-pointer"
+                  <span class="inline-flex gap-1 text-slate-500 hover:cursor-pointer hover:underline"
                     >Read more<a href="https://www.grantmakers.io/about/">about the project.</a></span
                   >
                 </p>
@@ -869,7 +869,7 @@
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                 <SummaryBoxHeader headerText={'Financial Trends'} anchorText={'financial trends'} />
               </div>
-              <div class="p-4 grow">
+              <div class="grow p-4">
                 <BarFinancialTrends
                   orgFinancialStats={profile.financial_stats}
                   lastUpdatedByIrs={profile.last_updated_irs}

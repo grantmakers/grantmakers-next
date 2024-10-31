@@ -5,7 +5,7 @@
 </script>
 
 <div class="relative {classes}">
-  <svg viewBox="6 0 84 96" class="w-full h-full {fillColorClass}" xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="6 0 84 96" class="h-full w-full {fillColorClass}" xmlns="http://www.w3.org/2000/svg">
     <!-- Hexagon -->
     <path d="M48 0 L90 24 L90 72 L48 96 L6 72 L6 24 Z" fill="currentColor" />
 

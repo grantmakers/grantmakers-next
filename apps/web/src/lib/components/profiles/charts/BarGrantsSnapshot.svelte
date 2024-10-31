@@ -96,26 +96,9 @@
     const ctx = chartCanvas.getContext('2d');
     if (!ctx) return;
 
-    const {  
-      Chart,
-      BarController,
-      CategoryScale,
-      LinearScale,
-      BarElement,
-      Title,
-      Tooltip,
-      Legend
-    } = await import('chart.js')
-    Chart.register(
-      BarController,
-      CategoryScale,
-      LinearScale,
-      BarElement,
-      Title,
-      Tooltip,
-      Legend
-    );
-    
+    const { Chart, BarController, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } = await import('chart.js');
+    Chart.register(BarController, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
     const colorPalette = ['#c54e00', '#e65c00', '#607d8b', '#7891a1', '#009688', '#00b3a1'];
 
     const getColorForRange = (range: string) => {
@@ -181,9 +164,9 @@
     if (chart) {
       chart.destroy();
     }
-  })
+  });
 </script>
 
-<div class="w-full min-h-[400px] max-h-[600px]">
+<div class="max-h-[600px] min-h-[400px] w-full">
   <canvas bind:this={chartCanvas}></canvas>
 </div>

@@ -14,7 +14,7 @@
     {#if message.type == 'warning'}
       <ExclamationTriangle class="mr-2 h-5 w-5" variation="solid" />
     {:else}
-      <img src={logo} class="inline-block mr-2 h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
+      <img src={logo} class="mr-2 inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
     {/if}
 
     <strong class="font-semibold">{message.intro}</strong>

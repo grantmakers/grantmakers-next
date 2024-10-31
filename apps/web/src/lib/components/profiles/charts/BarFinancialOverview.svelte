@@ -4,8 +4,6 @@
   import Divider from '$lib/components/shared/Divider.svelte';
   import type { Chart } from 'chart.js';
 
-
-
   export let year1: {
     assets: number;
     distributions: number;
@@ -86,32 +84,32 @@
     if (chart) {
       chart.destroy();
     }
-  })
+  });
 </script>
 
 <div class="p-4">
   <div class="flex flex-col gap-4">
     <div class="flex flex-col items-start">
-      <dl class="text-2xl flex flex-row w-full justify-around items-center">
-        <div class="p-2 flex flex-col items-center gap-2">
-          <dt class="text-sm leading-normal text-inherit flex flex-row items-center gap-1">
-            <span class="rounded-md bg-grantmakers-blue w-3 h-2"></span>
+      <dl class="flex w-full flex-row items-center justify-around text-2xl">
+        <div class="flex flex-col items-center gap-2 p-2">
+          <dt class="flex flex-row items-center gap-1 text-sm leading-normal text-inherit">
+            <span class="h-2 w-3 rounded-md bg-grantmakers-blue"></span>
             Assets
           </dt>
           <dd class=" text-slate-700">{humanizeCurrency(year1.assets)}</dd>
         </div>
 
-        <div class="p-2 flex flex-col items-center gap-2">
-          <dt class="text-sm leading-normal text-inherit flex flex-row items-center gap-1">
-            <span class="rounded-md bg-grantmakers-orange w-3 h-2"></span>
+        <div class="flex flex-col items-center gap-2 p-2">
+          <dt class="flex flex-row items-center gap-1 text-sm leading-normal text-inherit">
+            <span class="h-2 w-3 rounded-md bg-grantmakers-orange"></span>
             Distributions
           </dt>
           <dd class=" text-slate-700">{humanizeCurrency(year1.distributions)}</dd>
         </div>
 
-        <div class="p-2 flex flex-col items-center gap-2">
-          <dt class="text-sm leading-normal text-inherit flex flex-row items-center gap-1">
-            <span class="rounded-md bg-grantmakers-green w-3 h-2"></span>
+        <div class="flex flex-col items-center gap-2 p-2">
+          <dt class="flex flex-row items-center gap-1 text-sm leading-normal text-inherit">
+            <span class="h-2 w-3 rounded-md bg-grantmakers-green"></span>
             Contributions
           </dt>
           <dd class=" text-slate-700">{humanizeCurrency(year1.contributions)}</dd>
@@ -123,7 +121,7 @@
       <canvas bind:this={chartCanvas}></canvas>
     </div>
     <Divider />
-    <p class="flex justify-end text-xs gap-1">
+    <p class="flex justify-end gap-1 text-xs">
       Tax Year {orgCurrentTaxYear} ended {formattedTaxPeriodEnd ? formattedTaxPeriodEnd : 'N/A'}
     </p>
   </div>

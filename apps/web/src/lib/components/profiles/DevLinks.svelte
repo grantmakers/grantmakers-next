@@ -1,4 +1,4 @@
-<div class="container mx-auto mb-20 mt-6 flex w-full justify-center px-6 sm:mt-20 lg:p-8 bg-slate-200">
+<div class="container mx-auto mb-20 mt-6 flex w-full justify-center bg-slate-200 px-6 sm:mt-20 lg:p-8">
   <div class="mx-auto">
     <h2 class="text-center text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Demo Links</h2>
 

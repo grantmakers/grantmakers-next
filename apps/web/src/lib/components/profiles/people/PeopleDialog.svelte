@@ -16,7 +16,7 @@
     </div>
   </Dialog.Trigger>
 
-  <Dialog.Content class="overflow-y-scroll max-h-screen lg:max-w-xl w-full">
+  <Dialog.Content class="max-h-screen w-full overflow-y-scroll lg:max-w-xl">
     <Dialog.Header>
       <Dialog.Title>Board Members and Key Personnel</Dialog.Title>
       <Dialog.Description>

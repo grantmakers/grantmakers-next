@@ -9,10 +9,10 @@
   <thead>
     <tr>
       <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Name</th>
-      <th scope="col" class="xs:hidden px-3 py-3.5 text-left text-sm lg:table-cell font-semibold text-gray-900">Title</th>
-      <th scope="col" class="hidden px-3 py-3.5 text-left text-xs text-gray-900 sm:table-cell cursor-help" title="Hours per Week">Hrs/Wk</th
+      <th scope="col" class="xs:hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">Title</th>
+      <th scope="col" class="hidden cursor-help px-3 py-3.5 text-left text-xs text-gray-900 sm:table-cell" title="Hours per Week">Hrs/Wk</th
       >
-      <th scope="col" class="hidden px-3 py-3.5 text-left text-xs text-gray-900 sm:table-cell cursor-help" title="Annual Compensation"
+      <th scope="col" class="hidden cursor-help px-3 py-3.5 text-left text-xs text-gray-900 sm:table-cell" title="Annual Compensation"
         >Comp/Yr</th
       >
     </tr>

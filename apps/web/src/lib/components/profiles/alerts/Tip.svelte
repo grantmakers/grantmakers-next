@@ -6,13 +6,13 @@
   export let includeLogo: boolean = false;
 </script>
 
-<div class="p-6 rounded-md text-slate-700 bg-slate-100 border border-slate-200 shadow-sm text-sm">
-  <div class="flex flex-row items-start align-start gap-2">
+<div class="rounded-md border border-slate-200 bg-slate-100 p-6 text-sm text-slate-700 shadow-sm">
+  <div class="align-start flex flex-row items-start gap-2">
     {#if includeLogo}
       <!-- <img src={logo} class="inline-block h-4 w-4 rounded-full mt-[0.25em]" alt="Grantmakers.io Logo" height={36} width={36} /> -->
       <Blink classes="w-6 h-6" />
     {/if}
-    <div class="leading-normal flex-inline">
+    <div class="flex-inline leading-normal">
       {#if title}
         <span class="font-bold mr-1">{title}</span>
       {/if}

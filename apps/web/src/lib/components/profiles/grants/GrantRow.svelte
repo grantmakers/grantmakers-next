@@ -6,10 +6,10 @@
   const sanitize = DOMPurify.sanitize;
 </script>
 
-<tr class="even:bg-gray-50 relative">
+<tr class="relative even:bg-gray-50">
   <td class="px-3 py-4 text-sm">{formatToCurrency(grant.amount)}</td>
   <td class="py-4 pl-4 pr-3 text-sm sm:pl-0">
-    <div class="font-bold text-gray-900 text-md">{grant.name}</div>
+    <div class="text-md font-bold text-gray-900">{grant.name}</div>
   </td>
   <!-- eslint-disable-next-line svelte/no-at-html-tags -->
   <td class="px-3 py-4 text-sm">{@html sanitize(grant.purpose)}</td>
