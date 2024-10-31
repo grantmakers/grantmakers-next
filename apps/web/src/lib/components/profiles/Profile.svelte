@@ -4,25 +4,24 @@
   import SummaryBoxHeader from './SummaryBoxHeader.svelte';
   import Banner from './Banner.svelte';
   import NavSearch from '../search/Nav.svelte';
-  import HandDrawnBorder from '../shared/HandDrawnBorder.svelte';
   import GrantsTable from './grants/GrantsTable.svelte';
   import Eyes from '../shared/icons/Eyes.svelte';
   import Dot from '../shared/icons/Dot.svelte';
   import { formatTaxPeriodDate, formatDateToMonthYear, formatTaxYear, isOutdatedISOString } from '@shared/functions/formatters/dates';
   import { upperFirstLetter } from '@shared/functions/formatters/names';
-  import { humanizeCurrency, humanizeNumber, formatEin } from '@shared/functions/formatters/numbers';
+  import { humanizeCurrency, formatEin } from '@shared/functions/formatters/numbers';
   // import chatgptIcon from '$lib/assets/images/chatgpt.svg';
   // import claudeIcon from '$lib/assets/images/claude.svg';
   import logo from '$lib/assets/images/logo.svg';
   import irsLogo from '$lib/assets/images/irs-logo.png';
   import { Sparkles, LockOpen, LockClosed, UserGroup, GlobeAlt } from 'svelte-heros-v2';
   import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/grants';
-  import Bar from './charts/BarGrantsSnapshot.svelte';
   import ApplicationGuidelines from './guidelines/ApplicationGuidelines.svelte';
   import Tip from './alerts/Tip.svelte';
   // import Blink from '../shared/icons/Blink.svelte';
   import BarFinancialTrends from './charts/BarFinancialTrends.svelte';
   import BarFinancialOverview from './charts/BarFinancialOverview.svelte';
+  import GrantsSummaryBox from './grants/GrantsSummaryBox.svelte';
 
   type ImageModule = {
     default: string;
@@ -699,45 +698,12 @@
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                 <SummaryBoxHeader headerText={'Grants Snapshot'} />
               </div>
-              <div class="flex h-full flex-col items-start p-4">
-                <dl class="flex w-full flex-row items-center justify-around text-2xl">
-                  <div class="flex flex-col items-center p-2">
-                    <dd class="font-bold text-slate-700">{humanizeNumber(profile.grant_count)}</dd>
-                    <dt class="text-sm leading-normal text-inherit">Grants</dt>
-                  </div>
-                  <div class="pointer-events-none inset-0 flex items-center justify-center">
-                    <div class="h-12 border-r border-slate-200"></div>
-                  </div>
-
-                  <HandDrawnBorder>
-                    <div
-                      class="relative z-10 flex flex-col items-center rounded-full p-6"
-                      class:bg-indigo-50={profile.grant_median >= 100000}
-                      class:bg-slate-50={profile.grant_median < 100000}
-                    >
-                      <dd class="font-bold text-slate-700">
-                        {humanizeCurrency(profile.grant_median)}
-                      </dd>
-                      <dt class="text-sm leading-normal text-inherit">Median</dt>
-                    </div>
-                  </HandDrawnBorder>
-                  <div class="pointer-events-none inset-0 flex items-center justify-center">
-                    <div class="h-12 border-r border-slate-200"></div>
-                  </div>
-                  <div class="flex flex-col items-center p-2">
-                    <dd class="text-lg text-slate-700">
-                      {humanizeCurrency(profile.grant_max)} - {humanizeCurrency(profile.grant_min)}
-                    </dd>
-                    <dt class="text-sm leading-normal text-inherit">Range</dt>
-                  </div>
-                </dl>
-                <div class="mt-4 text-sm font-bold text-slate-700">Grant Clusters</div>
-                {#if grantsFacets}
-                  <Bar rawData={grantsFacets[0].facets.amount} />
-                {:else}
-                  <p>Not enough data</p>
-                {/if}
-              </div>
+              <GrantsSummaryBox
+                grantMin={profile.grant_min}
+                grantMax={profile.grant_max}
+                grantMedian={profile.grant_median}
+                {grantsFacets}
+              />
             </div>
           </div>
 
@@ -829,11 +795,14 @@
                     reflect current foundation priorities.
                   </p>
                 </div>
-                <p>
-                  <span class="inline-flex gap-1 text-slate-500 hover:cursor-pointer hover:underline"
-                    >Read more<a href="https://www.grantmakers.io/about/">about the project.</a></span
+                <div class="flex justify-center">
+                  <a
+                    href="https://www.grantmakers.io/about/"
+                    class="shrink rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-100"
                   >
-                </p>
+                    <div class="flex flex-row items-center justify-center gap-1">Learn More</div>
+                  </a>
+                </div>
 
                 <Tip
                   message="Grantmakers.io is not affiliated, associated, authorized, endorsed by, or in any way officially connected with any

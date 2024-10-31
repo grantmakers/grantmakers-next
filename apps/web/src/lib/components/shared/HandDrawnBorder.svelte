@@ -1,6 +1,8 @@
-<script>
+<script lang="ts">
   import HandDrawnSvg from './HandDrawnSvg.svelte';
-  export let fill = 'fill-slate-500';
+  export let fill: Fill = 'fill-grantmakers-blue';
+
+  type Fill = 'fill-grantmakers-orange' | 'fill-grantmakers-blue' | 'fill-grantmakers-green' | 'fill-transparent';
 </script>
 
 <div class="relative">

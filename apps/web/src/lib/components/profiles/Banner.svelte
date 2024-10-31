@@ -4,7 +4,7 @@
 
   const message = {
     intro: 'Welcome to Grantmakers.io NEXT',
-    body: 'ensuring the IRS 990 dataset remains truly open and free',
+    body: 'Building a community around truly open 990 data',
     type: '',
   };
 </script>
