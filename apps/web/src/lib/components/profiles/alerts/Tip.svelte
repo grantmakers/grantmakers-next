@@ -14,7 +14,7 @@
     {/if}
     <div class="flex-inline leading-normal">
       {#if title}
-        <span class="font-bold mr-1">{title}</span>
+        <span class="mr-1 font-bold">{title}</span>
       {/if}
       <p>{message}</p>
     </div>
