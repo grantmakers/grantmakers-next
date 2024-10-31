@@ -2,7 +2,7 @@
   <div class="mx-auto">
     <h2 class="text-center text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Demo Links</h2>
 
-    <div class="instructions mt-12 flex items-start justify-evenly gap-6">
+    <div class="instructions mt-12 flex items-start justify-between gap-6">
       <div class="flex flex-col gap-2 whitespace-nowrap">
         <h2 class="mb-4 mr-4 w-full border-b text-base">Typical</h2>
         <a href="/profiles/v1/810718077"><code>Thierer Family Foundation</code></a>
@@ -21,7 +21,7 @@
         <a href="/profiles/v1/010131950"><code>Plant Memorial Home</code></a>
       </div>
     </div>
-    <div class="flex w-full flex-col justify-center">
+    <div class="mt-12 flex w-full flex-col justify-center gap-2">
       <h2 class="mb-4 mr-4 w-full border-b text-base">Edge Cases</h2>
       <a href="/profiles/v1/205434405"><code>Margaret A Cargill Foundation (old EIN)</code></a>
       <a href="/profiles/v1/371758406"><code>Margaret A Cargill Foundation (new EIN)</code></a>
