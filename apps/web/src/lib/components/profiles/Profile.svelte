@@ -553,7 +553,7 @@
           <div class="mr-2 grid grid-cols-2 gap-x-4 gap-y-1 text-right">
             <span class="inline-flex text-sm items-center justify-end">EIN</span>
             <span
-              class="inline-flex items-center justify-center rounded-md bg-blue-50 px-2 py-1 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10"
+              class="inline-flex items-center justify-center rounded-md bg-slate-50 px-2 py-1 text-sm font-medium text-slate-700 ring-1 ring-inset ring-slate-700/10"
               >{formatEin(profile.ein)}</span
             >
             <span class="inline-flex text-sm items-center justify-end">IRS Status</span>
