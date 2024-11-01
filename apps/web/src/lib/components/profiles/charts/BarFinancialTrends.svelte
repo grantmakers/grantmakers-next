@@ -159,9 +159,9 @@
         <canvas bind:this={chartCanvas}></canvas>
       </div>
       <Divider />
-      <p class="flex justify-end gap-1 text-xs">
-        Tax Year {orgFinancialStats[0].tax_year} ended {formattedTaxPeriodEnd ? formattedTaxPeriodEnd : 'N/A'}
-      </p>
+      <div class="flex w-full justify-end gap-1 text-xs">
+        <p>Tax Year {orgFinancialStats[0].tax_year} ended {formattedTaxPeriodEnd ? formattedTaxPeriodEnd : 'N/A'}</p>
+      </div>
     {:else}
       <div class="relative h-full grow">
         <img src={skeleton} alt="Financial Overview Placeholder" class="h-full w-full object-cover" />
