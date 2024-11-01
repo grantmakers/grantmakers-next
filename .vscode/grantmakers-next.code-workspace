@@ -15,10 +15,16 @@
     {
       "name": "apps/web",
       "path": "../apps/web",
+      "settings": {
+        "[svelte]": {
+          "editor.defaultFormatter": "svelte.svelte-vscode"
+        }
+      }
     },
   ],
   "settings": {
     "prettier.enable": true,
+    "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.tokenColorCustomizations": {
       "[Monokai]": {
