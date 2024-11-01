@@ -58,7 +58,7 @@ export interface GrantmakersExtractedDataObj {
   grants_reference_attachment: boolean;
   charitable_activities: CharitableActivitiesArray;
   grants_facet_tax_year: any;
-  grants_facets?: Facets[];
+  grants_facets: Facets[];
   grants?: GrantsArray;
   grants_current_year_top_20?: GrantsArray;
   grants_all_years_top_20?: GrantsArray;

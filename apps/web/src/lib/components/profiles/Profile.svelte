@@ -702,6 +702,7 @@
                 grantMin={profile.grant_min}
                 grantMax={profile.grant_max}
                 grantMedian={profile.grant_median}
+                grantCount={profile.grant_count}
                 {grantsFacets}
               />
             </div>

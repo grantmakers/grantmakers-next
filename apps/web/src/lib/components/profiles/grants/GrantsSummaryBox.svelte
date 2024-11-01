@@ -9,9 +9,8 @@
   export let grantMin: number;
   export let grantMax: number;
   export let grantMedian: number;
+  export let grantCount: number;
   export let grantsFacets: GrantmakersExtractedDataObj['grants_facets'];
-
-  let grantCount: number = grantsFacets?.[0]?.grant_count ?? 0;
 
   function getBackgroundClass(median: number) {
     if (median === 0) return 'bg-transparent';
@@ -61,7 +60,7 @@
     </div>
   </dl>
   <div class="mt-4 text-sm font-bold text-slate-700">Grant Clusters</div>
-  {#if grantsFacets && grantCount !== 0}
+  {#if grantsFacets}
     <BarGrantsSnapshot rawData={grantsFacets[0].facets.amount} />
   {:else if grantCount === 0}
     <div class="object-fit relative h-full">
@@ -75,6 +74,6 @@
       </div>
     </div>
   {:else}
-    <p>Not enough data</p>
+    <p>Clusters not available for this tax year</p>
   {/if}
 </div>
