@@ -2,7 +2,7 @@
   import PeopleRow from './PeopleRow.svelte';
 
   export let people;
-  export let showAll: boolean = false;
+  export let isSummary: boolean = false;
 </script>
 
 <table class="min-w-full divide-y divide-gray-300">
@@ -19,17 +19,17 @@
   </thead>
   <tbody class="divide-y divide-gray-200 bg-white">
     {#if people}
-      {#if showAll}
-        {#each people as person}
+      {#if isSummary}
+        {#each people.slice(0, 5) as person}
           <PeopleRow {person} />
         {/each}
       {:else}
-        {#each people.slice(0, 5) as person}
+        {#each people as person}
           <PeopleRow {person} />
         {/each}
       {/if}
 
-      {#if !showAll}
+      {#if isSummary && people.length > 5}
         <tr>
           <td colspan="4" class="relative mb-2 flex items-center rounded-t-lg border-0 bg-white px-0 py-2 text-inherit">
             <div class="text-xs">{`and ${people.length - 5} more...`}</div>

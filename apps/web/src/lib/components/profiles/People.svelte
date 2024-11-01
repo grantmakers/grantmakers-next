@@ -17,7 +17,7 @@
 </script>
 
 <div class="mb-6 flex h-full flex-col justify-between p-4">
-  <PeopleTable people={normalizedPeople} />
+  <PeopleTable people={normalizedPeople} isSummary={true} />
   {#if people?.length > 5}
     <div class="flex justify-center">
       <PeopleDialog people={normalizedPeople} {taxPeriod} />

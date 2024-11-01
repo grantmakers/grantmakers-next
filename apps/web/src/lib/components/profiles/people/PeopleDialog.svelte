@@ -15,8 +15,7 @@
       View All Board Members and Leaders <ArrowsPointingOut class="h-4 w-4" />
     </div>
   </Dialog.Trigger>
-
-  <Dialog.Content class="max-h-screen w-full overflow-y-scroll lg:max-w-xl">
+  <Dialog.Content class="max-h-[85vh] w-full overflow-y-auto p-12 lg:max-w-max">
     <Dialog.Header>
       <Dialog.Title>Board Members and Key Personnel</Dialog.Title>
       <Dialog.Description>
@@ -27,6 +26,6 @@
         {/if}
       </Dialog.Description>
     </Dialog.Header>
-    <div class="grid gap-4 py-4"><PeopleTable {people} showAll={true} /></div>
+    <div class="grid gap-4 py-4"><PeopleTable {people} isSummary={false} /></div>
   </Dialog.Content>
 </Dialog.Root>
