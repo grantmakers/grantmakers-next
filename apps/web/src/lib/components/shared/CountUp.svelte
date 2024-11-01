@@ -4,10 +4,10 @@
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-nocheck
 
-  import { nanoid } from 'nanoid';
   import { inview } from 'svelte-inview';
 
-  const id = nanoid();
+  // const id = nanoid();
+  const id = Symbol();
 
   let isInView;
 
