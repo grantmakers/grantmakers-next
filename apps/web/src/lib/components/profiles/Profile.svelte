@@ -714,7 +714,7 @@
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                 <SummaryBoxHeader headerText={'People'} />
               </div>
-              <People {people} taxPeriod={formattedTaxPeriodEnd} />
+              <People {people} />
             </div>
           </div>
         </div>
