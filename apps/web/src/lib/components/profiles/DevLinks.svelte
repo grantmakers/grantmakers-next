@@ -11,7 +11,7 @@
         <a href="/profiles/v1/010247548"><code>The Clarence E Mulford Trust</code></a>
       </div>
       <div class="flex flex-col gap-2 whitespace-nowrap">
-        <h2 class="mb-4 w-full border-b text-base">Unique Summaries</h2>
+        <h2 class="mb-4 w-full border-b text-base">Unique Orgs</h2>
         <a href="/profiles/v1/611913297"><code>Every Org</code></a>
         <a href="/profiles/v1/832856275"><code>Expa Org</code></a>
       </div>
@@ -29,6 +29,10 @@
       <a href="/profiles/v1/546057730"
         ><code>Coastal Virginia Building Industry Association Scholarship Foundation (large people array)</code></a
       >
+    </div>
+    <div class="mt-12 flex w-full flex-col justify-center gap-2">
+      <h2 class="mb-4 mr-4 w-full border-b text-base">Handle Legacy Data Structures</h2>
+      <a href="/profiles/v1/010442078"><code>Morton-Kelly Charitable Tr (no grant facets)</code></a>
     </div>
   </div>
 </div>
