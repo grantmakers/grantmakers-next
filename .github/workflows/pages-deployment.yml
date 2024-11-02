@@ -51,6 +51,9 @@ jobs:
           PROFILES_API_ENDPOINT: ${{ secrets.PROFILES_API_ENDPOINT }}
           AUTH_PRIVATE_KEY: ${{ secrets.AUTH_PRIVATE_KEY }}
           WAF_AUTH_VERIFY_KEY: ${{secrets.WAF_AUTH_VERIFY_KEY }}
+          PUBLIC_ALGOLIA_APP_ID: ${{secrets.PUBLIC_ALGOLIA_APP_ID}}
+          PUBLIC_ALGOLIA_SEARCH_ONLY_KEY: ${{secrets.PUBLIC_ALGOLIA_SEARCH_ONLY_KEY}}
+          PUBLIC_ALGOLIA_INDEX_NAME: ${{secrets.PUBLIC_ALGOLIA_INDEX_NAME}}
 
       - name: Publish Webapp
         uses: cloudflare/pages-action@1
