@@ -1,9 +1,14 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import DOMPurify from 'isomorphic-dompurify';
   import { formatToCurrency } from '@shared/functions/formatters/numbers';
   export let grant;
 
-  const sanitize = DOMPurify.sanitize;
+  let sanitize = (html: string) => html;
+
+  onMount(() => {
+    sanitize = DOMPurify.sanitize;
+  });
 </script>
 
 <tr class="relative even:bg-gray-50">

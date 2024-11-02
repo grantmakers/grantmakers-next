@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import GrantRow from './GrantRow.svelte';
   import DOMPurify from 'isomorphic-dompurify';
   import { ExclamationCircle } from 'svelte-heros-v2';
@@ -8,11 +9,14 @@
   export let grantCount: number | null = null;
   export let filingsAvailable: number | null = null;
 
-  const sanitize = DOMPurify.sanitize;
+  let sanitize = (html: string) => html;
 
   const showGrantsCount = 5;
-
   const grantSummary = `Showing the <span class="font-bold">largest ${humanizeNumber(showGrantsCount)}</span> grants <br>among <span class="font-bold">${grantCount ? humanizeNumber(grantCount) : 'N/A'}</span> grants<br>made across <span class="font-bold">${filingsAvailable} years</span> <br>of available tax filings.`;
+
+  onMount(() => {
+    sanitize = DOMPurify.sanitize;
+  });
 </script>
 
 <div>
