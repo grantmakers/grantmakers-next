@@ -33,7 +33,7 @@ const config = {
           'self',
           'https://cloudflareinsights.com',
           'https://kdwvszvs1i-3.algolianet.com',
-          'https://kdwvszvs1i-dsn.algolia.net'
+          'https://kdwvszvs1i-dsn.algolia.net',
         ],
         'default-src': ['none'],
         'img-src': ['self', 'data:', 'https://images.unsplash.com', 'https://cdn.iubenda.com', 'https://tailwindui.com'], // Added Unsplash domain
