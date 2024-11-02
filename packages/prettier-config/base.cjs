@@ -6,5 +6,5 @@ module.exports = {
   printWidth: 140,
   experimentalTernaries: true,
   plugins: [],
-  endOfLine: "lf"
+  endOfLine: 'lf',
 };

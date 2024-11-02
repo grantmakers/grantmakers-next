@@ -1,33 +1,17 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": [
-    "**/.env.*local"
-  ],
+  "globalDependencies": ["**/.env.*local"],
   "tasks": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "env": [
-        "WORKER_URL",
-        "PROFILES_API_ENDPOINT",
-        "AUTH_PRIVATE_KEY",
-        "WAF_AUTH_VERIFY_KEY"
-      ],
-      "outputs": [
-        ".svelte-kit/**",
-        "apps/api/**"
-      ]
+      "dependsOn": ["^build"],
+      "env": ["WORKER_URL", "PROFILES_API_ENDPOINT", "AUTH_PRIVATE_KEY", "WAF_AUTH_VERIFY_KEY"],
+      "outputs": [".svelte-kit/**", "apps/api/**"]
     },
     "lint": {
-      "dependsOn": [
-        "^lint"
-      ]
+      "dependsOn": ["^lint"]
     },
     "format": {
-      "dependsOn": [
-        "^format"
-      ]
+      "dependsOn": ["^format"]
     },
     "dev": {
       "cache": false,

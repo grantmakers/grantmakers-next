@@ -240,30 +240,30 @@ export interface Grant {
 }
 
 export interface Facets {
-  'tax_year': string;
-  'grant_count': number;
-  'facets': GrantsFacets
+  tax_year: string;
+  grant_count: number;
+  facets: GrantsFacets;
 }
 
 export interface GrantsFacets {
-  'name': {
+  name: {
     [key: string]: number;
   };
-  'city': {
+  city: {
     [key: string]: number;
   };
-  'state': {
+  state: {
     [key: string]: number;
   };
-  'country': {
+  country: {
     [key: string]: number;
   };
   // TODO Upstream, convert null to boolean
-  'is_foreign': Record<string, never>;
-  'purpose': {
+  is_foreign: Record<string, never>;
+  purpose: {
     [key: string]: number;
   };
-  'amount': {
+  amount: {
     [key: string]: number;
   };
 }

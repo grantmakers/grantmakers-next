@@ -102,11 +102,11 @@ const slugify = (text: string): string => {
     .toString()
     .toLowerCase()
     .trim()
-    .replace(/\s+/g, '-')           // Replace spaces with -
-    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-    .replace(/^-+/, '')             // Trim - from start of text
-    .replace(/-+$/, '');            // Trim - from end of text
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+    .replace(/\-\-+/g, '-') // Replace multiple - with single -
+    .replace(/^-+/, '') // Trim - from start of text
+    .replace(/-+$/, ''); // Trim - from end of text
 };
 
 const extractFirstLetter = (organization_name: string): string => {
@@ -121,10 +121,4 @@ const extractFirstLetter = (organization_name: string): string => {
 const upperFirstLetter = (name: string) => extractFirstLetter(name).toUpperCase();
 
 // ESM export
-export {
-  convertToCapitalCase,
-  normalizePerson,
-  slugify,
-  extractFirstLetter,
-  upperFirstLetter,
-};
+export { convertToCapitalCase, normalizePerson, slugify, extractFirstLetter, upperFirstLetter };
