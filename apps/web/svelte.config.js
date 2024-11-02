@@ -29,7 +29,12 @@ const config = {
         'script-src': ['self', 'https://static.cloudflareinsights.com', 'https://cdn.iubenda.com', 'unsafe-eval'], // The unsafe-eval requirement is for Zaraz, a known CF issue required for now - Hashes will be added automatically
         'style-src': ['self', 'unsafe-inline', 'https://cdn.iubenda.com'], // Include 'unsafe-inline' for inline styles
         'frame-src': ['https://www.iubenda.com'],
-        'connect-src': ['self', 'https://cloudflareinsights.com'],
+        'connect-src': [
+          'self',
+          'https://cloudflareinsights.com',
+          'https://kdwvszvs1i-3.algolianet.com',
+          'https://kdwvszvs1i-dsn.algolia.net'
+        ],
         'default-src': ['none'],
         'img-src': ['self', 'data:', 'https://images.unsplash.com', 'https://cdn.iubenda.com', 'https://tailwindui.com'], // Added Unsplash domain
         'font-src': ['self', 'data:'],
