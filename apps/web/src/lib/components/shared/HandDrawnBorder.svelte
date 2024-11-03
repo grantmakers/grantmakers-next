@@ -7,7 +7,7 @@
 
 <div class="relative">
   <!-- Border SVG Container -->
-  <div class="pointer-events-none absolute inset-0 -top-1 z-20 h-full w-full" role="presentation">
+  <div class="pointer-events-none absolute inset-0 -top-1 z-20 h-full w-full" role="presentation" aria-hidden="true">
     <HandDrawnSvg {fill} />
   </div>
   <slot />
