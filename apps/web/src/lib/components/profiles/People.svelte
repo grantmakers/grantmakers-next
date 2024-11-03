@@ -22,7 +22,7 @@
 </script>
 
 {#if dialog}
-  <div class="mb-6 flex h-full flex-col justify-between p-4">
+  <div class="mb-6 flex h-full flex-col justify-between overflow-x-auto p-4">
     <PeopleTable people={normalizedPeople} isSummary={true} />
     {#if people?.length > 5}
       <button

@@ -549,13 +549,13 @@
           </div>
 
           <!-- Right side of box: metadata -->
-          <div class="mr-2 grid grid-cols-2 gap-x-4 gap-y-1 text-right">
-            <span class="inline-flex items-center justify-end text-sm">EIN</span>
+          <div class="ml-4 mt-4 grid grid-cols-2 gap-x-2 gap-y-1 text-right md:ml-2 md:mt-0 md:gap-x-4">
+            <span class="inline-flex items-center justify-start text-sm md:justify-end">EIN</span>
             <span
               class="inline-flex items-center justify-center rounded-md bg-slate-50 px-2 py-1 text-sm font-medium text-slate-700 ring-1 ring-inset ring-slate-700/10"
               >{formatEin(profile.ein)}</span
             >
-            <span class="inline-flex items-center justify-end text-sm">IRS Status</span>
+            <span class="inline-flex items-center justify-start text-sm md:justify-end">IRS Status</span>
             {#if profile.eobmf_recognized_exempt && profile.eobmf_ruling_date}
               <span
                 class="inline-flex items-center justify-center rounded-md bg-green-50 px-2 py-1 text-sm font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
@@ -567,7 +567,7 @@
                 >Unknown</span
               >
             {/if}
-            <span class="inline-flex items-center justify-end text-sm">Data Valid as of</span>
+            <span class="inline-flex items-center justify-start text-sm md:justify-end">Data Valid as of</span>
             {#if !isOutdatedISOString(profile.last_updated_irs)}
               <span
                 class="inline-flex items-center justify-center rounded-md bg-green-50 px-2 py-1 text-sm font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
