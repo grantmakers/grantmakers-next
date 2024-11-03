@@ -617,55 +617,38 @@
 
                 <div class="flex-auto p-4">
                   <!-- Core stats -->
-                  <dl class="grid grid-cols-1 overflow-hidden rounded-lg bg-white p-2" role="list" aria-label="Profile Statistics">
-                    <div class="flex w-full flex-row items-center justify-around">
-                      <div class="flex w-full flex-row justify-around text-2xl">
-                        <!-- Assets section -->
-                        <div class="flex flex-col items-center justify-end p-2">
-                          <dd class="font-bold text-slate-700" aria-label="Total Assets">
-                            {humanizeCurrency(profile.assets)}
-                          </dd>
-                          <dt class="text-sm leading-normal text-inherit">Assets</dt>
-                        </div>
+                  <dl class="grid grid-cols-1 overflow-hidden rounded-lg bg-white p-2">
+                    <!-- Assets section -->
+                    <dt class="text-center text-sm leading-normal text-inherit">Assets</dt>
+                    <dd class="mb-4 text-center text-2xl font-bold text-slate-700">
+                      {humanizeCurrency(profile.assets)}
+                    </dd>
 
-                        <!-- Approachability section -->
-                        <div class="flex flex-col items-center justify-end p-2">
-                          <dd class="flex flex-row items-center font-bold text-slate-700">
-                            <!-- Solicitation Status -->
-                            <div
-                              class="m-1 inline rounded p-2 {!noUnsolicited ? 'bg-green-500' : 'bg-yellow-500'}"
-                              role="status"
-                              aria-label="Solicitation {!noUnsolicited ? 'Allowed' : 'Not Allowed'}"
-                            >
-                              {#if !noUnsolicited}
-                                <LockOpen variation="solid" class="h-4 w-4 text-white" aria-hidden="true" />
-                              {:else}
-                                <LockClosed variation="solid" class="h-4 w-4 text-white" aria-hidden="true" />
-                              {/if}
-                            </div>
-
-                            <!-- Staffing Status -->
-                            <div
-                              class="m-1 inline rounded p-2 {isStaffed ? 'bg-green-500' : 'bg-yellow-500'}"
-                              role="status"
-                              aria-label="Organization {isStaffed ? 'is Staffed' : 'is not Staffed'}"
-                            >
-                              <UserGroup variation="solid" class="h-4 w-4 text-white" aria-hidden="true" />
-                            </div>
-
-                            <!-- Website Status -->
-                            <div
-                              class="m-1 inline rounded p-2 {hasWebsite ? 'bg-green-500' : 'bg-yellow-500'}"
-                              role="status"
-                              aria-label="Website {hasWebsite ? 'Available' : 'Not Available'}"
-                            >
-                              <GlobeAlt variation="solid" class="h-4 w-4 text-white" aria-hidden="true" />
-                            </div>
-                          </dd>
-                          <dt class="text-sm leading-normal text-inherit">Approachability</dt>
-                        </div>
+                    <!-- Approachability section -->
+                    <dt class="text-center text-sm leading-normal text-inherit">Approachability</dt>
+                    <dd class="flex flex-row items-center justify-center text-2xl font-bold text-slate-700">
+                      <!-- Solicitation Status -->
+                      <div class="m-1 inline rounded p-2 {!noUnsolicited ? 'bg-green-500' : 'bg-yellow-500'}">
+                        {#if !noUnsolicited}
+                          <LockOpen variation="solid" class="h-4 w-4 text-white" aria-hidden="true" />
+                        {:else}
+                          <LockClosed variation="solid" class="h-4 w-4 text-white" aria-hidden="true" />
+                        {/if}
+                        <span class="sr-only">Solicitation {!noUnsolicited ? 'Allowed' : 'Not Allowed'}</span>
                       </div>
-                    </div>
+
+                      <!-- Staffing Status -->
+                      <div class="m-1 inline rounded p-2 {isStaffed ? 'bg-green-500' : 'bg-yellow-500'}">
+                        <UserGroup variation="solid" class="h-4 w-4 text-white" aria-hidden="true" />
+                        <span class="sr-only">Organization {isStaffed ? 'is Staffed' : 'is not Staffed'}</span>
+                      </div>
+
+                      <!-- Website Status -->
+                      <div class="m-1 inline rounded p-2 {hasWebsite ? 'bg-green-500' : 'bg-yellow-500'}">
+                        <GlobeAlt variation="solid" class="h-4 w-4 text-white" aria-hidden="true" />
+                        <span class="sr-only">Website {hasWebsite ? 'Available' : 'Not Available'}</span>
+                      </div>
+                    </dd>
                   </dl>
                 </div>
               </div>
