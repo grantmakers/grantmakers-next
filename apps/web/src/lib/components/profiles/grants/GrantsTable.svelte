@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import GrantRow from './GrantRow.svelte';
-  import DOMPurify from 'isomorphic-dompurify';
   import { ExclamationCircle } from 'svelte-heros-v2';
   import type { GrantsArray } from '@shared/typings/grantmakers/grants';
   import { humanizeNumber } from '@shared/functions/formatters/numbers';
@@ -9,21 +7,16 @@
   export let grantCount: number | null = null;
   export let filingsAvailable: number | null = null;
 
-  let sanitize = (html: string) => html;
-
   const showGrantsCount = 5;
   const grantSummary = `Showing the <span class="font-bold">largest ${humanizeNumber(showGrantsCount)}</span> grants <br>among <span class="font-bold">${grantCount ? humanizeNumber(grantCount) : 'N/A'}</span> grants<br>made across <span class="font-bold">${filingsAvailable} years</span> <br>of available tax filings.`;
-
-  onMount(() => {
-    sanitize = DOMPurify.sanitize;
-  });
 </script>
 
 <div>
   <div class="sm:flex sm:items-center">
     <div class="w-1/2 sm:flex-auto">
+      <!-- Source: IRS core dataset via Grantmakers ETL -->
       <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-      <div class="mt-2 px-3 text-sm text-gray-700">{@html sanitize(grantSummary)}</div>
+      <div class="mt-2 px-3 text-sm text-gray-700">{@html grantSummary}</div>
     </div>
   </div>
   <div class="mt-8 flow-root">
