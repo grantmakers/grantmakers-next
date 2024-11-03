@@ -36,9 +36,15 @@ const humanReadableFormatter = new Intl.NumberFormat(LOCALE, {
   compactDisplay: 'short',
 });
 
-export function formatEin(string: string): string {
-  return string.replace(/(\d{2})/, '$1-');
-}
+const millionsFormatterSmall = new Intl.NumberFormat(LOCALE, {
+  minimumFractionDigits: 3,
+  maximumFractionDigits: 3,
+});
+
+const millionsFormatterLarge = new Intl.NumberFormat(LOCALE, {
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
+});
 
 export function formatNumber(num: number): string {
   return numberFormatter.format(num);
@@ -59,4 +65,18 @@ export function humanizeNumber(num: number): string {
 export function humanizeCurrency(num: number): string {
   const currencySymbol = currencyFormatter.format(0).charAt(0);
   return currencySymbol + humanReadableFormatter.format(num);
+}
+
+export function normalizeCurrencyToMillions(num: number): string {
+  const currencySymbol = currencyFormatter.format(0).charAt(0);
+  const inMillions = num / 1000000;
+
+  // Handle zero
+  if (num === 0) {
+    return currencySymbol + '0';
+  }
+
+  // Use different formatters based on the size of the number
+  const formatter = inMillions >= 1 ? millionsFormatterLarge : millionsFormatterSmall;
+  return currencySymbol + formatter.format(inMillions) + 'M';
 }

@@ -9,7 +9,8 @@
   import Dot from '../shared/icons/Dot.svelte';
   import { formatTaxPeriodDate, formatDateToMonthYear, formatTaxYear, isOutdatedISOString } from '@shared/functions/formatters/dates';
   import { upperFirstLetter } from '@shared/functions/formatters/names';
-  import { humanizeCurrency, formatEin } from '@shared/functions/formatters/numbers';
+  import { humanizeCurrency } from '@shared/functions/formatters/numbers';
+  import { formatEin } from '@shared/functions/formatters/ein';
   // import chatgptIcon from '$lib/assets/images/chatgpt.svg';
   // import claudeIcon from '$lib/assets/images/claude.svg';
   import logo from '$lib/assets/images/logo.svg';

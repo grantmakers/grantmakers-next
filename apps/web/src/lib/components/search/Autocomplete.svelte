@@ -1,12 +1,23 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
-  import type { AutocompleteApi } from '@algolia/autocomplete-js';
-  import type { BaseItem } from '@algolia/autocomplete-core';
-  import type { LiteClient } from 'algoliasearch/lite';
   import '@algolia/autocomplete-theme-classic';
   import algoliaLogo from '$lib/assets/images/Algolia-logo-blue.svg';
+  import { formatEin } from '@shared/functions/formatters/ein';
+  import type { AutocompleteApi } from '@algolia/autocomplete-js';
+  import type { BaseItem } from '@algolia/autocomplete-core';
+  import type { HTMLTemplate } from '@algolia/autocomplete-shared';
+  import type { LiteClient } from 'algoliasearch/lite';
+  import type { AlgoliaProfilesResponse } from '@shared/typings/algolia/profiles';
 
   import { PUBLIC_ALGOLIA_APP_ID, PUBLIC_ALGOLIA_SEARCH_ONLY_KEY, PUBLIC_ALGOLIA_INDEX_NAME } from '$env/static/public';
+  import { normalizeCurrencyToMillions } from '@shared/functions/formatters/numbers';
+
+  interface AlgoliaProfilesItem extends BaseItem, AlgoliaProfilesResponse {}
+
+  interface AlgoliaItemTemplateProps {
+    item: AlgoliaProfilesItem;
+    html: HTMLTemplate;
+  }
 
   let searchClient: LiteClient;
   const indexName = PUBLIC_ALGOLIA_INDEX_NAME;
@@ -23,6 +34,7 @@
     // Init Algolia Autocomplete
     const pkg = await import('@algolia/autocomplete-js');
     const { autocomplete, getAlgoliaResults } = pkg;
+
     if (container) {
       autocompleteInstance = autocomplete({
         container,
@@ -37,6 +49,7 @@
           detachedSearchButtonIcon: '!text-slate-500',
           detachedSearchButtonPlaceholder: 'text-slate-500 text-sm',
         },
+        // @ts-expect-error The Algolia response is properly typed - thus, there's no need to go into the underpinnings of Autocomplete to satisfy this error
         getSources({ query }) {
           return [
             {
@@ -62,18 +75,22 @@
                 header({ html }) {
                   return html`<div class="px-3 py-2 text-xs font-semibold uppercase text-gray-500">Foundation Profiles</div>`;
                 },
-                item({ item, html }) {
+                item({ item, html }: AlgoliaItemTemplateProps) {
                   // HACK data-sveltekit-reload forces a full refresh
                   // TODO Enable client-side fetch for these situations
                   // AKA There is no need to re-download chart.js, etc
                   return html`<a href="/profiles/v1/${item.ein}" data-sveltekit-reload
                     ><div class="px-3 py-2 transition-colors duration-100 hover:bg-gray-100">
-                      <div class="flex items-center gap-3">
+                      <div class="flex items-center justify-between gap-3">
                         <div class="min-w-0 flex-1">
                           <div class="truncate text-sm font-medium text-gray-900">${item.organization_name}</div>
                           ${item.city && item.state ?
                             html` <div class="truncate text-xs text-gray-500">${item.city}, ${item.state}</div> `
                           : ''}
+                        </div>
+                        <div class="flex flex-col justify-end text-xs text-gray-500">
+                          <div>${formatEin(item.ein)}</div>
+                          <div class="text-right">${normalizeCurrencyToMillions(item.assets)}</div>
                         </div>
                       </div>
                     </div></a
