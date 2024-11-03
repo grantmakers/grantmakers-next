@@ -4,6 +4,7 @@
   import type { BaseItem } from '@algolia/autocomplete-core';
   import type { LiteClient } from 'algoliasearch/lite';
   import '@algolia/autocomplete-theme-classic';
+  import algoliaLogo from '$lib/assets/images/Algolia-logo-blue.svg';
 
   import { PUBLIC_ALGOLIA_APP_ID, PUBLIC_ALGOLIA_SEARCH_ONLY_KEY, PUBLIC_ALGOLIA_INDEX_NAME } from '$env/static/public';
 
@@ -80,7 +81,15 @@
                 },
                 footer({ html }) {
                   return html`<div class="border-t px-3 py-2 text-xs text-gray-400">
-                    <a href="https://algolia.com" class="hover:text-gray-500" target="_blank" rel="noopener"> Powered by Algolia </a>
+                    <a
+                      href="https://algolia.com"
+                      class="mt-2 flex items-center justify-end gap-2 hover:text-gray-500"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      Search by
+                      <img src="${algoliaLogo}" alt="Algolia Logo" style="height: 1rem;" />
+                    </a>
                   </div>`;
                 },
               },
