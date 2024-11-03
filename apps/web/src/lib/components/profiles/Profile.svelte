@@ -477,16 +477,15 @@
         <nav>
           <ol class="mr-12 flex flex-wrap rounded-lg bg-transparent pt-1 sm:mr-16">
             <li class="text-sm leading-normal">
-              <a class="text-slate-700 opacity-50" href="/profiles">Foundation Profiles</a>
+              <a class="text-slate-700" href="/profiles">Foundation Profiles</a>
             </li>
             <li
-              class="pl-2 text-sm capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/']"
+              class="pl-2 text-sm font-semibold capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/']"
               aria-current="page"
             >
               {organization_name}
             </li>
           </ol>
-          <!-- <h6 class="mb-0 font-bold capitalize">A historic snapshot as of tax year {profile.tax_year}</h6> -->
         </nav>
 
         <!-- Search -->
@@ -618,32 +617,54 @@
 
                 <div class="flex-auto p-4">
                   <!-- Core stats -->
-                  <dl class="grid grid-cols-1 overflow-hidden rounded-lg bg-white p-2">
+                  <dl class="grid grid-cols-1 overflow-hidden rounded-lg bg-white p-2" role="list" aria-label="Profile Statistics">
                     <div class="flex w-full flex-row items-center justify-around">
-                      <dl class="flex w-full flex-row justify-around text-2xl">
+                      <div class="flex w-full flex-row justify-around text-2xl">
+                        <!-- Assets section -->
                         <div class="flex flex-col items-center justify-end p-2">
-                          <dd class="font-bold text-slate-700">{humanizeCurrency(profile.assets)}</dd>
+                          <dd class="font-bold text-slate-700" aria-label="Total Assets">
+                            {humanizeCurrency(profile.assets)}
+                          </dd>
                           <dt class="text-sm leading-normal text-inherit">Assets</dt>
                         </div>
+
+                        <!-- Approachability section -->
                         <div class="flex flex-col items-center justify-end p-2">
                           <dd class="flex flex-row items-center font-bold text-slate-700">
-                            <div class="m-1 inline rounded p-2 {!noUnsolicited ? 'bg-green-500' : 'bg-yellow-500'}">
+                            <!-- Solicitation Status -->
+                            <div
+                              class="m-1 inline rounded p-2 {!noUnsolicited ? 'bg-green-500' : 'bg-yellow-500'}"
+                              role="status"
+                              aria-label="Solicitation {!noUnsolicited ? 'Allowed' : 'Not Allowed'}"
+                            >
                               {#if !noUnsolicited}
-                                <LockOpen variation="solid" class="h-4 w-4 text-white" />
+                                <LockOpen variation="solid" class="h-4 w-4 text-white" aria-hidden="true" />
                               {:else}
-                                <LockClosed variation="solid" class="h-4 w-4 text-white" />
+                                <LockClosed variation="solid" class="h-4 w-4 text-white" aria-hidden="true" />
                               {/if}
                             </div>
-                            <div class="m-1 inline rounded p-2 {isStaffed ? 'bg-green-500' : 'bg-yellow-500'}">
-                              <UserGroup variation="solid" class="h-4 w-4 text-white" />
+
+                            <!-- Staffing Status -->
+                            <div
+                              class="m-1 inline rounded p-2 {isStaffed ? 'bg-green-500' : 'bg-yellow-500'}"
+                              role="status"
+                              aria-label="Organization {isStaffed ? 'is Staffed' : 'is not Staffed'}"
+                            >
+                              <UserGroup variation="solid" class="h-4 w-4 text-white" aria-hidden="true" />
                             </div>
-                            <div class="m-1 inline rounded p-2 {hasWebsite ? 'bg-green-500' : 'bg-yellow-500'}">
-                              <GlobeAlt variation="solid" class="h-4 w-4 text-white" />
+
+                            <!-- Website Status -->
+                            <div
+                              class="m-1 inline rounded p-2 {hasWebsite ? 'bg-green-500' : 'bg-yellow-500'}"
+                              role="status"
+                              aria-label="Website {hasWebsite ? 'Available' : 'Not Available'}"
+                            >
+                              <GlobeAlt variation="solid" class="h-4 w-4 text-white" aria-hidden="true" />
                             </div>
                           </dd>
                           <dt class="text-sm leading-normal text-inherit">Approachability</dt>
                         </div>
-                      </dl>
+                      </div>
                     </div>
                   </dl>
                 </div>
