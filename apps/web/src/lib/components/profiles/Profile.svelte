@@ -14,7 +14,7 @@
   // import chatgptIcon from '$lib/assets/images/chatgpt.svg';
   // import claudeIcon from '$lib/assets/images/claude.svg';
   import logo from '$lib/assets/images/logo.svg';
-  import irsLogo from '$lib/assets/images/irs-logo.png';
+  import irsLogo from '$lib/assets/images/irs-logo.webp';
   import { Sparkles, LockOpen, LockClosed, UserGroup, GlobeAlt } from 'svelte-heros-v2';
   import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/grants';
   import ApplicationGuidelines from './guidelines/ApplicationGuidelines.svelte';
@@ -490,7 +490,7 @@
         </nav>
 
         <!-- Search -->
-        <div class="mt-2 flex grow items-center justify-end sm:mr-6 sm:mt-0 md:mr-0 lg:flex lg:basis-auto">
+        <div class="mt-2 hidden grow items-center justify-end sm:mr-6 sm:mt-0 md:mr-0 md:flex lg:flex lg:basis-auto">
           <NavSearch />
         </div>
       </div>
@@ -502,7 +502,7 @@
       <div class="lg:w-12/12 relative top-2 z-20 mx-auto w-full">
         <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
           <SummaryBoxHeader headerText={'IRS Form 990-PF'}>
-            <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" />
+            <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} />
           </SummaryBoxHeader>
         </div>
       </div>
@@ -658,13 +658,13 @@
               <div class="shadow-soft-xl relative mt-4 min-w-0 grow flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
                 <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                   <SummaryBoxHeader headerText={'Data Source'}>
-                    <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" />
+                    <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} />
                   </SummaryBoxHeader>
                 </div>
 
                 <div class="flex-auto items-center space-y-2 rounded-b-2xl bg-white p-4">
                   <div class="flex flex-col gap-0 p-2">
-                    <!-- <img src={irsLogo} alt="IRS logo" class="h-6 w-auto" /> -->
+                    <!-- <img src={irsLogo} alt="IRS logo" class="h-6 w-auto" height={24} width={48}/> -->
                     <p class="text-sm font-bold text-slate-700">IRS Form 990-PF</p>
                     <p class="flex flex-row items-start gap-2 text-sm text-slate-700">Available to the general public at IRS.gov.</p>
                   </div>
@@ -759,7 +759,7 @@
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                 <SummaryBoxHeader headerText={'Application Guidelines'} anchorText={'guidelines'}
-                  ><img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" /></SummaryBoxHeader
+                  ><img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} /></SummaryBoxHeader
                 >
               </div>
               <ApplicationGuidelines
@@ -779,7 +779,7 @@
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                 <SummaryBoxHeader headerText={'About Grantmakers.io'}>
-                  <img src={logo} alt="Grantmakers.io logo" class="max-h-6 w-full" />
+                  <img src={logo} alt="Grantmakers.io logo" class="max-h-6 w-full" height={36} width={36} />
                 </SummaryBoxHeader>
               </div>
               <div class="flex flex-col gap-6 p-6">
