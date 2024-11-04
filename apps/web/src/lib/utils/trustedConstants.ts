@@ -9,7 +9,12 @@ export const meta = {
     title: 'Grantmakers.io - A Community Project',
     description: 'Quickly find data on 145,000 grantmaking institutions in the US. A free, open source project.',
   },
+  emails: {
+    support: 'help@grantmakers.io',
+  },
 };
+
+export const legacyUrl = 'https://legacy.grantmakers.io';
 
 export const articleLinks = {
   whyAlgolia: 'https://stories.algolia.com/why-hosted-search-made-sense-for-grantmakers-io-8974f5ed6bd6',
