@@ -607,9 +607,25 @@
       <div class="mx-auto mt-4 w-full pb-6">
         <!-- Snapshot Boxes -->
         <div class="-mx-3 mb-4 grid grid-cols-1 space-y-4 md:space-y-0 lg:grid-cols-2 xl:grid-cols-3">
+          <!-- Box 2 -->
+          <div class="h-full w-full max-w-full px-3">
+            <!-- Grant History -->
+            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+              <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
+                <SummaryBoxHeader headerText={'Grants Snapshot'} />
+              </div>
+              <GrantsSummaryBox
+                grantMin={profile.grant_min}
+                grantMax={profile.grant_max}
+                grantMedian={profile.grant_median}
+                grantCount={profile.grant_count}
+                {grantsFacets}
+              />
+            </div>
+          </div>
           <!-- Box 1 -->
-          <div class="lg-max:mt-6 h-full w-full max-w-full px-3">
-            <div class="flex h-full flex-col">
+          <div class="h-full w-full max-w-full px-3">
+            <div class="flex h-full flex-col gap-4">
               <!-- Summary -->
               <div class="shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
                 <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
@@ -655,7 +671,7 @@
               </div>
 
               <!-- Data Source -->
-              <div class="shadow-soft-xl relative mt-4 min-w-0 grow flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+              <div class="shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border md:h-full">
                 <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                   <SummaryBoxHeader headerText={'Data Source'}>
                     <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} />
@@ -696,25 +712,8 @@
             </div>
           </div>
 
-          <!-- Box 2 -->
-          <div class="lg-max:mt-6 h-full w-full max-w-full px-3">
-            <!-- Grant History -->
-            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
-              <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-                <SummaryBoxHeader headerText={'Grants Snapshot'} />
-              </div>
-              <GrantsSummaryBox
-                grantMin={profile.grant_min}
-                grantMax={profile.grant_max}
-                grantMedian={profile.grant_median}
-                grantCount={profile.grant_count}
-                {grantsFacets}
-              />
-            </div>
-          </div>
-
           <!-- Box 3 -->
-          <div class="lg-max:mt-6 h-full w-full max-w-full px-3">
+          <div class="h-full w-full max-w-full px-3">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                 <SummaryBoxHeader headerText={'People'} />
@@ -732,7 +731,7 @@
 
         <!-- Grants -->
         <div class="-mx-3 grid grid-cols-1">
-          <div class="lg-max:mt-6 mb-4 w-full max-w-full px-3">
+          <div class="mb-4 w-full max-w-full px-3">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                 <SummaryBoxHeader headerText={'Grants'} />
@@ -755,7 +754,7 @@
         <!-- About & Guidelines Sections -->
         <div class="-mx-3 grid grid-cols-1 md:grid-cols-2">
           <!-- Guidelines -->
-          <div class="lg-max:mt-6 mb-4 w-full max-w-full px-3">
+          <div class="mb-4 w-full max-w-full px-3">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                 <SummaryBoxHeader headerText={'Application Guidelines'} anchorText={'guidelines'}
@@ -775,7 +774,7 @@
           </div>
 
           <!-- About -->
-          <div class="lg-max:mt-6 mb-4 w-full max-w-full px-3 text-slate-700">
+          <div class="mb-4 w-full max-w-full px-3 text-slate-700">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                 <SummaryBoxHeader headerText={'About Grantmakers.io'}>
@@ -823,7 +822,7 @@
         <!-- Financial Sections -->
         <div class="-mx-3 grid grid-cols-1 md:grid-cols-2">
           <!-- Financial Overview -->
-          <div class="lg-max:mt-6 mb-4 w-full max-w-full px-3">
+          <div class="mb-4 w-full max-w-full px-3">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                 <SummaryBoxHeader headerText={'Financial Overview'} anchorText={'financials'} />
@@ -839,7 +838,7 @@
           </div>
 
           <!-- Financial Trends -->
-          <div class="lg-max:mt-6 mb-4 w-full max-w-full px-3">
+          <div class="mb-4 w-full max-w-full px-3">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                 <SummaryBoxHeader headerText={'Financial Trends'} anchorText={'financial trends'} />
