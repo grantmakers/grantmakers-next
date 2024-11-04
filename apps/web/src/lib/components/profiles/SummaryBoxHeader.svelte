@@ -5,7 +5,7 @@
   const anchorSlug = slugify(anchorText ? anchorText : headerText);
 </script>
 
-<div id={anchorSlug} class="flex items-center justify-between align-middle">
+<div id={anchorSlug} class="flex items-center justify-between align-middle lg:scroll-mt-8">
   <h6 class="mb-0">{headerText}</h6>
   <h6 class="m-0 text-xs font-bold leading-tight text-slate-500">
     <slot />
