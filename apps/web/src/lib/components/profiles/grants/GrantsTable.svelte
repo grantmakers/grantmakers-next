@@ -20,7 +20,7 @@
     </div>
   </div>
   <div class="mt-8 flow-root">
-    <div class="-mx-4 -my-2 overflow-x-auto overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="-my-2 overflow-x-auto sm:-mx-6">
       <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
         <table class="min-w-full table-auto divide-y divide-gray-300">
           <thead>
@@ -49,7 +49,7 @@
           <tfoot>
             <tr>
               <td colspan="5" class="mt-2 max-w-sm text-sm text-gray-700">
-                <p class="mb-4 mt-8 text-justify">Grants to be paid out in the future are not included.</p>
+                <p class="mb-4 mt-8 p-2 text-justify">Grants to be paid out in the future are not included.</p>
               </td>
             </tr>
           </tfoot>

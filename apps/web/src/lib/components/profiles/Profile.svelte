@@ -513,16 +513,16 @@
       >
         <div class="-mx-3 flex flex-wrap items-center justify-between">
           <!-- Left side -->
-          <div class="flex items-start space-x-4">
+          <div class="flex items-start space-x-0 md:space-x-4">
             <!-- Icon -->
-            <div class="w-auto max-w-full flex-none px-3">
+            <div class="w-auto max-w-full px-3 md:flex-none">
               <div
                 class="ease-soft-in-out size-18 relative inline-flex items-center justify-center rounded-xl text-base text-white transition-all duration-200"
               >
                 <img
                   src={typeof avatarImage === 'string' ? avatarImage : `/${DEFAULT_AVATAR}`}
                   alt="Foundation First Initial Icon"
-                  class="shadow-soft-sm size-20 w-full rounded-xl"
+                  class="md:shadow-soft-sm size-20 w-full rounded-xl"
                   width="74"
                   height="74"
                 />
@@ -606,7 +606,7 @@
       <!-- Core Body Sections -->
       <div class="mx-auto mt-4 w-full pb-6">
         <!-- Snapshot Boxes -->
-        <div class="-mx-3 mb-4 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+        <div class="-mx-3 mb-4 grid grid-cols-1 space-y-4 md:space-y-0 lg:grid-cols-2 xl:grid-cols-3">
           <!-- Box 1 -->
           <div class="lg-max:mt-6 h-full w-full max-w-full px-3">
             <div class="flex h-full flex-col">
