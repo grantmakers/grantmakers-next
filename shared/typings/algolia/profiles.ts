@@ -3,7 +3,6 @@ export interface Person {
   title: string;
 }
 
-// Interface for a filing record
 export interface Filing {
   object_id_irs: string;
   filing_version: string;
@@ -13,8 +12,8 @@ export interface Filing {
   url: string;
 }
 
-// Main foundation interface
-export interface AlgoliaProfilesResponse {
+// Legacy response
+export interface AlgoliaProfilesResponseLegacy {
   objectID: string;
   people: Person[];
   ein: string;

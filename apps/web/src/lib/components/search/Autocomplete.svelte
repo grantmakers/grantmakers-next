@@ -7,12 +7,12 @@
   import type { BaseItem } from '@algolia/autocomplete-core';
   import type { HTMLTemplate } from '@algolia/autocomplete-shared';
   import type { LiteClient } from 'algoliasearch/lite';
-  import type { AlgoliaProfilesResponse } from '@shared/typings/algolia/profiles';
+  import type { AlgoliaProfilesResponseLegacy } from '@shared/typings/algolia/profiles';
 
   import { PUBLIC_ALGOLIA_APP_ID, PUBLIC_ALGOLIA_SEARCH_ONLY_KEY, PUBLIC_ALGOLIA_INDEX_NAME } from '$env/static/public';
   import { normalizeCurrencyToMillions } from '@shared/functions/formatters/numbers';
 
-  interface AlgoliaProfilesItem extends BaseItem, AlgoliaProfilesResponse {}
+  interface AlgoliaProfilesItem extends BaseItem, AlgoliaProfilesResponseLegacy {}
 
   interface AlgoliaItemTemplateProps {
     item: AlgoliaProfilesItem;
@@ -79,7 +79,7 @@
                   // HACK data-sveltekit-reload forces a full refresh
                   // TODO Enable client-side fetch for these situations
                   // AKA There is no need to re-download chart.js, etc
-                  return html`<a href="/profiles/v1/${item.ein}" data-sveltekit-reload
+                  return html`<a href="/profiles/v0/${item.ein}" data-sveltekit-reload
                     ><div class="px-3 py-2 transition-colors duration-100 hover:bg-gray-100">
                       <div class="flex items-center justify-between gap-3">
                         <div class="min-w-0 flex-1">
