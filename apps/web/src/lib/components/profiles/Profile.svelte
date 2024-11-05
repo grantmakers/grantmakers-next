@@ -24,6 +24,7 @@
   import BarFinancialTrends from './charts/BarFinancialTrends.svelte';
   import BarFinancialOverview from './charts/BarFinancialOverview.svelte';
   import GrantsSummaryBox from './grants/GrantsSummaryBox.svelte';
+  import LogoMark from '../shared/LogoMark.svelte';
 
   type ImageModule = {
     default: string;
@@ -114,8 +115,33 @@
     class="ease-nav-brand z-990 absolute inset-y-0 ml-4 mt-0 block w-full max-w-64 -translate-x-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 py-2 pt-2 text-slate-500 antialiased shadow-none transition-transform duration-200 xl:left-0 xl:translate-x-0 xl:bg-transparent"
     id="sidenav-main"
   >
-    <div class="h-20">
-      <!-- <i class="hidden absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fa fa-times text-slate-400 xl:hidden" sidenav-close="" aria-hidden="true"></i> -->
+    <!-- User Preferences v0 -->
+    <!-- <div class="p-2">
+      <button
+        type="button"
+        class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-4 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="mx-auto h-8 w-8 text-gray-400"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Zm3.75 11.625a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"
+          />
+        </svg>
+
+        <span class="mt-2 block text-sm font-semibold text-gray-900">Enter your Search Criteria</span>
+      </button>
+    </div> -->
+
+    <!-- LogoMark -->
+    <!-- <div class="p-2">
       <a href="/" class="group m-0 block flex-shrink-0 whitespace-nowrap px-8 py-2 text-sm text-slate-700">
         <div class="flex items-center">
           <div>
@@ -126,7 +152,7 @@
           </div>
         </div>
       </a>
-    </div>
+    </div> -->
     <!-- Side Navigation -->
     <div class="block max-h-screen w-auto grow basis-full items-center overflow-auto">
       <ul class="mb-0 flex flex-col pl-0">
@@ -467,6 +493,29 @@
           </a>
         </li> -->
       </ul>
+      <!-- <div class="mx-4 p-2">
+        <button
+          type="button"
+          class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-4 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="mx-auto h-8 w-8 text-gray-400"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Zm3.75 11.625a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"
+            />
+          </svg>
+
+          <span class="mt-2 block text-sm font-semibold text-gray-900">Enter your<br />Search Criteria</span>
+        </button>
+      </div> -->
     </div>
   </aside>
 
@@ -480,13 +529,16 @@
     >
       <div class="flex-wrap-inherit mx-auto flex w-full items-center justify-between px-4 py-1">
         <!-- Breadcrumbs -->
-        <nav>
-          <ol class="mr-12 flex flex-wrap rounded-lg bg-transparent pt-1 sm:mr-16">
-            <li class="text-sm leading-normal">
+        <nav class="flex flex-wrap items-center">
+          <LogoMark isFooter={false} />
+          <ol class="flex flex-wrap items-center bg-transparent">
+            <li
+              class="text-sm leading-normal before:float-left before:hidden before:pr-2 before:text-gray-600 before:content-['/'] before:md:block"
+            >
               <a class="text-slate-700" href="/profiles">Foundation Profiles</a>
             </li>
             <li
-              class="pl-2 text-sm font-semibold capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/']"
+              class="hidden pl-2 text-sm capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/'] md:block"
               aria-current="page"
             >
               {organization_name}
@@ -516,7 +568,7 @@
       <div
         class="shadow-blur relative flex min-w-0 flex-auto flex-col overflow-hidden break-words rounded-2xl border-0 bg-white bg-clip-border bg-center p-4 backdrop-blur"
       >
-        <div class="-mx-3 flex flex-wrap items-center justify-between">
+        <div class="-mx-3 flex flex-wrap items-center justify-center md:justify-between">
           <!-- Left side -->
           <div class="flex items-start space-x-0 md:space-x-4">
             <!-- Icon -->
