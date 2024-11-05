@@ -127,7 +127,8 @@
       options: {
         indexAxis: 'y',
         responsive: true,
-        maintainAspectRatio: false,
+        aspectRatio: 0.8,
+        maintainAspectRatio: true,
         scales: {
           x: {
             beginAtZero: true,
@@ -167,6 +168,6 @@
   });
 </script>
 
-<div class="max-h-[600px] min-h-[400px] w-full">
+<div class="relative max-h-[600px] min-h-[400px] w-full">
   <canvas bind:this={chartCanvas}></canvas>
 </div>
