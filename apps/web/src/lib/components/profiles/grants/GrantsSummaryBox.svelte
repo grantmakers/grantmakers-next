@@ -6,11 +6,21 @@
   import { humanizeCurrency, humanizeNumber } from '@shared/functions/formatters/numbers';
   import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/grants';
 
-  export let grantMin: number;
-  export let grantMax: number;
-  export let grantMedian: number;
-  export let grantCount: number;
-  export let grantsFacets: GrantmakersExtractedDataObj['grants_facets'];
+  interface Props {
+    grantMin: number;
+    grantMax: number;
+    grantMedian: number;
+    grantCount: number;
+    grantsFacets: GrantmakersExtractedDataObj['grants_facets'];
+  }
+
+  let {
+    grantMin,
+    grantMax,
+    grantMedian,
+    grantCount,
+    grantsFacets
+  }: Props = $props();
 
   function getBackgroundClass(median: number) {
     if (median === 0) return 'bg-transparent';

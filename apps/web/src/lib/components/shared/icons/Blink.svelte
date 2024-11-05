@@ -1,5 +1,9 @@
 <script lang="ts">
-  export let classes: string = 'w-6 h-6';
+  interface Props {
+    classes?: string;
+  }
+
+  let { classes = 'w-6 h-6' }: Props = $props();
 
   const fillColorClass = 'text-grantmakers-green';
 </script>

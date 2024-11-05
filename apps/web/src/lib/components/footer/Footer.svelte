@@ -69,7 +69,7 @@
     <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 sm:py-8 lg:px-8 lg:py-6">
       <div class="w-full text-sm uppercase md:inline-block md:w-fit"><a href="mailto:feedback@grantmakers.io">Feedback</a></div>
       <div class="hidden h-4 w-5 md:inline-block">
-        <a href="https://github.com/grantmakers" target="_blank" rel="noopener noreferrer"
+        <a href="https://github.com/grantmakers" target="_blank" rel="noopener noreferrer" aria-label="Github"
           ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98 96"
             ><path
               fill-rule="evenodd"

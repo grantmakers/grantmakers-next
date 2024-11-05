@@ -1,6 +1,6 @@
 <!-- Source: https://github.com/saadeghi/svelte-countup/blob/master/src/Component.svelte -->
 
-<script>
+<script lang="ts">
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-nocheck
 
@@ -9,14 +9,18 @@
   // const id = nanoid();
   const id = Symbol();
 
-  let isInView;
+  let isInView = $state();
 
-  export let value;
-  export let initial = 0;
-  export let duration = 3000;
-  export let step = 1;
-  export let roundto = 1;
-  export let format = true;
+  interface Props {
+    value: any;
+    initial?: number;
+    duration?: number;
+    step?: number;
+    roundto?: number;
+    format?: boolean;
+  }
+
+  let { value, initial = 0, duration = 3000, step = $bindable(1), roundto = 1, format = true }: Props = $props();
 
   function formatNumber(input) {
     if (format) {
@@ -25,7 +29,7 @@
     return input;
   }
 
-  const counterResult = [];
+  const counterResult = $state([]);
   const timers = [];
 
   const max = parseInt(value);
@@ -51,7 +55,7 @@
 
 <span
   use:inview
-  on:change={(event) => {
+  onchange={(event) => {
     const { inView } = event.detail;
     isInView = inView;
   }}>{formatNumber(counterResult[id])}</span

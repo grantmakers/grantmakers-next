@@ -17,7 +17,7 @@
     <p class="mt-6 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">Oof. We've been notified and are working on a fix.</p>
     <div class="mt-10 flex items-center justify-center gap-x-6">
       <button
-        on:click={refreshPage}
+        onclick={refreshPage}
         class="rounded-md bg-slate-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-500"
         >Refresh the Page</button
       >

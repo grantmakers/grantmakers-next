@@ -4,18 +4,29 @@
   import Divider from '$lib/components/shared/Divider.svelte';
   import type { Chart } from 'chart.js';
 
-  export let year1: {
-    assets: number;
-    distributions: number;
-    contributions: number;
-  };
-  export let orgCurrentTaxYear: string;
-  export let formattedTaxPeriodEnd: string;
-  export let chartsColorPrimary = '#607d8b';
-  export let chartsColorSecondary = '#c54e00';
-  export let chartsColorTertiary = '#009688';
+  interface Props {
+    year1: {
+      assets: number;
+      distributions: number;
+      contributions: number;
+    };
+    orgCurrentTaxYear: string;
+    formattedTaxPeriodEnd: string;
+    chartsColorPrimary?: string;
+    chartsColorSecondary?: string;
+    chartsColorTertiary?: string;
+  }
 
-  let chartCanvas: HTMLCanvasElement;
+  let {
+    year1,
+    orgCurrentTaxYear,
+    formattedTaxPeriodEnd,
+    chartsColorPrimary = '#607d8b',
+    chartsColorSecondary = '#c54e00',
+    chartsColorTertiary = '#009688',
+  }: Props = $props();
+
+  let chartCanvas: HTMLCanvasElement | undefined = $state();
   let chart: Chart;
 
   onMount(async () => {
@@ -93,7 +104,7 @@
       <dl class="flex w-full flex-row items-center justify-around text-2xl">
         <div class="flex flex-col items-center gap-2 p-2">
           <dt class="flex flex-row items-center gap-1 text-sm leading-normal text-inherit">
-            <span class="h-2 w-3 rounded-md bg-grantmakers-blue"></span>
+            <span class="bg-grantmakers-blue h-2 w-3 rounded-md"></span>
             Assets
           </dt>
           <dd class=" text-slate-700">{humanizeCurrency(year1.assets)}</dd>
@@ -101,7 +112,7 @@
 
         <div class="flex flex-col items-center gap-2 p-2">
           <dt class="flex flex-row items-center gap-1 text-sm leading-normal text-inherit">
-            <span class="h-2 w-3 rounded-md bg-grantmakers-orange"></span>
+            <span class="bg-grantmakers-orange h-2 w-3 rounded-md"></span>
             Distributions
           </dt>
           <dd class=" text-slate-700">{humanizeCurrency(year1.distributions)}</dd>
@@ -109,7 +120,7 @@
 
         <div class="flex flex-col items-center gap-2 p-2">
           <dt class="flex flex-row items-center gap-1 text-sm leading-normal text-inherit">
-            <span class="h-2 w-3 rounded-md bg-grantmakers-green"></span>
+            <span class="bg-grantmakers-green h-2 w-3 rounded-md"></span>
             Contributions
           </dt>
           <dd class=" text-slate-700">{humanizeCurrency(year1.contributions)}</dd>

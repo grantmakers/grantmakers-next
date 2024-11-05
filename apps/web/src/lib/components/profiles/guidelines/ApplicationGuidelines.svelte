@@ -1,18 +1,30 @@
 <script lang="ts">
   import Tip from '../alerts/Tip.svelte';
   import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/grants';
-  export let website: string | null = null;
-  export let websiteIsEmail: GrantmakersExtractedDataObj['website_is_an_email'];
-  export let grantsToPreselectedOnly: GrantmakersExtractedDataObj['grants_to_preselected_only'] = null;
-  export let applicationInfo: GrantmakersExtractedDataObj['grants_application_info'];
-  export let applicationDeadlines: GrantmakersExtractedDataObj['grants_application_deadlines'];
-  export let applicationRestrictions: GrantmakersExtractedDataObj['grants_application_restrictions'];
-  export let applicationContact: GrantmakersExtractedDataObj['grants_application_contact'];
+  interface Props {
+    website?: string | null;
+    websiteIsEmail: GrantmakersExtractedDataObj['website_is_an_email'];
+    grantsToPreselectedOnly?: GrantmakersExtractedDataObj['grants_to_preselected_only'];
+    applicationInfo: GrantmakersExtractedDataObj['grants_application_info'];
+    applicationDeadlines: GrantmakersExtractedDataObj['grants_application_deadlines'];
+    applicationRestrictions: GrantmakersExtractedDataObj['grants_application_restrictions'];
+    applicationContact: GrantmakersExtractedDataObj['grants_application_contact'];
+  }
 
-  $: formattedPhone =
-    'phone' in applicationContact && applicationContact.phone ?
+  let {
+    website = null,
+    websiteIsEmail,
+    grantsToPreselectedOnly = null,
+    applicationInfo,
+    applicationDeadlines,
+    applicationRestrictions,
+    applicationContact
+  }: Props = $props();
+
+  let formattedPhone =
+    $derived('phone' in applicationContact && applicationContact.phone ?
       `(${applicationContact.phone.slice(0, 3)}) ${applicationContact.phone.slice(3, 6)}-${applicationContact.phone.slice(6, 10)}`
-    : 'N/A';
+    : 'N/A');
 </script>
 
 <div class="p-6">

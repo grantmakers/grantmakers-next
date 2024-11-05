@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  // @ts-ignore - Mixed Svelte 4/5 component
   import People from './People.svelte';
   import SummaryBoxHeader from './SummaryBoxHeader.svelte';
   import Banner from './Banner.svelte';
@@ -28,7 +29,11 @@
     default: string;
   };
 
-  export let profile: GrantmakersExtractedDataObj;
+  interface Props {
+    profile: GrantmakersExtractedDataObj;
+  }
+
+  let { profile }: Props = $props();
 
   const aiSummaries: { [key: string]: string } = {
     // The Plant Memorial uses the Claude prompt but in Google AI Studio with Gemini Pro 002
@@ -69,10 +74,10 @@
   // };
 
   let avatarImageModule: Promise<ImageModule> | undefined;
-  let avatarImage: string;
+  let avatarImage: string | undefined = $state();
   // let sourceName: 'chatgpt' | 'claude';
   // let currentAiIconDetails: { src: string; width: number; height: number; maxHeightClass: string };
-  let formattedTaxPeriodEnd: string;
+  let formattedTaxPeriodEnd: string = $state('N/A');
 
   // function isAiImgDetailsKey(key: string): key is keyof typeof aiImgDetails {
   //   return key === 'chatgpt' || key === 'claude';
@@ -718,6 +723,7 @@
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                 <SummaryBoxHeader headerText={'People'} />
               </div>
+              <!-- @ts-expect-error Mixing Svelte versions causes issues with passed in props -->
               <People {people} />
             </div>
           </div>

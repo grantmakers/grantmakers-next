@@ -1,8 +1,12 @@
 <script lang="ts">
   import PeopleRow from './PeopleRow.svelte';
 
-  export let people;
-  export let isSummary: boolean = false;
+  interface Props {
+    people: any;
+    isSummary?: boolean;
+  }
+
+  let { people, isSummary = false }: Props = $props();
 </script>
 
 <table class="min-w-full divide-y divide-gray-300">

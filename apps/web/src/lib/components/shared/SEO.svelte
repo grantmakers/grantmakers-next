@@ -8,7 +8,11 @@
   type Title = GrantmakersExtractedDataObj['organization_name'];
   type Description = Pick<GrantmakersExtractedDataObj, 'organization_name' | 'city' | 'state' | 'ein' | 'filings'>;
 
-  export let profile: GrantmakersExtractedDataObj;
+  interface Props {
+    profile: GrantmakersExtractedDataObj;
+  }
+
+  let { profile }: Props = $props();
 
   const { organization_name, city, state, ein, filings } = profile;
   const title = createTitle(organization_name);

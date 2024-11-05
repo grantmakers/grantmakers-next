@@ -1,5 +1,10 @@
 <script lang="ts">
-  export let variant: 'positive' | 'negative';
+  interface Props {
+    variant: 'positive' | 'negative';
+    children?: import('svelte').Snippet;
+  }
+
+  let { variant, children }: Props = $props();
   const positiveClasses = 'bg-green-50 text-green-700 ring-green-100/75';
   const negativeClasses = 'bg-red-100 text-red-700 ring-red-100/75';
 </script>
@@ -9,5 +14,5 @@
     negativeClasses
   )}"
 >
-  <slot />
+  {@render children?.()}
 </span>

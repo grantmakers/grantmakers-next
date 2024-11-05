@@ -22,7 +22,7 @@
   let searchClient: LiteClient;
   const indexName = PUBLIC_ALGOLIA_INDEX_NAME;
 
-  let container: HTMLElement;
+  let container: HTMLElement | undefined = $state();
   let panelContainer: HTMLElement;
   let autocompleteInstance: AutocompleteApi<BaseItem>;
 

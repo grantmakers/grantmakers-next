@@ -2,6 +2,11 @@
   import '@fontsource/inter';
   import '../app.pcss';
   import { meta } from '@utils/trustedConstants';
+  interface Props {
+    children?: import('svelte').Snippet;
+  }
+
+  let { children }: Props = $props();
 
   const {
     defaults: { title, description },
@@ -13,4 +18,4 @@
   <meta name="description" content={description} />
 </svelte:head>
 
-<slot />
+{@render children?.()}

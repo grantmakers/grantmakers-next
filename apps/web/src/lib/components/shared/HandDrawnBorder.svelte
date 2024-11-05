@@ -1,6 +1,11 @@
 <script lang="ts">
   import HandDrawnSvg from './HandDrawnSvg.svelte';
-  export let fill: Fill = 'fill-grantmakers-blue';
+  interface Props {
+    fill?: Fill;
+    children?: import('svelte').Snippet;
+  }
+
+  let { fill = 'fill-grantmakers-blue', children }: Props = $props();
 
   type Fill = 'fill-grantmakers-orange' | 'fill-grantmakers-blue' | 'fill-grantmakers-green' | 'fill-transparent';
 </script>
@@ -10,5 +15,5 @@
   <div class="pointer-events-none absolute inset-0 -top-1 z-20 h-full w-full" role="presentation" aria-hidden="true">
     <HandDrawnSvg {fill} />
   </div>
-  <slot />
+  {@render children?.()}
 </div>

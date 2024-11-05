@@ -1,6 +1,8 @@
 <script lang="ts">
   import { humanizeCurrency } from '@shared/functions/formatters/numbers';
-  export let person;
+  import type { Person } from '@shared/typings/grantmakers/grants';
+
+  let { person }: { person: Person } = $props();
 </script>
 
 <tr>

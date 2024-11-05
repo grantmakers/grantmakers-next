@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import CountUp from '$lib/components/shared/CountUp.svelte';
   const counterEnd = 9452158;
   const counterStart = counterEnd - 50000;

@@ -1,9 +1,14 @@
 <script lang="ts">
   import Blink from '$lib/components/shared/icons/Blink.svelte';
-  // import logo from '$lib/assets/images/logo.svg';
-  export let title: string = '';
-  export let message: string;
-  export let includeLogo: boolean = false;
+  
+  interface Props {
+    // import logo from '$lib/assets/images/logo.svg';
+    title?: string;
+    message: string;
+    includeLogo?: boolean;
+  }
+
+  let { title = '', message, includeLogo = false }: Props = $props();
 </script>
 
 <div class="rounded-md border border-slate-200 bg-slate-100 p-6 text-sm text-slate-700 shadow-sm">

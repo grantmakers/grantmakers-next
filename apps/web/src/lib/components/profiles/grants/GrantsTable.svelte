@@ -3,9 +3,13 @@
   import { ExclamationCircle } from 'svelte-heros-v2';
   import type { GrantsArray } from '@shared/typings/grantmakers/grants';
   import { humanizeNumber } from '@shared/functions/formatters/numbers';
-  export let grants: GrantsArray | null = null;
-  export let grantCount: number | null = null;
-  export let filingsAvailable: number | null = null;
+  interface Props {
+    grants?: GrantsArray | null;
+    grantCount?: number | null;
+    filingsAvailable?: number | null;
+  }
+
+  let { grants = null, grantCount = null, filingsAvailable = null }: Props = $props();
 
   const showGrantsCount = 5;
   const grantSummary = `Showing the <span class="font-bold">largest ${humanizeNumber(showGrantsCount)}</span> grants <br>among <span class="font-bold">${grantCount ? humanizeNumber(grantCount) : 'N/A'}</span> grants<br>made across <span class="font-bold">${filingsAvailable} years</span> <br>of available tax filings.`;

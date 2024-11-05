@@ -14,7 +14,11 @@
   import SEO from '$lib/components/shared/SEO.svelte';
   import Profile from '$lib/components/profiles/Profile.svelte';
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
+
+  let { data }: Props = $props();
   let {
     foundationData: { profile },
   } = data;

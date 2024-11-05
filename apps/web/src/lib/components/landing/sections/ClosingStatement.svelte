@@ -1,7 +1,7 @@
 <script lang="ts">
-  import viewport from '$lib/utils/useViewportAction';
+  import viewport from '@utils/useViewportAction';
 
-  let textInView = false;
+  let textInView = $state(false);
 
   const textAnimationInitClasses = 'opacity-0 translate-y-4';
   const textAnimationClasses = 'opacity-1 translate-y-0';
@@ -9,7 +9,7 @@
 
 <div
   use:viewport
-  on:enterViewport={() => {
+  onEnterViewport={() => {
     if (!textInView) {
       textInView = true;
     }

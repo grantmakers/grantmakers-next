@@ -1,5 +1,9 @@
 <script lang="ts">
-  export let fill: string | undefined = 'fill-orange-700';
+  interface Props {
+    fill?: string | undefined;
+  }
+
+  let { fill = 'fill-orange-700' }: Props = $props();
 </script>
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 374.82 259.39" class={fill} style="width: 100%; height: 100%;">

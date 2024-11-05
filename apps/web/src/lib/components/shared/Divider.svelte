@@ -1,5 +1,9 @@
 <script lang="ts">
-  export let borderColorClass = 'border-gray-200';
+  interface Props {
+    borderColorClass?: string;
+  }
+
+  let { borderColorClass = 'border-gray-200' }: Props = $props();
 </script>
 
 <div class="relative w-full">

@@ -1,6 +1,8 @@
 <script lang="ts">
   import { formatToCurrency } from '@shared/functions/formatters/numbers';
-  export let grant;
+  import type { Grant } from '@shared/typings/grantmakers/grants';
+
+  let { grant }: { grant: Grant } = $props();
 </script>
 
 <tr class="relative even:bg-gray-50">

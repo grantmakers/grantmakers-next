@@ -2,7 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
   import type { Chart } from 'chart.js';
 
-  export let rawData;
+  let { rawData }: { rawData: RawData } = $props();
 
   type RawData = {
     [key: string]: number;
@@ -85,7 +85,7 @@
     return processedData;
   }
 
-  let chartCanvas: HTMLCanvasElement;
+  let chartCanvas: HTMLCanvasElement | undefined = $state();
   let chart: Chart;
 
   const data = prepareAndReduceChartData(rawData);

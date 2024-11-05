@@ -9,22 +9,32 @@
   import { ChartBarSquare } from 'svelte-heros-v2';
   import type { Chart } from 'chart.js';
 
-  export let orgFinancialStats: GrantmakersExtractedDataObj['financial_stats'];
-  export let lastUpdatedByIrs: string;
-  export let formattedTaxPeriodEnd: string;
-
   type Stats = GrantmakersExtractedDataObj['financial_stats'];
+
+  interface Props {
+    orgFinancialStats: GrantmakersExtractedDataObj['financial_stats'];
+    lastUpdatedByIrs: string;
+    formattedTaxPeriodEnd: string;
+    chartsColorPrimary?: string;
+    chartsColorSecondary?: string;
+    chartsColorTertiary?: string;
+  }
+
+  let {
+    orgFinancialStats,
+    lastUpdatedByIrs,
+    formattedTaxPeriodEnd,
+    chartsColorPrimary = '#607d8b',
+    chartsColorSecondary = '#c54e00',
+    chartsColorTertiary = '#009688',
+  }: Props = $props();
 
   const assets = orgFinancialStats.map((value: Stats) => value.assets).reverse();
   const distributions = orgFinancialStats.map((value: Stats) => value.distributions).reverse();
   const contributions = orgFinancialStats.map((value: Stats) => value.contributions).reverse();
   const years = orgFinancialStats.map((value: Stats) => value.tax_year).reverse();
 
-  export let chartsColorPrimary = '#607d8b';
-  export let chartsColorSecondary = '#c54e00';
-  export let chartsColorTertiary = '#009688';
-
-  let chartCanvas: HTMLCanvasElement;
+  let chartCanvas: HTMLCanvasElement | undefined = $state();
   let chart: Chart;
 
   async function initializeChart() {
