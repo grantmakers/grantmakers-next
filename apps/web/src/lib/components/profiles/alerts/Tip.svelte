@@ -1,6 +1,6 @@
 <script lang="ts">
   import Blink from '$lib/components/shared/icons/Blink.svelte';
-  
+
   interface Props {
     // import logo from '$lib/assets/images/logo.svg';
     title?: string;

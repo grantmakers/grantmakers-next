@@ -1,4 +1,5 @@
 <svelte:options runes={false} />
+
 <script lang="ts">
   import { onMount } from 'svelte';
   import { createDialog } from 'svelte-headlessui';
@@ -22,8 +23,6 @@
   interface MimicSvelte5 extends TransitionProps {
     children?: any;
   }
-
-  const  vra = 'foo'
 
   // Svelte 4 props
   export let people: PeopleArray;
@@ -57,10 +56,7 @@
         <div class="flex w-full flex-col items-center justify-center">
           <!-- The z-index is required to ensure the modal is above the hand drawn circle -->
           <div class="relative z-30">
-            <Transition 
-              show={$dialog?.expanded} 
-              {...props as MimicSvelte5}
-            >
+            <Transition show={$dialog?.expanded} {...props as MimicSvelte5}>
               <Transition
                 enter="ease-out duration-300"
                 enterFrom="opacity-0"

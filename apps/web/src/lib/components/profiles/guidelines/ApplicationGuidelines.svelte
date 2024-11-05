@@ -18,13 +18,14 @@
     applicationInfo,
     applicationDeadlines,
     applicationRestrictions,
-    applicationContact
+    applicationContact,
   }: Props = $props();
 
-  let formattedPhone =
-    $derived('phone' in applicationContact && applicationContact.phone ?
+  let formattedPhone = $derived(
+    'phone' in applicationContact && applicationContact.phone ?
       `(${applicationContact.phone.slice(0, 3)}) ${applicationContact.phone.slice(3, 6)}-${applicationContact.phone.slice(6, 10)}`
-    : 'N/A');
+    : 'N/A',
+  );
 </script>
 
 <div class="p-6">

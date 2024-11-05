@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  // @ts-ignore - Mixed Svelte 4/5 component
   import People from './People.svelte';
   import SummaryBoxHeader from './SummaryBoxHeader.svelte';
   import Banner from './Banner.svelte';

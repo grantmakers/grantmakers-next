@@ -14,13 +14,7 @@
     grantsFacets: GrantmakersExtractedDataObj['grants_facets'];
   }
 
-  let {
-    grantMin,
-    grantMax,
-    grantMedian,
-    grantCount,
-    grantsFacets
-  }: Props = $props();
+  let { grantMin, grantMax, grantMedian, grantCount, grantsFacets }: Props = $props();
 
   function getBackgroundClass(median: number) {
     if (median === 0) return 'bg-transparent';

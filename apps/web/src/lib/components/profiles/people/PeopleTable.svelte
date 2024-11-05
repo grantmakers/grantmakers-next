@@ -1,8 +1,9 @@
 <script lang="ts">
   import PeopleRow from './PeopleRow.svelte';
+  import type { PeopleArray } from '@shared/typings/grantmakers/grants';
 
   interface Props {
-    people: any;
+    people: PeopleArray;
     isSummary?: boolean;
   }
 
