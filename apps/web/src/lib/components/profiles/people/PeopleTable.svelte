@@ -1,6 +1,6 @@
 <script lang="ts">
   import PeopleRow from './PeopleRow.svelte';
-  import type { PeopleArray } from '@shared/typings/grantmakers/grants';
+  import type { PeopleArray } from '@shared/typings/grantmakers/all';
 
   interface Props {
     people: PeopleArray;

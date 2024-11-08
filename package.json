@@ -12,13 +12,14 @@
     "@repo/eslint-config": "*",
     "@repo/prettier-config": "^0.0.0",
     "@repo/typescript-config": "*",
+    "@repo/shared": "*",
     "turbo": "^2.2.3"
   },
   "packageManager": "npm@10.2.3",
   "workspaces": [
     "apps/*",
     "packages/*",
-    "shared/*"
+    "shared"
   ],
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.9.6"

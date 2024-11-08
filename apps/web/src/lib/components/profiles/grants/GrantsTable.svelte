@@ -1,7 +1,7 @@
 <script lang="ts">
   import GrantRow from './GrantRow.svelte';
   import { ExclamationCircle } from 'svelte-heros-v2';
-  import type { GrantsArray } from '@shared/typings/grantmakers/grants';
+  import type { GrantsArray } from '@shared/typings/grantmakers/all';
   import { humanizeNumber } from '@shared/functions/formatters/numbers';
   interface Props {
     grants?: GrantsArray | null;

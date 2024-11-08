@@ -3,7 +3,7 @@
    * TODO This will be moved to SvelteKit layout
    * See notes in [ein]/+page.svelte
    */
-  import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/grants';
+  import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
 
   type Title = GrantmakersExtractedDataObj['organization_name'];
   type Description = Pick<GrantmakersExtractedDataObj, 'organization_name' | 'city' | 'state' | 'ein' | 'filings'>;

@@ -10,6 +10,7 @@ export interface GrantmakersExtractedDataObj {
   filing_is_amendment: boolean;
   ein: string; // Note: See note above re: improving
   organization_name: string;
+  organization_name_slug: string;
   organization_names_all?: AllOrgNamesObj;
   assets: number;
   contributions: number;

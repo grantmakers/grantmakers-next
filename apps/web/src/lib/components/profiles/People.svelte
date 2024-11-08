@@ -5,7 +5,7 @@
   import { createDialog } from 'svelte-headlessui';
   import Transition from 'svelte-transition';
   import { normalizePerson } from '@shared/functions/formatters/names';
-  import type { PeopleArray } from '@shared/typings/grantmakers/grants';
+  import type { PeopleArray } from '@shared/typings/grantmakers/all';
   import type TransitionProps from 'svelte-transition';
   import PeopleTable from './people/PeopleTable.svelte';
   import { ArrowsPointingOut } from 'svelte-heros-v2';

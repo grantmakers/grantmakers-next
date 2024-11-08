@@ -16,7 +16,7 @@
   import logo from '$lib/assets/images/logo.svg';
   import irsLogo from '$lib/assets/images/irs-logo.webp';
   import { Sparkles, LockOpen, LockClosed, UserGroup, GlobeAlt } from 'svelte-heros-v2';
-  import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/grants';
+  import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
   import ApplicationGuidelines from './guidelines/ApplicationGuidelines.svelte';
   import Tip from './alerts/Tip.svelte';
   // import Blink from '../shared/icons/Blink.svelte';

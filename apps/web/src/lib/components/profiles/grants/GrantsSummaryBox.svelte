@@ -4,7 +4,7 @@
   import chartSkeleton from '$lib/assets/images/blank-chart.jpg';
   import { ChartBarSquare } from 'svelte-heros-v2';
   import { humanizeCurrency, humanizeNumber } from '@shared/functions/formatters/numbers';
-  import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/grants';
+  import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
 
   interface Props {
     grantMin: number;

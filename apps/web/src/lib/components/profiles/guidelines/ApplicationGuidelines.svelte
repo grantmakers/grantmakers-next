@@ -1,6 +1,6 @@
 <script lang="ts">
   import Tip from '../alerts/Tip.svelte';
-  import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/grants';
+  import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
   interface Props {
     website?: string | null;
     websiteIsEmail: GrantmakersExtractedDataObj['website_is_an_email'];
