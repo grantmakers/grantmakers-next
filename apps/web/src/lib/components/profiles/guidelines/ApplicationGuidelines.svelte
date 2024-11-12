@@ -41,27 +41,35 @@
 
   {#if grantsToPreselectedOnly}
     <div class="mb-4">
-      <div class="flex items-center gap-4">
-        <div class="rounded-full bg-red-600 p-2 text-white">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div class="flex items-start gap-4">
+        <div
+          class="tooltip-trigger rounded-full bg-yellow-500 p-2 text-white"
+          data-tooltip="The form in which applications should be submitted and information and materials they should include Line 2b"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4">
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+              fill-rule="evenodd"
+              d="M12 1.5a5.25 5.25 0 0 0-5.25 5.25v3a3 3 0 0 0-3 3v6.75a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3v-6.75a3 3 0 0 0-3-3v-3c0-2.9-2.35-5.25-5.25-5.25Zm3.75 8.25v-3a3.75 3.75 0 1 0-7.5 0v3h7.5Z"
+              clip-rule="evenodd"
             />
           </svg>
         </div>
-        <p class="text-slate-700">
-          The foundation checked a box on its latest tax filing indicating it only makes contributions to preselected charitable
-          organizations and does not accept unsolicited requests for funds.
-        </p>
+        <div>
+          <span class="font-bold text-slate-700">Preselected Only</span>
+          <p class="text-sm text-slate-700">
+            The foundation checked a box on its latest tax filing indicating it "only makes contributions to preselected charitable
+            organizations and doesn't accept unsolicited applications for funds".
+          </p>
+        </div>
       </div>
     </div>
   {/if}
 
   {#if applicationInfo}
-    <div class="space-y-4">
+    {#if grantsToPreselectedOnly}
+      <hr class="my-4 border-gray-200" />
+    {/if}
+    <div class="mt-4 space-y-4">
       <div class="flex items-start gap-4">
         <div
           class="tooltip-trigger rounded-full bg-slate-500 p-2 text-white"
@@ -99,8 +107,12 @@
           class="tooltip-trigger rounded-full bg-slate-500 p-2 text-white"
           data-tooltip="Any restrictions or limitations on awards, such as by geographical areas, charitable fields, kinds of institutions, or other factors Line 2d"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4">
+            <path
+              fill-rule="evenodd"
+              d="m6.72 5.66 11.62 11.62A8.25 8.25 0 0 0 6.72 5.66Zm10.56 12.68L5.66 6.72a8.25 8.25 0 0 0 11.62 11.62ZM5.105 5.106c3.807-3.808 9.98-3.808 13.788 0 3.808 3.807 3.808 9.98 0 13.788-3.807 3.808-9.98 3.808-13.788 0-3.808-3.807-3.808-9.98 0-13.788Z"
+              clip-rule="evenodd"
+            />
           </svg>
         </div>
         <div>
