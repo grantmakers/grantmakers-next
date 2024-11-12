@@ -24,6 +24,7 @@
   import BarFinancialOverview from './charts/BarFinancialOverview.svelte';
   import GrantsSummaryBox from './grants/GrantsSummaryBox.svelte';
   import LogoMark from '../shared/LogoMark.svelte';
+  import CharitableActivities from './activities/CharitableActivities.svelte';
 
   type ImageModule = {
     default: string;
@@ -802,6 +803,29 @@
                   />
                 {:else}
                   <div class="p-6">Unable to find an available free source of grants data</div>
+                {/if}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charitable Activities -->
+        <div class="-mx-3 grid grid-cols-1">
+          <div class="mb-4 w-full max-w-full px-3">
+            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+              <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
+                <SummaryBoxHeader headerText={'Direct Charitable Activities'}
+                  ><img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} /></SummaryBoxHeader
+                >
+              </div>
+              <div>
+                {#if profile.has_charitable_activities}
+                  <CharitableActivities
+                    activities={profile.charitable_activities}
+                    areRestatement={profile.charitable_activities_are_restatement_of_grants}
+                  />
+                {:else}
+                  <div class="p-6">No Direct Charitable Activities listed on Form 990 PF Part IX-A</div>
                 {/if}
               </div>
             </div>
