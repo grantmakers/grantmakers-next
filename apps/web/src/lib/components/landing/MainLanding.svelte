@@ -194,7 +194,4 @@
       <BottomCTA />
     </div>
   </main>
-
-  <!-- Footer -->
-  <Footer></Footer>
 </div>

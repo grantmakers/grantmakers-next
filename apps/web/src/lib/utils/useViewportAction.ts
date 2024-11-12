@@ -1,3 +1,6 @@
+// useViewportAction.ts
+import type { Action } from 'svelte/action';
+
 let intersectionObserver: IntersectionObserver | undefined;
 
 function ensureIntersectionObserver(): void {
@@ -5,26 +8,26 @@ function ensureIntersectionObserver(): void {
 
   intersectionObserver = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
     entries.forEach((entry: IntersectionObserverEntry) => {
-      const eventName: 'enterViewport' | 'exitViewport' = entry.isIntersecting ? 'enterViewport' : 'exitViewport';
+      const eventName = entry.isIntersecting ? 'enterViewport' : 'exitViewport';
       entry.target.dispatchEvent(new CustomEvent(eventName));
     });
   });
 }
 
-interface ViewportResult {
-  destroy(): void;
-}
+type ViewportEvents = {
+  onenterViewport: (e: CustomEvent) => void;
+  onexitViewport: (e: CustomEvent) => void;
+};
 
-export default function viewport(element: Element): ViewportResult {
+const viewport: Action<HTMLElement, null, ViewportEvents> = (element) => {
   ensureIntersectionObserver();
-
-  // Type assertion here since we know ensureIntersectionObserver initializes it
   (intersectionObserver as IntersectionObserver).observe(element);
 
   return {
     destroy() {
-      // Same type assertion needed here
       (intersectionObserver as IntersectionObserver).unobserve(element);
     },
   };
-}
+};
+
+export default viewport;

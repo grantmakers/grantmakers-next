@@ -8,8 +8,8 @@
 </script>
 
 <div
-  use:viewport
-  onEnterViewport={() => {
+  use:viewport={null}
+  onenterViewport={() => {
     if (!textInView) {
       textInView = true;
     }

@@ -521,7 +521,7 @@
   </aside>
 
   <!-- Main Wrapper -->
-  <div class="ease-soft-in-out relative h-full max-h-screen rounded-xl transition-all duration-200 xl:ml-64" id="panel">
+  <div class="ease-soft-in-out relative h-full rounded-xl transition-all duration-200 xl:ml-64" id="panel">
     <!-- Top Nav -->
     <nav
       class="duration-250 ease-soft-in relative mx-6 flex flex-wrap items-center justify-between rounded-2xl px-0 py-2 shadow-none transition-all lg:flex-nowrap lg:justify-start"
@@ -955,36 +955,5 @@
         </div>
       </div>
     </div>
-    <!-- Footer -->
-    <footer class="pt-4">
-      <div class="mx-auto w-full px-6">
-        <div class="-mx-3 flex flex-wrap items-center lg:justify-between">
-          <div class="mb-6 mt-0 w-full max-w-full shrink-0 px-3 lg:mb-0 lg:w-1/2 lg:flex-none">
-            <div class="text-size-sm text-center leading-normal text-slate-500 lg:text-left">
-              © 2024, made with ❤️ and ☕ by
-              <a href="https://www.chadkruse.com" class="font-semibold text-slate-700" target="_blank">Chad Kruse</a>
-            </div>
-          </div>
-          <div class="mt-0 w-full max-w-full shrink-0 px-3 lg:w-1/2 lg:flex-none">
-            <ul class="mb-0 flex list-none flex-wrap justify-center pl-0 lg:justify-end">
-              <li class="nav-item">
-                <a
-                  href="https://www.grantmakers.io/about/"
-                  class="ease-soft-in-out text-size-sm block px-4 pb-1 pt-0 font-normal text-slate-500 transition-colors"
-                  target="_blank">The Project</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  href="https://www.grantmakers.io/about/the-dataset/"
-                  class="ease-soft-in-out text-size-sm block px-4 pb-1 pt-0 font-normal text-slate-500 transition-colors"
-                  target="_blank">The Dataset</a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </footer>
   </div>
 </div>
