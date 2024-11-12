@@ -32,7 +32,7 @@
 <style>
   :global(.eye) {
     animation: blink 3s;
-    animation-iteration-count: 3;
+    animation-iteration-count: 5;
   }
 
   @keyframes blink {

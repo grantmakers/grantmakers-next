@@ -24,6 +24,7 @@
   import BarFinancialOverview from './charts/BarFinancialOverview.svelte';
   import GrantsSummaryBox from './grants/GrantsSummaryBox.svelte';
   import LogoMark from '../shared/LogoMark.svelte';
+  import Blink from '../shared/icons/Blink.svelte';
   import CharitableActivities from './activities/CharitableActivities.svelte';
 
   type ImageModule = {
@@ -643,9 +644,17 @@
       <!-- AI Summary -->
       <div class="shadow-soft-xl relative mt-4 flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
         <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-          <SummaryBoxHeader headerText={'Summary'} />
+          <SummaryBoxHeader headerText={'Community Intelligence'}>
+            <div class="flex items-center justify-center gap-2">
+              <Blink />
+              <div>+</div>
+              <img src={irsLogo} alt="IRS Logo" class="h-6" />
+            </div>
+          </SummaryBoxHeader>
         </div>
         <div class="flex-auto items-start justify-center space-x-2 p-4">
+          <!-- <div class="p-4 text-center">Public data made meaningful by your nonprofit peers</div> -->
+
           {#if aiSummaries[profile.ein]}
             <p class="text-sm">{aiSummaries[profile.ein]}</p>
           {:else}
@@ -653,7 +662,19 @@
               <div class="flex flex-col items-center text-sm text-gray-500">
                 <Sparkles variation="solid" />
                 <h2 class="mt-2 text-base font-semibold leading-6 text-gray-900">AI Summaries</h2>
-                <p class="mt-1">Grantmakers.io extracts key data while AI packages it easy to digest summaries</p>
+                <div class="mt-1 flex flex-row items-center gap-4">
+                  🌐 Public data
+                  <div>></div>
+                  <div class="flex items-center gap-1">
+                    <img src={logo} alt="Grantmakers.io Logo" class="wr-0 h-4 w-4" /> Grantmakers.io excerpts
+                  </div>
+                  <div>+</div>
+                  <div class="flex items-center gap-1">
+                    <Blink classes={'h-4 w-4'} /> Community curation of AI-generated summaries
+                  </div>
+                  <div>=</div>
+                  💯
+                </div>
               </div>
             </div>
           {/if}
@@ -758,12 +779,11 @@
                       {/if}
                     </div>
                   </div>
-
-                  <!-- <Tip
-                    title="Remember"
-                    message="The data represents past activity and may not reflect current foundation priorities."
+                  <Tip
+                    message="Grantmakers.io is not affiliated, associated, authorized, endorsed by, or in any way officially connected with any
+                  foundation appearing on the site."
                     includeLogo
-                  /> -->
+                  />
                 </div>
               </div>
             </div>
@@ -784,7 +804,7 @@
         <!-- Hello Message -->
         <div class="mb-4 mt-2 flex flex-row items-start justify-center gap-2 p-4">
           <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
-          <div>Grantmakers.io is an open source project for our friends in the nonprofit community</div>
+          <div>Grantmakers.io is an open source project built by changemakers for future changemakers</div>
         </div>
 
         <!-- Grants -->
@@ -792,7 +812,9 @@
           <div class="mb-4 w-full max-w-full px-3">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-                <SummaryBoxHeader headerText={'Grants'} />
+                <SummaryBoxHeader headerText={'Grants'}
+                  ><img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} /></SummaryBoxHeader
+                >
               </div>
               <div>
                 {#if grantsFacets}
@@ -892,12 +914,6 @@
                     <div class="flex flex-row items-center justify-center gap-1">Learn More</div>
                   </a>
                 </div>
-
-                <Tip
-                  message="Grantmakers.io is not affiliated, associated, authorized, endorsed by, or in any way officially connected with any
-                  foundation appearing on the site."
-                  includeLogo
-                />
               </div>
             </div>
           </div>
