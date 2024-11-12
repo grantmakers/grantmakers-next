@@ -12,7 +12,7 @@
   let { grants = null, grantCount = null, filingsAvailable = null }: Props = $props();
 
   const showGrantsCount = 5;
-  const grantSummary = `Showing the <span class="font-bold">largest ${humanizeNumber(showGrantsCount)}</span> grants <br>among <span class="font-bold">${grantCount ? humanizeNumber(grantCount) : 'N/A'}</span> grants<br>made across <span class="font-bold">${filingsAvailable} years</span> <br>of available tax filings.`;
+  const grantSummary = `Showing the largest <span class="font-bold">${humanizeNumber(showGrantsCount)} grants</span> from <span class="font-bold">${grantCount ? humanizeNumber(grantCount) : 'N/A'} grants</span> made across <span class="font-bold">${filingsAvailable} years</span> of available tax filings.`;
 </script>
 
 <div>
