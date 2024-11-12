@@ -40,6 +40,7 @@
         container,
         panelContainer,
         detachedMediaQuery: '',
+        placeholder: 'Quick search...',
         openOnFocus: true,
         classNames: {
           // https://www.algolia.com/doc/ui-libraries/autocomplete/api-reference/autocomplete-js/autocomplete/#components
@@ -73,7 +74,12 @@
               },
               templates: {
                 header({ html }) {
-                  return html`<div class="px-3 py-2 text-xs font-semibold uppercase text-gray-500">Foundation Profiles</div>`;
+                  return html`
+                    <div class="flex items-center justify-between">
+                      <div class="px-3 py-2 text-xs font-semibold uppercase text-gray-500">Foundation Profiles</div>
+                      <a class="pr-3 text-xs font-semibold uppercase text-gray-500" href="/profiles/random">Surprise me</a>
+                    </div>
+                  `;
                 },
                 item({ item, html }: AlgoliaItemTemplateProps) {
                   // HACK data-sveltekit-reload forces a full refresh
