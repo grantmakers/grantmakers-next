@@ -6,6 +6,7 @@ const convertToCapitalCase = (str: string): string => {
    * fbo: For the benefit of
    * dba: Doing business as
    * llc: Limited liability company
+   * llp: Limited liability partnership
    * tr: Trust
    * uw: Under will
    * u-w: Under will
@@ -25,6 +26,7 @@ const convertToCapitalCase = (str: string): string => {
     "dba",
     "ii",
     "llc",
+    "llp",
     "pf",
     "ta",
     "ttee",
