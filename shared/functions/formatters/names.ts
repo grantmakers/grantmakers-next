@@ -87,6 +87,15 @@ const convertToCapitalCase = (str: string): string => {
   return str;
 };
 
+const toTitleCase = (str: string) => {
+  if (typeof str === 'string') {
+    return str.replace(/\w\S*/g, function (txt) {
+      return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
+    });
+  }
+  return str;
+};
+
 const normalizePerson = (person: Person): Person => {
   if (typeof person.name === 'string') {
     return person;
@@ -123,4 +132,4 @@ const extractFirstLetter = (organization_name: string): string => {
 const upperFirstLetter = (name: string) => extractFirstLetter(name).toUpperCase();
 
 // ESM export
-export { convertToCapitalCase, normalizePerson, slugify, extractFirstLetter, upperFirstLetter };
+export { convertToCapitalCase, normalizePerson, slugify, toTitleCase, extractFirstLetter, upperFirstLetter };

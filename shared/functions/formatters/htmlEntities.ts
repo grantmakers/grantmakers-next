@@ -9,5 +9,5 @@ export const convertAmpersandEntity = (value: string | null | undefined): string
     return '';
   }
 
-  return value.replaceAll('&amp;', '&');
+  return value.replace(/&amp;/gi, '&');
 };
