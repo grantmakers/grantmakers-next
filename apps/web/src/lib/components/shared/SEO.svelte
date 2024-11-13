@@ -1,8 +1,4 @@
 <script lang="ts">
-  /**
-   * TODO This will be moved to SvelteKit layout
-   * See notes in [ein]/+page.svelte
-   */
   import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
 
   type Title = GrantmakersExtractedDataObj['organization_name'];
