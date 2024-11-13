@@ -12,7 +12,7 @@
   let isInView = $state();
 
   interface Props {
-    value: any;
+    value: number;
     initial?: number;
     duration?: number;
     step?: number;

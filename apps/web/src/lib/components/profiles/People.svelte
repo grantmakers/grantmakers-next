@@ -11,7 +11,6 @@
   import { ArrowsPointingOut } from 'svelte-heros-v2';
 
   // Svelte 5 props - can't use until svelte-headlessui and svelte-transition are Svelte 5 compatible (has to do with slots vs children)
-  // Note the HACK required to force the Transition component to accept children
   // interface Props {
   //   people: PeopleArray;
   // }
@@ -19,9 +18,9 @@
   // let dialog = $state<ReturnType<typeof createDialog> | null>(null);
   // let normalizedPeople: PeopleArray | undefined = $state();
 
-  // Svelte 5 HACK
+  // Svelte 4 HACK - required to force the Transition component to accept children when running as a Svelte 4 component via runes = false
   interface MimicSvelte5 extends TransitionProps {
-    children?: any;
+    children?: Node | Node[];
   }
 
   // Svelte 4 props
