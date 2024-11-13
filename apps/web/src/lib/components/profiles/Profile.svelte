@@ -531,7 +531,7 @@
       <div class="flex-wrap-inherit mx-auto flex w-full items-center justify-between px-4 py-1">
         <!-- Breadcrumbs -->
         <nav class="flex flex-wrap items-center">
-          <LogoMark isFooter={false} />
+          <LogoMark isLandingOrFooter={false} />
           <ol class="flex flex-wrap items-center bg-transparent">
             <li
               class="text-sm leading-normal before:float-left before:hidden before:pr-2 before:text-gray-600 before:content-['/'] before:md:block"
@@ -647,14 +647,10 @@
           <SummaryBoxHeader headerText={'Community Intelligence'}>
             <div class="flex items-center justify-center gap-2">
               <Blink />
-              <div>+</div>
-              <img src={irsLogo} alt="IRS Logo" class="h-6" />
             </div>
           </SummaryBoxHeader>
         </div>
         <div class="flex-auto items-start justify-center space-x-2 p-4">
-          <!-- <div class="p-4 text-center">Public data made meaningful by your nonprofit peers</div> -->
-
           {#if aiSummaries[profile.ein]}
             <p class="text-sm">{aiSummaries[profile.ein]}</p>
           {:else}

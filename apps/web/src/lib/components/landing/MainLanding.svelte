@@ -20,7 +20,7 @@
   <header class="absolute inset-x-0 top-0 z-50">
     <nav class="flex items-center justify-start p-6 md:justify-end lg:px-8" aria-label="Global">
       <div class="">
-        <LogoMark isFooter={false} />
+        <LogoMark isLandingOrFooter={true} />
       </div>
     </nav>
   </header>

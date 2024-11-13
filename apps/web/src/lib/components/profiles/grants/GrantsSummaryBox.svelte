@@ -75,7 +75,7 @@
   <h2 class="mt-4 text-sm font-bold text-slate-700">Grant Clusters</h2>
 
   {#if grantsFacets}
-    <div>
+    <div class="w-full">
       <BarGrantsSnapshot rawData={grantsFacets[0].facets.amount} />
     </div>
   {:else if grantCount === 0}
