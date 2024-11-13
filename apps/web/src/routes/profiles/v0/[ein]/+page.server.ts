@@ -1,6 +1,5 @@
 import { dev } from '$app/environment';
-import { connectToDatabase, getCollection } from '@repo/shared/utils/db/mongo';
-import { MONGODB_URI, MONGODB_DB, WORKER_URL, PROFILES_API_ENDPOINT, AUTH_PRIVATE_KEY, WAF_AUTH_VERIFY_KEY } from '$env/static/private';
+import { WORKER_URL, PROFILES_API_ENDPOINT, AUTH_PRIVATE_KEY, WAF_AUTH_VERIFY_KEY } from '$env/static/private';
 import type { PageServerLoad } from './$types';
 import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
 
@@ -25,12 +24,14 @@ const fetchRemoteProfile = async (ein: string, url: string): Promise<Grantmakers
 };
 
 const fetchLocalProfile = async (ein: string): Promise<GrantmakersExtractedDataObj> => {
-  console.log(`Fetching local profile for ${ein} from MongoDB`);
+  const { connectToDatabase, getCollection } = await import('@repo/shared/utils/db/mongo');
+  const { MONGODB_URI, MONGODB_DB } = await import('$env/static/private');
   const uri = MONGODB_URI;
   const dbName = MONGODB_DB;
   const collectionName = 'aggregated';
 
   try {
+    console.log(`Fetching local profile for ${ein} from MongoDB`);
     if (!uri || !dbName) {
       throw new Error('MongoDB URI and database name are required');
     }
