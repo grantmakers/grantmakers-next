@@ -4,7 +4,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "env": ["WORKER_URL", "PROFILES_API_ENDPOINT", "AUTH_PRIVATE_KEY", "WAF_AUTH_VERIFY_KEY"],
+      "env": ["MONGODB_URI", "MONGODB_DB", "WORKER_URL", "PROFILES_API_ENDPOINT", "AUTH_PRIVATE_KEY", "WAF_AUTH_VERIFY_KEY"],
       "outputs": [".svelte-kit/**", "apps/api/**"]
     },
     "lint": {
