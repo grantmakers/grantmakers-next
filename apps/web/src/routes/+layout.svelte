@@ -11,6 +11,8 @@
 
   let { children }: Props = $props();
 
+  let isProfileRoute = $derived($page.url.pathname.startsWith('/profiles/'));
+
   const {
     defaults: { title, description },
   } = meta;
@@ -24,8 +26,9 @@
     <meta name="description" content={description} />
   {/if}
 </svelte:head>
+
 <div class="app-container">
   {@render children?.()}
 
-  <Footer />
+  <Footer {isProfileRoute} />
 </div>
