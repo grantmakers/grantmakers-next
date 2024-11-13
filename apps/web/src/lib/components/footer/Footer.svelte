@@ -93,7 +93,7 @@
       </div>
     </div>
   </div>
-  <div class="flex items-center justify-between gap-4 bg-gray-700 px-4 py-2 lg:px-6">
+  <div class="flex items-center justify-between gap-4 bg-black px-4 py-2 lg:px-6">
     <div class="hidden text-sm text-gray-300 lg:flex">
       All content is licensed under a&nbsp;<a href="http://creativecommons.org/licenses/by-sa/4.0/"
         >Creative Commons Attribution-ShareAlike 4.0 International License</a
