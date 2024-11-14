@@ -1,8 +1,9 @@
 <script lang="ts">
   import Blink from '$lib/components/shared/icons/Blink.svelte';
   import SummaryBoxHeader from '../SummaryBoxHeader.svelte';
-  import { Sparkles } from 'svelte-heros-v2';
+  import { BellAlert, Sparkles } from 'svelte-heros-v2';
   import logo from '$lib/assets/images/logo.svg';
+  import Divider from '$lib/components/shared/Divider.svelte';
 
   interface Props {
     ein: string;
@@ -39,22 +40,41 @@
   {#if aiSummaries[ein]}
     <p class="text-sm">{aiSummaries[ein]}</p>
   {:else}
-    <div class="rounded-lg border-2 border-dashed border-gray-300 p-6">
-      <div class="flex flex-col items-center text-sm text-gray-500">
-        <Sparkles variation="solid" />
-        <h2 class="mt-2 text-base font-semibold leading-6 text-gray-900">AI Summaries</h2>
-        <div class="mt-1 flex flex-row items-center gap-4">
-          🌐 Public data
-          <div>></div>
-          <div class="flex items-center gap-1">
-            <img src={logo} alt="Grantmakers.io Logo" class="wr-0 h-4 w-4" /> Grantmakers.io excerpts
+    <div class="flex flex-col gap-4">
+      <div class="rounded-lg border-2 border-dashed border-gray-300 p-6">
+        <div class="flex flex-row items-center justify-evenly gap-8 text-sm text-slate-700">
+          <div class="flex flex-col items-center">
+            <Sparkles variation="solid" class="text-grantmakers-blue" />
+            <h2 class="mt-2 text-base font-semibold leading-6 text-slate-700">AI Summaries</h2>
           </div>
-          <div>+</div>
-          <div class="flex items-center gap-1">
-            <Blink classes={'h-4 w-4'} /> Community curation of AI-generated summaries
+          <div class="mt-1 flex flex-col items-start gap-4 lg:min-w-[300px]">
+            🌐 Public data, is combined with
+
+            <div class="flex items-center gap-1">
+              <img src={logo} alt="Grantmakers.io Logo" class="wr-0 h-4 w-4" /> Grantmakers.io open source prompts, to
+            </div>
+
+            <div class="flex items-center gap-1">
+              <Sparkles variation="solid" /> Generate AI summaries, that are
+            </div>
+
+            <div class="flex items-center gap-1">
+              <Blink classes={'h-4 w-4'} /> Selected and curated by the community
+            </div>
+            <Divider />
+            <div class="font-bold">Community Intelligence, powered by YOU</div>
           </div>
-          <div>=</div>
-          💯
+        </div>
+      </div>
+      <div class="rounded-lg border-2 border-dashed border-gray-300 p-6">
+        <div class="flex flex-row items-center justify-evenly gap-8 text-sm text-slate-700">
+          <div class="flex flex-col items-center">
+            <BellAlert variation="solid" class="text-grantmakers-blue" />
+            <h2 class="mt-2 flex flex-col items-center text-base font-semibold leading-6 text-slate-700">
+              <span>Crowdsourced</span><span>Updates</span>
+            </h2>
+          </div>
+          <div class="mt-1 flex flex-col items-start gap-4 lg:min-w-[300px]">🌐 Public tax returns can be stale</div>
         </div>
       </div>
     </div>
