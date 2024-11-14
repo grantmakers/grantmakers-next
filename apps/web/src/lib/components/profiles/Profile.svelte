@@ -15,16 +15,13 @@
   // import claudeIcon from '$lib/assets/images/claude.svg';
   import logo from '$lib/assets/images/logo.svg';
   import irsLogo from '$lib/assets/images/irs-logo.webp';
-  import { Sparkles } from 'svelte-heros-v2';
   import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
   import ApplicationGuidelines from './guidelines/ApplicationGuidelines.svelte';
   import Tip from './alerts/Tip.svelte';
-  // import Blink from '../shared/icons/Blink.svelte';
   import BarFinancialTrends from './charts/BarFinancialTrends.svelte';
   import BarFinancialOverview from './charts/BarFinancialOverview.svelte';
   import GrantsSummaryBox from './grants/GrantsSummaryBox.svelte';
   import LogoMark from '../shared/LogoMark.svelte';
-  import Blink from '../shared/icons/Blink.svelte';
   import CharitableActivities from './activities/CharitableActivities.svelte';
   import SideNav from './sidenav/SideNav.svelte';
   import PercentileBar from './overview/PercentileBar.svelte';

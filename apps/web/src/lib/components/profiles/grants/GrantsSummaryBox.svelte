@@ -1,8 +1,6 @@
 <script lang="ts">
   import HandDrawnBorder from '$lib/components/shared/HandDrawnBorder.svelte';
   import BarGrantsSnapshot from '../charts/BarGrantsSnapshot.svelte';
-  import chartSkeleton from '$lib/assets/images/blank-chart.jpg';
-  import { ChartBarSquare } from 'svelte-heros-v2';
   import { humanizeCurrency, humanizeNumber } from '@shared/functions/formatters/numbers';
   import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
   import Tip from '../alerts/Tip.svelte';

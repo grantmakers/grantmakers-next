@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Dot from '$lib/components/shared/icons/Dot.svelte';
   import Eyes from '$lib/components/shared/icons/Eyes.svelte';
   import { formatToCurrency } from '@shared/functions/formatters/numbers';
   import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
@@ -51,15 +50,6 @@
               </tr>
             {/if}
           </tbody>
-          <!-- <tfoot>
-            <tr>
-              <td colspan="2" class="max-w-sm text-sm text-gray-700">
-                <div class="my-2">
-                  <Tip message={'Grants to be paid out in the future are not included.'} variation={'inline'} includeLogo />
-                </div>
-              </td>
-            </tr>
-          </tfoot> -->
         </table>
       </div>
     </div>
