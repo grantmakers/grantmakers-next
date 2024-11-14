@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import People from './People.svelte';
+  import People from './people/People.svelte';
   import SummaryBoxHeader from './SummaryBoxHeader.svelte';
   import Banner from './Banner.svelte';
   import NavSearch from '../search/Nav.svelte';
@@ -15,7 +15,7 @@
   // import claudeIcon from '$lib/assets/images/claude.svg';
   import logo from '$lib/assets/images/logo.svg';
   import irsLogo from '$lib/assets/images/irs-logo.webp';
-  import { Sparkles, LockOpen, LockClosed, UserGroup, GlobeAlt } from 'svelte-heros-v2';
+  import { Sparkles } from 'svelte-heros-v2';
   import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
   import ApplicationGuidelines from './guidelines/ApplicationGuidelines.svelte';
   import Tip from './alerts/Tip.svelte';
@@ -27,6 +27,9 @@
   import Blink from '../shared/icons/Blink.svelte';
   import CharitableActivities from './activities/CharitableActivities.svelte';
   import SideNav from './sidenav/SideNav.svelte';
+  import PercentileBar from './overview/PercentileBar.svelte';
+  import Approachability from './header/Approachability.svelte';
+  import CommunityIntelligence from './community/CommunityIntelligence.svelte';
 
   type ImageModule = {
     default: string;
@@ -37,23 +40,6 @@
   }
 
   let { profile }: Props = $props();
-
-  const aiSummaries: { [key: string]: string } = {
-    // The Plant Memorial uses the Claude prompt but in Google AI Studio with Gemini Pro 002
-    '010131950':
-      'The Plant Memorial Home functions as a private operating foundation, primarily serving as a direct provider of elder care services rather than a traditional grantmaker. Their consistent, hyperlocal giving demonstrates a deep commitment to their immediate community in Maine, specifically focused on subsidized assisted living. They champion practical solutions to the challenges faced by their residents and are unlikely to fund untested programs. Given their operating nature and limited staff, their engagement style is likely transactional rather than relationship-driven. Building a connection with key decision-makers will be essential for any external organization seeking collaboration, though funding opportunities are extremely limited given their focused mission. Their primary value is ensuring the well-being of the elderly they serve directly, viewing their role as a direct service provider.',
-    // This suggest the Claude prompt needs to adjusting...they don't donate to nonprofits directly, which is cool, time to move on
-    '611913297':
-      "Every Org is a supplementary funder, acting as a facilitator rather than a primary grantmaker. Their giving supports a wide range of organizations, suggesting an openness to diverse approaches and a willingness to fund newer, less established ventures. Their online platform indicates a preference for streamlined, tech-forward interactions. While relationship-building might not be their primary focus, their emphasis on accessibility suggests a commitment to empowering both nonprofits and donors. Every Org's mission centers on democratizing philanthropy, indicating a belief in the power of collective giving to solve global problems. They envision their role as a catalyst for change, providing the infrastructure for a more generous world. The best approach is likely through their online platform, highlighting a project's alignment with their values of accessibility and broad impact.",
-    '832856275':
-      'Expa Org appears to be a supplementary funder, providing substantial but infrequent grants. Their giving pattern suggests a preference for established organizations and initiatives, demonstrated by grants marked as “general support” or “operating support,” rather than early-stage, high-risk ventures. While their grant amounts are significant, their limited staff suggests a streamlined, potentially transaction-focused approach. This likely means cultivating a relationship with key decision-makers is crucial. Geographically focused on their local community and select national partners, Expa Org prioritizes organizations within their network. Their funding choices indicate a commitment to strengthening core organizational capacity and enabling existing programs to scale, playing a supportive role in fostering growth within specific organizations. Direct and concise communication about a project’s alignment with their chosen grantees’ missions and demonstrable impact will likely be most effective.',
-    '810718077':
-      "The Thierer Family Foundation, based in Chicago, IL, primarily supports organizations located in the Chicago metropolitan area, though some grants extend to other US locations. The foundation has a website, http://thiererfamilyfoundation.org, and appears to have paid staff. While tax filings indicate the foundation only funds pre-selected organizations, further research may be warranted. Giving appears to focus on basic needs, arts & culture, healthcare, and education. Grants range from $1,000 to $165,500, with many grants clustering in the $5,000-$50,000 range and a small number exceeding $50,000. Nonprofits in the Chicago area working in the aforementioned program areas could be a good fit, but should be prepared for additional cultivation given the foundation's history of primarily supporting a smaller, set group of organizations.",
-    '510381959':
-      'The Harnisch Family Foundation, Inc. is a private foundation supporting primarily charitable purposes. In 2022, they awarded 69 grants ranging from $1,000 to $275,000, with most grants clustered between $1,000 and $49,999. Grantmaking appears to focus on organizations serving women and girls, media/film, and racial equity. The foundation has a history of grantmaking with over 700 grants distributed over multiple years. Geographic giving appears to be national, though New York and California receive a higher volume of funding. With assets of roughly $8.7 million, the foundation appears to be staffed, and lists contact information for grant applications on their website, http://www.thehf.org. Nonprofits focused on issues impacting women and girls, particularly those engaged in media and/or racial equity work, may find pursuing funding to be worthwhile.',
-    '131684331':
-      'The Ford Foundation is a large, staffed private foundation with assets exceeding $16 billion (2022). Their website, http://www.fordfoundation.org, offers additional information. The foundation supports a variety of causes, but a significant portion of grants appears to be dedicated to social justice initiatives, arts, and international development. Grants range from $75 to over $16 million, with a median grant amount of $100,000. While many grants fall within the $100,000 - $999,999 range, a considerable number are designated as "Matching Gift," suggesting an employee matching program. Excluding these, general operating support is frequently provided. The foundation\'s programs, including the BUILD program, Global Fellowship program, and Art for Justice, constitute a major part of their grantmaking. Geographically, while the foundation supports organizations across the U.S. and internationally, higher concentrations of funding are directed to organizations in New York and the greater Washington D.C. area. Nonprofits working in social justice, particularly those focused on combating inequality, along with arts organizations and international development groups, appear to be the best fit for pursuing further research. The provided application instructions on the tax form indicate an open application process.',
-  };
 
   let {
     // aiSummary,
@@ -66,6 +52,9 @@
     has_website: hasWebsite,
     grants_facets: grantsFacets,
     grants_to_preselected_only: noUnsolicited,
+    has_recent_grants: hasRecentGrants,
+    grants_reference_attachment: grantsReferenceAttachment,
+    has_charitable_activities: hasCharitableActivities,
     grants_current_year_top_20: grantsTop20,
     grants_all_years_top_20: grantsAllYearsTop20,
   } = profile;
@@ -118,6 +107,7 @@
     id="sidenav-main"
   >
     <!-- LogoMark -->
+
     <!-- <div class="p-2">
       <a href="/" class="group m-0 block flex-shrink-0 whitespace-nowrap px-8 py-2 text-sm text-slate-700">
         <div class="flex items-center">
@@ -132,6 +122,10 @@
     </div> -->
     <!-- Side Navigation -->
     <div class="block max-h-screen w-auto grow basis-full items-center overflow-auto">
+      <div class="mx-auto ml-3 flex w-full flex-col items-start p-4 lg:mb-10">
+        <LogoMark isLandingOrFooter={false} />
+        <div class="ml-10 text-sm"></div>
+      </div>
       <SideNav />
 
       <!-- <div class="mx-4 p-2">
@@ -171,11 +165,9 @@
       <div class="flex-wrap-inherit mx-auto flex w-full items-center justify-between px-4 py-1">
         <!-- Breadcrumbs -->
         <nav class="flex flex-wrap items-center">
-          <LogoMark isLandingOrFooter={false} />
+          <!-- <LogoMark isLandingOrFooter={false} /> -->
           <ol class="flex flex-wrap items-center bg-transparent">
-            <li
-              class="text-sm leading-normal before:float-left before:hidden before:pr-2 before:text-gray-600 before:content-['/'] before:md:block"
-            >
+            <li class="text-sm leading-normal">
               <a class="text-slate-700" href="/profiles">Foundation Profiles</a>
             </li>
             <li
@@ -246,6 +238,8 @@
             </div>
           </div>
 
+          <Approachability {noUnsolicited} {isStaffed} {hasWebsite} {hasRecentGrants} />
+
           <!-- Right side of box: metadata -->
           <div class="ml-4 mt-4 grid grid-cols-2 gap-x-2 gap-y-1 text-right md:ml-2 md:mt-0 md:gap-x-4">
             <span class="inline-flex items-center justify-start text-sm md:justify-end">EIN</span>
@@ -281,47 +275,16 @@
         </div>
       </div>
 
-      <!-- AI Summary -->
+      <!-- Community Intelligence -->
       <div class="shadow-soft-xl relative mt-4 flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
-        <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-          <SummaryBoxHeader headerText={'Community Intelligence'}>
-            <div class="flex items-center justify-center gap-2">
-              <Blink />
-            </div>
-          </SummaryBoxHeader>
-        </div>
-        <div class="flex-auto items-start justify-center space-x-2 p-4">
-          {#if aiSummaries[profile.ein]}
-            <p class="text-sm">{aiSummaries[profile.ein]}</p>
-          {:else}
-            <div class="rounded-lg border-2 border-dashed border-gray-300 p-6">
-              <div class="flex flex-col items-center text-sm text-gray-500">
-                <Sparkles variation="solid" />
-                <h2 class="mt-2 text-base font-semibold leading-6 text-gray-900">AI Summaries</h2>
-                <div class="mt-1 flex flex-row items-center gap-4">
-                  🌐 Public data
-                  <div>></div>
-                  <div class="flex items-center gap-1">
-                    <img src={logo} alt="Grantmakers.io Logo" class="wr-0 h-4 w-4" /> Grantmakers.io excerpts
-                  </div>
-                  <div>+</div>
-                  <div class="flex items-center gap-1">
-                    <Blink classes={'h-4 w-4'} /> Community curation of AI-generated summaries
-                  </div>
-                  <div>=</div>
-                  💯
-                </div>
-              </div>
-            </div>
-          {/if}
-        </div>
+        <!-- Content goes here -->
       </div>
 
       <!-- Core Body Sections -->
       <div class="mx-auto mt-4 w-full pb-6">
         <!-- Snapshot Boxes -->
         <div class="-mx-3 mb-4 grid grid-cols-1 space-y-4 md:space-y-0 lg:grid-cols-2 xl:grid-cols-3">
-          <!-- Box 2 -->
+          <!-- Box 1 -->
           <div class="h-full w-full max-w-full px-3">
             <!-- Grant History -->
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
@@ -334,10 +297,12 @@
                 grantMedian={profile.grant_median}
                 grantCount={profile.grant_count}
                 {grantsFacets}
+                {grantsReferenceAttachment}
+                {hasCharitableActivities}
               />
             </div>
           </div>
-          <!-- Box 1 -->
+          <!-- Box 2 -->
           <div class="h-full w-full max-w-full px-3">
             <div class="flex h-full flex-col gap-4">
               <!-- Summary -->
@@ -346,41 +311,16 @@
                   <SummaryBoxHeader headerText={'Overview'} />
                 </div>
 
-                <div class="flex-auto p-4">
+                <div class="flex flex-auto flex-col gap-4 p-4">
                   <!-- Core stats -->
                   <dl class="grid grid-cols-1 overflow-hidden rounded-lg bg-white p-2">
                     <!-- Assets section -->
                     <dt class="text-center text-sm leading-normal text-inherit">Assets</dt>
-                    <dd class="mb-4 text-center text-2xl font-bold text-slate-700">
+                    <dd class="text-center text-2xl font-bold text-slate-700">
                       {humanizeCurrency(profile.assets)}
                     </dd>
-
-                    <!-- Approachability section -->
-                    <dt class="text-center text-sm leading-normal text-inherit">Approachability</dt>
-                    <dd class="flex flex-row items-center justify-center text-2xl font-bold text-slate-700">
-                      <!-- Solicitation Status -->
-                      <div class="m-1 inline rounded p-2 {!noUnsolicited ? 'bg-green-500' : 'bg-yellow-500'}">
-                        {#if !noUnsolicited}
-                          <LockOpen variation="solid" class="h-4 w-4 text-white" aria-hidden="true" />
-                        {:else}
-                          <LockClosed variation="solid" class="h-4 w-4 text-white" aria-hidden="true" />
-                        {/if}
-                        <span class="sr-only">Solicitation {!noUnsolicited ? 'Allowed' : 'Not Allowed'}</span>
-                      </div>
-
-                      <!-- Staffing Status -->
-                      <div class="m-1 inline rounded p-2 {isStaffed ? 'bg-green-500' : 'bg-yellow-500'}">
-                        <UserGroup variation="solid" class="h-4 w-4 text-white" aria-hidden="true" />
-                        <span class="sr-only">Organization {isStaffed ? 'is Staffed' : 'is not Staffed'}</span>
-                      </div>
-
-                      <!-- Website Status -->
-                      <div class="m-1 inline rounded p-2 {hasWebsite ? 'bg-green-500' : 'bg-yellow-500'}">
-                        <GlobeAlt variation="solid" class="h-4 w-4 text-white" aria-hidden="true" />
-                        <span class="sr-only">Website {hasWebsite ? 'Available' : 'Not Available'}</span>
-                      </div>
-                    </dd>
                   </dl>
+                  <PercentileBar rank={profile.rank} total={profile.rank_total} classes={'p-2'} />
                 </div>
               </div>
 
@@ -472,7 +412,7 @@
           <div class="mb-4 w-full max-w-full px-3">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-                <SummaryBoxHeader headerText={'Direct Charitable Activities'}
+                <SummaryBoxHeader headerText={'Charitable Activities'}
                   ><img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} /></SummaryBoxHeader
                 >
               </div>
@@ -515,42 +455,7 @@
           <!-- About -->
           <div class="mb-4 w-full max-w-full px-3 text-slate-700">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
-              <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-                <SummaryBoxHeader headerText={'About Grantmakers.io'}>
-                  <img src={logo} alt="Grantmakers.io logo" class="max-h-6 w-full" height={36} width={36} />
-                </SummaryBoxHeader>
-              </div>
-              <div class="flex flex-col gap-6 p-6">
-                <div>
-                  <div class="text-sm font-bold uppercase text-slate-700">Open Source</div>
-                  <p>
-                    Grantmakers.io is a free community project ensuring nonprofits unfettered access to the public IRS dataset of Form 990
-                    tax filings.
-                  </p>
-                </div>
-                <div>
-                  <div class="text-sm font-bold uppercase text-slate-700">Data is Verbatim</div>
-                  <p>
-                    The project pulls from an open dataset published by the IRS. Data is presented exactly as found in the tax filings.
-                    Misspellings and cut off words are common as is the use of ALLCAPS.
-                  </p>
-                </div>
-                <div>
-                  <div class="text-sm font-bold uppercase text-slate-700">Historical Data</div>
-                  <p>
-                    Be mindful of the limitations of using historical data in your research - the data represents past activity and may not
-                    reflect current foundation priorities.
-                  </p>
-                </div>
-                <div class="flex justify-center">
-                  <a
-                    href="https://www.grantmakers.io/about/"
-                    class="shrink rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-100"
-                  >
-                    <div class="flex flex-row items-center justify-center gap-1">Learn More</div>
-                  </a>
-                </div>
-              </div>
+              <CommunityIntelligence ein={profile.ein} />
             </div>
           </div>
         </div>

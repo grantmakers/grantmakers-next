@@ -18,7 +18,7 @@
     <div class="w-1/2 sm:flex-auto">
       <!-- Source: IRS core dataset via Grantmakers ETL -->
       <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-      <div class="mt-2 px-3 text-sm text-gray-700">IRS Form 990 PF<Dot />Summary of Direct Charitable Activities</div>
+      <div class="mt-2 px-3 text-sm text-gray-700">Summary of Direct Charitable Activities</div>
     </div>
   </div>
   <div class="mt-8 flow-root">

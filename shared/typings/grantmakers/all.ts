@@ -67,6 +67,8 @@ export interface GrantmakersExtractedDataObj {
   organization_name_prior_year: string | null;
   organization_name_second_prior_year: string | null;
   enable_algolia_search: boolean;
+  rank: number;
+  rank_total: number;
 }
 
 export interface SummaryGrant {

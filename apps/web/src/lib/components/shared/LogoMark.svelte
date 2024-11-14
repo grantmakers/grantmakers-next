@@ -1,7 +1,7 @@
 <script lang="ts">
   import logo from '$lib/assets/images/logo.svg';
 
-  let { isLandingOrFooter = false }: { isLandingOrFooter: boolean } = $props();
+  let { isLandingOrFooter = false }: { isLandingOrFooter: boolean | undefined } = $props();
 
   let classes = {
     img: 'h-6',
