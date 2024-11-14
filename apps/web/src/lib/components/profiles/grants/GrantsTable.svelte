@@ -22,9 +22,6 @@
       <!-- @html Trusted source: IRS core dataset via Grantmakers ETL -->
       <!-- eslint-disable-next-line svelte/no-at-html-tags -->
       <div class="mt-2 px-3 text-sm text-gray-700">{@html grantSummary}</div>
-      {#if grants && grants.length > 0}
-        <Tip message={'Grants to be paid out in the future are not included.'} variation={'inline'} align={'right'} includeLogo />
-      {/if}
     </div>
   </div>
   <div class="mt-8 flow-root">

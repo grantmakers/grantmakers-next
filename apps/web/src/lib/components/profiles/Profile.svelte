@@ -329,11 +329,11 @@
                   </SummaryBoxHeader>
                 </div>
 
-                <div class="flex-auto items-center space-y-2 rounded-b-2xl bg-white p-4">
+                <div class="flex-auto items-center space-y-2 rounded-b-2xl bg-white p-4 text-sm text-slate-700">
                   <div class="flex flex-col gap-0 p-2">
                     <!-- <img src={irsLogo} alt="IRS logo" class="h-6 w-auto" height={24} width={48}/> -->
-                    <p class="text-sm font-bold text-slate-700">IRS Form 990-PF</p>
-                    <p class="flex flex-row items-start gap-2 text-sm text-slate-700">Available to the general public at IRS.gov.</p>
+                    <p class="font-bold">IRS Form 990-PF</p>
+                    <p class="flex flex-row items-start gap-2 text-slate-500">Available to the general public at IRS.gov.</p>
                   </div>
 
                   <hr class="border-1" />
@@ -342,8 +342,10 @@
                     <div class="flex flex-row items-center justify-between">
                       <div>
                         <div class="font-bold">Latest Available Filing</div>
-                        <div>Tax Year {formatTaxYear(profile.filings[0].tax_year)} ended {formattedTaxPeriodEnd ?? 'N/A'}</div>
-                        <div>Published by the IRS {formatDateToMonthYear(profile.last_updated_irs) ?? 'N/A'}</div>
+                        <div class="text-slate-500">
+                          Tax Year {formatTaxYear(profile.filings[0].tax_year)} ended {formattedTaxPeriodEnd ?? 'N/A'}
+                        </div>
+                        <div class="text-slate-500">Published by the IRS {formatDateToMonthYear(profile.last_updated_irs) ?? 'N/A'}</div>
                       </div>
                       {#if isOutdatedISOString(profile.last_updated_irs)}
                         <div>
