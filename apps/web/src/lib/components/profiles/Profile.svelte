@@ -25,6 +25,7 @@
   import CommunityIntelligence from './community/CommunityIntelligence.svelte';
   import Overview from './overview/Overview.svelte';
   import DataSource from './about/DataSource.svelte';
+  import { ArrowPath } from 'svelte-heros-v2';
 
   type ImageModule = {
     default: string;
@@ -161,7 +162,11 @@
         </nav>
 
         <!-- Search -->
-        <div class="mt-2 hidden grow items-center justify-end sm:mr-6 sm:mt-0 md:mr-0 md:flex lg:flex lg:basis-auto">
+        <div class="mt-2 hidden grow items-center justify-end gap-4 sm:mr-6 sm:mt-0 md:mr-0 md:flex lg:flex lg:basis-auto">
+          <div class="hidden flex-row items-center gap-2 lg:flex">
+            <ArrowPath class="size-4 text-gray-500" />
+            <a class="pr-3 text-xs font-semibold uppercase text-slate-500" href="/profiles/random">Surprise me</a>
+          </div>
           <NavSearch />
         </div>
       </div>

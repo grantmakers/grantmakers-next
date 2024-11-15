@@ -77,7 +77,6 @@
                   return html`
                     <div class="flex items-center justify-between">
                       <div class="px-3 py-2 text-xs font-semibold uppercase text-gray-500">Foundation Profiles</div>
-                      <a class="pr-3 text-xs font-semibold uppercase text-gray-500" href="/profiles/random">Surprise me</a>
                     </div>
                   `;
                 },
