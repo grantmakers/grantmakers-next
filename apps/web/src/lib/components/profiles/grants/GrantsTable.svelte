@@ -7,24 +7,40 @@
   interface Props {
     grants?: GrantsArray | null;
     grantCount?: number | null;
+    grantCountAllYears?: number | null;
     filingsAvailable?: number | null;
+    grantsReferenceAttachment: boolean;
   }
 
-  let { grants = null, grantCount = null, filingsAvailable = null }: Props = $props();
+  let {
+    grants = null,
+    grantCount = null,
+    grantCountAllYears = null,
+    filingsAvailable = null,
+    grantsReferenceAttachment = false,
+  }: Props = $props();
 
   const numberOfGrantsToDisplay = 5;
-  const grantSummary = `Showing the largest <span class="font-bold">${humanizeNumber(numberOfGrantsToDisplay)} grants</span> from <span class="font-bold">${grantCount ? humanizeNumber(grantCount) : 'N/A'} grants</span> made across <span class="font-bold">${filingsAvailable} years</span> of available tax filings.`;
 </script>
 
 <div>
-  <div class="sm:flex sm:items-center">
-    <div class="flex w-full flex-row items-center justify-between">
-      <!-- @html Trusted source: IRS core dataset via Grantmakers ETL -->
-      <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-      <div class="mt-2 px-3 text-sm text-gray-700">{@html grantSummary}</div>
+  {#if grantCountAllYears && grantCountAllYears > 1}
+    <div class="sm:flex sm:items-center">
+      <div class="flex w-full flex-row items-center justify-between">
+        <div class="mt-2 px-3 text-sm text-gray-700">
+          {#if grantCountAllYears <= 5}
+            Showing all {grantCountAllYears} grants listed in <span class="font-bold">{filingsAvailable} years</span> of available tax filings.
+          {:else}
+            Showing the largest <span class="font-bold">{humanizeNumber(numberOfGrantsToDisplay)} grants</span> from
+            <span class="font-bold">{grantCountAllYears ? humanizeNumber(grantCountAllYears) : 'N/A'} grants</span>
+            made across <span class="font-bold">{filingsAvailable} years</span> of available tax filings.
+          {/if}
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="mt-8 flow-root">
+  {/if}
+
+  <div class="{grantCountAllYears && grantCountAllYears > 1 ? 'mt-8 ' : 'mt-4 '}flow-root">
     <div class="-my-2 overflow-x-auto sm:-mx-6">
       <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:mb-4 lg:px-8">
         <table class="min-w-full table-auto divide-y divide-gray-300">
@@ -48,12 +64,21 @@
               <tr>
                 <td colspan="5" class="flex items-center gap-2 px-3 py-4 text-sm">
                   <ExclamationCircle variation="solid" />
-                  No grants available for this foundation
+                  No grants {grantCount === 0 ? 'listed' : 'available'} for this foundation
                 </td>
               </tr>
             {/if}
           </tbody>
         </table>
+        {#if grantsReferenceAttachment && grantCount === 1}
+          <div class="mt-4 flex w-1/2 justify-center">
+            <Tip
+              title="Grants reference an attachment"
+              message="The use of attachments and statements to provide grant details is a holdover from before foundation tax returns were filed electronically. Though unlikely, further grant details may be available in the tax filing itself. "
+              includeLogo
+            />
+          </div>
+        {/if}
       </div>
     </div>
   </div>

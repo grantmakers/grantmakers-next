@@ -1,13 +1,10 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import People from './people/People.svelte';
   import SummaryBoxHeader from './SummaryBoxHeader.svelte';
   import Banner from './Banner.svelte';
   import NavSearch from '../search/Nav.svelte';
   import GrantsTable from './grants/GrantsTable.svelte';
   import { formatTaxPeriodDate } from '@shared/functions/formatters/dates';
-  // import chatgptIcon from '$lib/assets/images/chatgpt.svg';
-  // import claudeIcon from '$lib/assets/images/claude.svg';
   import logo from '$lib/assets/images/logo.svg';
   import irsLogo from '$lib/assets/images/irs-logo.webp';
   import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
@@ -31,8 +28,6 @@
   let { profile }: Props = $props();
 
   let {
-    // aiSummary,
-    // aiSummarySource,
     organization_name,
     filings,
     grants,
@@ -46,26 +41,6 @@
   } = profile;
 
   let formattedTaxPeriodEnd: string = $derived(formatTaxPeriodDate(filings[0].tax_period) || 'N/A');
-
-  // const aiImgDetails = {
-  //   chatgpt: { src: chatgptIcon, width: 280, height: 54, maxHeightClass: 'max-h-6' },
-  //   claude: { src: claudeIcon, width: 280, height: 54, maxHeightClass: 'max-h-6' },
-  // };
-
-  // let sourceName: 'chatgpt' | 'claude';
-  // let currentAiIconDetails: { src: string; width: number; height: number; maxHeightClass: string };
-
-  // function isAiImgDetailsKey(key: string): key is keyof typeof aiImgDetails {
-  //   return key === 'chatgpt' || key === 'claude';
-  // }
-
-  onMount(async () => {
-    // Handle AI Summary logos
-    // sourceName = aiSummarySource?.startsWith('chatgpt') ? 'chatgpt' : 'claude';
-    // if (isAiImgDetailsKey(sourceName)) {
-    //   currentAiIconDetails = aiImgDetails[sourceName];
-    // }
-  });
 </script>
 
 <Banner />
