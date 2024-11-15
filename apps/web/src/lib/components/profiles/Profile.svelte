@@ -211,8 +211,10 @@
                 {#if grantsFacets}
                   <GrantsTable
                     grants={grants || grantsTop20 || grantsAllYearsTop20}
-                    grantCount={profile.grant_count_all_years}
+                    grantCount={profile.grant_count}
+                    grantCountAllYears={profile.grant_count_all_years}
                     filingsAvailable={profile.filings.length}
+                    {grantsReferenceAttachment}
                   />
                 {:else}
                   <div class="p-6">Unable to find an available free source of grants data</div>
