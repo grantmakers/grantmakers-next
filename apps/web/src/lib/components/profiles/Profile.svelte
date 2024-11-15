@@ -5,10 +5,7 @@
   import Banner from './Banner.svelte';
   import NavSearch from '../search/Nav.svelte';
   import GrantsTable from './grants/GrantsTable.svelte';
-  import Dot from '../shared/icons/Dot.svelte';
-  import { formatTaxPeriodDate, isOutdatedISOString } from '@shared/functions/formatters/dates';
-  import { upperFirstLetter } from '@shared/functions/formatters/names';
-  import { formatEin } from '@shared/functions/formatters/ein';
+  import { formatTaxPeriodDate } from '@shared/functions/formatters/dates';
   // import chatgptIcon from '$lib/assets/images/chatgpt.svg';
   // import claudeIcon from '$lib/assets/images/claude.svg';
   import logo from '$lib/assets/images/logo.svg';
@@ -21,15 +18,11 @@
   import LogoMark from '../shared/LogoMark.svelte';
   import CharitableActivities from './activities/CharitableActivities.svelte';
   import SideNav from './sidenav/SideNav.svelte';
-  import Approachability from './header/Approachability.svelte';
   import CommunityIntelligence from './community/CommunityIntelligence.svelte';
   import Overview from './overview/Overview.svelte';
   import DataSource from './about/DataSource.svelte';
   import { ArrowPath } from 'svelte-heros-v2';
-
-  type ImageModule = {
-    default: string;
-  };
+  import FoundationHeader from './header/FoundationHeader.svelte';
 
   interface Props {
     profile: GrantmakersExtractedDataObj;
@@ -44,54 +37,34 @@
     filings,
     grants,
     people,
-    is_likely_staffed: isStaffed,
     has_website: hasWebsite,
     grants_facets: grantsFacets,
-    grants_to_preselected_only: noUnsolicited,
-    has_recent_grants: hasRecentGrants,
     grants_reference_attachment: grantsReferenceAttachment,
     has_charitable_activities: hasCharitableActivities,
     grants_current_year_top_20: grantsTop20,
     grants_all_years_top_20: grantsAllYearsTop20,
   } = profile;
 
-  const DEFAULT_AVATAR = 'default.png';
+  let formattedTaxPeriodEnd: string = $derived(formatTaxPeriodDate(filings[0].tax_period) || 'N/A');
+
   // const aiImgDetails = {
   //   chatgpt: { src: chatgptIcon, width: 280, height: 54, maxHeightClass: 'max-h-6' },
   //   claude: { src: claudeIcon, width: 280, height: 54, maxHeightClass: 'max-h-6' },
   // };
 
-  let avatarImageModule: Promise<ImageModule> | undefined;
-  let avatarImage: string | undefined = $state();
   // let sourceName: 'chatgpt' | 'claude';
   // let currentAiIconDetails: { src: string; width: number; height: number; maxHeightClass: string };
-  let formattedTaxPeriodEnd: string = $state('N/A');
 
   // function isAiImgDetailsKey(key: string): key is keyof typeof aiImgDetails {
   //   return key === 'chatgpt' || key === 'claude';
   // }
 
   onMount(async () => {
-    /**
-     * Handle generic letter avatars
-     */
-    const firstLetter = upperFirstLetter(organization_name);
-    avatarImageModule = await import(`../../assets/images/icons-letters/svg/${firstLetter}.svg`);
-    // @ts-expect-error: Need to properly type Module, from Vite? SvelteKit?
-    avatarImage = avatarImageModule ? avatarImageModule?.default : '/logo.svg';
-
-    /**
-     * Handle AI Summary logos
-     */
+    // Handle AI Summary logos
     // sourceName = aiSummarySource?.startsWith('chatgpt') ? 'chatgpt' : 'claude';
     // if (isAiImgDetailsKey(sourceName)) {
     //   currentAiIconDetails = aiImgDetails[sourceName];
     // }
-
-    /**
-     * Misc formatting helpers
-     */
-    formattedTaxPeriodEnd = formatTaxPeriodDate(filings[0].tax_period);
   });
 </script>
 
@@ -187,78 +160,7 @@
       <div
         class="shadow-blur relative flex min-w-0 flex-auto flex-col overflow-hidden rounded-2xl border-0 bg-white bg-clip-border bg-center p-4"
       >
-        <div class="flex flex-wrap items-center justify-center gap-6 md:justify-between">
-          <!-- Left side -->
-          <div class="flex items-center gap-4 md:items-start">
-            <!-- Icon -->
-            <div class="w-auto max-w-full md:flex-none">
-              <div
-                class="ease-soft-in-out relative inline-flex size-12 items-center justify-center rounded-xl text-base text-white transition-all duration-200 md:size-20"
-              >
-                <img
-                  src={typeof avatarImage === 'string' ? avatarImage : `/${DEFAULT_AVATAR}`}
-                  alt="Foundation First Initial Icon"
-                  class="md:shadow-soft-sm size-12 w-full rounded-xl md:size-20"
-                  width="74"
-                  height="74"
-                />
-              </div>
-            </div>
-            <!-- Name -->
-            <div class="relative my-auto w-auto max-w-full flex-none md:px-3">
-              <div class="h-full">
-                <h5 class="mb-1 w-full whitespace-normal text-wrap">{organization_name}</h5>
-                <div class="mb-0 text-sm font-normal leading-normal">
-                  <strong class="text-slate-700">
-                    {profile.city},
-                    {profile.is_foreign && profile.state === 'Foreign' ? profile.country : profile.state}
-                  </strong>
-                  {#if profile.has_website}
-                    <a href={profile.website} target="_blank" rel="noopener noreferrer">
-                      <Dot />
-                      {profile.website_verbatim?.toLowerCase()}
-                    </a>
-                  {/if}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <Approachability {noUnsolicited} {isStaffed} {hasWebsite} {hasRecentGrants} />
-
-          <!-- Right side of box: metadata -->
-          <div class="ml-4 grid w-full grid-cols-2 gap-x-2 gap-y-1 text-right md:ml-2 md:mt-0 md:w-auto md:gap-x-4">
-            <span class="inline-flex items-center justify-start text-sm md:justify-end">EIN</span>
-            <span
-              class="inline-flex items-center justify-center rounded-md bg-slate-50 px-2 py-1 text-sm font-medium text-slate-700 ring-1 ring-inset ring-slate-700/10"
-              >{formatEin(profile.ein)}</span
-            >
-            <span class="inline-flex items-center justify-start text-sm md:justify-end">IRS Status</span>
-            {#if profile.eobmf_recognized_exempt && profile.eobmf_ruling_date}
-              <span
-                class="inline-flex items-center justify-center rounded-md bg-green-50 px-2 py-1 text-sm font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
-                >Since {formatTaxPeriodDate(profile.eobmf_ruling_date)}</span
-              >
-            {:else}
-              <span
-                class="inline-flex items-center justify-center rounded-md bg-yellow-50 px-2 py-1 text-sm font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20"
-                >Unknown</span
-              >
-            {/if}
-            <span class="inline-flex items-center justify-start text-sm md:justify-end">Data Valid as of</span>
-            {#if !isOutdatedISOString(profile.last_updated_irs)}
-              <span
-                class="inline-flex items-center justify-center rounded-md bg-green-50 px-2 py-1 text-sm font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
-                >FYE {formattedTaxPeriodEnd}</span
-              >
-            {:else}
-              <span
-                class="inline-flex items-center justify-center rounded-md bg-yellow-50 px-2 py-1 text-sm font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20"
-                >FYE {formattedTaxPeriodEnd}</span
-              >
-            {/if}
-          </div>
-        </div>
+        <FoundationHeader {organization_name} {profile} {formattedTaxPeriodEnd} />
       </div>
 
       <!-- Placeholder wrapper -->
