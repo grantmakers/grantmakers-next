@@ -1,12 +1,13 @@
 /* global Env */
-export async function fetchR2Object(env: Env, key: string): Promise<Response> {
-  const profile = await env.API_V1_POC0.get(key);
+export async function fetchR2Object(env: Env, namespace: string, key: string): Promise<Response> {
+  const namespacedKey = `${namespace}/${key}`;
+  const object = await env.API_V1_POC0.get(namespacedKey);
 
-  if (!profile) {
+  if (!object) {
     return new Response('Profile Not Found', { status: 404 });
   }
 
-  return new Response(profile.body, {
+  return new Response(object.body, {
     headers: { 'Content-Type': 'application/json' },
   });
 }
