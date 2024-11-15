@@ -29,7 +29,7 @@ router
 
     // Validate EIN
     if (isValidEin(ein)) {
-      return fetchR2Object(env, key, namespace);
+      return fetchR2Object(env, namespace, key);
     }
 
     return new Response('Invalid EIN format', { status: 400 });
@@ -45,7 +45,7 @@ router
 
     // Validate EIN
     if (isValidEin(ein)) {
-      return fetchR2Object(env, key, namespace);
+      return fetchR2Object(env, namespace, key);
     }
 
     return new Response('Invalid EIN format', { status: 400 });
