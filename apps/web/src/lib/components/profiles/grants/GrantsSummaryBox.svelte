@@ -41,11 +41,11 @@
   <!-- Grant Statistics Section -->
   <dl class="flex w-full flex-row items-center justify-around text-2xl">
     <!-- Grant Count -->
-    <div class="flex flex-col items-center p-2">
-      <dd class="font-bold text-slate-700">{humanizeNumber(grantCount)}</dd>
+    <div>
       <dt class="text-sm leading-normal text-inherit">
         {grantCount === 1 ? 'Grant' : 'Grants'}
       </dt>
+      <dd class="font-bold text-slate-700">{humanizeNumber(grantCount)}</dd>
     </div>
 
     <!-- Decorative Divider -->
@@ -55,18 +55,20 @@
 
     {#if grantCount >= 2}
       <!-- Median Grant Amount -->
-      <HandDrawnBorder fill={`fill-${getHandDrawnClass(grantMedian, grantCount)}`}>
-        <div class="relative z-10 flex flex-col items-center rounded-full {getBackgroundClass(grantMedian, grantCount)} p-6">
-          <dd class="{grantCount === 0 || grantCount < 3 ? 'text-lg' : ''} font-bold text-slate-700">
-            {#if grantCount === 0 || grantCount < 3}
-              N/A
-            {:else}
-              {humanizeCurrency(grantMedian)}
-            {/if}
-          </dd>
-          <dt class="text-sm leading-normal text-inherit">Median</dt>
-        </div>
-      </HandDrawnBorder>
+      <div>
+        <HandDrawnBorder fill={`fill-${getHandDrawnClass(grantMedian, grantCount)}`}>
+          <div class="relative z-10 flex flex-col items-center rounded-full {getBackgroundClass(grantMedian, grantCount)} p-6">
+            <dt class="text-sm leading-normal text-inherit">Median</dt>
+            <dd class="{grantCount === 0 || grantCount < 3 ? 'text-lg' : ''} font-bold text-slate-700">
+              {#if grantCount === 0 || grantCount < 3}
+                N/A
+              {:else}
+                {humanizeCurrency(grantMedian)}
+              {/if}
+            </dd>
+          </div>
+        </HandDrawnBorder>
+      </div>
 
       <!-- Decorative Divider -->
       <div class="pointer-events-none inset-0 flex items-center justify-center" aria-hidden="true">
@@ -74,7 +76,8 @@
       </div>
 
       <!-- Grant Range -->
-      <div class="flex flex-col items-center p-2">
+      <div>
+        <dt class="text-sm leading-normal text-inherit">Range</dt>
         <dd class="text-lg text-slate-700">
           {#if grantCount === 0}
             N/A
@@ -84,12 +87,11 @@
             {humanizeCurrency(grantMax)} - {humanizeCurrency(grantMin)}
           {/if}
         </dd>
-        <dt class="text-sm leading-normal text-inherit">Range</dt>
       </div>
     {:else}
-      <div class="flex flex-col items-center p-2">
-        <dd class="font-bold text-slate-700">{humanizeCurrency(grantMax)}</dd>
+      <div>
         <dt class="text-sm leading-normal text-inherit">Amount</dt>
+        <dd class="font-bold text-slate-700">{humanizeCurrency(grantMax)}</dd>
       </div>
     {/if}
   </dl>
