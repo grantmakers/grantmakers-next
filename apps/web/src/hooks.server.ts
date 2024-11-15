@@ -10,6 +10,9 @@ export const handleError: HandleServerError = async ({ error }) => {
   if (error instanceof ReferenceError && error.message === 'window is not defined') {
     console.error('Window Reference Error:', error.stack);
   }
+  if (error) {
+    console.log(error);
+  }
   return {
     message: 'Internal Server Error',
   };
