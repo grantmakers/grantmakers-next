@@ -2,13 +2,16 @@
   import { meta } from '$lib/utils/trustedConstants';
   const linkToHome = '/';
   const linkToSupport = meta.emails.support;
+  let { message = '' } = $props();
 </script>
 
 <main class="grid min-h-screen place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
   <div class="text-center">
-    <p class="text-base font-semibold text-slate-500">404</p>
-    <h1 class="mt-4 text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">Page not found</h1>
-    <p class="mt-6 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">Sorry, we couldn’t find the page you’re looking for.</p>
+    <p class="text-base font-semibold text-slate-500">400</p>
+    <h1 class="mt-4 text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">Bad Request</h1>
+    <p class="mt-6 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">
+      {message ? message : 'You are trying to access a route that does not exist'}
+    </p>
     <div class="mt-10 flex items-center justify-center gap-x-6">
       <a
         href={linkToHome}

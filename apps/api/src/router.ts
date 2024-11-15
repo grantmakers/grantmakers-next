@@ -8,7 +8,7 @@
  */
 import { Router } from 'itty-router';
 import { fetchR2Object } from './r2';
-import { isValidEin } from './utils/validators';
+import { isValidEin } from '@repo/shared/utils/validators';
 
 // eslint-disable-next-line new-cap
 const router = Router();

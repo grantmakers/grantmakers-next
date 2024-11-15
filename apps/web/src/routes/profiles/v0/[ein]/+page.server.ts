@@ -1,5 +1,7 @@
 import { dev } from '$app/environment';
+import { error } from '@sveltejs/kit';
 import { WORKER_URL, PROFILES_API_ENDPOINT, AUTH_PRIVATE_KEY, WAF_AUTH_VERIFY_KEY } from '$env/static/private';
+import { isValidEin } from '@repo/shared/utils/validators';
 import type { PageServerLoad } from './$types';
 import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
 
@@ -79,13 +81,22 @@ const getProfile = async (ein: string): Promise<GrantmakersExtractedDataObj> => 
 export const load: PageServerLoad = async ({ params }) => {
   const { ein } = params;
 
+  if (!isValidEin(ein)) {
+    throw error(400, {
+      message: 'Invalid EIN format. Please check the EIN and try again.',
+    });
+  }
+
   try {
     const profile = await getProfile(ein);
     return {
       foundationData: { profile },
     };
-  } catch (error) {
-    console.error('Error in load function:', error);
-    throw error;
+  } catch (err) {
+    console.error('Error in load function:', err);
+
+    throw error(500, {
+      message: 'An unexpected error occurred while fetching the foundation profile.',
+    });
   }
 };
