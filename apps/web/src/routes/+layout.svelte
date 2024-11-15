@@ -27,8 +27,6 @@
   {/if}
 </svelte:head>
 
-<div class="app-container">
-  {@render children?.()}
+{@render children?.()}
 
-  <Footer {isProfileRoute} />
-</div>
+<Footer {isProfileRoute} />

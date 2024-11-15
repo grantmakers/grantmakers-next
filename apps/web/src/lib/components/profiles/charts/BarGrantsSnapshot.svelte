@@ -168,6 +168,6 @@
   });
 </script>
 
-<div class="relative max-h-[600px] min-h-[400px] w-full">
+<div class="relative max-h-[450px] min-h-[300px] w-full">
   <canvas bind:this={chartCanvas}></canvas>
 </div>

@@ -57,7 +57,7 @@
       <!-- Median Grant Amount -->
       <HandDrawnBorder fill={`fill-${getHandDrawnClass(grantMedian, grantCount)}`}>
         <div class="relative z-10 flex flex-col items-center rounded-full {getBackgroundClass(grantMedian, grantCount)} p-6">
-          <dd class="{grantCount === 0 || grantCount < 3 ? 'text-lg' : 'font-bold '} text-slate-700">
+          <dd class="{grantCount === 0 || grantCount < 3 ? 'text-lg' : ''} font-bold text-slate-700">
             {#if grantCount === 0 || grantCount < 3}
               N/A
             {:else}
@@ -111,10 +111,6 @@
         includeLogo
       />
     {/if}
-
-    <div class="object-fit relative h-full">
-      <!-- <img src={chartSkeleton} alt="No grants data available - placeholder chart" class="object-fit h-full w-full" /> -->
-    </div>
   {:else if grantsFacets && grantsFacets[0].grant_count > 0}
     <h2 class="mt-4 text-sm font-bold text-slate-700">Grant Clusters</h2>
     <div class="w-full">

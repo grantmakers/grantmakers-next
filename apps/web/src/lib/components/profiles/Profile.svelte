@@ -5,11 +5,9 @@
   import Banner from './Banner.svelte';
   import NavSearch from '../search/Nav.svelte';
   import GrantsTable from './grants/GrantsTable.svelte';
-  import Eyes from '../shared/icons/Eyes.svelte';
   import Dot from '../shared/icons/Dot.svelte';
-  import { formatTaxPeriodDate, formatDateToMonthYear, formatTaxYear, isOutdatedISOString } from '@shared/functions/formatters/dates';
+  import { formatTaxPeriodDate, isOutdatedISOString } from '@shared/functions/formatters/dates';
   import { upperFirstLetter } from '@shared/functions/formatters/names';
-  import { humanizeCurrency } from '@shared/functions/formatters/numbers';
   import { formatEin } from '@shared/functions/formatters/ein';
   // import chatgptIcon from '$lib/assets/images/chatgpt.svg';
   // import claudeIcon from '$lib/assets/images/claude.svg';
@@ -17,16 +15,16 @@
   import irsLogo from '$lib/assets/images/irs-logo.webp';
   import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
   import ApplicationGuidelines from './guidelines/ApplicationGuidelines.svelte';
-  import Tip from './alerts/Tip.svelte';
   import BarFinancialTrends from './charts/BarFinancialTrends.svelte';
   import BarFinancialOverview from './charts/BarFinancialOverview.svelte';
   import GrantsSummaryBox from './grants/GrantsSummaryBox.svelte';
   import LogoMark from '../shared/LogoMark.svelte';
   import CharitableActivities from './activities/CharitableActivities.svelte';
   import SideNav from './sidenav/SideNav.svelte';
-  import PercentileBar from './overview/PercentileBar.svelte';
   import Approachability from './header/Approachability.svelte';
   import CommunityIntelligence from './community/CommunityIntelligence.svelte';
+  import Overview from './overview/Overview.svelte';
+  import DataSource from './about/DataSource.svelte';
 
   type ImageModule = {
     default: string;
@@ -103,20 +101,6 @@
     class="ease-nav-brand z-990 absolute inset-y-0 ml-4 mt-0 block w-full max-w-64 -translate-x-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 py-2 pt-2 text-slate-500 antialiased shadow-none transition-transform duration-200 xl:left-0 xl:translate-x-0 xl:bg-transparent"
     id="sidenav-main"
   >
-    <!-- LogoMark -->
-
-    <!-- <div class="p-2">
-      <a href="/" class="group m-0 block flex-shrink-0 whitespace-nowrap px-8 py-2 text-sm text-slate-700">
-        <div class="flex items-center">
-          <div>
-            <img src={logo} class="inline-block h-9 w-9 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
-          </div>
-          <div class="ml-1 flex items-center">
-            <span class="text-sm font-medium text-gray-700 group-hover:text-gray-900">Grantmakers.io</span>
-          </div>
-        </div>
-      </a>
-    </div> -->
     <!-- Side Navigation -->
     <div class="block max-h-screen w-auto grow basis-full items-center overflow-auto">
       <div class="mx-auto ml-3 flex w-full flex-col items-start p-4 lg:mb-10">
@@ -196,41 +180,41 @@
 
       <!-- Foundation header -->
       <div
-        class="shadow-blur relative flex min-w-0 flex-auto flex-col overflow-hidden break-words rounded-2xl border-0 bg-white bg-clip-border bg-center p-4 backdrop-blur"
+        class="shadow-blur relative flex min-w-0 flex-auto flex-col overflow-hidden rounded-2xl border-0 bg-white bg-clip-border bg-center p-4"
       >
-        <div class="-mx-3 flex flex-wrap items-center justify-center md:justify-between">
+        <div class="flex flex-wrap items-center justify-center gap-6 md:justify-between">
           <!-- Left side -->
-          <div class="flex items-start space-x-0 md:space-x-4">
+          <div class="flex items-center gap-4 md:items-start">
             <!-- Icon -->
-            <div class="w-auto max-w-full px-3 md:flex-none">
+            <div class="w-auto max-w-full md:flex-none">
               <div
-                class="ease-soft-in-out size-18 relative inline-flex items-center justify-center rounded-xl text-base text-white transition-all duration-200"
+                class="ease-soft-in-out relative inline-flex size-12 items-center justify-center rounded-xl text-base text-white transition-all duration-200 md:size-20"
               >
                 <img
                   src={typeof avatarImage === 'string' ? avatarImage : `/${DEFAULT_AVATAR}`}
                   alt="Foundation First Initial Icon"
-                  class="md:shadow-soft-sm size-20 w-full rounded-xl"
+                  class="md:shadow-soft-sm size-12 w-full rounded-xl md:size-20"
                   width="74"
                   height="74"
                 />
               </div>
             </div>
             <!-- Name -->
-            <div class="relative my-auto w-auto max-w-full flex-none px-3">
+            <div class="relative my-auto w-auto max-w-full flex-none md:px-3">
               <div class="h-full">
-                <h5 class="mb-1">{organization_name}</h5>
-                <p class="mb-0 text-sm font-normal leading-normal">
+                <h5 class="mb-1 w-full whitespace-normal text-wrap">{organization_name}</h5>
+                <div class="mb-0 text-sm font-normal leading-normal">
                   <strong class="text-slate-700">
                     {profile.city},
                     {profile.is_foreign && profile.state === 'Foreign' ? profile.country : profile.state}
                   </strong>
                   {#if profile.has_website}
-                    <Dot />
                     <a href={profile.website} target="_blank" rel="noopener noreferrer">
+                      <Dot />
                       {profile.website_verbatim?.toLowerCase()}
                     </a>
                   {/if}
-                </p>
+                </div>
               </div>
             </div>
           </div>
@@ -238,7 +222,7 @@
           <Approachability {noUnsolicited} {isStaffed} {hasWebsite} {hasRecentGrants} />
 
           <!-- Right side of box: metadata -->
-          <div class="ml-4 mt-4 grid grid-cols-2 gap-x-2 gap-y-1 text-right md:ml-2 md:mt-0 md:gap-x-4">
+          <div class="ml-4 grid w-full grid-cols-2 gap-x-2 gap-y-1 text-right md:ml-2 md:mt-0 md:w-auto md:gap-x-4">
             <span class="inline-flex items-center justify-start text-sm md:justify-end">EIN</span>
             <span
               class="inline-flex items-center justify-center rounded-md bg-slate-50 px-2 py-1 text-sm font-medium text-slate-700 ring-1 ring-inset ring-slate-700/10"
@@ -272,7 +256,7 @@
         </div>
       </div>
 
-      <!-- Community Intelligence -->
+      <!-- Placeholder wrapper -->
       <div class="shadow-soft-xl relative mt-4 flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
         <!-- Content goes here -->
       </div>
@@ -304,62 +288,12 @@
             <div class="flex h-full flex-col gap-4">
               <!-- Summary -->
               <div class="shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
-                <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-                  <SummaryBoxHeader headerText={'Overview'} />
-                </div>
-
-                <div class="flex flex-auto flex-col gap-4 p-4">
-                  <!-- Core stats -->
-                  <dl class="grid grid-cols-1 overflow-hidden rounded-lg bg-white p-2">
-                    <!-- Assets section -->
-                    <dt class="text-center text-sm leading-normal text-inherit">Assets</dt>
-                    <dd class="text-center text-2xl font-bold text-slate-700">
-                      {humanizeCurrency(profile.assets)}
-                    </dd>
-                  </dl>
-                  <PercentileBar rank={profile.rank} total={profile.rank_total} classes={'p-2'} />
-                </div>
+                <Overview rank={profile.rank} rankTotal={profile.rank_total} assets={profile.assets} />
               </div>
 
               <!-- Data Source -->
               <div class="shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border md:h-full">
-                <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-                  <SummaryBoxHeader headerText={'Data Source'}>
-                    <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} />
-                  </SummaryBoxHeader>
-                </div>
-
-                <div class="flex-auto items-center space-y-2 rounded-b-2xl bg-white p-4 text-sm text-slate-700">
-                  <div class="flex flex-col gap-0 p-2">
-                    <!-- <img src={irsLogo} alt="IRS logo" class="h-6 w-auto" height={24} width={48}/> -->
-                    <p class="font-bold">IRS Form 990-PF</p>
-                    <p class="flex flex-row items-start gap-2 text-slate-500">Available to the general public at IRS.gov.</p>
-                  </div>
-
-                  <hr class="border-1" />
-
-                  <div class="p-2 text-sm text-slate-700">
-                    <div class="flex flex-row items-center justify-between">
-                      <div>
-                        <div class="font-bold">Latest Available Filing</div>
-                        <div class="text-slate-500">
-                          Tax Year {formatTaxYear(profile.filings[0].tax_year)} ended {formattedTaxPeriodEnd ?? 'N/A'}
-                        </div>
-                        <div class="text-slate-500">Published by the IRS {formatDateToMonthYear(profile.last_updated_irs) ?? 'N/A'}</div>
-                      </div>
-                      {#if isOutdatedISOString(profile.last_updated_irs)}
-                        <div>
-                          <Eyes />
-                        </div>
-                      {/if}
-                    </div>
-                  </div>
-                  <Tip
-                    message="Grantmakers.io is not affiliated, associated, authorized, endorsed by, or in any way officially connected with any
-                  foundation appearing on the site."
-                    includeLogo
-                  />
-                </div>
+                <DataSource taxYear={profile.filings[0].tax_year} {formattedTaxPeriodEnd} lastUpatedIrs={profile.last_updated_irs} />
               </div>
             </div>
           </div>
