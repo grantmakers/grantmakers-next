@@ -10,11 +10,7 @@
   let { title = '', message, variation = undefined, align = undefined, includeLogo = false }: Props = $props();
 </script>
 
-<div
-  class="rounded-md border border-slate-200 bg-slate-100 {variation === 'xs' ? 'p-4' : 'p-6'} {variation === 'xs' ? 'text-xs' : (
-    'text-sm'
-  )} {variation === 'xs' ? 'border-0 bg-transparent' : ''} text-slate-700 shadow-sm"
->
+<div class="rounded-md bg-transparent {variation === 'xs' ? 'p-4 ' : 'p-6 '}{variation === 'xs' ? 'text-xs ' : 'text-sm '}text-slate-700">
   <div class="flex flex-row items-start {align === 'right' ? 'justify-end ' : ''}gap-2">
     {#if includeLogo}
       <div class="text-grantmakers-orange">
@@ -39,7 +35,7 @@
       {#if title}
         <span class="mr-1 font-bold">{title}</span>
       {/if}
-      <p>{message}</p>
+      <div class="max-w-md">{message}</div>
     </div>
   </div>
 </div>
