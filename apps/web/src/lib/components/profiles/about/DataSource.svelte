@@ -51,9 +51,4 @@
       {/if}
     </div>
   </div>
-  <Tip
-    message="Grantmakers.io is not affiliated, associated, authorized, endorsed by, or in any way officially connected with any
-  foundation appearing on the site."
-    includeLogo
-  />
 </div>

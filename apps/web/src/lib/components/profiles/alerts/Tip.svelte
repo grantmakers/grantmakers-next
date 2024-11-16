@@ -2,7 +2,7 @@
   interface Props {
     title?: string;
     message: string;
-    variation?: 'inline' | undefined;
+    variation?: 'inline' | 'xs' | undefined;
     align?: 'right' | undefined;
     includeLogo?: boolean;
   }
@@ -10,7 +10,11 @@
   let { title = '', message, variation = undefined, align = undefined, includeLogo = false }: Props = $props();
 </script>
 
-<div class="rounded-md border border-slate-200 bg-slate-100 {variation === 'inline' ? 'p-2' : 'p-6'} text-sm text-slate-700 shadow-sm">
+<div
+  class="rounded-md border border-slate-200 bg-slate-100 {variation === 'xs' ? 'p-4' : 'p-6'} {variation === 'xs' ? 'text-xs' : (
+    'text-sm'
+  )} {variation === 'xs' ? 'border-0 bg-transparent' : ''} text-slate-700 shadow-sm"
+>
   <div class="flex flex-row items-start {align === 'right' ? 'justify-end ' : ''}gap-2">
     {#if includeLogo}
       <div class="text-grantmakers-orange">
