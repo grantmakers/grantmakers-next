@@ -44,11 +44,11 @@ const fetchLocalProfile = async (ein: string): Promise<GrantmakersExtractedDataO
       { ein },
       {
         projection: {
-          'pub78._id': 0, // Note: A 500 error occurs if the _id makes it to +page.svelte - likely due to failed interpretation of the BSON $oid
           organization_name_slug: 0,
           organization_names_all_years: 0,
-          grants_current_year_top_20: 0,
           grants_all_years: 0,
+          grants: 0,
+          // grants_current_year_top_20: 0,
         },
       },
     );

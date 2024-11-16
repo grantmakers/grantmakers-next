@@ -36,7 +36,7 @@
     grants_facets: grantsFacets,
     grants_reference_attachment: grantsReferenceAttachment,
     has_charitable_activities: hasCharitableActivities,
-    grants_current_year_top_20: grantsTop20,
+    grants_current_year_top_20: grantsCurrentTop20,
     grants_all_years_top_20: grantsAllYearsTop20,
   } = profile;
 
@@ -210,7 +210,8 @@
               <div>
                 {#if grantsFacets}
                   <GrantsTable
-                    grants={grants || grantsTop20 || grantsAllYearsTop20}
+                    grantsAllYears={grantsAllYearsTop20}
+                    grantsCurrent={grantsCurrentTop20}
                     grantCount={profile.grant_count}
                     grantCountAllYears={profile.grant_count_all_years}
                     filingsAvailable={profile.filings.length}

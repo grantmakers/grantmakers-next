@@ -5,7 +5,8 @@
   import { humanizeNumber } from '@shared/functions/formatters/numbers';
   import Tip from '../alerts/Tip.svelte';
   interface Props {
-    grants?: GrantsArray | null;
+    grantsAllYears?: GrantsArray | null;
+    grantsCurrent?: GrantsArray | null;
     grantCount?: number | null;
     grantCountAllYears?: number | null;
     filingsAvailable?: number | null;
@@ -13,34 +14,63 @@
   }
 
   let {
-    grants = null,
+    grantsAllYears = null,
+    grantsCurrent = null,
     grantCount = null,
     grantCountAllYears = null,
     filingsAvailable = null,
     grantsReferenceAttachment = false,
   }: Props = $props();
 
-  const numberOfGrantsToDisplay = 5;
+  const numberOfGrantsToDisplay = 10;
+
+  let viewMode: 'all-time' | 'current' = $state('all-time');
+  let grants = $derived(viewMode === 'all-time' ? grantsAllYears : grantsCurrent);
 </script>
 
 <div>
-  {#if grantCountAllYears && grantCountAllYears > 1}
+  {#if grants && grants.length > 0}
     <div class="sm:flex sm:items-center">
       <div class="flex w-full flex-row items-center justify-between">
-        <div class="mt-2 px-3 text-sm text-gray-700">
-          {#if grantCountAllYears <= 5}
-            Showing all {grantCountAllYears} grants listed in <span class="font-bold">{filingsAvailable} years</span> of available tax filings.
-          {:else}
-            Showing the largest <span class="font-bold">{humanizeNumber(numberOfGrantsToDisplay)} grants</span> from
-            <span class="font-bold">{grantCountAllYears ? humanizeNumber(grantCountAllYears) : 'N/A'} grants</span>
-            made across <span class="font-bold">{filingsAvailable} years</span> of available tax filings.
-          {/if}
+        <div class="flex items-center space-x-4">
+          <div class="inline-flex rounded-b-lg border border-slate-200 p-1 hover:cursor-default">
+            <button
+              onclick={() => (viewMode = 'all-time')}
+              class="cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium {viewMode === 'all-time' ?
+                'bg-slate-200 text-slate-700 hover:cursor-default'
+              : 'text-slate-700 hover:text-slate-900'}"
+            >
+              All Time
+            </button>
+            {#if grantsCurrent}
+              <button
+                onclick={() => (viewMode = 'current')}
+                class="cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium {viewMode === 'current' ?
+                  'bg-slate-200 text-slate-700 hover:cursor-default'
+                : 'text-slate-700 hover:text-slate-900'}"
+              >
+                Current Year
+              </button>
+            {/if}
+          </div>
+
+          <p class="text-sm text-slate-700">
+            {#if viewMode === 'all-time'}
+              Showing the largest <span class="font-bold">{numberOfGrantsToDisplay} grants</span> from
+              <span class="font-bold">{grantCountAllYears ? humanizeNumber(grantCountAllYears) : 'N/A'} grants</span> made across
+              <span class="font-bold">{filingsAvailable} years</span>
+            {:else}
+              Showing the largest <span class="font-bold">{numberOfGrantsToDisplay} grants</span> from
+              <span class="font-bold">{grantCount ? humanizeNumber(grantCount) : 'N/A'} grants</span> made in the
+              <span class="font-bold">most recent year</span>
+            {/if}
+          </p>
         </div>
       </div>
     </div>
   {/if}
 
-  <div class="{grantCountAllYears && grantCountAllYears > 1 ? 'mt-8 ' : 'mt-4 '}flow-root">
+  <div class="{grants && grants?.length > 0 ? 'mt-8 ' : 'mt-4 '}flow-root">
     <div class="-my-2 overflow-x-auto sm:-mx-6">
       <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:mb-4 lg:px-8">
         <table class="min-w-full table-auto divide-y divide-gray-300">
@@ -71,7 +101,7 @@
           </tbody>
         </table>
         {#if grantsReferenceAttachment && grantCount === 1}
-          <div class="mt-4 flex w-1/2 justify-center">
+          <div class="mx-auto mt-4 flex">
             <Tip
               title="Grants reference an attachment"
               message="The use of attachments and statements to provide grant details is a holdover from before foundation tax returns were filed electronically. Though unlikely, further grant details may be available in the tax filing itself. "
