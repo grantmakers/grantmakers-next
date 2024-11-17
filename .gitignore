@@ -29,6 +29,7 @@ dist
 
 # Mocks
 shared/mocks
+shared/tmp
 
 
 # Debug
