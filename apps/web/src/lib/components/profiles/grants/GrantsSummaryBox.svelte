@@ -103,11 +103,13 @@
   <!-- Grant Clusters Section -->
   {#if grantCount === 0}
     {#if hasCharitableActivities && grantCount === 0}
-      <Tip
-        title="Check the Charitable Activities section"
-        message="While no grants were listed for the current year, the foundation does list direct charitable activities."
-        includeLogo
-      />
+      <a href="#charitable-activities" class="mt-4">
+        <Tip
+          title="See Charitable Activities below"
+          message="The foundation appears to directly serve its mission beyond grantmaking."
+          includeLogo
+        />
+      </a>
     {/if}
   {:else if grantsFacets && grantsFacets[0].grant_count > 0}
     <h2 class="mt-4 text-sm font-bold text-slate-700">Grant Clusters</h2>

@@ -3,7 +3,7 @@
   import SummaryBoxHeader from '../SummaryBoxHeader.svelte';
   import irsLogo from '$lib/assets/images/irs-logo.webp';
   import Eyes from '$lib/components/shared/icons/Eyes.svelte';
-  import Tip from '../alerts/Tip.svelte';
+  import { tooltip } from '@utils/tooltip';
 
   interface Props {
     taxYear: number;
@@ -45,7 +45,7 @@
         <div class="text-slate-500">Published by the IRS {formatDateToMonthYear(lastUpdatedIrs) ?? 'N/A'}</div>
       </div>
       {#if isOutdatedISOString(lastUpdatedIrs)}
-        <div>
+        <div use:tooltip={{ content: 'Published over a year ago' }}>
           <Eyes />
         </div>
       {/if}
