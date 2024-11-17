@@ -97,6 +97,7 @@
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           title: {
             display: true,
@@ -166,7 +167,7 @@
     </div>
     <Divider />
     {#if orgFinancialStats && orgFinancialStats.length > 1}
-      <div class="min-h-full w-full">
+      <div class="min-h-60 w-full">
         <canvas bind:this={chartCanvas}></canvas>
       </div>
       <Divider />

@@ -97,11 +97,7 @@
   </dl>
 
   {#if grantsReferenceAttachment && grantCount === 1}
-    <Tip
-      title="Grantmaking reported as a single grant"
-      message="Further grant details may be available in the tax filing itself."
-      includeLogo
-    />
+    <Tip title="Grantmaking reported as a single grant" message="See the Grants table below for details." includeLogo />
   {/if}
 
   <!-- Grant Clusters Section -->

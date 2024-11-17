@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Toaster } from 'svelte-french-toast';
   import People from './people/People.svelte';
   import SummaryBoxHeader from './SummaryBoxHeader.svelte';
   import Banner from './Banner.svelte';
@@ -30,7 +31,7 @@
   let {
     organization_name,
     filings,
-    grants,
+    // grants,
     people,
     has_website: hasWebsite,
     grants_facets: grantsFacets,
@@ -43,6 +44,7 @@
   let formattedTaxPeriodEnd: string = $derived(formatTaxPeriodDate(filings[0].tax_period) || 'N/A');
 </script>
 
+<Toaster />
 <Banner />
 <div class="relative">
   <!-- Left Navigation -->

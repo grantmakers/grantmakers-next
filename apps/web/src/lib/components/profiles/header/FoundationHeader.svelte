@@ -1,5 +1,7 @@
 <script lang="ts">
   import Approachability from './Approachability.svelte';
+  import { copy } from 'svelte-copy';
+  import toast from 'svelte-french-toast';
   import Dot from '$lib/components/shared/icons/Dot.svelte';
   import LetterAvatar from '$lib/components/shared/avatars/LetterAvatar.svelte';
   import { formatEin } from '@shared/functions/formatters/ein';
@@ -46,9 +48,9 @@
       </div>
     </div>
     <!-- Name -->
-    <div class="relative my-auto w-auto max-w-full flex-none md:px-3">
+    <div class="relative my-auto w-auto md:flex-none md:px-3 lg:max-w-full">
       <div class="h-full">
-        <h5 class="mb-1 w-full max-w-md whitespace-normal text-wrap">{organization_name}</h5>
+        <h5 class="mb-1 w-full whitespace-normal text-wrap text-lg font-semibold md:max-w-md">{organization_name}</h5>
         <div class="mb-0 text-sm font-normal leading-normal">
           <strong class="text-slate-700">
             {profile.city},
@@ -71,7 +73,13 @@
   <div class="ml-4 grid w-full grid-cols-2 gap-x-2 gap-y-1 text-right md:ml-2 md:mt-0 md:w-auto md:gap-x-4">
     <span class="inline-flex items-center justify-start text-sm md:justify-end">EIN</span>
     <span
-      class="inline-flex items-center justify-center rounded-md bg-slate-50 px-2 py-1 text-sm font-medium text-slate-700 ring-1 ring-inset ring-slate-700/10"
+      use:copy={{
+        text: profile.ein,
+        onCopy() {
+          toast.success('Copied EIN');
+        },
+      }}
+      class="inline-flex cursor-copy items-center justify-center rounded-md px-2 py-1 text-sm font-medium text-slate-700"
       >{formatEin(profile.ein)}</span
     >
     <span class="inline-flex items-center justify-start text-sm md:justify-end">IRS Status</span>

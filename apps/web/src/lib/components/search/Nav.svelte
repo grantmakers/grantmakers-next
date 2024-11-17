@@ -32,7 +32,7 @@
             ></path>
           </svg>
         </div>
-        <span class="text-sm text-slate-500">Search</span>
+        <span class="text-sm text-slate-500">Quick search...</span>
       </div>
     </button>
   </div>

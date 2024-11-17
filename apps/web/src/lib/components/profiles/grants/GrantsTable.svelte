@@ -1,23 +1,23 @@
 <script lang="ts">
   import GrantRow from './GrantRow.svelte';
   import { ExclamationCircle } from 'svelte-heros-v2';
-  import type { GrantsArray } from '@shared/typings/grantmakers/all';
+  import type { GrantsArray, GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
   import { humanizeNumber } from '@shared/functions/formatters/numbers';
   import Tip from '../alerts/Tip.svelte';
   interface Props {
     grantsAllYears?: GrantsArray | null;
     grantsCurrent?: GrantsArray | null;
-    grantCount?: number | null;
-    grantCountAllYears?: number | null;
+    grantCount?: GrantmakersExtractedDataObj['grant_count'];
+    grantCountAllYears?: GrantmakersExtractedDataObj['grant_count_all_years'];
     filingsAvailable?: number | null;
-    grantsReferenceAttachment: boolean;
+    grantsReferenceAttachment: GrantmakersExtractedDataObj['grants_reference_attachment'];
   }
 
   let {
     grantsAllYears = null,
     grantsCurrent = null,
-    grantCount = null,
-    grantCountAllYears = null,
+    grantCount,
+    grantCountAllYears,
     filingsAvailable = null,
     grantsReferenceAttachment = false,
   }: Props = $props();
@@ -104,7 +104,7 @@
           <div class="mx-auto mt-4 flex">
             <Tip
               title="Grants reference an attachment"
-              message="The use of attachments and statements to provide grant details is a holdover from before foundation tax returns were filed electronically. Though unlikely, further grant details may be available in the tax filing itself. "
+              message="The use of attachments and statements to provide grant details is a holdover from before foundation tax returns were filed electronically. Unfortunately, these attachments are often not available. "
               includeLogo
             />
           </div>
