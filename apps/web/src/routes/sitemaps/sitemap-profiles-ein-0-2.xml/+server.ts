@@ -1,5 +1,5 @@
 import { generateSitemap } from '$utils/sitemap';
-import sitemapData from '@repo/shared/data/sitemapData.json';
+import sitemapData from '@repo/shared/data/public/sitemap-data.json';
 import type { Profile } from '@repo/shared/typings/sitemaps';
 import type { RequestHandler } from '@sveltejs/kit';
 
