@@ -14,7 +14,11 @@ export const meta = {
   },
 };
 
-export const legacyUrl = 'https://legacy.grantmakers.io';
+export const hostnameLegacy = 'https://legacy.grantmakers.io';
+export const hostnameNext = 'https://next.grantmakers.io';
+export const hostnameProd = 'https://www.grantmakers.io';
+
+export const cutoverDate = new Date('2024-12-01').toISOString().replace(/\.\d{3}Z$/, 'Z');
 
 export const articleLinks = {
   whyAlgolia: 'https://stories.algolia.com/why-hosted-search-made-sense-for-grantmakers-io-8974f5ed6bd6',
