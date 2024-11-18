@@ -2,7 +2,7 @@
   import GrantRow from './GrantRow.svelte';
   import { ExclamationCircle } from 'svelte-heros-v2';
   import type { GrantsArray, GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
-  import { humanizeNumber } from '@shared/functions/formatters/numbers';
+  import { humanizeNumber } from '@repo/shared/functions/formatters/numbers';
   import Tip from '../alerts/Tip.svelte';
   interface Props {
     grantsAllYears?: GrantsArray | null;

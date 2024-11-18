@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { formatTaxYear, formatDateToMonthYear, isOutdatedISOString } from '@shared/functions/formatters/dates';
+  import { formatTaxYear, formatDateToMonthYear, isOutdatedISOString } from '@repo/shared/functions/formatters/dates';
   import SummaryBoxHeader from '../SummaryBoxHeader.svelte';
   import irsLogo from '$lib/assets/images/irs-logo.webp';
   import Eyes from '$lib/components/shared/icons/Eyes.svelte';
-  import { tooltip } from '@utils/tooltip';
+  import { tooltip } from '$utils/tooltip';
 
   interface Props {
     taxYear: number;

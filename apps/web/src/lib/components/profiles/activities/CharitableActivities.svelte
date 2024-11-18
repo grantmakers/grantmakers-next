@@ -1,6 +1,6 @@
 <script lang="ts">
   import Eyes from '$lib/components/shared/icons/Eyes.svelte';
-  import { formatToCurrency } from '@shared/functions/formatters/numbers';
+  import { formatToCurrency } from '@repo/shared/functions/formatters/numbers';
   import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
   import { ExclamationCircle } from 'svelte-heros-v2';
 

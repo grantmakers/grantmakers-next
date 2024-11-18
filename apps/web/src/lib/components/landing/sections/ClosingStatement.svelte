@@ -1,5 +1,5 @@
 <script lang="ts">
-  import viewport from '@utils/useViewportAction';
+  import viewport from '$utils/useViewportAction';
 
   let textInView = $state(false);
 

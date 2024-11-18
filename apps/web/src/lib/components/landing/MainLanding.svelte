@@ -11,7 +11,7 @@
   import Market from './sections/Market.svelte';
   import Education from './sections/Education.svelte';
   import BottomCTA from './sections/BottomCTA.svelte';
-  import { features, articleLinks } from '@utils/trustedConstants';
+  import { features, articleLinks } from '$utils/trustedConstants';
   import ClosingStatement from './sections/ClosingStatement.svelte';
 </script>
 

@@ -2,7 +2,7 @@
   import { onDestroy, onMount } from 'svelte';
   import '@algolia/autocomplete-theme-classic';
   import algoliaLogo from '$lib/assets/images/Algolia-logo-blue.svg';
-  import { formatEin } from '@shared/functions/formatters/ein';
+  import { formatEin } from '@repo/shared/functions/formatters/ein';
   import type { AutocompleteApi } from '@algolia/autocomplete-js';
   import type { BaseItem } from '@algolia/autocomplete-core';
   import type { HTMLTemplate } from '@algolia/autocomplete-shared';
@@ -10,7 +10,7 @@
   import type { AlgoliaProfilesResponseLegacy } from '@shared/typings/algolia/profiles';
 
   import { PUBLIC_ALGOLIA_APP_ID, PUBLIC_ALGOLIA_SEARCH_ONLY_KEY, PUBLIC_ALGOLIA_INDEX_NAME } from '$env/static/public';
-  import { normalizeCurrencyToMillions } from '@shared/functions/formatters/numbers';
+  import { normalizeCurrencyToMillions } from '@repo/shared/functions/formatters/numbers';
 
   interface AlgoliaProfilesItem extends BaseItem, AlgoliaProfilesResponseLegacy {}
 

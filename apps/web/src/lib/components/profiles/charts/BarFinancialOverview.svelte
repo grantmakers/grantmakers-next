@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
-  import { humanizeCurrency } from '@shared/functions/formatters/numbers';
+  import { humanizeCurrency } from '@repo/shared/functions/formatters/numbers';
   import Divider from '$lib/components/shared/Divider.svelte';
   import type { Chart } from 'chart.js';
 

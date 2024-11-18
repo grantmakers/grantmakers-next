@@ -5,10 +5,10 @@
   import Banner from './Banner.svelte';
   import NavSearch from '../search/Nav.svelte';
   import GrantsTable from './grants/GrantsTable.svelte';
-  import { formatTaxPeriodDate } from '@shared/functions/formatters/dates';
+  import { formatTaxPeriodDate } from '@repo/shared/functions/formatters/dates';
   import logo from '$lib/assets/images/logo.svg';
   import irsLogo from '$lib/assets/images/irs-logo.webp';
-  import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
+  import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
   import ApplicationGuidelines from './guidelines/ApplicationGuidelines.svelte';
   import BarFinancialTrends from './charts/BarFinancialTrends.svelte';
   import BarFinancialOverview from './charts/BarFinancialOverview.svelte';

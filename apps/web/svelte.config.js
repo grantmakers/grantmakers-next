@@ -20,8 +20,8 @@ const config = {
       },
     }),
     alias: {
-      '@shared': '../../shared/*', // Monorepo 'shared' directory
-      '@utils': './src/lib/utils', // Svelte utils
+      '@repo/shared': '../../shared/*', // Monorepo 'shared' directory
+      '$utils': './src/lib/utils', // Svelte utils
     },
     csp: {
       mode: 'auto',

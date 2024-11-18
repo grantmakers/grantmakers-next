@@ -1,7 +1,7 @@
 <script lang="ts">
   import HandDrawnBorder from '$lib/components/shared/HandDrawnBorder.svelte';
   import BarGrantsSnapshot from '../charts/BarGrantsSnapshot.svelte';
-  import { humanizeCurrency, humanizeNumber } from '@shared/functions/formatters/numbers';
+  import { humanizeCurrency, humanizeNumber } from '@repo/shared/functions/formatters/numbers';
   import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
   import Tip from '../alerts/Tip.svelte';
 

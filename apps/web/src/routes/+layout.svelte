@@ -3,7 +3,7 @@
   import '../app.pcss';
   import { page } from '$app/stores';
   import SEO from '$lib/components/shared/SEO.svelte';
-  import { meta } from '@utils/trustedConstants';
+  import { meta } from '$utils/trustedConstants';
   import Footer from '$lib/components/footer/Footer.svelte';
   interface Props {
     children?: import('svelte').Snippet;

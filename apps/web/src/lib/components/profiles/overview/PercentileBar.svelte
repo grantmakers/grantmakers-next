@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { formatNumber } from '@shared/functions/formatters/numbers';
+  import { formatNumber } from '@repo/shared/functions/formatters/numbers';
   interface Props {
     rank: number | undefined;
     total: number;

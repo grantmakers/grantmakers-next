@@ -1,6 +1,6 @@
 <script lang="ts">
   import SummaryBoxHeader from '../SummaryBoxHeader.svelte';
-  import { humanizeCurrency } from '@shared/functions/formatters/numbers';
+  import { humanizeCurrency } from '@repo/shared/functions/formatters/numbers';
   import PercentileBar from './PercentileBar.svelte';
 
   interface Props {

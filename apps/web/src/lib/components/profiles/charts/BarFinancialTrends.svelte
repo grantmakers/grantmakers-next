@@ -2,8 +2,8 @@
   import { onMount } from 'svelte';
   import { onDestroy } from 'svelte';
   import skeleton from '$lib/assets/images/blank-chart-trends.jpg';
-  import { humanizeCurrency } from '@shared/functions/formatters/numbers';
-  import { formatFullDate } from '@shared/functions/formatters/dates';
+  import { humanizeCurrency } from '@repo/shared/functions/formatters/numbers';
+  import { formatFullDate } from '@repo/shared/functions/formatters/dates';
   import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
   import Divider from '$lib/components/shared/Divider.svelte';
   import { ChartBarSquare } from 'svelte-heros-v2';

@@ -4,10 +4,10 @@
   import toast from 'svelte-french-toast';
   import Dot from '$lib/components/shared/icons/Dot.svelte';
   import LetterAvatar from '$lib/components/shared/avatars/LetterAvatar.svelte';
-  import { formatEin } from '@shared/functions/formatters/ein';
-  import { formatTaxPeriodDate, isOutdatedISOString } from '@shared/functions/formatters/dates';
-  import { upperFirstLetter } from '@shared/functions/formatters/names';
-  import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
+  import { formatEin } from '@repo/shared/functions/formatters/ein';
+  import { formatTaxPeriodDate, isOutdatedISOString } from '@repo/shared/functions/formatters/dates';
+  import { upperFirstLetter } from '@repo/shared/functions/formatters/names';
+  import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
 
   interface Props {
     organization_name: GrantmakersExtractedDataObj['organization_name'];

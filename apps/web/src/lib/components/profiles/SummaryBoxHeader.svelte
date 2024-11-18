@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { slugify } from '@shared/functions/formatters/names';
+  import { slugify } from '@repo/shared/functions/formatters/names';
   interface Props {
     headerText: string;
     anchorText?: string | undefined;

@@ -4,8 +4,8 @@
   import { onMount } from 'svelte';
   import { createDialog } from 'svelte-headlessui';
   import Transition from 'svelte-transition';
-  import { normalizePerson } from '@shared/functions/formatters/names';
-  import type { PeopleArray } from '@shared/typings/grantmakers/all';
+  import { normalizePerson } from '@repo/shared/functions/formatters/names';
+  import type { PeopleArray } from '@repo/shared/typings/grantmakers/all';
   import type TransitionProps from 'svelte-transition';
   import PeopleTable from './PeopleTable.svelte';
   import { ArrowsPointingOut } from 'svelte-heros-v2';
