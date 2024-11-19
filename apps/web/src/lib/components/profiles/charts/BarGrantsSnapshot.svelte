@@ -2,7 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
   import type { Chart } from 'chart.js';
 
-  let { rawData }: { rawData: RawData } = $props();
+  let { rawData, grantCount }: { rawData: RawData; grantCount: number } = $props();
 
   type RawData = {
     [key: string]: number;
@@ -113,11 +113,10 @@
     chart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: data.map((d: GrantRange) => d.displayRange),
+        labels: data.map((d) => d.displayRange),
         datasets: [
           {
-            // label: 'Amount Clusters',
-            data: data.map((d) => d.count),
+            data: data.map((d) => (d.count / grantCount) * 100),
             backgroundColor: data.map((d) => getColorForRange(d.displayRange)),
             borderColor: data.map((d) => getColorForRange(d.displayRange)),
             borderWidth: 1,
@@ -135,7 +134,17 @@
             beginAtZero: true,
             title: {
               display: true,
-              text: '# of Grants',
+              text: '% of Grants',
+            },
+            min: 0,
+            max: 100,
+            ticks: {
+              callback: function (value: string | number): string {
+                return `${Math.round(Number(value))}%`;
+              },
+              autoSkip: false,
+              stepSize: 25,
+              count: 5,
             },
             grid: {
               display: false,
@@ -155,8 +164,13 @@
           },
           tooltip: {
             callbacks: {
-              label: (context) => {
-                return `${context.formattedValue} grants`;
+              title: () => '',
+              label: () => '',
+              footer: (tooltipItems) => {
+                const context = tooltipItems[0];
+                const percentage = Math.round(context.parsed.x);
+                const actualCount = data[context.dataIndex].count;
+                return `${actualCount} grants (${percentage}%)`;
               },
             },
           },
