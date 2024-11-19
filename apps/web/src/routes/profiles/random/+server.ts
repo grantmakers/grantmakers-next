@@ -3,14 +3,12 @@ import data from '@repo/shared/data/public/ein.json';
 
 export const prerender = true;
 
-type Data = {
-  ein: string;
-};
+type Data = number[];
 
-const eins: Data[] = data;
+const einArray: Data = data;
 
 export const GET: RequestHandler = async () => {
-  const { ein: randomEIN } = eins[Math.floor(Math.random() * eins.length)];
+  const randomEIN = einArray[Math.floor(Math.random() * einArray.length)].toString();
 
   return new Response(null, {
     status: 307,

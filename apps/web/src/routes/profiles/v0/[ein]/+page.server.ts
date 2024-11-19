@@ -3,7 +3,7 @@ import { error } from '@sveltejs/kit';
 import { WORKER_URL, PROFILES_API_ENDPOINT, AUTH_PRIVATE_KEY, WAF_AUTH_VERIFY_KEY } from '$env/static/private';
 import { isValidEin } from '@repo/shared/utils/validators';
 import type { PageServerLoad } from './$types';
-import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
+import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
 
 const remoteUrl = WORKER_URL + PROFILES_API_ENDPOINT + '/';
 
