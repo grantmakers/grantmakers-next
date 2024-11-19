@@ -121,6 +121,7 @@
             backgroundColor: data.map((d) => getColorForRange(d.displayRange)),
             borderColor: data.map((d) => getColorForRange(d.displayRange)),
             borderWidth: 1,
+            barThickness: 26,
           },
         ],
       },
@@ -135,6 +136,9 @@
             title: {
               display: true,
               text: '# of Grants',
+            },
+            grid: {
+              display: false,
             },
           },
           y: {
