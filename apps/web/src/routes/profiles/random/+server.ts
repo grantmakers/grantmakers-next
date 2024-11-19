@@ -1,14 +1,16 @@
 import type { RequestHandler } from '@sveltejs/kit';
-import data from '$lib/assets/eins.json';
+import data from '@repo/shared/data/public/ein.json';
 
-type Ein = {
-  _id: string;
+export const prerender = true;
+
+type Data = {
+  ein: string;
 };
 
-const eins: Ein[] = data;
+const eins: Data[] = data;
 
 export const GET: RequestHandler = async () => {
-  const { _id: randomEIN } = eins[Math.floor(Math.random() * eins.length)];
+  const { ein: randomEIN } = eins[Math.floor(Math.random() * eins.length)];
 
   return new Response(null, {
     status: 307,
