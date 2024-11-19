@@ -1,7 +1,7 @@
 <script lang="ts">
   import Eyes from '$lib/components/shared/icons/Eyes.svelte';
   import { formatToCurrency } from '@repo/shared/functions/formatters/numbers';
-  import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
+  import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
   import { ExclamationCircle } from 'svelte-heros-v2';
 
   interface Props {

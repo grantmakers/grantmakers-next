@@ -7,7 +7,7 @@
   import type { BaseItem } from '@algolia/autocomplete-core';
   import type { HTMLTemplate } from '@algolia/autocomplete-shared';
   import type { LiteClient } from 'algoliasearch/lite';
-  import type { AlgoliaProfilesResponseLegacy } from '@shared/typings/algolia/profiles';
+  import type { AlgoliaProfilesResponseLegacy } from '@repo/shared/typings/algolia/profiles';
 
   import { PUBLIC_ALGOLIA_APP_ID, PUBLIC_ALGOLIA_SEARCH_ONLY_KEY, PUBLIC_ALGOLIA_INDEX_NAME } from '$env/static/public';
   import { normalizeCurrencyToMillions } from '@repo/shared/functions/formatters/numbers';

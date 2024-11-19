@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { GrantmakersExtractedDataObj } from '@shared/typings/grantmakers/all';
+  import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
 
   type Title = GrantmakersExtractedDataObj['organization_name'];
   type Description = Pick<GrantmakersExtractedDataObj, 'organization_name' | 'city' | 'state' | 'ein' | 'filings'>;
