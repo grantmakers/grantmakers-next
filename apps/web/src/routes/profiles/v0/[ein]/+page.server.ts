@@ -45,7 +45,7 @@ const fetchLocalProfile = async (ein: string): Promise<GrantmakersExtractedDataO
       {
         projection: {
           phone: 0,
-          organization_name_slug: 0,
+          organization_name_legacy_slug: 0,
           organization_names_all_years: 0,
           grants_all_years: 0,
           grants: 0,
