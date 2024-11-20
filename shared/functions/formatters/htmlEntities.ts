@@ -5,9 +5,8 @@
  * Consider handling upstream in xml-fast-parser as security allows
  */
 export const convertAmpersandEntity = (value: string | null | undefined): string => {
-  if (!value) {
-    return '';
-  }
+  if (!value) return '';
+  if (typeof value !== 'string') return 'N/A';
 
   return value.replace(/&amp;/gi, '&');
 };

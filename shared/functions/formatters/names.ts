@@ -113,11 +113,15 @@ const slugify = (text: string): string => {
     .toString()
     .toLowerCase()
     .trim()
-    .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(/[^\w\-]+/g, '') // Remove all non-word chars
-    .replace(/\-\-+/g, '-') // Replace multiple - with single -
-    .replace(/^-+/, '') // Trim - from start of text
-    .replace(/-+$/, ''); // Trim - from end of text
+    .replace(/&amp\s+/g, ' and ')
+    .replace(/&amp;\s+/g, ' and ')
+    .replace(/([A-Za-z])&([A-Za-z])/g, '$1-and-$2') // Now "E&Ss" → "e-and-ss", "J&J" → "j-and-j"
+    .replace(/\s*&\s*/g, ' and ')
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-')
+    .replace(/^-+/, '')
+    .replace(/-+$/, '');
 };
 
 const extractFirstLetter = (organization_name: string): string => {
