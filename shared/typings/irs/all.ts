@@ -1,4 +1,4 @@
-import type { ObjectId } from 'mongodb';
+import type { ObjectId, InsertOneResult } from 'mongodb';
 import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
 import type { IrsGrant } from './grants';
 
@@ -151,7 +151,7 @@ export interface GrantmakersFilingObj {
 export interface OutlierDoc {
   _id?: ObjectId;
   outlier_irs_object_id: string;
-  tax_year: string;
+  irs_year_filed: string;
   Return: {
     ReturnData: {
       IRS990PF: {
@@ -163,3 +163,10 @@ export interface OutlierDoc {
     };
   };
 }
+
+export type FilingInsertResult = InsertOneResult<GrantmakersRawFilingObj>;
+export type OutlierInsertResult = InsertOneResult<OutlierDoc>;
+export type FilingWithOutlierResult = [FilingInsertResult, OutlierInsertResult];
+
+// Define the new type for the saveFiling function's return value
+export type SaveFilingResult = Promise<FilingInsertResult | FilingWithOutlierResult | undefined>;
