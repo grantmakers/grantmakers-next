@@ -1,8 +1,6 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import data from '@repo/shared/data/public/ein.json';
 
-export const prerender = true;
-
 type Data = number[];
 
 const einArray: Data = data;
