@@ -1,5 +1,5 @@
 import { dev } from '$app/environment';
-import { redirect, error } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import { WORKER_URL, PROFILES_API_ENDPOINT, AUTH_PRIVATE_KEY, WAF_AUTH_VERIFY_KEY } from '$env/static/private';
 import { isValidEin } from '@repo/shared/utils/validators';
 import type { PageServerLoad } from './$types';
@@ -79,13 +79,14 @@ const getProfile = async (ein: string): Promise<GrantmakersExtractedDataObj> => 
   return await fetchRemoteProfile(ein, remoteUrl);
 };
 
-export const load: PageServerLoad = async ({ params, url }) => {
+export const load: PageServerLoad = async ({ params }) => {
   // This main dynamic route handles two scenarios:
   // 1. The full canonical url: [ein]-[slugified-org-name]
   // 2. The ein-only helper router: [ein]
   // We only need the EIN to fetch the data
   // In the case of the full canonical route, we handle the full url expansion on the client to avoid duplicating the data fetch via a full redirect
   const ein = params.ein.split('-')[0];
+  console.log('EIN:', ein);
 
   if (!isValidEin(ein)) {
     throw error(400, {
