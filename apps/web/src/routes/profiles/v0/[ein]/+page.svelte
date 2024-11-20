@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
   import type { PageData } from './$types.js';
   import SEO from '$lib/components/shared/SEO.svelte';
   import Profile from '$lib/components/profiles/Profile.svelte';
@@ -8,9 +11,14 @@
   }
 
   let { data }: Props = $props();
-  const {
-    foundationData: { profile },
-  } = data;
+  const { profile } = data;
+
+  onMount(() => {
+    const canonicalSlug = `${profile.ein}-${profile.organization_name_slug}`;
+    if ($page.params.ein !== canonicalSlug) {
+      goto(`/profiles/v0/${canonicalSlug}`, { replaceState: true });
+    }
+  });
 </script>
 
 {#if profile}
