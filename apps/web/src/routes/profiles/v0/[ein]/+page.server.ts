@@ -30,7 +30,7 @@ const fetchLocalProfile = async (ein: string): Promise<GrantmakersExtractedDataO
   const { MONGODB_URI, MONGODB_DB } = await import('$env/static/private');
   const uri = MONGODB_URI;
   const dbName = MONGODB_DB;
-  const collectionName = 'aggregated';
+  const collectionName = 'r2';
 
   try {
     console.log(`Fetching local profile for ${ein} from MongoDB`);
@@ -44,6 +44,7 @@ const fetchLocalProfile = async (ein: string): Promise<GrantmakersExtractedDataO
       { ein },
       {
         projection: {
+          phone: 0,
           organization_name_slug: 0,
           organization_names_all_years: 0,
           grants_all_years: 0,
