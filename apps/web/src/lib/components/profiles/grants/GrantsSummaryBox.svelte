@@ -4,6 +4,7 @@
   import { humanizeCurrency, humanizeNumber } from '@repo/shared/functions/formatters/numbers';
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
   import Tip from '../alerts/Tip.svelte';
+  import { tooltip } from '$utils/tooltip';
 
   interface Props {
     grantMin: number;
@@ -83,6 +84,13 @@
             N/A
           {:else if grantCount === 1}
             {humanizeCurrency(grantMax)} - N/A
+          {:else if grantMin < 0}
+            {humanizeCurrency(grantMax)}
+            &nbsp;-&nbsp;
+            <span
+              use:tooltip={{ content: 'Negative values may reflect grant returns, adjustments, or modifications to prior disbursements' }}
+              >{humanizeCurrency(grantMin)}*</span
+            >
           {:else}
             {humanizeCurrency(grantMax)} - {humanizeCurrency(grantMin)}
           {/if}

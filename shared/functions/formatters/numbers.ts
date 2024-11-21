@@ -64,12 +64,18 @@ export function humanizeNumber(num: number): string {
 
 export function humanizeCurrency(num: number): string {
   const currencySymbol = currencyFormatter.format(0).charAt(0);
-  return currencySymbol + humanReadableFormatter.format(num);
+  const isNegative = num < 0;
+  const absoluteValue = Math.abs(num);
+  const formattedNumber = humanReadableFormatter.format(absoluteValue);
+
+  return isNegative ? `(${currencySymbol}${formattedNumber})` : `${currencySymbol}${formattedNumber}`;
 }
 
 export function normalizeCurrencyToMillions(num: number): string {
   const currencySymbol = currencyFormatter.format(0).charAt(0);
-  const inMillions = num / 1000000;
+  const isNegative = num < 0;
+  const absoluteValue = Math.abs(num);
+  const inMillions = absoluteValue / 1000000;
 
   // Handle zero
   if (num === 0) {
@@ -78,5 +84,7 @@ export function normalizeCurrencyToMillions(num: number): string {
 
   // Use different formatters based on the size of the number
   const formatter = inMillions >= 1 ? millionsFormatterLarge : millionsFormatterSmall;
-  return currencySymbol + formatter.format(inMillions) + 'M';
+  const formattedNumber = formatter.format(inMillions) + 'M';
+
+  return isNegative ? `(${currencySymbol}${formattedNumber})` : `${currencySymbol}${formattedNumber}`;
 }
