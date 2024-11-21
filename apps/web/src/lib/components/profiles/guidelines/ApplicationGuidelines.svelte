@@ -1,5 +1,6 @@
 <script lang="ts">
   import Tip from '../alerts/Tip.svelte';
+  import placeholderImage from '$lib/assets/images/placeholder-application-guidelines.webp';
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
   interface Props {
     website?: string | null;
@@ -145,9 +146,13 @@
                 <p>{applicationContact.name}</p>
                 {#if applicationContact.email}
                   <p class="text-gray-600">
-                    <a href="mailto:{applicationContact.email.toLowerCase()}" class="hover:underline">
+                    {#if applicationContact.email.includes('@')}
+                      <a href="mailto:{applicationContact.email.toLowerCase()}" class="hover:underline">
+                        {applicationContact.email.toLowerCase()}
+                      </a>
+                    {:else}
                       {applicationContact.email.toLowerCase()}
-                    </a>
+                    {/if}
                   </p>
                 {/if}
                 <p>{applicationContact.address.street}</p>
@@ -176,6 +181,13 @@
       {:else}
         foo
       {/if}
+    </div>
+  {/if}
+
+  {#if !website && !grantsToPreselectedOnly && !applicationInfo}
+    <p>No guidance listed in the latest available tax filing</p>
+    <div class="mt-4 opacity-20 lg:p-8">
+      <img src={placeholderImage} alt="No Guidelines Provided Placeholder" width={600} height={600} class="rounded-lg opacity-90" />
     </div>
   {/if}
 </div>

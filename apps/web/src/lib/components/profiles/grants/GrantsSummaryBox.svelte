@@ -3,6 +3,7 @@
   import BarGrantsSnapshot from '../charts/BarGrantsSnapshot.svelte';
   import { humanizeCurrency, humanizeNumber } from '@repo/shared/functions/formatters/numbers';
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
+  import placeholderImage from '$lib/assets/images/placeholder-no-grants.webp';
   import Tip from '../alerts/Tip.svelte';
   import { tooltip } from '$utils/tooltip';
 
@@ -38,7 +39,7 @@
   }
 </script>
 
-<div class="flex h-full flex-col items-start gap-2 p-4">
+<div class="items-justify flex h-full flex-col gap-2 p-4">
   <!-- Grant Statistics Section -->
   <dl class="flex w-full flex-row items-center justify-around text-2xl">
     <!-- Grant Count -->
@@ -109,8 +110,8 @@
   {/if}
 
   <!-- Grant Clusters Section -->
-  {#if grantCount === 0}
-    {#if hasCharitableActivities && grantCount === 0}
+  {#if grantCount && grantCount === 0}
+    {#if hasCharitableActivities}
       <a href="#charitable-activities" class="mt-4">
         <Tip
           title="See Charitable Activities below"
@@ -125,6 +126,9 @@
       <BarGrantsSnapshot rawData={grantsFacets[0].facets.amount} {grantCount} />
     </div>
   {:else}
-    <p>Clusters not available for this tax year</p>
+    <div class="mt-4 opacity-30">
+      <img src={placeholderImage} alt="Grant Chart Placeholder" width={400} height={400} class="rounded-lg opacity-90" />
+    </div>
+    <p class="text-center">No grants listed</p>
   {/if}
 </div>
