@@ -38,7 +38,7 @@
   <div class="p-2 text-sm text-slate-700">
     <div class="flex flex-row items-center justify-between">
       <div>
-        <div class="font-bold">Latest Available Filing</div>
+        <div class="font-bold" title="Latest available filing for this EIN">Latest Filing</div>
         <div class="text-slate-500">
           Tax Year {formatTaxYear(taxYear)} ended {formattedTaxPeriodEnd ?? 'N/A'}
         </div>

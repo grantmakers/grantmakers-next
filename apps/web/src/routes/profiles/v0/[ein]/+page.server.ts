@@ -86,7 +86,6 @@ export const load: PageServerLoad = async ({ params }) => {
   // We only need the EIN to fetch the data
   // In the case of the full canonical route, we handle the full url expansion on the client to avoid duplicating the data fetch via a full redirect
   const ein = params.ein.split('-')[0];
-  console.log('EIN:', ein);
 
   if (!isValidEin(ein)) {
     throw error(400, {
