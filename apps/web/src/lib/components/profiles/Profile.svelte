@@ -46,14 +46,13 @@
 
 <Toaster />
 <Banner />
-<div class="relative">
+<div class="relative flex min-h-screen">
   <!-- Left Navigation -->
   <aside
-    class="ease-nav-brand z-990 absolute inset-y-0 ml-4 mt-0 block w-full max-w-64 -translate-x-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 py-2 pt-2 text-slate-500 antialiased shadow-none transition-transform duration-200 xl:left-0 xl:translate-x-0 xl:bg-transparent"
+    class="ease-nav-brand z-990 sticky top-0 ml-4 hidden h-screen w-64 shrink-0 overflow-y-auto rounded-2xl border-0 bg-white p-0 py-2 pt-2 text-slate-500 antialiased shadow-none transition-transform duration-200 md:block xl:left-0 xl:translate-x-0 xl:bg-transparent"
     id="sidenav-main"
   >
-    <!-- Side Navigation -->
-    <div class="block max-h-screen w-auto grow basis-full items-center overflow-auto">
+    <div class="flex h-full flex-col">
       <div class="mx-auto ml-3 flex w-full flex-col items-start p-4 lg:mb-10">
         <LogoMark isLandingOrFooter={false} />
         <div class="ml-10 text-sm"></div>
@@ -87,7 +86,7 @@
   </aside>
 
   <!-- Main Wrapper -->
-  <div class="ease-soft-in-out relative h-full rounded-xl transition-all duration-200 xl:ml-64" id="panel">
+  <div class="ease-soft-in-out relative h-full grow rounded-xl transition-all duration-200" id="panel">
     <!-- Top Nav -->
     <nav
       class="duration-250 ease-soft-in relative mx-6 flex flex-wrap items-center justify-between rounded-2xl px-0 py-2 shadow-none transition-all lg:flex-nowrap lg:justify-start"
