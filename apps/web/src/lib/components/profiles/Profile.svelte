@@ -3,7 +3,9 @@
   import People from './people/People.svelte';
   import SummaryBoxHeader from './SummaryBoxHeader.svelte';
   import Banner from './Banner.svelte';
-  import NavSearch from '../search/Nav.svelte';
+  import NavSearch from './topnav/Nav.svelte';
+  import SurpriseMe from './topnav/SurpriseMe.svelte';
+  import FoundationHeader from './header/FoundationHeader.svelte';
   import GrantsTable from './grants/GrantsTable.svelte';
   import { formatTaxPeriodDate } from '@repo/shared/functions/formatters/dates';
   import logo from '$lib/assets/images/logo.svg';
@@ -19,8 +21,6 @@
   import CommunityIntelligence from './community/CommunityIntelligence.svelte';
   import Overview from './overview/Overview.svelte';
   import DataSource from './about/DataSource.svelte';
-  import { ArrowPath } from 'svelte-heros-v2';
-  import FoundationHeader from './header/FoundationHeader.svelte';
 
   interface Props {
     profile: GrantmakersExtractedDataObj;
@@ -111,15 +111,9 @@
           </ol>
         </nav>
 
-        <!-- Search -->
+        <!-- Top Nav -->
         <div class="mt-2 hidden grow items-center justify-end gap-4 sm:mr-6 sm:mt-0 md:mr-0 md:flex lg:flex lg:basis-auto">
-          <a class="pr-3 text-xs font-semibold uppercase text-slate-500" href="/profiles/random">
-            <div class="hidden flex-row items-center gap-2 lg:flex">
-              <ArrowPath class="size-4 text-gray-500" />
-              Surprise me
-            </div>
-          </a>
-
+          <SurpriseMe />
           <NavSearch />
         </div>
       </div>

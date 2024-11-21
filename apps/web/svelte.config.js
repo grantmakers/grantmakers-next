@@ -33,9 +33,8 @@ const config = {
           'self',
           'https://cloudflareinsights.com',
           'https://*.algolia.net',
-          'https://*.algolianet.com', 
+          'https://*.algolianet.com',
           'https://*.algolia.io',
-
         ],
         'default-src': ['none'],
         'img-src': ['self', 'data:', 'https://images.unsplash.com', 'https://cdn.iubenda.com', 'https://tailwindui.com'], // Added Unsplash domain

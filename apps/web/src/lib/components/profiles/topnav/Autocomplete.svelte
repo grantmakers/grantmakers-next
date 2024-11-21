@@ -3,6 +3,7 @@
   import '@algolia/autocomplete-theme-classic';
   import algoliaLogo from '$lib/assets/images/Algolia-logo-blue.svg';
   import { formatEin } from '@repo/shared/functions/formatters/ein';
+  import staticData from '@repo/shared/data/public/autocomplete-static-data.json';
   import type { AutocompleteApi } from '@algolia/autocomplete-js';
   import type { BaseItem } from '@algolia/autocomplete-core';
   import type { HTMLTemplate } from '@algolia/autocomplete-shared';
@@ -26,6 +27,40 @@
   let panelContainer: HTMLElement;
   let autocompleteInstance: AutocompleteApi<BaseItem>;
 
+  const mockResults = staticData;
+
+  const algoliaTemplates = {
+    header: ({ html }: { html: HTMLTemplate }) => html`
+      <div class="flex items-center justify-between">
+        <div class="px-3 py-2 text-xs font-semibold uppercase text-gray-500">Foundation Profiles</div>
+      </div>
+    `,
+    item: ({ item, html }: AlgoliaItemTemplateProps) =>
+      html`<a href="/profiles/v0/${item.ein}-${item.organization_name_slug}" data-sveltekit-reload>
+        <div class="px-3 py-2 transition-colors duration-100 hover:bg-gray-100">
+          <div class="flex items-center justify-between gap-3">
+            <div class="min-w-0 flex-1">
+              <div class="truncate text-sm font-medium text-gray-900">${item.organization_name}</div>
+              ${item.city && item.state ? html` <div class="truncate text-xs text-gray-500">${item.city}, ${item.state}</div> ` : ''}
+            </div>
+            <div class="flex flex-col justify-end text-xs text-gray-500">
+              <div>${formatEin(item.ein)}</div>
+              <div class="text-right">${normalizeCurrencyToMillions(item.assets)}</div>
+            </div>
+          </div>
+        </div></a
+      > `,
+    footer: ({ html }: { html: HTMLTemplate }) =>
+      html`<div class="border-t px-3 py-2 text-xs text-gray-400">
+        <a href="https://algolia.com" class="mt-2 flex items-center justify-end gap-2 hover:text-gray-500" target="_blank" rel="noopener">
+          Search by
+          <img src="${algoliaLogo}" alt="Algolia Logo" style="height: 1rem;" />
+        </a>
+      </div>`,
+  };
+
+  const getItemUrl = ({ item }: { item: AlgoliaProfilesItem }) => `/profiles/v0/${item.ein}-${item.organization_name_slug}`;
+
   onMount(async () => {
     // Define Algolia client
     const { liteClient: algoliasearch } = await import('algoliasearch/lite');
@@ -43,7 +78,7 @@
         placeholder: 'Quick search...',
         openOnFocus: true,
         classNames: {
-          // https://www.algolia.com/doc/ui-libraries/autocomplete/api-reference/autocomplete-js/autocomplete/#components
+          // https://www.algolia.com/doc/ui-libraries/autocomplete/api-reference/autocomplete-js/autocomplete/#param-classnames
           detachedFormContainer: '!rounded-t-2xl !border-b-0 !bg-slate-200',
           detachedSearchButton:
             '!rounded-md !border-0 !min-w-48 ring-1 ring-inset !ring-gray-300 !placeholder:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 !sm:text-sm !sm:leading-6',
@@ -52,12 +87,21 @@
         },
         // @ts-expect-error The Algolia response is properly typed - thus, there's no need to go into the underpinnings of Autocomplete to satisfy this error
         getSources({ query }) {
+          if (!query) {
+            return [
+              {
+                sourceId: 'recommended',
+                getItems() {
+                  return mockResults;
+                },
+                getItemUrl,
+                templates: algoliaTemplates,
+              },
+            ];
+          }
           return [
             {
               sourceId: 'foundations',
-              getItemUrl({ item }) {
-                return `/profiles/v1/${item.ein}`;
-              },
               getItems() {
                 return getAlgoliaResults({
                   searchClient,
@@ -72,56 +116,15 @@
                   ],
                 });
               },
-              templates: {
-                header({ html }) {
-                  return html`
-                    <div class="flex items-center justify-between">
-                      <div class="px-3 py-2 text-xs font-semibold uppercase text-gray-500">Foundation Profiles</div>
-                    </div>
-                  `;
-                },
-                item({ item, html }: AlgoliaItemTemplateProps) {
-                  // HACK data-sveltekit-reload forces a full refresh
-                  // TODO Enable client-side fetch for these situations
-                  // AKA There is no need to re-download chart.js, etc
-                  return html`<a href="/profiles/v0/${item.ein}" data-sveltekit-reload
-                    ><div class="px-3 py-2 transition-colors duration-100 hover:bg-gray-100">
-                      <div class="flex items-center justify-between gap-3">
-                        <div class="min-w-0 flex-1">
-                          <div class="truncate text-sm font-medium text-gray-900">${item.organization_name}</div>
-                          ${item.city && item.state ?
-                            html` <div class="truncate text-xs text-gray-500">${item.city}, ${item.state}</div> `
-                          : ''}
-                        </div>
-                        <div class="flex flex-col justify-end text-xs text-gray-500">
-                          <div>${formatEin(item.ein)}</div>
-                          <div class="text-right">${normalizeCurrencyToMillions(item.assets)}</div>
-                        </div>
-                      </div>
-                    </div></a
-                  >`;
-                },
-                footer({ html }) {
-                  return html`<div class="border-t px-3 py-2 text-xs text-gray-400">
-                    <a
-                      href="https://algolia.com"
-                      class="mt-2 flex items-center justify-end gap-2 hover:text-gray-500"
-                      target="_blank"
-                      rel="noopener"
-                    >
-                      Search by
-                      <img src="${algoliaLogo}" alt="Algolia Logo" style="height: 1rem;" />
-                    </a>
-                  </div>`;
-                },
-              },
+              getItemUrl,
+              templates: algoliaTemplates,
             },
           ];
         },
         navigator: {
+          // Enables keyboard navigation, e.g. using arrows and enter to select
           navigate({ itemUrl }) {
-            // Force a full page reload
-            // Temp solution until we upgrade to SvelteKit 5 and add client-side fetch
+            // TODO Switch to goto when move to loading data into a profiles store is complete
             window.location.href = itemUrl;
             // goto(itemUrl, { invalidateAll: true });
           },
@@ -146,4 +149,4 @@
   });
 </script>
 
-<div id="#autocomplete" bind:this={container} class=""></div>
+<div id="#autocomplete" bind:this={container}></div>
