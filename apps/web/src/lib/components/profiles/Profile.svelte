@@ -1,5 +1,5 @@
 <script lang="ts">
-  import toast, { Toaster } from 'svelte-french-toast';
+  import { Toaster } from 'svelte-french-toast';
   import People from './people/People.svelte';
   import SummaryBoxHeader from './SummaryBoxHeader.svelte';
   import Banner from './Banner.svelte';
@@ -24,6 +24,8 @@
   import Research from './research/Research.svelte';
   import About from './about/About.svelte';
   import { MagnifyingGlassCircle } from 'svelte-heros-v2';
+  import type { AutocompleteInstance } from '@repo/shared/typings/algolia/autocomplete';
+  import { browser } from '$app/environment';
 
   interface Props {
     profile: GrantmakersExtractedDataObj;
@@ -46,10 +48,16 @@
 
   let formattedTaxPeriodEnd: string = $derived(formatTaxPeriodDate(filings[0].tax_period) || 'N/A');
 
-  const openSearch = () => {
-    toast('Easy speedster!\nThe full search is coming soon.', {
-      icon: '😳',
-    });
+  let autocompleteInstance: AutocompleteInstance | null = $state(null);
+
+  function handleAutocompleteInit(instance: AutocompleteInstance) {
+    autocompleteInstance = instance;
+  }
+
+  let openSearch = () => {
+    if (browser) {
+      autocompleteInstance?.setIsOpen(true);
+    }
   };
 </script>
 
@@ -122,7 +130,7 @@
         <!-- Top Nav -->
         <div class="mt-2 hidden grow items-center justify-end gap-4 sm:mr-6 sm:mt-0 md:mr-0 md:flex lg:flex lg:basis-auto">
           <SurpriseMe />
-          <NavSearch />
+          <NavSearch {handleAutocompleteInit} />
         </div>
       </div>
     </nav>
@@ -384,7 +392,7 @@
               <div class="mt-4 flex flex-wrap items-center gap-4">
                 <button
                   type="button"
-                  class="inline-flex items-center gap-x-1.5 rounded-md bg-grantmakers-orange px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  class="bg-grantmakers-orange inline-flex items-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   onclick={openSearch}
                 >
                   <MagnifyingGlassCircle variation={'solid'} class={'h-4 w-4'} />
