@@ -8,7 +8,7 @@
     <img src={logo} alt="Grantmakers.io logo" class="max-h-6 w-full" height={36} width={36} />
   </SummaryBoxHeader>
 </div>
-<div class="flex flex-col gap-6 p-6">
+<div class="flex flex-col gap-6 p-8">
   <div>
     <div class="text-sm font-bold uppercase text-slate-700">Open Source</div>
     <p>
