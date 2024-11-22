@@ -35,7 +35,6 @@
       class="{styles.solicitation.base} {styles.solicitation.disabled ? 'bg-slate-200' : ''}"
       use:tooltip={{
         content: noUnsolicited ? 'Preselected only?' : 'Possibly accepts unsolicited applications',
-        disabled: styles.solicitation.disabled ? true : false,
       }}
     >
       {#if !noUnsolicited}
@@ -63,7 +62,6 @@
       class="{styles.grants.base} {styles.grants.disabled ? 'bg-slate-200' : ''}"
       use:tooltip={{
         content: hasRecentGrants ? 'Recent grants' : 'No recent grants',
-        disabled: styles.solicitation.disabled ? true : false,
       }}
     >
       <CurrencyDollar variation="solid" class="h-4 w-4 text-white" aria-hidden="true" />

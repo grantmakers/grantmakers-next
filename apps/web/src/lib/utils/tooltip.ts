@@ -4,7 +4,6 @@ import { browser } from '$app/environment';
 
 interface TooltipParams extends Partial<Props> {
   content?: Content; // Using tippy's Content type instead of just string
-  disabled?: boolean;
 }
 
 let tippyInstance: typeof tippy | undefined;
@@ -14,7 +13,7 @@ if (browser) {
 }
 
 export function tooltip(node: HTMLElement, params: TooltipParams = {}) {
-  if (!browser || !tippyInstance || params.disabled) {
+  if (!browser || !tippyInstance) {
     return {
       update: () => {},
       destroy: () => {},
@@ -43,14 +42,11 @@ export function tooltip(node: HTMLElement, params: TooltipParams = {}) {
     ...params,
     animation: true,
     arrow: true,
+    touch: false,
   });
 
   return {
     update(newParams: TooltipParams) {
-      if (newParams.disabled) {
-        tip.destroy();
-        return;
-      }
       const newContent = newParams.content ?? content;
       tip.setProps({
         content: newContent,
