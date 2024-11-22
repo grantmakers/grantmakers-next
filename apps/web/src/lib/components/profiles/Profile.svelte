@@ -199,7 +199,7 @@
         <!-- Hello Message -->
         <div class="mb-4 mt-2 flex flex-row items-start justify-center gap-2 p-8">
           <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
-          <div>Grantmakers.io is an open source project built by changemakers for future changemakers</div>
+          <div>Grantmakers.io is a community project</div>
         </div>
 
         <!-- Grants -->
