@@ -1,12 +1,11 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { onDestroy } from 'svelte';
-  import skeleton from '$lib/assets/images/blank-chart-trends.jpg';
+  import placeholder from '$lib/assets/images/placeholder-financial-trends.webp';
   import { humanizeCurrency } from '@repo/shared/functions/formatters/numbers';
   import { formatFullDate } from '@repo/shared/functions/formatters/dates';
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
   import Divider from '$lib/components/shared/Divider.svelte';
-  import { ChartBarSquare } from 'svelte-heros-v2';
   import type { Chart } from 'chart.js';
 
   type Stats = GrantmakersExtractedDataObj['financial_stats'];
@@ -176,14 +175,19 @@
       </div>
     {:else}
       <div class="relative h-full grow">
-        <img src={skeleton} alt="Financial Overview Placeholder" class="h-full w-full object-cover" />
+        <div class="mt-4 opacity-30">
+          <img src={placeholder} alt="Grant Chart Placeholder" width={400} height={200} class="w-full rounded-lg opacity-80" />
+        </div>
+        <p class="text-center">Trends will appear as more tax filings become available</p>
+
+        <!-- <img src={placeholder} alt="Financial Trends Placeholder" class="h-full w-full object-cover" />
 
         <div class="absolute inset-0 flex items-center justify-center">
-          <div class="flex items-center gap-4 bg-white px-8 py-4 text-slate-600 shadow-xl lg:mx-4">
-            <ChartBarSquare variation="solid" class="h-16 w-16 text-slate-500" />
+          <div class="shadow-blur flex items-center gap-4 bg-white px-8 py-4 text-slate-600 lg:mx-4">
+            <ChartBarSquare variation="solid" class="h-16 w-16 text-slate-400" />
             <p>Trends will appear as more tax filings become available</p>
           </div>
-        </div>
+        </div> -->
       </div>
     {/if}
   </div>
