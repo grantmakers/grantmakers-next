@@ -44,12 +44,7 @@
   {#if grantsToPreselectedOnly}
     <div class="mb-4">
       <div class="flex items-start gap-4">
-        <div
-          class="rounded-full bg-yellow-500 p-2 text-white"
-          use:tooltip={{
-            content: 'The form in which applications should be submitted and information and materials they should include Line 2b',
-          }}
-        >
+        <div class="rounded-full bg-yellow-500 p-2 text-white">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4">
             <path
               fill-rule="evenodd"
