@@ -3,6 +3,7 @@
   import { copy } from 'svelte-copy';
   import toast from 'svelte-french-toast';
   import Dot from '$lib/components/shared/icons/Dot.svelte';
+  import { tooltip } from '$utils/tooltip';
   import LetterAvatar from '$lib/components/shared/avatars/LetterAvatar.svelte';
   import { formatEin } from '@repo/shared/functions/formatters/ein';
   import { formatTaxPeriodDate, isOutdatedISOString } from '@repo/shared/functions/formatters/dates';
@@ -13,9 +14,11 @@
     organization_name: GrantmakersExtractedDataObj['organization_name'];
     profile: GrantmakersExtractedDataObj;
     formattedTaxPeriodEnd: string;
+    eobmfRecognizedExempt: boolean;
+    grantCount: number;
   }
 
-  let { organization_name, profile, formattedTaxPeriodEnd }: Props = $props();
+  let { organization_name, profile, formattedTaxPeriodEnd, eobmfRecognizedExempt, grantCount }: Props = $props();
 
   let {
     is_likely_staffed: isStaffed,
@@ -67,7 +70,9 @@
     </div>
   </div>
 
-  <Approachability {noUnsolicited} {isStaffed} {hasWebsite} {hasRecentGrants} />
+  {#if eobmfRecognizedExempt}
+    <Approachability {noUnsolicited} {isStaffed} {hasWebsite} {hasRecentGrants} {grantCount} />
+  {/if}
 
   <!-- Right side of box: metadata -->
   <div class="ml-4 grid w-full grid-cols-2 gap-x-2 gap-y-1 text-right md:ml-2 md:mt-0 md:w-auto md:gap-x-4">
