@@ -1,10 +1,10 @@
-// tooltip.ts
 import tippy, { type Props, type Content } from 'tippy.js';
 import 'tippy.js/dist/tippy.css';
 import { browser } from '$app/environment';
 
 interface TooltipParams extends Partial<Props> {
   content?: Content; // Using tippy's Content type instead of just string
+  disabled?: boolean;
 }
 
 let tippyInstance: typeof tippy | undefined;
@@ -14,7 +14,7 @@ if (browser) {
 }
 
 export function tooltip(node: HTMLElement, params: TooltipParams = {}) {
-  if (!browser || !tippyInstance) {
+  if (!browser || !tippyInstance || params.disabled) {
     return {
       update: () => {},
       destroy: () => {},
@@ -47,6 +47,10 @@ export function tooltip(node: HTMLElement, params: TooltipParams = {}) {
 
   return {
     update(newParams: TooltipParams) {
+      if (newParams.disabled) {
+        tip.destroy();
+        return;
+      }
       const newContent = newParams.content ?? content;
       tip.setProps({
         content: newContent,
