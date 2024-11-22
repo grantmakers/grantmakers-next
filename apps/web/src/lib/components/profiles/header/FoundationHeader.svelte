@@ -3,7 +3,6 @@
   import { copy } from 'svelte-copy';
   import toast from 'svelte-french-toast';
   import Dot from '$lib/components/shared/icons/Dot.svelte';
-  import { tooltip } from '$utils/tooltip';
   import LetterAvatar from '$lib/components/shared/avatars/LetterAvatar.svelte';
   import { formatEin } from '@repo/shared/functions/formatters/ein';
   import { formatTaxPeriodDate, isOutdatedISOString } from '@repo/shared/functions/formatters/dates';

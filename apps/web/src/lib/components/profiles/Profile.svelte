@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Toaster } from 'svelte-french-toast';
+  import toast, { Toaster } from 'svelte-french-toast';
   import People from './people/People.svelte';
   import SummaryBoxHeader from './SummaryBoxHeader.svelte';
   import Banner from './Banner.svelte';
@@ -21,6 +21,9 @@
   import CommunityIntelligence from './community/CommunityIntelligence.svelte';
   import Overview from './overview/Overview.svelte';
   import DataSource from './about/DataSource.svelte';
+  import Research from './research/Research.svelte';
+  import About from './about/About.svelte';
+  import { MagnifyingGlassCircle } from 'svelte-heros-v2';
 
   interface Props {
     profile: GrantmakersExtractedDataObj;
@@ -42,6 +45,12 @@
   } = profile;
 
   let formattedTaxPeriodEnd: string = $derived(formatTaxPeriodDate(filings[0].tax_period) || 'N/A');
+
+  const openSearch = () => {
+    toast('Easy speedster!\nThe full search is coming soon.', {
+      icon: '😳',
+    });
+  };
 </script>
 
 <Toaster />
@@ -196,10 +205,12 @@
           </div>
         </div>
 
-        <!-- Hello Message -->
+        <!-- Interstitial Message -->
         <div class="mb-4 mt-2 flex flex-row items-start justify-center gap-2 p-8">
           <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
-          <div>Grantmakers.io is a community project</div>
+          <div class="font-normal">
+            Grantmakers.io is a community project for the 88% of nonprofits that can't afford an expensive subscription service
+          </div>
         </div>
 
         <!-- Grants -->
@@ -252,6 +263,15 @@
           </div>
         </div>
 
+        <!-- Interstitial Message -->
+        <div class="mb-4 mt-2 flex flex-row items-start justify-center gap-2 p-8">
+          <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
+          <div class="flex flex-col items-center justify-center gap-2">
+            <div class="font-semibold">Open data. Open source. Forever free.</div>
+            <div class="text-xs">You know, the way it should be.</div>
+          </div>
+        </div>
+
         <!-- About & Guidelines Sections -->
         <div class="-mx-3 grid grid-cols-1 md:grid-cols-2">
           <!-- Guidelines -->
@@ -274,7 +294,7 @@
             </div>
           </div>
 
-          <!-- About -->
+          <!-- CI -->
           <div class="mb-4 w-full max-w-full px-3 text-slate-700">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <CommunityIntelligence ein={profile.ein} />
@@ -313,6 +333,71 @@
                   {formattedTaxPeriodEnd}
                 />
               </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interstitial Message -->
+        <div class="mb-4 mt-2 flex flex-row items-start justify-center gap-2 p-8">
+          <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
+          <div class="flex flex-col items-center justify-center gap-2">
+            <div class="font-semibold">Still driving to the library to access basic grants data?</div>
+            <div class="text-xs">That's cool. We'll be here when you get back.</div>
+          </div>
+        </div>
+
+        <div class="-mx-3 grid grid-cols-1 md:grid-cols-1">
+          <!-- Research -->
+          <div class="mb-4 w-full max-w-full px-3 text-slate-700">
+            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+              <Research ein={profile.ein} irsObjectId={profile.filings[0].object_id_irs} />
+            </div>
+          </div>
+        </div>
+
+        <!-- Interstitial Message -->
+        <!-- <div class="mb-4 mt-2 flex flex-row items-start justify-center gap-2 p-8">
+          <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
+          <div class="flex flex-col items-center justify-center gap-2">
+            <div class="text-lg font-semibold">Looking for another grantmaker?</div>
+            <div class="text-sm">Free profiles for over 150,000 US private foundations</div>
+            <div class="mt-4 flex flex-wrap items-center gap-4">
+              <button
+                type="button"
+                class="bg-grantmakers-orange inline-flex items-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                <MagnifyingGlassCircle variation={'solid'} class={'h-4 w-4'} />
+                Profiles search
+              </button>
+              <div class="flex flex-row items-center gap-2"></div>
+            </div>
+          </div>
+        </div> -->
+
+        <div class="-mx-3 mt-12 grid grid-cols-1 items-center md:grid-cols-2">
+          <!-- Bottom CTA -->
+          <div class="mb-4 mt-2 flex flex-row items-start justify-center gap-2 p-8">
+            <!-- <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} /> -->
+            <div class="flex flex-col items-center justify-center gap-2">
+              <div class="text-lg font-semibold">Looking for another grantmaker?</div>
+              <div class="text-sm">Free profiles for over 150,000 US private foundations</div>
+              <div class="mt-4 flex flex-wrap items-center gap-4">
+                <button
+                  type="button"
+                  class="bg-grantmakers-orange inline-flex items-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  onclick={openSearch}
+                >
+                  <MagnifyingGlassCircle variation={'solid'} class={'h-4 w-4'} />
+                  Profiles search
+                </button>
+                <div class="flex flex-row items-center gap-2"></div>
+              </div>
+            </div>
+          </div>
+          <!-- About -->
+          <div class="mb-4 w-full max-w-full px-3 text-slate-700">
+            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+              <About />
             </div>
           </div>
         </div>
