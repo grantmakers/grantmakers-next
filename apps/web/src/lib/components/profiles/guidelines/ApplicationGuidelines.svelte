@@ -1,5 +1,6 @@
 <script lang="ts">
   import Tip from '../alerts/Tip.svelte';
+  import { tooltip } from '$utils/tooltip';
   import placeholderImage from '$lib/assets/images/placeholder-application-guidelines.webp';
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
   interface Props {
@@ -44,8 +45,10 @@
     <div class="mb-4">
       <div class="flex items-start gap-4">
         <div
-          class="tooltip-trigger rounded-full bg-yellow-500 p-2 text-white"
-          data-tooltip="The form in which applications should be submitted and information and materials they should include Line 2b"
+          class="rounded-full bg-yellow-500 p-2 text-white"
+          use:tooltip={{
+            content: 'The form in which applications should be submitted and information and materials they should include Line 2b',
+          }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4">
             <path
@@ -73,8 +76,10 @@
     <div class="mt-4 space-y-4">
       <div class="flex items-start gap-4">
         <div
-          class="tooltip-trigger rounded-full bg-slate-500 p-2 text-white"
-          data-tooltip="The form in which applications should be submitted and information and materials they should include Line 2b"
+          class="rounded-full bg-slate-500 p-2 text-white"
+          use:tooltip={{
+            content: 'The form in which applications should be submitted and information and materials they should include Line 2b',
+          }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
@@ -92,7 +97,7 @@
       </div>
 
       <div class="flex items-start gap-4">
-        <div class="tooltip-trigger rounded-full bg-slate-500 p-2 text-white" data-tooltip="Any submission deadlines Line 2c">
+        <div class="rounded-full bg-slate-500 p-2 text-white" use:tooltip={{ content: 'Any submission deadlines Line 2c' }}>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
@@ -105,8 +110,11 @@
 
       <div class="flex items-start gap-4">
         <div
-          class="tooltip-trigger rounded-full bg-slate-500 p-2 text-white"
-          data-tooltip="Any restrictions or limitations on awards, such as by geographical areas, charitable fields, kinds of institutions, or other factors Line 2d"
+          class="rounded-full bg-slate-500 p-2 text-white"
+          use:tooltip={{
+            content:
+              'Any restrictions or limitations on awards, such as by geographical areas, charitable fields, kinds of institutions, or other factors Line 2d',
+          }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4">
             <path
@@ -127,8 +135,11 @@
 
         <div class="flex items-start gap-4">
           <div
-            class="tooltip-trigger rounded-full bg-slate-500 p-2 text-white"
-            data-tooltip="The name, address, and telephone number or e-mail address of the person to whom applications should be addressed Line 2a"
+            class="rounded-full bg-slate-500 p-2 text-white"
+            use:tooltip={{
+              content:
+                'The name, address, and telephone number or e-mail address of the person to whom applications should be addressed Line 2a',
+            }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path

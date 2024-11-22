@@ -4,5 +4,5 @@
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "cSpell.words": ["pcss"]
+  "cSpell.words": ["heros", "mongoexport", "pcss", "topnav"]
 }

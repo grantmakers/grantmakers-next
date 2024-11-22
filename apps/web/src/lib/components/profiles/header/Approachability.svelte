@@ -12,14 +12,6 @@
 </script>
 
 <dl class="grid grid-cols-1 overflow-hidden rounded-lg bg-white p-2">
-  <!-- Assets section -->
-  <!-- <dt class="text-center text-sm leading-normal text-inherit">Assets</dt>
-  <dd class="mb-4 text-center text-2xl font-bold text-slate-700">
-    {humanizeCurrency(assets)}
-  </dd> -->
-
-  <!-- Approachability section -->
-
   <dd class="flex flex-row items-center justify-center text-2xl font-bold text-slate-700">
     <!-- Solicitation Status -->
     <div class="m-1 inline rounded p-2 {!noUnsolicited ? 'bg-green-500' : 'bg-yellow-500'}">

@@ -18,11 +18,12 @@
   };
 
   let getBarColor = (pct: number | 'N/A') => {
-    if (pct === 'N/A') return 'bg-slate-200';
-    if (pct >= 90) return 'bg-grantmakers-blue';
-    if (pct >= 75) return 'bg-grantmakers-blue opacity-80';
-    if (pct >= 50) return 'bg-grantmakers-blue opacity-50';
-    return 'bg-grantmakers-green';
+    if (pct === 'N/A') return 'bg-yellow-500';
+    if (pct >= 90) return 'bg-grantmakers-green';
+    if (pct >= 75) return 'bg-grantmakers-blue';
+    if (pct >= 50) return 'bg-grantmakers-blue opacity-80';
+    if (pct >= 30) return 'bg-grantmakers-blue opacity-50';
+    return 'bg-yellow-500';
   };
 </script>
 
