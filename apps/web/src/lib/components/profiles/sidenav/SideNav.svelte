@@ -32,13 +32,13 @@
   ];
 </script>
 
-<nav class="flex flex-col gap-4">
-  <ul>
+<nav>
+  <ul class="flex flex-col">
     {#each navItems as item}
       <NavItem {item} active={item.title.toLowerCase() === 'overview'} />
     {/each}
   </ul>
-  <div>
+  <div class="mt-12">
     <Tip
       title="No Affiliation"
       message="Grantmakers.io is not affiliated, associated, authorized, endorsed by, or in any way officially connected with any
