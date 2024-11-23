@@ -217,7 +217,7 @@
         <div class="mb-4 mt-2 flex flex-row items-start justify-center gap-2 p-8">
           <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
           <div class="font-normal">
-            Grantmakers.io is a community project for the 88% of nonprofits that can't afford an expensive subscription service
+            88% of nonprofits have budgets less than $500k. Grantmakers.io is built for them.
           </div>
         </div>
 
@@ -275,8 +275,7 @@
         <div class="mb-4 mt-2 flex flex-row items-start justify-center gap-2 p-8">
           <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
           <div class="flex flex-col items-center justify-center gap-2">
-            <div class="font-semibold">Open data. Open source. Forever free.</div>
-            <div class="text-xs">You know, the way it should be.</div>
+            <div class="font-normal">Open data. Open source. Forever free.</div>
           </div>
         </div>
 
