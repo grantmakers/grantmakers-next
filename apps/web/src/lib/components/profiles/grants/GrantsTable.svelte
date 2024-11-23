@@ -26,7 +26,10 @@
 
   const numberOfGrantsToDisplay = 10;
 
-  function determineInitialViewMode(grantCount: GrantmakersExtractedDataObj['grant_count'], grantCountAllYears: GrantmakersExtractedDataObj['grant_count_all_years'] ): ViewMode {
+  function determineInitialViewMode(
+    grantCount: GrantmakersExtractedDataObj['grant_count'],
+    grantCountAllYears: GrantmakersExtractedDataObj['grant_count_all_years'],
+  ): ViewMode {
     if (!grantCount) return 'all-time';
     if (!grantCountAllYears) return 'latest';
     return grantCount >= 5 ? 'latest' : 'all-time';
@@ -43,15 +46,15 @@
         <div class="flex items-center space-x-4">
           <div class="inline-flex rounded-b-lg border border-slate-200 p-1 hover:cursor-default">
             {#if grantsCurrent}
-            <button
-              onclick={() => (viewMode = 'latest')}
-              class="cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium {viewMode === 'latest' ?
-                'bg-slate-200 text-slate-700 hover:cursor-default'
-              : 'text-slate-700 hover:text-slate-900'}"
-            >
-              Latest Filing
-            </button>
-          {/if}
+              <button
+                onclick={() => (viewMode = 'latest')}
+                class="cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium {viewMode === 'latest' ?
+                  'bg-slate-200 text-slate-700 hover:cursor-default'
+                : 'text-slate-700 hover:text-slate-900'}"
+              >
+                Latest Filing
+              </button>
+            {/if}
             <button
               onclick={() => (viewMode = 'all-time')}
               class="cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium {viewMode === 'all-time' ?
