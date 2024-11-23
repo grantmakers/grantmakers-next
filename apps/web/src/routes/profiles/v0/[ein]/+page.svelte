@@ -3,7 +3,6 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import type { PageData } from './$types.js';
-  import SEO from '$lib/components/shared/SEO.svelte';
   import Profile from '$lib/components/profiles/Profile.svelte';
 
   interface Props {
@@ -22,7 +21,6 @@
 </script>
 
 {#if profile}
-  <SEO {profile} />
   <Profile {profile} />
 {:else}
   <p>No profile data available</p>

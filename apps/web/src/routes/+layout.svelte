@@ -19,8 +19,8 @@
 </script>
 
 <svelte:head>
-  {#if $page.data.foundationData?.profile}
-    <SEO profile={$page.data.foundationData.profile} />
+  {#if $page.data.profile}
+    <SEO profile={$page.data.profile} />
   {:else}
     <title>{title}</title>
     <meta name="description" content={description} />
