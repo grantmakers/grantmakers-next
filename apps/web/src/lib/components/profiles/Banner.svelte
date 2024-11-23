@@ -4,7 +4,7 @@
 
   const message = {
     intro: 'Welcome to Grantmakers.io NEXT',
-    body: '990s for Fundraisers',
+    body: 'Truly open foundation data for fundraisers',
     type: '',
   };
 </script>
