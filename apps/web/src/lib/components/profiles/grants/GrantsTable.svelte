@@ -40,7 +40,7 @@
 </script>
 
 <div>
-  {#if grants && grants.length > 0}
+  {#if grantCountAllYears > 0}
     <div class="sm:flex sm:items-center">
       <div class="flex w-full flex-row items-center justify-between">
         <div class="flex items-center space-x-4">
@@ -81,7 +81,7 @@
     </div>
   {/if}
 
-  <div class="{grants && grants?.length > 0 ? 'mt-8 ' : 'mt-4 '}flow-root">
+  <div class="{grantCountAllYears > 0 ? 'mt-8 ' : 'mt-4 '}flow-root">
     <div class="-my-2 overflow-x-auto sm:-mx-6">
       <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:mb-4 lg:px-8">
         <table class="min-w-full table-auto divide-y divide-gray-300">
@@ -105,7 +105,7 @@
               <tr>
                 <td colspan="5" class="flex items-center gap-2 px-3 py-4 text-sm">
                   <ExclamationCircle variation="solid" />
-                  No grants {grantCount === 0 ? 'listed' : 'available'} for this foundation
+                  No grants {grantCount === 0 ? 'listed' : 'available for this foundation'}
                 </td>
               </tr>
             {/if}
