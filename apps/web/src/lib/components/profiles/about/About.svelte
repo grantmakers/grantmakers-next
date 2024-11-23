@@ -9,26 +9,8 @@
   </SummaryBoxHeader>
 </div>
 <div class="flex flex-col gap-6 p-8">
-  <div>
-    <div class="text-sm font-bold uppercase text-slate-700">Open Source</div>
-    <p>
-      Grantmakers.io is a free community project ensuring nonprofits unfettered access to the public IRS dataset of Form 990 tax filings.
-    </p>
-  </div>
-  <div>
-    <div class="text-sm font-bold uppercase text-slate-700">Data is Verbatim</div>
-    <p>
-      The project pulls from an open dataset published by the IRS. Data is presented exactly as found in the tax filings. Misspellings and
-      cut off words are common as is the use of ALLCAPS.
-    </p>
-  </div>
-  <div>
-    <div class="text-sm font-bold uppercase text-slate-700">Historical Data</div>
-    <p>
-      Be mindful of the limitations of using historical data in your research - the data represents past activity and may not reflect
-      current foundation priorities.
-    </p>
-  </div>
+  <p>Grantmakers.io is a free, open source project built to help nonprofits utilize the incredible IRS 990-PF dataset.</p>
+  <p>The project exists to move the philanthropic data industry away from expensive subscriptions and towards decentralized data sharing.</p>
   <div class="flex justify-center">
     <a
       href="https://www.grantmakers.io/about/"
