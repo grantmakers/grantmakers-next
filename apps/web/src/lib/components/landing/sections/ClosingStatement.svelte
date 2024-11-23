@@ -1,18 +1,17 @@
 <script lang="ts">
-  import viewport from '$utils/useViewportAction';
+  import { inview } from 'svelte-inview';
 
-  let textInView = $state(false);
+  let isInView = $state(false);
 
   const textAnimationInitClasses = 'opacity-0 translate-y-4';
   const textAnimationClasses = 'opacity-1 translate-y-0';
 </script>
 
 <div
-  use:viewport={null}
-  onenterViewport={() => {
-    if (!textInView) {
-      textInView = true;
-    }
+  use:inview
+  oninview_change={(event) => {
+    const { inView } = event.detail;
+    isInView = inView;
   }}
   class="bg-gray-900"
   data-sveltekit-preload-code="eager"
@@ -27,7 +26,7 @@
     <div class="px-6 py-24 sm:py-32 lg:px-8">
       <div class="mx-auto max-w-7xl">
         <div
-          class="mx-auto max-w-2xl text-center will-change-scroll {textInView ? textAnimationClasses : (
+          class="mx-auto max-w-2xl text-center will-change-scroll {isInView ? textAnimationClasses : (
             textAnimationInitClasses
           )} pointer-events-none duration-500 ease-in-out"
         >

@@ -55,7 +55,7 @@
 
 <span
   use:inview
-  onchange={(event) => {
+  oninview_change={(event) => {
     const { inView } = event.detail;
     isInView = inView;
   }}>{formatNumber(counterResult[id])}</span
