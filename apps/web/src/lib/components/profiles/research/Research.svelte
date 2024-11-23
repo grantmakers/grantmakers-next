@@ -2,11 +2,11 @@
   import SummaryBoxHeader from '../SummaryBoxHeader.svelte';
   import propublicaLogo from '$lib/assets/images/propublica.svg';
   import irsLogo from '$lib/assets/images/irs-logo.webp';
-  import grantadvisorLogo from '$lib/assets/images/grantadvisor.svg';
+  // import grantadvisorLogo from '$lib/assets/images/grantadvisor.svg';
   import { copy } from 'svelte-copy';
   import toast from 'svelte-french-toast';
   import { ClipboardDocument, DocumentText, MagnifyingGlassCircle } from 'svelte-heros-v2';
-  import { formatEin } from '@repo/shared/functions/formatters/ein';
+  import Tip from '../alerts/Tip.svelte';
 
   interface Props {
     ein: string;
@@ -24,13 +24,15 @@
     <div class="flex items-center rounded bg-slate-100 p-2">
       <div class="flex grow flex-col gap-1">
         <div class="text-xs text-green-500">Non-Commercial</div>
-        <div class="text-sm font-bold uppercase text-slate-700">Read full 990<span class="lowercase">s</span></div>
-        <div class="text-sm text-slate-700">ProPublica</div>
+        <div class="text-sm font-bold uppercase text-slate-700">Review the 990</div>
       </div>
       <div class="shrink"><img src={propublicaLogo} alt="ProPublica logo" class="max-h-4 shrink" height={16} width={184} /></div>
     </div>
-    <p>Our favorite source for full 990s is ProPublica. They share our mission of truly free and open access to 990 data.</p>
-    <div class="mt-4 flex flex-wrap items-center gap-4 lg:mt-12">
+    <div>
+      <Tip message={'Our favorite source for full 990s. They share our mission of truly free and open access to 990 data.'} includeLogo />
+    </div>
+    <!-- <p class="mt-4">Our favorite source for full 990s is ProPublica. They share our mission of truly free and open access to 990 data.</p> -->
+    <div class="mt-4 flex flex-wrap items-center gap-4">
       <a
         href="https://projects.propublica.org/nonprofits/organizations/{ein}/{irsObjectId}/full"
         target="_blank"
@@ -50,17 +52,22 @@
     </div>
   </div>
 
-  <div class="flex-auto items-start justify-center gap-2 p-8">
+  <div class="flex-auto items-start justify-center gap-4 p-8">
     <div class="flex items-center rounded bg-slate-100 p-2">
       <div class="flex grow flex-col gap-1">
         <div class="text-xs text-blue-500">Government Source</div>
-        <div class="text-sm font-bold uppercase text-slate-700">Tax Exempt Organization Search</div>
-        <div class="text-sm text-slate-700">IRS</div>
+        <div class="text-sm font-bold uppercase text-slate-700">Review IRS docs</div>
       </div>
       <img src={irsLogo} alt="IRS logo" class="max-h-6" height={24} width={48} />
     </div>
-    <p>The source of truth. Also provides full 990s of course, but great for confirming IRS status and checking revocation status.</p>
-    <div class="mt-4 flex flex-wrap items-center gap-4 lg:mt-12">
+    <div>
+      <Tip
+        message={'Get the latest 990s straight from the source. Also great for confirming IRS status and checking revocation status.'}
+        includeLogo
+      />
+    </div>
+    <!-- <p class="mt-4">The source of truth. Also provides full 990s of course, but great for confirming IRS status and checking revocation status.</p> -->
+    <div class="mt-4 flex flex-wrap items-center gap-4">
       <a
         href="https://apps.irs.gov/app/eos/"
         target="_blank"
@@ -97,7 +104,7 @@
       </div>
       <img src={grantadvisorLogo} alt="IRS logo" class="max-h-6 max-w-fit" height={40} width={40} />
     </div>
-    <p>Community-sourced reviews from your peers. Nearly 1,000 reviews from professional fundraisers just like you.</p>
+    <p class="mt-4">Community-sourced reviews from your peers. Nearly 1,000 reviews from professional fundraisers just like you.</p>
     <div class="mt-4 flex flex-wrap items-center gap-4 lg:mt-12">
       <a
         href="https://grantadvisor.org/"

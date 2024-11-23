@@ -10,7 +10,9 @@
 </div>
 <div class="flex flex-col gap-6 p-8">
   <p>Grantmakers.io is a free, open source project built to help nonprofits utilize the incredible IRS 990-PF dataset.</p>
-  <p>The project exists to move the philanthropic data industry away from expensive subscriptions and towards decentralized data sharing.</p>
+  <p>
+    The project exists to move the philanthropic data industry away from expensive subscriptions and towards decentralized data sharing.
+  </p>
   <div class="flex justify-center">
     <a
       href="https://www.grantmakers.io/about/"
