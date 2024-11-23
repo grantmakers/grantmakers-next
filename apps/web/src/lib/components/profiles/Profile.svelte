@@ -166,52 +166,52 @@
 
       <!-- Core Body Sections -->
       <div class="mx-auto mt-4 w-full pb-6">
-        <!-- Snapshot Boxes -->
-        <div class="-mx-3 mb-4 grid grid-cols-1 space-y-4 md:space-y-0 lg:grid-cols-2 xl:grid-cols-3">
-          <!-- Box 1 -->
-          <div class="h-full w-full max-w-full px-3">
-            <!-- Grant History -->
-            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
-              <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-                <SummaryBoxHeader headerText={'Grants Snapshot'} />
-              </div>
-              <GrantsSummaryBox
-                grantMin={profile.grant_min}
-                grantMax={profile.grant_max}
-                grantMedian={profile.grant_median}
-                grantCount={profile.grant_count}
-                {grantsFacets}
-                {grantsReferenceAttachment}
-                {hasCharitableActivities}
-              />
-            </div>
-          </div>
-          <!-- Box 2 -->
-          <div class="h-full w-full max-w-full px-3">
-            <div class="flex h-full flex-col gap-4">
-              <!-- Summary -->
-              <div class="shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
-                <Overview rank={profile.rank} rankTotal={profile.rank_total} assets={profile.assets} />
-              </div>
+<!-- Snapshot Boxes -->
+<div class="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
+  <!-- Grants Box (First on desktop, third on mobile) -->
+  <div class="order-3 xl:order-1">
+    <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+      <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
+        <SummaryBoxHeader headerText={'Grants Snapshot'} />
+      </div>
+      <GrantsSummaryBox
+        grantMin={profile.grant_min}
+        grantMax={profile.grant_max}
+        grantMedian={profile.grant_median}
+        grantCount={profile.grant_count}
+        {grantsFacets}
+        {grantsReferenceAttachment}
+        {hasCharitableActivities}
+      />
+    </div>
+  </div>
 
-              <!-- Data Source -->
-              <div class="shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border md:h-full">
-                <DataSource taxYear={filings[0].tax_year} {formattedTaxPeriodEnd} lastUpdatedIrs={profile.last_updated_irs} />
-              </div>
-            </div>
-          </div>
+  <!-- Overview & Data Source Box (Second on desktop, first on mobile) -->
+  <div class="order-1 xl:order-2">
+    <div class="flex h-full flex-col gap-4">
+      <!-- Overview (First on mobile) -->
+      <div class="shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+        <Overview rank={profile.rank} rankTotal={profile.rank_total} assets={profile.assets} />
+      </div>
 
-          <!-- Box 3 -->
-          <div class="h-full w-full max-w-full px-3">
-            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
-              <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-                <SummaryBoxHeader headerText={'People'} />
-              </div>
-              <!-- @ts-expect-error Mixing Svelte versions causes issues with passed in props -->
-              <People {people} />
-            </div>
-          </div>
-        </div>
+      <!-- Data Source (Second on mobile) -->
+      <div class="shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border md:h-full">
+        <DataSource taxYear={filings[0].tax_year} {formattedTaxPeriodEnd} lastUpdatedIrs={profile.last_updated_irs} />
+      </div>
+    </div>
+  </div>
+
+  <!-- People Box (Third on desktop, fourth on mobile) -->
+  <div class="order-4 xl:order-3">
+    <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+      <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
+        <SummaryBoxHeader headerText={'People'} />
+      </div>
+      <!-- @ts-expect-error Mixing Svelte versions causes issues with passed in props -->
+      <People {people} />
+    </div>
+  </div>
+</div>
 
         <!-- Interstitial Message -->
         <div class="mb-4 mt-2 flex flex-row items-start justify-center gap-2 p-8">
