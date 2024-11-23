@@ -216,7 +216,7 @@
         <!-- Interstitial Message -->
         <div class="mb-4 mt-2 flex flex-row items-start justify-center gap-2 p-8">
           <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
-          <div class="font-normal">88% of nonprofits have budgets less than $500k. Grantmakers.io is built for them.</div>
+          <div>Ensuring equitable access to a critical information source since 2016</div>
         </div>
 
         <!-- Grants -->
@@ -273,7 +273,7 @@
         <div class="mb-4 mt-2 flex flex-row items-start justify-center gap-2 p-8">
           <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
           <div class="flex flex-col items-center justify-center gap-2">
-            <div class="font-normal">Open data. Open source. Forever free.</div>
+            <div class="font-normal">88% of nonprofits have budgets less than $500k. Grantmakers.io is built for them.</div>
           </div>
         </div>
 
@@ -346,8 +346,7 @@
         <div class="mb-4 mt-2 flex flex-row items-start justify-center gap-2 p-8">
           <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
           <div class="flex flex-col items-center justify-center gap-2">
-            <div class="font-semibold">Still driving to the library to access basic grants data?</div>
-            <div class="text-xs">That's cool. We'll be here when you get back.</div>
+            <div class="font-normal">Open data. Open source. Forever free.</div>
           </div>
         </div>
 
@@ -359,25 +358,6 @@
             </div>
           </div>
         </div>
-
-        <!-- Interstitial Message -->
-        <!-- <div class="mb-4 mt-2 flex flex-row items-start justify-center gap-2 p-8">
-          <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
-          <div class="flex flex-col items-center justify-center gap-2">
-            <div class="text-lg font-semibold">Looking for another grantmaker?</div>
-            <div class="text-sm">Free profiles for over 150,000 US private foundations</div>
-            <div class="mt-4 flex flex-wrap items-center gap-4">
-              <button
-                type="button"
-                class="bg-grantmakers-orange inline-flex items-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                <MagnifyingGlassCircle variation={'solid'} class={'h-4 w-4'} />
-                Profiles search
-              </button>
-              <div class="flex flex-row items-center gap-2"></div>
-            </div>
-          </div>
-        </div> -->
 
         <div class="-mx-3 mt-12 grid grid-cols-1 items-center md:grid-cols-2">
           <!-- Bottom CTA -->

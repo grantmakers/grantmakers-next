@@ -39,6 +39,7 @@
         ],
       },
     },
+    "cSpell.words": ["inview"],
   },
   "extensions": {
     "recommendations": ["dbaeumer.vscode-eslint"],
