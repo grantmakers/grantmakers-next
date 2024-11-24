@@ -1,4 +1,16 @@
-import { UserGroup, MagnifyingGlassCircle, Gift, BookOpen, ClipboardDocumentCheck, Server } from 'svelte-heros-v2';
+import {
+  UserGroup,
+  MagnifyingGlassCircle,
+  Gift,
+  BookOpen,
+  ClipboardDocumentCheck,
+  Server,
+  ChartBar,
+  RectangleGroup,
+  ClipboardDocumentList,
+  CurrencyDollar,
+  Users,
+} from 'svelte-heros-v2';
 export interface EachFAQ {
   question: string;
   answer: string;
@@ -31,6 +43,34 @@ export const navigation = [
   { name: 'Features', href: '#' },
   { name: 'Marketplace', href: '#' },
   { name: 'Company', href: '#' },
+];
+
+export interface NavItemTypes {
+  title: string;
+  icon: typeof ChartBar;
+}
+
+export const navItems: NavItemTypes[] = [
+  {
+    title: 'Overview',
+    icon: RectangleGroup,
+  },
+  {
+    title: 'People',
+    icon: Users,
+  },
+  {
+    title: 'Grants',
+    icon: CurrencyDollar,
+  },
+  {
+    title: 'Guidelines',
+    icon: ClipboardDocumentList,
+  },
+  {
+    title: 'Financials',
+    icon: ChartBar,
+  },
 ];
 export const features = [
   {

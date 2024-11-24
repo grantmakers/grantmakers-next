@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { ChartBar } from 'svelte-heros-v2';
+  import { getActiveSection, setActiveSection } from './ActiveLink.svelte';
 
   // HACK Uses types from a specific icon
   // A generic type does not appear to exist
@@ -10,25 +11,31 @@
 
   interface Props {
     item: NavItem;
-    active?: boolean;
   }
 
-  let { item, active = false }: Props = $props();
+  let { item }: Props = $props();
 
-  let href = $derived(`#${item.title.toLowerCase()}`);
-  let uppercase = $derived(item.title.toUpperCase());
+  let uppercaseTitle = item.title.toUpperCase();
+  let lowercaseTitle = item.title.toLowerCase();
+  let href = `#${lowercaseTitle}`;
+  let isActive = $derived(getActiveSection() === lowercaseTitle);
+
+  function handleClick(id: string): void {
+    setActiveSection(id);
+  }
 </script>
 
 <li class="mt-0.5 w-full">
   <a
-    class="ease-nav-brand mx-4 my-0 flex items-center whitespace-nowrap px-4 py-2.5 text-sm transition-colors {active ?
+    class="ease-nav-brand mx-4 my-0 flex items-center whitespace-nowrap px-4 py-2.5 text-sm transition-colors {isActive ?
       'shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700'
     : ''}"
     {href}
-    aria-label={uppercase}
+    onclick={() => handleClick(lowercaseTitle)}
+    aria-label={uppercaseTitle}
   >
     <div
-      class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg text-center {active ? 'bg-slate-700 text-white' : (
+      class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg text-center {isActive ? 'bg-slate-700 text-white' : (
         'bg-white fill-current stroke-0 text-slate-900'
       )}"
     >
