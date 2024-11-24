@@ -6,7 +6,6 @@
   import { copy } from 'svelte-copy';
   import toast from 'svelte-french-toast';
   import { ClipboardDocument, DocumentText, MagnifyingGlassCircle } from 'svelte-heros-v2';
-  import Tip from '../alerts/Tip.svelte';
 
   interface Props {
     ein: string;
