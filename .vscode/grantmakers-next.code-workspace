@@ -15,11 +15,6 @@
     {
       "name": "apps/web",
       "path": "../apps/web",
-      "settings": {
-        "[svelte]": {
-          "editor.defaultFormatter": "svelte.svelte-vscode",
-        },
-      },
     },
   ],
   "settings": {

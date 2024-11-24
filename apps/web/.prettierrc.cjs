@@ -1,4 +1,4 @@
-const baseConfig = require('../../.prettierrc.cjs');
+const baseConfig = require('@repo/prettier-config/base.cjs');
 
 module.exports = {
   ...baseConfig,
@@ -6,11 +6,13 @@ module.exports = {
   singleQuote: true,
   svelteIndentScriptAndStyle: true,
   tailwindConfig: './tailwind.config.js',
+  printWidth: 140, // Ensure override of Svelte Prettier plugin
   overrides: [
     {
       files: '*.svelte',
       options: {
         parser: 'svelte',
+        printWidth: 140, // Override Svelte Prettier plugin
       },
     },
   ],
