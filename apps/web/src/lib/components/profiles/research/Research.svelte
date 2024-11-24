@@ -28,11 +28,7 @@
       </div>
       <div class="shrink"><img src={propublicaLogo} alt="ProPublica logo" class="max-h-4 shrink" height={16} width={184} /></div>
     </div>
-    <div>
-      <Tip message={'Our favorite source for full 990s. They share our mission of truly free and open access to 990 data.'} includeLogo />
-    </div>
-    <!-- <p class="mt-4">Our favorite source for full 990s is ProPublica. They share our mission of truly free and open access to 990 data.</p> -->
-    <div class="mt-4 flex flex-wrap items-center gap-4">
+    <div class="mt-8 flex flex-wrap items-center gap-4">
       <a
         href="https://projects.propublica.org/nonprofits/organizations/{ein}/{irsObjectId}/full"
         target="_blank"
@@ -60,14 +56,7 @@
       </div>
       <img src={irsLogo} alt="IRS logo" class="max-h-6" height={24} width={48} />
     </div>
-    <div>
-      <Tip
-        message={'Get the latest 990s straight from the source. Also great for confirming IRS status and checking revocation status.'}
-        includeLogo
-      />
-    </div>
-    <!-- <p class="mt-4">The source of truth. Also provides full 990s of course, but great for confirming IRS status and checking revocation status.</p> -->
-    <div class="mt-4 flex flex-wrap items-center gap-4">
+    <div class="mt-8 flex flex-wrap items-center gap-4">
       <a
         href="https://apps.irs.gov/app/eos/"
         target="_blank"
