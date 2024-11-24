@@ -21,7 +21,7 @@
   let isActive = $derived(getActiveSection() === lowercaseTitle);
 
   function handleClick(id: string): void {
-    setActiveSection(id);
+    setActiveSection(id, true);
   }
 </script>
 

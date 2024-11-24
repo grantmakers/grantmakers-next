@@ -13,9 +13,12 @@
   let { headerText, anchorText = undefined, children }: Props = $props();
   let anchorSlug = slugify(anchorText ? anchorText : headerText);
 
+  let observerEnabled = true;
   let options: Options = {
     // HACK Optimized for desktop, but effectively skips People
+    rootMargin: anchorSlug === 'overview' ? '-150px 0px 0px 0px' : '0px',
     threshold: anchorSlug === 'overview' ? 0.8 : 0.6,
+    unobserveOnEnter: false,
   };
 
   // Not all section headers have sidenav links
@@ -27,14 +30,15 @@
   id={anchorSlug}
   use:inview={options}
   class="flex items-center justify-between align-middle lg:scroll-mt-8"
-  {...isNavItem && {
-    'use:inview': options,
-    oninview_change: (event) => {
-      if (event.detail.inView) {
-        setActiveSection(anchorSlug);
-      }
-    },
-  }}
+  {...isNavItem &&
+    observerEnabled && {
+      'use:inview': options,
+      oninview_change: (event) => {
+        if (event.detail.inView) {
+          setActiveSection(anchorSlug);
+        }
+      },
+    }}
 >
   <h6 class="mb-0">{headerText}</h6>
   <h6 class="m-0 text-xs font-bold leading-tight text-slate-500">
