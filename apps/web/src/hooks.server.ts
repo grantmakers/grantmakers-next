@@ -1,12 +1,17 @@
 import type { HandleServerError } from '@sveltejs/kit';
 
-export async function handle({ event, resolve }) {
-  const legacySiteRedirects: Record<string, string> = {
-    '/sitemap-main.xml': '/sitemaps/sitemap-main.xml',
-  };
+type Redirects = { [key: string]: string };
 
-  if (legacySiteRedirects[event.url.pathname]) {
-    return Response.redirect(new URL(legacySiteRedirects[event.url.pathname], event.url.origin), 301);
+const legacySitemapRedirects: Redirects = {
+  '/sitemap-main.xml': '/sitemaps/sitemap-main.xml',
+};
+
+export async function handle({ event, resolve }) {
+  const path = event.url.pathname;
+
+  // Handle legacy sitemap redirect
+  if (legacySitemapRedirects[path]) {
+    return Response.redirect(new URL(legacySitemapRedirects[path], event.url.origin), 301);
   }
 
   return resolve(event);
