@@ -34,7 +34,7 @@
     <div
       class="{styles.solicitation.base} {styles.solicitation.disabled ? 'bg-slate-200' : ''}"
       use:tooltip={{
-        content: noUnsolicited ? 'Preselected only?' : 'Possibly accepts unsolicited applications',
+        content: noUnsolicited ? 'Preselected only' : 'Possibly accepts unsolicited applications',
       }}
     >
       {#if !noUnsolicited}
@@ -46,9 +46,9 @@
     </div>
 
     <!-- Staffing Status -->
-    <div class={styles.staffing} use:tooltip={{ content: isStaffed ? 'Likely staffed' : 'No paid staff' }}>
+    <div class={styles.staffing} use:tooltip={{ content: isStaffed ? 'Likely staffed' : 'Limited staffing' }}>
       <UserGroup variation="solid" class="h-4 w-4 text-white" aria-hidden="true" />
-      <span class="sr-only">Organization {isStaffed ? 'is Staffed' : 'is not Staffed'}</span>
+      <span class="sr-only">Organization {isStaffed ? 'is Staffed' : 'reports limited staffing'}</span>
     </div>
 
     <!-- Website Status -->
