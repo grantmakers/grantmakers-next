@@ -28,9 +28,9 @@
   const firstLetter = upperFirstLetter(organization_name);
 </script>
 
-<div class="flex flex-wrap items-center justify-center gap-6 md:justify-between">
+<div class="mt-3 flex flex-wrap items-center justify-center gap-6 sm:mt-0 md:justify-between">
   <!-- Left side -->
-  <div class="flex items-start gap-4 md:items-start">
+  <div class="flex grow items-start justify-start gap-4 sm:grow-0 md:items-start">
     <!-- Icon -->
     <div class="mt-1 w-auto max-w-full md:mt-0 md:flex-none">
       <div
@@ -53,14 +53,14 @@
     <div class="relative my-auto w-auto md:flex-none md:px-3 lg:max-w-full">
       <div class="h-full">
         <h5 class="mb-1 w-full whitespace-normal text-wrap text-lg font-semibold md:max-w-md">{organization_name}</h5>
-        <div class="mb-0 text-sm font-normal leading-normal">
+        <div class="align-left mb-0 flex flex-col text-sm font-normal leading-normal sm:flex-row sm:items-center">
           <strong class="text-slate-700">
             {profile.city},
             {profile.is_foreign && profile.state === 'Foreign' ? profile.country : profile.state}
           </strong>
           {#if profile.has_website}
+            <Dot />
             <a href={profile.website} target="_blank" rel="noopener noreferrer">
-              <Dot />
               {profile.website_verbatim?.toLowerCase()}
             </a>
           {/if}
