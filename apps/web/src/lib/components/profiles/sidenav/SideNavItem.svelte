@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { ChartBar } from 'svelte-heros-v2';
   import { getActiveSection, setActiveSection } from './ActiveLink.svelte';
+  import { slugify } from '@repo/shared/functions/formatters/names';
 
   // HACK Uses types from a specific icon
   // A generic type does not appear to exist
@@ -16,7 +17,7 @@
   let { item }: Props = $props();
 
   let uppercaseTitle = item.title.toUpperCase();
-  let lowercaseTitle = item.title.toLowerCase();
+  let lowercaseTitle = slugify(item.title.toLowerCase());
   let href = `#${lowercaseTitle}`;
   let isActive = $derived(getActiveSection() === lowercaseTitle);
 
@@ -25,7 +26,7 @@
   }
 </script>
 
-<li class="mt-0.5 w-full">
+<li class="mt-0.5">
   <a
     class="ease-nav-brand mx-4 my-0 flex items-center whitespace-nowrap px-4 py-2.5 text-sm transition-colors {isActive ?
       'shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700'

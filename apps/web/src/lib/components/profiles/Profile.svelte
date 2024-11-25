@@ -18,7 +18,6 @@
   import LogoMark from '../shared/LogoMark.svelte';
   import CharitableActivities from './activities/CharitableActivities.svelte';
   import SideNav from './sidenav/SideNav.svelte';
-  import CommunityIntelligence from './community/CommunityIntelligence.svelte';
   import Overview from './overview/Overview.svelte';
   import DataSource from './about/DataSource.svelte';
   import Research from './research/Research.svelte';
@@ -26,6 +25,7 @@
   import { MagnifyingGlassCircle } from 'svelte-heros-v2';
   import type { AutocompleteInstance } from '@repo/shared/typings/algolia/autocomplete';
   import { browser } from '$app/environment';
+  import CiModal from './community/CiModal.svelte';
 
   interface Props {
     profile: GrantmakersExtractedDataObj;
@@ -59,6 +59,8 @@
       autocompleteInstance?.setIsOpen(true);
     }
   };
+
+  let sidebarWidthClass = 'w-64';
 </script>
 
 <Toaster />
@@ -66,7 +68,7 @@
 <div class="relative flex min-h-screen">
   <!-- Left Navigation -->
   <aside
-    class="ease-nav-brand z-990 sticky top-0 ml-4 hidden h-screen w-64 shrink-0 overflow-y-auto rounded-2xl border-0 bg-white p-0 py-2 pt-2 text-slate-500 antialiased shadow-none transition-transform duration-200 md:block xl:left-0 xl:translate-x-0 xl:bg-transparent"
+    class="ease-nav-brand z-990 sticky top-0 ml-4 hidden h-screen {sidebarWidthClass} shrink-0 overflow-y-auto rounded-2xl border-0 bg-white p-0 py-2 pt-2 text-slate-500 antialiased shadow-none transition-transform duration-200 md:block xl:left-0 xl:translate-x-0 xl:bg-transparent"
     id="sidenav-main"
   >
     <div class="flex h-full flex-col">
@@ -134,6 +136,9 @@
           grantCount={profile.grant_count}
         />
       </div>
+
+      <!-- Community Intelligence Modal Body-->
+      <CiModal ein={profile.ein} />
 
       <!-- Placeholder wrapper -->
       <div class="shadow-soft-xl relative mt-4 flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
@@ -275,10 +280,10 @@
             </div>
           </div>
 
-          <!-- CI -->
+          <!-- About -->
           <div class="mb-4 w-full max-w-full px-3 text-slate-700">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
-              <CommunityIntelligence ein={profile.ein} />
+              <About />
             </div>
           </div>
         </div>
@@ -327,7 +332,7 @@
           </div>
         </div>
 
-        <div class="-mx-3 mt-12 grid grid-cols-1 items-center md:grid-cols-2">
+        <div class="-mx-3 mt-12 grid grid-cols-1 items-center md:grid-cols-1">
           <!-- Bottom CTA -->
           <div class="mb-4 mt-2 flex flex-row items-start justify-center gap-2 p-8">
             <!-- <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} /> -->
@@ -343,16 +348,18 @@
                   <MagnifyingGlassCircle variation={'solid'} class={'h-4 w-4'} />
                   Profiles search
                 </button>
+                <button
+                  type="button"
+                  class="inline-flex items-center gap-x-1.5 rounded-md bg-white px-4 py-3 text-sm font-semibold text-white shadow-sm hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  <SurpriseMe />
+                </button>
                 <div class="flex flex-row items-center gap-2"></div>
               </div>
             </div>
           </div>
-          <!-- About -->
-          <div class="mb-4 w-full max-w-full px-3 text-slate-700">
-            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
-              <About />
-            </div>
-          </div>
+          <!-- Placeholder grid 1 col 1/2 width -->
+          <div class="mb-4 w-full max-w-full px-3 text-slate-700"></div>
         </div>
       </div>
     </div>
