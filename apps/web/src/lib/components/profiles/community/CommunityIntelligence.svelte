@@ -1,6 +1,6 @@
 <script lang="ts">
   import Blink from '$lib/components/shared/icons/Blink.svelte';
-  import SummaryBoxHeader from '../SummaryBoxHeader.svelte';
+  import ContentBoxHeader from '../ContentBoxHeader.svelte';
   import { BellAlert, Sparkles } from 'svelte-heros-v2';
   import logo from '$lib/assets/images/logo.svg';
   import Divider from '$lib/components/shared/Divider.svelte';
@@ -30,11 +30,11 @@
 </script>
 
 <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-  <SummaryBoxHeader headerText={'Community Intelligence'}>
+  <ContentBoxHeader title={'Community Intelligence'}>
     <div class="flex items-center justify-center gap-2">
       <Blink />
     </div>
-  </SummaryBoxHeader>
+  </ContentBoxHeader>
 </div>
 <div class="flex-auto items-start justify-center space-x-2 p-4">
   {#if aiSummaries[ein]}

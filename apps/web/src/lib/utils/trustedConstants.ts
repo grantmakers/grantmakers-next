@@ -38,12 +38,7 @@ export const articleLinks = {
 export const anecdote =
   'Grantmakers.io is the espresso shot of grants research &ndash; small, powerful, and exactly what you need when you need it most. No login required.';
 
-export const navigation = [
-  { name: 'Product', href: '#' },
-  { name: 'Features', href: '#' },
-  { name: 'Marketplace', href: '#' },
-  { name: 'Company', href: '#' },
-];
+export type SideNavIds = 'overview' | 'people' | 'grants' | 'guidelines' | 'financials';
 
 export interface NavItemTypes {
   title: string;

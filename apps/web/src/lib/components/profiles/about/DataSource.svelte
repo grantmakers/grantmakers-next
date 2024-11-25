@@ -1,6 +1,6 @@
 <script lang="ts">
   import { formatTaxYear, formatDateToMonthYear, isOutdatedISOString } from '@repo/shared/functions/formatters/dates';
-  import SummaryBoxHeader from '../SummaryBoxHeader.svelte';
+  import ContentBoxHeader from '../ContentBoxHeader.svelte';
   import irsLogo from '$lib/assets/images/irs-logo.webp';
   import Eyes from '$lib/components/shared/icons/Eyes.svelte';
   import { tooltip } from '$utils/tooltip';
@@ -15,9 +15,9 @@
 </script>
 
 <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-  <SummaryBoxHeader headerText={'Data Source'}>
+  <ContentBoxHeader title={'Data Source'}>
     <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} />
-  </SummaryBoxHeader>
+  </ContentBoxHeader>
 </div>
 
 <div class="flex-auto items-center space-y-2 rounded-b-2xl bg-white p-4 text-sm text-slate-700">

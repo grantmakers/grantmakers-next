@@ -1,7 +1,8 @@
 <script lang="ts">
   import { Toaster } from 'svelte-french-toast';
   import People from './people/People.svelte';
-  import SummaryBoxHeader from './SummaryBoxHeader.svelte';
+  import ContentBoxWrapper from './ContentBoxWrapper.svelte';
+  import ContentBoxHeader from './ContentBoxHeader.svelte';
   import Banner from './Banner.svelte';
   import NavSearch from './topnav/Nav.svelte';
   import SurpriseMe from './topnav/SurpriseMe.svelte';
@@ -18,7 +19,7 @@
   import LogoMark from '../shared/LogoMark.svelte';
   import CharitableActivities from './activities/CharitableActivities.svelte';
   import SideNav from './sidenav/SideNav.svelte';
-  import Overview from './overview/Overview.svelte';
+  import Rank from './ranking/Rank.svelte';
   import DataSource from './about/DataSource.svelte';
   import Research from './research/Research.svelte';
   import About from './about/About.svelte';
@@ -115,27 +116,29 @@
 
     <!-- Main Content -->
     <div class="mx-auto w-full px-6 py-6 text-slate-500">
-      <!-- Alert -->
-      <div class="lg:w-12/12 relative top-2 z-20 mx-auto w-full">
-        <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-          <SummaryBoxHeader headerText={'IRS Form 990-PF'}>
-            <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} />
-          </SummaryBoxHeader>
+      <!-- Profile header -->
+      <ContentBoxWrapper id="overview">
+        <div class="lg:w-12/12 relative top-2 z-20 mx-auto w-full">
+          <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
+            <ContentBoxHeader title={'IRS Form 990-PF'}>
+              <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} />
+            </ContentBoxHeader>
+          </div>
         </div>
-      </div>
 
-      <!-- Foundation header -->
-      <div
-        class="shadow-blur relative flex min-w-0 flex-auto flex-col overflow-hidden rounded-2xl border-0 bg-white bg-clip-border bg-center p-4"
-      >
-        <FoundationHeader
-          {organization_name}
-          {profile}
-          {formattedTaxPeriodEnd}
-          eobmfRecognizedExempt={profile.eobmf_recognized_exempt}
-          grantCount={profile.grant_count}
-        />
-      </div>
+        <!-- Foundation header -->
+        <div
+          class="shadow-blur relative flex min-w-0 flex-auto flex-col overflow-hidden rounded-2xl border-0 bg-white bg-clip-border bg-center p-4"
+        >
+          <FoundationHeader
+            {organization_name}
+            {profile}
+            {formattedTaxPeriodEnd}
+            eobmfRecognizedExempt={profile.eobmf_recognized_exempt}
+            grantCount={profile.grant_count}
+          />
+        </div>
+      </ContentBoxWrapper>
 
       <!-- Community Intelligence Modal Body-->
       <CiModal ein={profile.ein} />
@@ -153,7 +156,7 @@
           <div class="order-3 xl:order-1">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-                <SummaryBoxHeader headerText={'Grants Snapshot'} />
+                <ContentBoxHeader title={'Grants Snapshot'} />
               </div>
               <GrantsSummaryBox
                 grantMin={profile.grant_min}
@@ -167,12 +170,12 @@
             </div>
           </div>
 
-          <!-- Overview & Data Source Box (Second on desktop, first on mobile) -->
+          <!-- Ranking & Data Source Boxes (Second on desktop, first on mobile) -->
           <div class="order-1 xl:order-2">
             <div class="flex h-full flex-col gap-4">
-              <!-- Overview (First on mobile) -->
+              <!-- Ranking (First on mobile) -->
               <div class="shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
-                <Overview rank={profile.rank} rankTotal={profile.rank_total} assets={profile.assets} />
+                <Rank rank={profile.rank} rankTotal={profile.rank_total} assets={profile.assets} />
               </div>
 
               <!-- Data Source (Second on mobile) -->
@@ -184,13 +187,15 @@
 
           <!-- People Box (Third on desktop, fourth on mobile) -->
           <div class="order-4 xl:order-3">
-            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
-              <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-                <SummaryBoxHeader headerText={'People'} />
+            <ContentBoxWrapper id="people" classes="flex h-full">
+              <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+                <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
+                  <ContentBoxHeader title={'People'} />
+                </div>
+                <!-- @ts-expect-error Mixing Svelte versions causes issues with passed in props -->
+                <People {people} />
               </div>
-              <!-- @ts-expect-error Mixing Svelte versions causes issues with passed in props -->
-              <People {people} />
-            </div>
+            </ContentBoxWrapper>
           </div>
         </div>
 
@@ -202,38 +207,40 @@
 
         <!-- Grants -->
         <div class="-mx-3 grid grid-cols-1">
-          <div class="mb-4 w-full max-w-full px-3">
-            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden break-words rounded-2xl bg-white">
-              <div class="mb-0 bg-slate-200 p-4">
-                <SummaryBoxHeader headerText={'Grants'}
-                  ><img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} /></SummaryBoxHeader
-                >
-              </div>
-              <div>
-                {#if grantsFacets}
-                  <GrantsTable
-                    grantsAllYears={grantsAllYearsTop20}
-                    grantsCurrent={grantsCurrentTop20}
-                    grantCount={profile.grant_count}
-                    grantCountAllYears={profile.grant_count_all_years}
-                    filingsAvailable={profile.filings.length}
-                    {grantsReferenceAttachment}
-                  />
-                {:else}
-                  <div class="p-6">Unable to find an available free source of grants data</div>
-                {/if}
+          <ContentBoxWrapper id="grants">
+            <div class="mb-4 w-full max-w-full px-3">
+              <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden break-words rounded-2xl bg-white">
+                <div class="mb-0 bg-slate-200 p-4">
+                  <ContentBoxHeader title={'Grants'}
+                    ><img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} /></ContentBoxHeader
+                  >
+                </div>
+                <div>
+                  {#if grantsFacets}
+                    <GrantsTable
+                      grantsAllYears={grantsAllYearsTop20}
+                      grantsCurrent={grantsCurrentTop20}
+                      grantCount={profile.grant_count}
+                      grantCountAllYears={profile.grant_count_all_years}
+                      filingsAvailable={profile.filings.length}
+                      {grantsReferenceAttachment}
+                    />
+                  {:else}
+                    <div class="p-6">Unable to find an available free source of grants data</div>
+                  {/if}
+                </div>
               </div>
             </div>
-          </div>
+          </ContentBoxWrapper>
         </div>
 
         <!-- Charitable Activities -->
-        <div class="-mx-3 grid grid-cols-1">
+        <div id="charitable-activites" class="-mx-3 grid grid-cols-1">
           <div class="mb-4 w-full max-w-full px-3">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden break-words rounded-2xl bg-white">
               <div class="mb-0 border-b-0 bg-slate-200 p-4">
-                <SummaryBoxHeader headerText={'Charitable Activities'}
-                  ><img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} /></SummaryBoxHeader
+                <ContentBoxHeader title={'Charitable Activities'}
+                  ><img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} /></ContentBoxHeader
                 >
               </div>
               <div>
@@ -261,24 +268,26 @@
         <!-- About & Guidelines Sections -->
         <div class="-mx-3 grid grid-cols-1 md:grid-cols-2">
           <!-- Guidelines -->
-          <div class="mb-4 w-full max-w-full px-3">
-            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
-              <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-                <SummaryBoxHeader headerText={'Application Guidelines'} anchorText={'guidelines'}
-                  ><img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} /></SummaryBoxHeader
-                >
+          <ContentBoxWrapper id="guidelines" classes="flex flex-col">
+            <div class="mb-4 h-full w-full max-w-full px-3">
+              <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+                <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
+                  <ContentBoxHeader title={'Application Guidelines'}>
+                    <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} />
+                  </ContentBoxHeader>
+                </div>
+                <ApplicationGuidelines
+                  website={hasWebsite ? profile.website : null}
+                  websiteIsEmail={profile.website_is_an_email}
+                  grantsToPreselectedOnly={profile.grants_to_preselected_only}
+                  applicationInfo={profile.grants_application_info}
+                  applicationDeadlines={profile.grants_application_deadlines}
+                  applicationRestrictions={profile.grants_application_restrictions}
+                  applicationContact={profile.grants_application_contact}
+                />
               </div>
-              <ApplicationGuidelines
-                website={hasWebsite ? profile.website : null}
-                websiteIsEmail={profile.website_is_an_email}
-                grantsToPreselectedOnly={profile.grants_to_preselected_only}
-                applicationInfo={profile.grants_application_info}
-                applicationDeadlines={profile.grants_application_deadlines}
-                applicationRestrictions={profile.grants_application_restrictions}
-                applicationContact={profile.grants_application_contact}
-              />
             </div>
-          </div>
+          </ContentBoxWrapper>
 
           <!-- About -->
           <div class="mb-4 w-full max-w-full px-3 text-slate-700">
@@ -291,26 +300,28 @@
         <!-- Financial Sections -->
         <div class="-mx-3 grid grid-cols-1 md:grid-cols-2">
           <!-- Financial Overview -->
-          <div class="mb-4 w-full max-w-full px-3">
-            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
-              <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-                <SummaryBoxHeader headerText={'Financial Overview'} anchorText={'financials'} />
-              </div>
-              <div class="p-4">
-                <BarFinancialOverview
-                  year1={profile.financial_stats[0]}
-                  orgCurrentTaxYear={profile.financial_stats[0].tax_year}
-                  {formattedTaxPeriodEnd}
-                />
+          <ContentBoxWrapper id="financials">
+            <div class="mb-4 w-full max-w-full px-3">
+              <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+                <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
+                  <ContentBoxHeader title={'Financial Overview'} />
+                </div>
+                <div class="p-4">
+                  <BarFinancialOverview
+                    year1={profile.financial_stats[0]}
+                    orgCurrentTaxYear={profile.financial_stats[0].tax_year}
+                    {formattedTaxPeriodEnd}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          </ContentBoxWrapper>
 
           <!-- Financial Trends -->
           <div class="mb-4 w-full max-w-full px-3">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-                <SummaryBoxHeader headerText={'Financial Trends'} anchorText={'financial trends'} />
+                <ContentBoxHeader title={'Financial Trends'} />
               </div>
               <div class="grow p-4">
                 <BarFinancialTrends

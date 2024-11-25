@@ -1,5 +1,5 @@
 <script lang="ts">
-  import SummaryBoxHeader from '../SummaryBoxHeader.svelte';
+  import ContentBoxHeader from '../ContentBoxHeader.svelte';
   import propublicaLogo from '$lib/assets/images/propublica.svg';
   import irsLogo from '$lib/assets/images/irs-logo.webp';
   // import grantadvisorLogo from '$lib/assets/images/grantadvisor.svg';
@@ -16,7 +16,7 @@
 </script>
 
 <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-  <SummaryBoxHeader headerText={'Further Research'}></SummaryBoxHeader>
+  <ContentBoxHeader title={'Further Research'}></ContentBoxHeader>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 md:grid-rows-1">
   <div class="flex-auto items-start justify-center gap-2 p-8">

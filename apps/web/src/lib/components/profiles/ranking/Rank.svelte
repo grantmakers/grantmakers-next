@@ -1,5 +1,5 @@
 <script lang="ts">
-  import SummaryBoxHeader from '../SummaryBoxHeader.svelte';
+  import ContentBoxHeader from '../ContentBoxHeader.svelte';
   import { humanizeCurrency } from '@repo/shared/functions/formatters/numbers';
   import PercentileBar from './PercentileBar.svelte';
 
@@ -13,7 +13,7 @@
 </script>
 
 <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-  <SummaryBoxHeader headerText={'Overview'} />
+  <ContentBoxHeader title={'Ranking'} />
 </div>
 
 <div class="flex flex-auto flex-col gap-4 p-4">
