@@ -32,7 +32,7 @@
   ): ViewMode {
     if (!grantCount) return 'all-time';
     if (!grantCountAllYears) return 'latest';
-    return grantCount >= 5 ? 'latest' : 'all-time';
+    return grantCount >= 3 ? 'latest' : 'all-time';
   }
 
   let viewMode = $state<ViewMode>(determineInitialViewMode(grantCount, grantCountAllYears));

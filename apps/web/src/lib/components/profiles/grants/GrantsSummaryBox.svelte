@@ -19,22 +19,32 @@
 
   let { grantMin, grantMax, grantMedian, grantCount, grantsFacets, grantsReferenceAttachment, hasCharitableActivities }: Props = $props();
 
+  let isHighlySkewed = $derived((grantMax - grantMedian) / (grantMedian - grantMin) > 3);
+
+  // TODO Create helper algorithm
+  // if (!eobmf_recognized_exempt && [last published over two years ago?])
+  let isNotActive;
+
   function getBackgroundClass(median: number, count: number) {
+    if (isHighlySkewed) return 'bg-transparent';
     if (count <= 2) return 'bg-transparent';
     if (median === 0) return 'bg-transparent';
-    if (median >= 1000000) return 'bg-orange-50';
-    if (median < 10000) return 'bg-teal-50';
+    if (median >= 1000000) return 'bg-green-50';
+    if (median < 500) return 'bg-yellow-50';
+    if (median < 10000) return 'bg-slate-50';
     return 'bg-slate-50';
   }
 
   function getHandDrawnClass(
     median: number,
     count: number,
-  ): 'grantmakers-green' | 'grantmakers-blue' | 'grantmakers-orange' | 'transparent' {
-    if (median === 0) return 'transparent';
+  ): 'grantmakers-green' | 'grantmakers-blue' | 'yellow-500' | 'grantmakers-orange' | 'transparent' {
+    if (isHighlySkewed) return 'transparent';
     if (count <= 2) return 'transparent';
-    if (median >= 1000000) return 'grantmakers-orange';
-    if (median < 1000) return 'grantmakers-green';
+    if (median === 0) return 'transparent';
+    if (median >= 1000000) return 'grantmakers-green';
+    if (median < 500) return 'yellow-500';
+    if (median < 1000) return 'grantmakers-blue';
     return 'grantmakers-blue';
   }
 </script>
@@ -61,7 +71,7 @@
         <HandDrawnBorder fill={`fill-${getHandDrawnClass(grantMedian, grantCount)}`}>
           <div class="relative z-10 flex flex-col items-center rounded-full {getBackgroundClass(grantMedian, grantCount)} p-6">
             <dt class="text-sm leading-normal text-inherit">Median</dt>
-            <dd class="{grantCount === 0 || grantCount < 3 ? 'text-lg' : ''} font-bold text-slate-700">
+            <dd class="text-slate-700 {grantCount === 0 || grantCount < 3 ? 'text-lg' : ''} {isHighlySkewed ? 'text-lg' : 'font-bold'}">
               {#if grantCount === 0 || grantCount < 3}
                 N/A
               {:else}
@@ -92,6 +102,8 @@
               use:tooltip={{ content: 'Negative values may reflect grant returns, adjustments, or modifications to prior disbursements' }}
               >{humanizeCurrency(grantMin)}*</span
             >
+          {:else if isHighlySkewed}
+            <span class="font-bold">{humanizeCurrency(grantMax)}</span> - {humanizeCurrency(grantMin)}
           {:else}
             {humanizeCurrency(grantMax)} - {humanizeCurrency(grantMin)}
           {/if}
