@@ -13,10 +13,7 @@
   let { id, classes = '', children }: Props = $props();
 
   let options: Options = {
-    threshold:
-      id === 'overview' ? 0
-      : id === 'people' ? 1
-      : 0.6,
+    threshold: id === 'overview' || id === 'people' ? 1 : 0.6,
     unobserveOnEnter: false,
   };
 
