@@ -43,7 +43,6 @@
 
   function getHandDrawnClass(
     median: number,
-    count: number,
   ): 'grantmakers-green' | 'grantmakers-blue' | 'yellow-500' | 'grantmakers-orange' | 'transparent' {
     if (median === 0) return 'transparent';
     if (median >= 1000000) return 'grantmakers-green';
@@ -72,7 +71,7 @@
     {#if grantCount >= 2}
       <!-- Median Grant Amount -->
       <div class="flex flex-col items-center">
-        <HandDrawnBorder fill={`fill-${getHandDrawnClass(grantMedian, grantCount)}`} show={highlightMedian}>
+        <HandDrawnBorder fill={`fill-${getHandDrawnClass(grantMedian)}`} show={highlightMedian}>
           <div class="relative z-10 flex flex-col items-center rounded-full p-6">
             <dt class="text-sm leading-normal text-inherit">Median</dt>
             <dd class="text-slate-700 {highlightMedian ? 'font-bold' : 'text-lg'}">
