@@ -1,5 +1,5 @@
 <script lang="ts">
-  import DevLinks from '$lib/components/profiles/DevLinks.svelte';
+  import DevLinks from '$lib/components/profiles/root/DevLinks.svelte';
 </script>
 
 <DevLinks />
