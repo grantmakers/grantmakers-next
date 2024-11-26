@@ -270,7 +270,7 @@
               <a href="#grantmakers-10k" class="rounded-md px-3 py-2 text-sm font-medium text-indigo-100 hover:bg-white/10"
                 >Grantmakers 10k</a
               >
-              <a href="all-active" class="rounded-md px-3 py-2 text-sm font-medium text-indigo-100 hover:bg-white/10">All Active</a>
+              <a href="#all-active" class="rounded-md px-3 py-2 text-sm font-medium text-indigo-100 hover:bg-white/10">All Active</a>
             </nav>
           </div>
           <div>
