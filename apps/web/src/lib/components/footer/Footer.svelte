@@ -85,7 +85,7 @@
           ></a
         >
       </div>
-      <div>
+      <div class="text-sm">
         Built with <Heart class="inline size-5 text-red-700" variation="solid" /> and
         <span class="inline size-5 text-amber-800"
           ><svg xmlns="http://www.w3.org/2000/svg" class="inline size-5 text-amber-800" viewBox="0 0 640 512"
@@ -98,8 +98,8 @@
       </div>
     </div>
   </div>
-  <div class="flex items-center justify-between gap-4 bg-black px-4 py-2 lg:px-6">
-    <div class="hidden text-sm text-gray-300 lg:flex">
+  <div class="flex items-center justify-between gap-4 bg-black px-4 py-2 text-xs lg:px-6">
+    <div class="hidden text-gray-300 lg:flex">
       All content is licensed under a&nbsp;<a href="http://creativecommons.org/licenses/by-sa/4.0/"
         >Creative Commons Attribution-ShareAlike 4.0 International License</a
       >, except Grantmakers.io logo (all rights reserved Chad Kruse)
@@ -112,7 +112,7 @@
           </li>
         {:else}
           <li>
-            <a href={item.href} class="text-sm leading-6 text-gray-300 hover:text-white">
+            <a href={item.href} class="leading-6 text-gray-300 hover:text-white">
               {item.name}
             </a>
           </li>
