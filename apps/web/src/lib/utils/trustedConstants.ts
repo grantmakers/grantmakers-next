@@ -67,6 +67,80 @@ export const navItems: NavItemTypes[] = [
     icon: ChartBar,
   },
 ];
+
+export const demoLinks = [
+  {
+    name: 'Thierer Family Foundation',
+    ein: '810718077',
+    category: 'Typical',
+  },
+  {
+    name: 'Harnisch Family Foundation',
+    ein: '510381959',
+    category: 'Typical',
+  },
+  {
+    name: 'Ford Foundation',
+    ein: '131684331',
+    category: 'Typical',
+  },
+  {
+    name: 'The Clarence E Mulford Trust',
+    ein: '010247548',
+    category: 'Typical',
+  },
+  // Unique Orgs
+  {
+    name: 'Every Org',
+    ein: '611913297',
+    category: 'Unique Orgs',
+  },
+  {
+    name: 'Expa Org',
+    ein: '832856275',
+    category: 'Unique Orgs',
+  },
+  // Direct Activities
+  {
+    name: 'McArthur Home for Aged People Assoc',
+    ein: '010212437',
+    category: 'Direct Activities',
+  },
+  {
+    name: 'Plant Memorial Home',
+    ein: '010131950',
+    category: 'Direct Activities',
+  },
+  // Edge Cases
+  {
+    name: 'Margaret A Cargill Foundation (old EIN)',
+    ein: '205434405',
+    category: 'Edge Cases',
+  },
+  {
+    name: 'Margaret A Cargill Foundation (new EIN)',
+    ein: '371758406',
+    category: 'Edge Cases',
+  },
+  {
+    name: 'Cape Elizabeth Home',
+    ein: '010238086',
+    category: 'Edge Cases',
+  },
+  // Large people array
+  {
+    name: 'Coastal Virginia Building Industry Association Scholarship Foundation',
+    ein: '546057730',
+    category: 'Large People Array',
+  },
+  // See Attached, but high rank
+  {
+    name: 'Morton-Kelly Charitable Tr',
+    ein: '010442078',
+    category: 'See Attached',
+  },
+];
+
 export const features = [
   {
     name: 'Radical transparency.',

@@ -15,8 +15,9 @@
     if (category === 'Unique Orgs') return 'info';
     if (category === 'Edge Cases') return 'warning';
     if (category === 'Large People Array') return 'danger';
-    if (category === 'Sparse Data') return 'indigo';
+    if (category === 'Direct Activities') return 'indigo';
     if (category === 'See Attached') return 'purple';
+    return 'default';
   });
 
   let badgeClasses = $derived.by(() => {

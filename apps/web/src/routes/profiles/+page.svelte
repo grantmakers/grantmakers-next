@@ -1,9 +1,43 @@
 <script lang="ts">
   import { browser } from '$app/environment';
-  import Autocomplete from '$lib/components/profiles/topnav/Autocomplete.svelte';
-  import type { AutocompleteInstance } from '@repo/shared/typings/algolia/autocomplete';
   import LogoMark from '$lib/components/shared/LogoMark.svelte';
   import ListItem from '$lib/components/profiles/root/ListItem.svelte';
+  import { demoLinks } from '$utils/trustedConstants';
+  import placeholder from '$lib/assets/images/placeholder-no-grants.webp';
+  import Autocomplete from '$lib/components/profiles/topnav/Autocomplete.svelte';
+  import type { AutocompleteInstance } from '@repo/shared/typings/algolia/autocomplete';
+  import BackToTop from '$lib/components/shared/BackToTop.svelte';
+  import Logo from '$lib/components/shared/icons/Logo.svelte';
+
+  // Core layout functionality
+  let isMobileMenuOpen = $state(false);
+  let isProfileMenuOpen = $state(false);
+
+  // Element references
+  let profileButton: HTMLButtonElement;
+  let profileMenu: HTMLDivElement;
+  let mobileMenuButton: HTMLButtonElement;
+  let mobileMenu: HTMLDivElement;
+
+  function toggleMobileMenu() {
+    isMobileMenuOpen = !isMobileMenuOpen;
+  }
+
+  function toggleProfileMenu() {
+    isProfileMenuOpen = !isProfileMenuOpen;
+  }
+
+  function handleClickOutside(event: MouseEvent) {
+    // Handle profile menu
+    if (profileButton && profileMenu && !profileButton.contains(event.target as Node) && !profileMenu.contains(event.target as Node)) {
+      isProfileMenuOpen = false;
+    }
+
+    // Handle mobile menu
+    if (mobileMenuButton && mobileMenu && !mobileMenuButton.contains(event.target as Node) && !mobileMenu.contains(event.target as Node)) {
+      isMobileMenuOpen = false;
+    }
+  }
 
   let autocompleteInstance: AutocompleteInstance | null = $state(null);
 
@@ -16,110 +50,20 @@
       autocompleteInstance?.setIsOpen(true);
     }
   };
-
-  const demoLinks = [
-    {
-      name: 'Thierer Family Foundation',
-      ein: '810718077',
-      category: 'Typical',
-    },
-    {
-      name: 'Harnisch Family Foundation',
-      ein: '510381959',
-      category: 'Typical',
-    },
-    {
-      name: 'Ford Foundation',
-      ein: '131684331',
-      category: 'Typical',
-    },
-    {
-      name: 'The Clarence E Mulford Trust',
-      ein: '010247548',
-      category: 'Typical',
-    },
-    // Unique Orgs
-    {
-      name: 'Every Org',
-      ein: '611913297',
-      category: 'Unique Orgs',
-    },
-    {
-      name: 'Expa Org',
-      ein: '832856275',
-      category: 'Unique Orgs',
-    },
-    // Sparse Data
-    {
-      name: 'McArthur Home for Aged People Assoc',
-      ein: '010212437',
-      category: 'Sparse Data',
-    },
-    {
-      name: 'Plant Memorial Home',
-      ein: '010131950',
-      category: 'Sparse Data',
-    },
-    // Edge Cases
-    {
-      name: 'Margaret A Cargill Foundation (old EIN)',
-      ein: '205434405',
-      category: 'Edge Cases',
-    },
-    {
-      name: 'Margaret A Cargill Foundation (new EIN)',
-      ein: '371758406',
-      category: 'Edge Cases',
-    },
-    {
-      name: 'Cape Elizabeth Home',
-      ein: '010238086',
-      category: 'Edge Cases',
-    },
-    // Large people array
-    {
-      name: 'Coastal Virginia Building Industry Association Scholarship Foundation',
-      ein: '546057730',
-      category: 'Large People Array',
-    },
-    // See Attached, but high rank
-    {
-      name: 'Morton-Kelly Charitable Tr',
-      ein: '010442078',
-      category: 'See Attached',
-    },
-  ];
 </script>
 
-<!--
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
--->
-<!--
-  This example requires updating your template:
+<svelte:window onclick={handleClickOutside} />
 
-  ```
-  <html class="h-full bg-gray-100">
-  <body class="h-full">
-  ```
--->
 <div class="min-h-full">
   <header class="bg-slate-600 pb-24">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
       <div class="relative flex items-center justify-center py-5 lg:justify-between">
         <!-- Logo -->
-        <div class="absolute left-0 shrink-0 lg:static">
+        <div class="absolute left-0 hidden shrink-0 lg:static lg:block">
           <LogoMark isLandingOrFooter />
+        </div>
+        <div class="absolute left-0 shrink-0 lg:hidden">
+          <Logo variation={'title'} />
         </div>
 
         <!-- Right section on desktop -->
@@ -153,9 +97,10 @@
               <button
                 type="button"
                 class="relative flex rounded-full bg-white text-sm ring-2 ring-white/20 focus:outline-none focus:ring-white"
-                id="user-menu-button"
-                aria-expanded="false"
+                bind:this={profileButton}
+                aria-expanded={isProfileMenuOpen}
                 aria-haspopup="true"
+                onclick={toggleProfileMenu}
               >
                 <span class="absolute -inset-1.5"></span>
                 <span class="sr-only">Open user menu</span>
@@ -177,20 +122,28 @@
                 From: "transform opacity-100 scale-100"
                 To: "transform opacity-0 scale-95"
             -->
-            <div
-              class="absolute -right-2 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none"
-              role="menu"
-              aria-orientation="vertical"
-              aria-labelledby="user-menu-button"
-              tabindex="-1"
-            >
-              <!-- Active: "bg-gray-100 outline-none", Not Active: "" -->
-              <!-- <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a> -->
-              <!-- Active: "bg-gray-100 outline-none", Not Active: "" -->
-              <!-- <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a> -->
-              <!-- Active: "bg-gray-100 outline-none", Not Active: "" -->
-              <!-- <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a> -->
-            </div>
+            {#if isProfileMenuOpen}
+              <div
+                class="absolute -right-2 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none"
+                role="menu"
+                aria-orientation="vertical"
+                aria-labelledby="user-menu-button"
+                tabindex="-1"
+              >
+                <!-- Active: "bg-gray-100 outline-none", Not Active: "" -->
+                <a href="#profile" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0"
+                  >Your Profile</a
+                >
+                <!-- Active: "bg-gray-100 outline-none", Not Active: "" -->
+                <a href="#settings" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1"
+                  >Settings</a
+                >
+                <!-- Active: "bg-gray-100 outline-none", Not Active: "" -->
+                <a href="#sign-out" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2"
+                  >Sign out</a
+                >
+              </div>
+            {/if}
           </div>
         </div>
 
@@ -225,14 +178,17 @@
           <!-- Mobile menu button -->
           <button
             type="button"
+            bind:this={mobileMenuButton}
             class="relative inline-flex items-center justify-center rounded-md bg-transparent p-2 text-indigo-200 hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
-            aria-expanded="false"
+            aria-controls="mobile-menu"
+            aria-expanded={isMobileMenuOpen}
+            onclick={toggleMobileMenu}
           >
             <span class="absolute -inset-0.5"></span>
             <span class="sr-only">Open main menu</span>
             <!-- Menu open: "hidden", Menu closed: "block" -->
             <svg
-              class="block size-6"
+              class={!isMobileMenuOpen ? 'block size-6' : 'hidden size-6'}
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
@@ -244,7 +200,7 @@
             </svg>
             <!-- Menu open: "block", Menu closed: "hidden" -->
             <svg
-              class="hidden size-6"
+              class={isMobileMenuOpen ? 'block size-6' : 'hidden size-6'}
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
@@ -302,8 +258,9 @@
     </div>
 
     <!-- Mobile menu, show/hide based on mobile menu state. -->
-    <div class="lg:hidden">
-      <!--
+    {#if isMobileMenuOpen}
+      <div bind:this={mobileMenu} class="lg:hidden">
+        <!--
         Mobile menu overlay, show/hide based on mobile menu state.
 
         Entering: "duration-150 ease-out"
@@ -313,9 +270,9 @@
           From: "opacity-100"
           To: "opacity-0"
       -->
-      <div class="fixed inset-0 z-20 bg-black/25" aria-hidden="true"></div>
+        <div class="fixed inset-0 z-20 bg-black/25" aria-hidden="true"></div>
 
-      <!--
+        <!--
         Mobile menu, show/hide based on mobile menu state.
 
         Entering: "duration-150 ease-out"
@@ -325,20 +282,74 @@
           From: "opacity-100 scale-100"
           To: "opacity-0 scale-95"
       -->
-      <div class="absolute inset-x-0 top-0 z-30 mx-auto w-full max-w-3xl origin-top transform p-2 transition">
-        <div class="divide-y divide-gray-200 rounded-lg bg-white shadow-lg ring-1 ring-black/5">
-          <div class="pb-2 pt-3">
-            <div class="flex items-center justify-between px-4">
-              <div>
-                <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company" />
+        <div class="absolute inset-x-0 top-0 z-30 mx-auto w-full max-w-3xl origin-top transform p-2 transition">
+          <div class="divide-y divide-gray-200 rounded-lg bg-white shadow-lg ring-1 ring-black/5">
+            <div class="pb-2 pt-3">
+              <div class="flex items-center justify-between px-4">
+                <div>
+                  <LogoMark isLandingOrFooter={false} />
+                </div>
+                <div class="-mr-2">
+                  <button
+                    type="button"
+                    class="relative inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                    onclick={toggleMobileMenu}
+                  >
+                    <span class="absolute -inset-0.5"></span>
+                    <span class="sr-only">Close menu</span>
+                    <svg
+                      class="size-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                      data-slot="icon"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
               </div>
-              <div class="-mr-2">
+              <div class="mt-3 space-y-1 px-2">
+                <a
+                  href="/profiles"
+                  class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
+                  >Foundation Profiles</a
+                >
+                <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
+                  >Profile</a
+                >
+                <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
+                  >Resources</a
+                >
+                <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
+                  >Company Directory</a
+                >
+                <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
+                  >Openings</a
+                >
+              </div>
+            </div>
+            <div class="pb-2 pt-4">
+              <div class="flex items-center px-5">
+                <div class="shrink-0">
+                  <img
+                    class="size-10 rounded-full"
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    alt=""
+                  />
+                </div>
+                <div class="ml-3 min-w-0 flex-1">
+                  <div class="truncate text-base font-medium text-gray-800">Tom Cook</div>
+                  <div class="truncate text-sm font-medium text-gray-500">tom@example.com</div>
+                </div>
                 <button
                   type="button"
-                  class="relative inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                  class="relative ml-auto shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                  <span class="absolute -inset-0.5"></span>
-                  <span class="sr-only">Close menu</span>
+                  <span class="absolute -inset-1.5"></span>
+                  <span class="sr-only">View notifications</span>
                   <svg
                     class="size-6"
                     fill="none"
@@ -348,82 +359,30 @@
                     aria-hidden="true"
                     data-slot="icon"
                   >
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
+                    />
                   </svg>
                 </button>
               </div>
-            </div>
-            <div class="mt-3 space-y-1 px-2">
-              <a
-                href="/profiles"
-                class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
-                >Foundation Profiles</a
-              >
-              <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
-                >Profile</a
-              >
-              <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
-                >Resources</a
-              >
-              <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
-                >Company Directory</a
-              >
-              <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
-                >Openings</a
-              >
-            </div>
-          </div>
-          <div class="pb-2 pt-4">
-            <div class="flex items-center px-5">
-              <div class="shrink-0">
-                <img
-                  class="size-10 rounded-full"
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  alt=""
-                />
-              </div>
-              <div class="ml-3 min-w-0 flex-1">
-                <div class="truncate text-base font-medium text-gray-800">Tom Cook</div>
-                <div class="truncate text-sm font-medium text-gray-500">tom@example.com</div>
-              </div>
-              <button
-                type="button"
-                class="relative ml-auto shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              >
-                <span class="absolute -inset-1.5"></span>
-                <span class="sr-only">View notifications</span>
-                <svg
-                  class="size-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                  data-slot="icon"
+              <div class="mt-3 space-y-1 px-2">
+                <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
+                  >Your Profile</a
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div class="mt-3 space-y-1 px-2">
-              <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
-                >Your Profile</a
-              >
-              <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
-                >Settings</a
-              >
-              <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
-                >Sign out</a
-              >
+                <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
+                  >Settings</a
+                >
+                <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
+                  >Sign out</a
+                >
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    {/if}
   </header>
   <main class="-mt-24 pb-8">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -440,8 +399,8 @@
                   <div class="max-w-xl">
                     <h1 id="order-history-heading" class="text-3xl font-bold tracking-tight text-gray-900">Demo Links</h1>
                     <p class="mt-2 text-sm text-gray-500">
-                      A collection of profiles used in the development of this prototypes. Covers a diverse spectrum of foundation profiles
-                      including edge cases.
+                      A collection of demo profiles. They cover a diverse spectrum of foundation profiles and are used to ensure the
+                      template engine correctly handles edge cases. Community feedback is most welcome!
                     </p>
                   </div>
                 </div>
@@ -458,9 +417,12 @@
         <!-- Right column -->
         <div class="grid grid-cols-1 gap-4">
           <section aria-labelledby="section-2-title">
-            <h2 class="sr-only" id="section-2-title">Section title</h2>
-            <div class="overflow-hidden rounded-lg bg-white shadow">
-              <div id="autocomplete-embedded" class="p-6">Algolia Autocomplete Search Results go here</div>
+            <h2 class="sr-only" id="section-2-title">Search History</h2>
+            <div class="overflow-hidden rounded-lg bg-white shadow lg:min-h-60">
+              <div class="flex flex-col justify-center">
+                <img src={placeholder} alt="Search History Placeholder" width={400} height={400} class="rounded-lg opacity-50" />
+              </div>
+              <div id="autocomplete-embedded" class="p-6">Algolia Autocomplete filters go here</div>
             </div>
           </section>
         </div>
@@ -468,12 +430,10 @@
     </div>
   </main>
   <footer>
-    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-      <div class="border-t border-gray-200 py-8 text-center text-sm text-gray-500 sm:text-left">
-        <span class="block sm:inline">&copy; 2021 Your Company, Inc.</span> <span class="block sm:inline">All rights reserved.</span>
-      </div>
-    </div>
+    <BackToTop />
   </footer>
 </div>
 
-<Autocomplete onAutocompleteInit={handleAutocompleteInit} />
+<div class="hidden">
+  <Autocomplete onAutocompleteInit={handleAutocompleteInit} />
+</div>
