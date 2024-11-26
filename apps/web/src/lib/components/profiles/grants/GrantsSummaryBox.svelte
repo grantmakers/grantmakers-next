@@ -1,6 +1,7 @@
 <script lang="ts">
   import HandDrawnBorder from '$lib/components/shared/HandDrawnBorder.svelte';
   import BarGrantsSnapshot from '../charts/BarGrantsSnapshot.svelte';
+  import { isLikelyInactive } from '@repo/shared/algorithms/inactive';
   import { humanizeCurrency, humanizeNumber } from '@repo/shared/functions/formatters/numbers';
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
   import placeholderImage from '$lib/assets/images/placeholder-no-grants.webp';
@@ -15,32 +16,35 @@
     grantsFacets: GrantmakersExtractedDataObj['grants_facets'];
     grantsReferenceAttachment: GrantmakersExtractedDataObj['grants_reference_attachment'];
     hasCharitableActivities: boolean;
+    taxPeriod: number;
+    eobmfStatus: boolean;
   }
 
-  let { grantMin, grantMax, grantMedian, grantCount, grantsFacets, grantsReferenceAttachment, hasCharitableActivities }: Props = $props();
+  let {
+    grantMin,
+    grantMax,
+    grantMedian,
+    grantCount,
+    grantsFacets,
+    grantsReferenceAttachment,
+    hasCharitableActivities,
+    taxPeriod,
+    eobmfStatus,
+  }: Props = $props();
 
   let isHighlySkewed = $derived((grantMax - grantMedian) / (grantMedian - grantMin) > 3);
-
-  // TODO Create helper algorithm
-  // if (!eobmf_recognized_exempt && [last published over two years ago?])
-  let isNotActive;
-
-  function getBackgroundClass(median: number, count: number) {
-    if (isHighlySkewed) return 'bg-transparent';
-    if (count <= 2) return 'bg-transparent';
-    if (median === 0) return 'bg-transparent';
-    if (median >= 1000000) return 'bg-green-50';
-    if (median < 500) return 'bg-yellow-50';
-    if (median < 10000) return 'bg-slate-50';
-    return 'bg-slate-50';
-  }
+  let hideHandDrawn = $derived(isLikelyInactive(eobmfStatus, taxPeriod));
+  let highlightMedian = $derived.by(() => {
+    if (grantCount === 0 || grantCount < 3) return false;
+    if (hideHandDrawn) return false;
+    if (isHighlySkewed) return false;
+    return true;
+  });
 
   function getHandDrawnClass(
     median: number,
     count: number,
   ): 'grantmakers-green' | 'grantmakers-blue' | 'yellow-500' | 'grantmakers-orange' | 'transparent' {
-    if (isHighlySkewed) return 'transparent';
-    if (count <= 2) return 'transparent';
     if (median === 0) return 'transparent';
     if (median >= 1000000) return 'grantmakers-green';
     if (median < 500) return 'yellow-500';
@@ -68,10 +72,10 @@
     {#if grantCount >= 2}
       <!-- Median Grant Amount -->
       <div class="flex flex-col items-center">
-        <HandDrawnBorder fill={`fill-${getHandDrawnClass(grantMedian, grantCount)}`}>
-          <div class="relative z-10 flex flex-col items-center rounded-full {getBackgroundClass(grantMedian, grantCount)} p-6">
+        <HandDrawnBorder fill={`fill-${getHandDrawnClass(grantMedian, grantCount)}`} show={highlightMedian}>
+          <div class="relative z-10 flex flex-col items-center rounded-full p-6">
             <dt class="text-sm leading-normal text-inherit">Median</dt>
-            <dd class="text-slate-700 {grantCount === 0 || grantCount < 3 ? 'text-lg' : ''} {isHighlySkewed ? 'text-lg' : 'font-bold'}">
+            <dd class="text-slate-700 {highlightMedian ? 'font-bold' : 'text-lg'}">
               {#if grantCount === 0 || grantCount < 3}
                 N/A
               {:else}
@@ -103,7 +107,7 @@
               >{humanizeCurrency(grantMin)}*</span
             >
           {:else if isHighlySkewed}
-            <span class="font-bold">{humanizeCurrency(grantMax)}</span> - {humanizeCurrency(grantMin)}
+            <span class="font-bold">{humanizeCurrency(grantMax)} - {humanizeCurrency(grantMin)}</span>
           {:else}
             {humanizeCurrency(grantMax)} - {humanizeCurrency(grantMin)}
           {/if}

@@ -166,6 +166,8 @@
                 {grantsFacets}
                 {grantsReferenceAttachment}
                 {hasCharitableActivities}
+                taxPeriod={profile.filings[0].tax_period}
+                eobmfStatus={profile.eobmf_recognized_exempt}
               />
             </div>
           </div>
