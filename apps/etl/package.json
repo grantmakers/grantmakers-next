@@ -3,10 +3,25 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
+  "scripts": {
+    "process:xmlFilings": "tsx --env-file=.env.local ./src/processors/xml/xml2json.ts",
+    "process:rawFilings": "tsx --env-file=.env.local ./src/processors/rawFilings/normalize.ts",
+    "migrate": "tsx --env-file=.env.local ./src/processors/algolia/migrate.ts"
+  },
   "dependencies": {
-    "mongodb": "^6.9.0"
+    "algoliasearch": "^4.24.0",
+    "fast-xml-parser": "^4.5.0",
+    "graceful-fs": "^4.2.11",
+    "jsonstream": "^1.0.3",
+    "mongodb": "^6.9.0",
+    "p-limit": "^6.1.0",
+    "stream-chain": "^3.3.2",
+    "stream-json": "^1.9.0"
   },
   "devDependencies": {
+    "@types/graceful-fs": "^4.1.9",
+    "@types/jsonstream": "^0.8.33",
+    "@types/stream-json": "^1.7.7",
     "tsx": "^4.19.1"
   }
 }
