@@ -1,5 +1,5 @@
 import { fontFamily } from 'tailwindcss/defaultTheme';
-import forms from '@tailwindcss/forms'
+import forms from '@tailwindcss/forms';
 
 /** @type {import('tailwindcss').Config} */
 const config = {
