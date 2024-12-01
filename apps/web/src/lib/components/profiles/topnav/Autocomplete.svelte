@@ -13,6 +13,7 @@
   import algoliaLogo from '$lib/assets/images/Algolia-logo-blue.svg';
   import { formatEin } from '@repo/shared/functions/formatters/ein';
   import staticData from '@repo/shared/data/public/autocomplete-static-data.json';
+  import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
   import type { BaseItem } from '@algolia/autocomplete-core';
   import type { AutocompleteInstance } from '@repo/shared/typings/algolia/autocomplete';
   import type { HTMLTemplate } from '@algolia/autocomplete-shared';
@@ -25,7 +26,7 @@
   interface AlgoliaProfilesItem extends BaseItem, AlgoliaProfilesResponseLegacy {}
 
   interface AlgoliaItemTemplateProps {
-    item: AlgoliaProfilesItem;
+    item: GrantmakersExtractedDataObj;
     html: HTMLTemplate;
   }
 
@@ -99,7 +100,7 @@
         placeholder: 'Quick search...',
         openOnFocus: true,
         classNames: {
-          detachedFormContainer: '!rounded-t-2xl !border-b-0 !bg-slate-200',
+          detachedFormContainer: '!lg:rounded-t-2xl !border-b-0 !bg-slate-200',
           detachedSearchButton: '!hidden', // Hide the navbar search box and use our SSR placeholder search box as the trigger.
           detachedSearchButtonIcon: '!text-slate-500',
           detachedSearchButtonPlaceholder: 'text-slate-500 text-sm',
@@ -169,6 +170,8 @@
     }
   });
 </script>
+
+<!-- https://tailwindui.com/components/application-ui/navigation/command-palettes -->
 
 <!-- SSR Placeholder -->
 <!-- This mimics the Autocomplete-generated search box -->

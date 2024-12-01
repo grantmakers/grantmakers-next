@@ -19,7 +19,7 @@ export interface EachFAQ {
 export const meta = {
   defaults: {
     title: 'Grantmakers.io - A Community Project',
-    description: 'Quickly find data on 145,000 grantmaking institutions in the US. A free, open source project.',
+    description: 'Quickly find data on 150,000 grantmaking institutions in the US. A free, open source project.',
   },
   emails: {
     support: 'help@grantmakers.io',
@@ -40,12 +40,12 @@ export const anecdote =
 
 export type SideNavIds = 'overview' | 'people' | 'grants' | 'guidelines' | 'financials';
 
-export interface NavItemTypes {
+export interface ProfileNavItems {
   title: string;
   icon: typeof ChartBar;
 }
 
-export const navItems: NavItemTypes[] = [
+export const profileNavItems: ProfileNavItems[] = [
   {
     title: 'Overview',
     icon: RectangleGroup,
@@ -65,6 +65,43 @@ export const navItems: NavItemTypes[] = [
   {
     title: 'Financials',
     icon: ChartBar,
+  },
+];
+
+/**
+ * Profiles root route e.g /profiles
+ */
+
+export const profileRootLinks = [
+  {
+    title: 'Search',
+    id: 'foundation-search',
+    link: '/profiles',
+  },
+  {
+    title: 'Demo Links',
+    id: 'demo-links',
+    link: '#demo-links',
+  },
+  {
+    title: 'Popular',
+    id: 'popular',
+    link: '#popular',
+  },
+  {
+    title: 'Research-Ready 990s',
+    id: 'digital-ready-990s',
+    link: '#digital-ready-990s',
+  },
+  {
+    title: 'Grantmakers 10k',
+    id: 'grantmakers-10k',
+    link: '#grantmakers-10k',
+  },
+  {
+    title: 'All Active',
+    id: 'all-active',
+    link: '#all-active',
   },
 ];
 

@@ -1,7 +1,4 @@
 <script lang="ts">
-  /**
-   * https://tailwindui.com/components/application-ui/lists/stacked-lists
-   */
   interface Props {
     name: string;
     ein: string;
@@ -31,6 +28,8 @@
   });
   let url = $derived('/profiles/v0/' + ein);
 </script>
+
+<!-- https://tailwindui.com/components/application-ui/lists/stacked-lists -->
 
 <li class="flex items-center justify-between gap-x-6 py-5 odd:bg-white even:bg-slate-50">
   <div class="min-w-0">

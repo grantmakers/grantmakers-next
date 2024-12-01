@@ -2,7 +2,7 @@
   import { inview, type Options } from 'svelte-inview';
   import { setActiveSection } from './sidenav/ActiveLink.svelte';
   import { slugify } from '@repo/shared/functions/formatters/names';
-  import { navItems, type SideNavIds } from '$lib/utils/trustedConstants';
+  import { profileNavItems, type SideNavIds } from '$lib/utils/trustedConstants';
 
   interface Props {
     id: SideNavIds;
@@ -19,7 +19,7 @@
 
   // Not all section headers have sidenav links
   // Only activate scrollspy if the section is also a sidenav link
-  const isNavItem = navItems.some((item) => slugify(item.title).toLowerCase() === slugify(id).toLowerCase());
+  const isNavItem = profileNavItems.some((item) => slugify(item.title).toLowerCase() === slugify(id).toLowerCase());
 </script>
 
 <div
