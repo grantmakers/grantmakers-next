@@ -4,14 +4,9 @@
   import { Heart } from 'svelte-heros-v2';
   import PrivacyPolicy from './PrivacyPolicy.svelte';
   import Divider from '../shared/Divider.svelte';
-
-  interface Props {
-    isProfileRoute: boolean;
-  }
-  let { isProfileRoute }: Props = $props();
 </script>
 
-<footer class="relative m-auto h-full {isProfileRoute ? 'bg-slate-700' : 'bg-gray-900'}" aria-labelledby="footer-heading">
+<footer class="relative m-auto h-full bg-slate-700" aria-labelledby="footer-heading">
   <Divider borderColorClass="border-slate-800" />
   <h2 id="footer-heading" class="sr-only">Footer</h2>
   <div class="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8 lg:py-32">

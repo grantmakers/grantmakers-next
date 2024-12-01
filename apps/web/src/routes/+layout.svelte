@@ -11,8 +11,6 @@
 
   let { children }: Props = $props();
 
-  let isProfileRoute = $derived($page.url.pathname.startsWith('/profiles/'));
-
   const {
     defaults: { title, description },
   } = meta;
@@ -29,4 +27,4 @@
 
 {@render children?.()}
 
-<Footer {isProfileRoute} />
+<Footer />
