@@ -70,9 +70,9 @@
         <div class="hidden lg:ml-4 lg:flex lg:items-center lg:pr-0.5">
           <!-- Profile dropdown -->
           <div class="relative ml-4 flex flex-auto shrink-0 items-center">
-            <a href="#about" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-slate-500/75">About</a>
-            <a href="#pricing" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-slate-500/75">Pricing</a>
-            <a href="#faq" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-slate-500/75">FAQ</a>
+            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-slate-500/75">About</a>
+            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-slate-500/75">Pricing</a>
+            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-slate-500/75">FAQ</a>
             <div class="ml-4">
               <button
                 type="button"
