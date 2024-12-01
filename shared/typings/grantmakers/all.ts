@@ -13,9 +13,10 @@ export interface GrantmakersExtractedDataObj {
   organization_name_slug: string;
   organization_names_all?: AllOrgNamesObj;
   assets: number;
+  total_giving: number;
   contributions: number;
   distributions: number;
-  financial_stats?: any; // TODO
+  financial_stats: FinancialStats[];
   filings: Filing[]; // TODO Ensure flows through new additions to monorepo
   part_v: PartV | null;
   website: WebsiteObj['website'];
@@ -55,10 +56,9 @@ export interface GrantmakersExtractedDataObj {
   grants_application_info: string | null;
   grants_application_deadlines: string | null;
   grants_application_restrictions: string | null;
-  grants_application_contact: GrantsApplicationContact | {};
+  grants_application_contact: GrantsApplicationContact | Record<string, never>;
   grants_reference_attachment: boolean;
   charitable_activities: CharitableActivitiesArray;
-  grants_facet_tax_year: any;
   grants_facets: Facets[];
   grants?: GrantsArray;
   grants_current_year_top_20?: GrantsArray;
@@ -69,6 +69,7 @@ export interface GrantmakersExtractedDataObj {
   enable_algolia_search: boolean;
   rank: number;
   rank_total: number;
+  rank_giving: number;
 }
 
 export interface SummaryGrant {
@@ -80,6 +81,7 @@ export interface SummaryGrant {
   amount: number;
   purpose: string;
   tax_year: number;
+  isMalformedGrant?: boolean;
 }
 
 export interface SummaryGrantsData extends GrantmakersExtractedDataObj {
@@ -153,6 +155,14 @@ export interface PartV {
 }
 // cspell:enable
 
+export interface FinancialStats {
+  tax_year: GrantmakersExtractedDataObj['tax_year'];
+  assets: GrantmakersExtractedDataObj['assets'];
+  total_giving: GrantmakersExtractedDataObj['total_giving'];
+  contributions: GrantmakersExtractedDataObj['contributions'];
+  distributions: GrantmakersExtractedDataObj['distributions'];
+}
+
 export interface AllOrgNamesObj {
   filing: FilingOrgNamesObj;
   eobmf?: EobmfOrgNamesObj;
@@ -218,13 +228,13 @@ export interface Person {
 
 interface PersonNameWithAttributes {
   text: string;
-  attributes: any;
+  attributes: unknown;
 }
 
 interface LegacyPersonNameWithAttributes {
   // prettier-ignore
   _: string;
-  attributes: any;
+  attributes: unknown;
 }
 
 export type GrantsArray = Grant[] | null; // This is normalized: Filings with only 1 grant will be normalized to be have one grant in an array

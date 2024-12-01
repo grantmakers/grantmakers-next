@@ -1,16 +1,12 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
   import { humanizeCurrency } from '@repo/shared/functions/formatters/numbers';
+  import type { FinancialStats } from '@repo/shared/typings/grantmakers/all';
   import Divider from '$lib/components/shared/Divider.svelte';
   import type { Chart } from 'chart.js';
 
   interface Props {
-    year1: {
-      assets: number;
-      distributions: number;
-      contributions: number;
-    };
-    orgCurrentTaxYear: string;
+    year1: FinancialStats;
     formattedTaxPeriodEnd: string;
     chartsColorPrimary?: string;
     chartsColorSecondary?: string;
@@ -19,12 +15,13 @@
 
   let {
     year1,
-    orgCurrentTaxYear,
     formattedTaxPeriodEnd,
     chartsColorPrimary = '#607d8b',
     chartsColorSecondary = '#c54e00',
     chartsColorTertiary = '#009688',
   }: Props = $props();
+
+  let orgCurrentTaxYear = $derived(year1.tax_year?.toString());
 
   let chartCanvas: HTMLCanvasElement | undefined = $state();
   let chart: Chart;

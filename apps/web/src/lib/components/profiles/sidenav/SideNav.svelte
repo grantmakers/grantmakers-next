@@ -1,12 +1,12 @@
 <script lang="ts">
   import NavItem from './SideNavItem.svelte';
-  import { navItems } from '$lib/utils/trustedConstants';
+  import { profileNavItems } from '$lib/utils/trustedConstants';
   import Tip from '../alerts/Tip.svelte';
 </script>
 
 <nav>
   <ul class="flex flex-col">
-    {#each navItems as item}
+    {#each profileNavItems as item}
       <NavItem {item} />
     {/each}
   </ul>

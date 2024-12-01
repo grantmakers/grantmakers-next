@@ -309,11 +309,7 @@
                   <ContentBoxHeader title={'Financial Overview'} />
                 </div>
                 <div class="p-4">
-                  <BarFinancialOverview
-                    year1={profile.financial_stats[0]}
-                    orgCurrentTaxYear={profile.financial_stats[0].tax_year}
-                    {formattedTaxPeriodEnd}
-                  />
+                  <BarFinancialOverview year1={profile.financial_stats[0]} {formattedTaxPeriodEnd} />
                 </div>
               </div>
             </div>
