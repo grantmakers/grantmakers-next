@@ -9,16 +9,13 @@
   let { href, title }: Props = $props();
 
   let isActive = $derived($page.url.pathname === href);
-
-  const getLinkClasses = (path: string) => {
-    const active = 'rounded-none border-white text-white pointer-events-none';
-    const inactive = 'border-transparent text-indigo-100 hover:bg-white/10';
-    return `${$page.url.pathname === path ? active : inactive}`;
-  };
+  let linkClasses = $derived(
+    isActive ? 'rounded-none border-white text-white pointer-events-none' : 'border-transparent text-indigo-100 hover:bg-white/10',
+  );
 </script>
 
 <a
   {href}
-  class="rounded-md border-b-2 px-3 py-2 text-sm font-medium focus:outline-none focus-visible:outline-none {getLinkClasses(href)}"
+  class="rounded-md border-b-2 px-3 py-2 text-sm font-medium focus:outline-none focus-visible:outline-none {linkClasses}"
   aria-current={isActive ? 'page' : undefined}>{title}</a
 >
