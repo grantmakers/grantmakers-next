@@ -26,7 +26,13 @@ const config = {
     csp: {
       mode: 'auto',
       directives: {
-        'script-src': ['self', 'https://static.cloudflareinsights.com', 'https://docs.google.com/', 'https://cdn.iubenda.com', 'unsafe-eval'], // The unsafe-eval requirement is for Zaraz, a known CF issue required for now - Hashes will be added automatically
+        'script-src': [
+          'self',
+          'https://static.cloudflareinsights.com',
+          'https://docs.google.com/',
+          'https://cdn.iubenda.com',
+          'unsafe-eval',
+        ], // The unsafe-eval requirement is for Zaraz, a known CF issue required for now - Hashes will be added automatically
         'style-src': ['self', 'unsafe-inline', 'https://cdn.iubenda.com'], // Include 'unsafe-inline' for inline styles
         'frame-src': ['https://www.iubenda.com', 'https://docs.google.com/'],
         'frame-ancestors': ['https://docs.google.com/'],
@@ -43,7 +49,6 @@ const config = {
         'object-src': ['none'],
         'base-uri': ['none'],
         'form-action': ['self'],
-        
       },
     },
   },
