@@ -8,7 +8,7 @@
 
   let { href, title }: Props = $props();
 
-  let isActive = $derived($page.url.pathname === href);
+  let isActive = $derived($page.url.pathname === href || $page.url.pathname.startsWith(href));
   let linkClasses = $derived(isActive ? 'bg-slate-700 cursor-default pointer-events-none' : 'hover:bg-slate-500/75');
 </script>
 
