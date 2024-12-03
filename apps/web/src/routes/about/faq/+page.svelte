@@ -1,6 +1,7 @@
 <script lang="ts">
   import BackToTop from '$lib/components/shared/BackToTop.svelte';
   import FAQ from '$lib/components/static/FAQ.svelte';
+  import placeholder from '$lib/assets/images/placeholder-faq.webp';
 </script>
 
 <!-- https://tailwindui.com/components/application-ui/application-shells/stacked -->
@@ -24,20 +25,12 @@
         </div>
 
         <!-- Right column -->
-        <div class="grid hidden grid-cols-1 gap-4 lg:col-span-1">
+        <div class="grid grid-cols-1 gap-4 lg:col-span-1">
           <section aria-labelledby="faq">
             <h2 class="sr-only" id="faq-nav">On this page</h2>
             <div class="overflow-hidden rounded-lg bg-white shadow lg:min-h-60">
-              <div class="relative isolate bg-white p-8">
-                <div class="mx-auto max-w-2xl lg:max-w-4xl">
-                  <p class="text-gray-slate text-md font-bold tracking-tight sm:text-xl">On this page</p>
-                </div>
-                <ul class="flex flex-col gap-2 py-8 font-light text-slate-700">
-                  <li><a href="#toc-intro">Open access</a></li>
-                  <li><a href="#toc-freedom">Free forever</a></li>
-                  <li><a href="#toc-transparency">Transparent</a></li>
-                  <li><a href="#toc-chad">Meet Chad</a></li>
-                </ul>
+              <div class="relative isolate bg-white p-2">
+                <img src={placeholder} alt="FAQ Placeholder" width={400} height={400} class="rounded-lg opacity-70" />
               </div>
             </div>
           </section>
