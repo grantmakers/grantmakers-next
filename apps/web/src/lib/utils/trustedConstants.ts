@@ -178,6 +178,24 @@ export const demoLinks = [
   },
 ];
 
+export const aboutLinks = [
+  {
+    title: 'About',
+    id: 'about',
+    link: '/about',
+  },
+  {
+    title: 'The Dataset',
+    id: 'the-dataset',
+    link: '/about/the-dataset',
+  },
+  {
+    title: 'FAQ',
+    id: 'faq',
+    link: '/about/faq',
+  },
+];
+
 export const features = [
   {
     name: 'Radical transparency.',
@@ -212,19 +230,34 @@ export const features = [
 ];
 export const faqData: EachFAQ[] = [
   {
-    question: 'How does Grantmakers.io sustain itself?',
+    question: 'Where does the data come from?',
     answer:
-      "All hard costs are covered by contributions from our community. The technology is architected to minimize maintenance requirements. Algolia's support plays a major role here, as their technology effectively eliminates a full time software engineer. Further, operational aspects requiring humans are simply out of scope of the project - there are no humans tagging grants or creating content. If you require these features, we highly recommend trying out FDO at your local library or Instrumentl if you can afford it.",
+      'IRS Form 990-PF published in machine-readable format, openly available via <a href="https://www.irs.gov/charities-non-profits/form-990-series-downloads">IRS.gov</a>.',
   },
   {
-    question: "Why don't you publish foundation contact info?",
+    question: 'Can profiles be edited or removed?',
     answer:
-      'We actually do, but only when a foundation explicitly provides this (Part XIV, section 2a of Form 990-PF). We take an ethics-first approach to republishing contact info - e.g. a phone number is only relevant when used for its intended purpose. Consider a small family foundation that explicitly states they do not accept unsolicited applications (Part XIV, section 2 of Form 990-PF). Is it really worth your time to track them down? Maybe, maybe not.',
+      'Grantmakers.io has no control over the information provided in the public dataset by the IRS. Any inquiries as to removing information should be made <a href="https://www.irs.gov/e-file-providers/e-file-for-charities-and-non-profits">directly with the IRS</a>.',
   },
   {
-    question: 'I saw a Grantmakers.io profile appear in [insert news outlet here]. How does that come about?',
+    question: "Why can't I find a foundation?",
     answer:
-      "The project started republishing the IRS e-file dataset shortly after the IRS first published it on AWS in 2016. Grantmakers.io's product goal is to facilitate a more efficient path to getting to a go/no-go decision on a foundation prospect. We appreciate the tireless efforts of journalists and watchdog groups in holding public benefit organizations accountable. If you're journalist, watchdog group, or simply a concerned citizen, check out ProPublica's Nonprofit Explorer.",
+      'Grantmakers.io focuses exclusively on US private foundations, those that file IRS Form 990-PF. Other types of foundations including community foundations, operating foundations, and public foundations are beyond the current scope of the project.',
+  },
+  {
+    question: 'Do you make any changes to the data?',
+    answer:
+      'All data found on Grantmakers.io is presented exactly as found in the tax filings, with the exception of a very limited number of formatting changes to improve readability. ',
+  },
+  {
+    question: 'Do you exclude any data?',
+    answer:
+      'Only to stay within the free tier limits of our search partner. Generally speaking, this affects only older grants e.g. tax years 2009 and 2010.',
+  },
+  {
+    question: 'Why is Grantmakers.io free?',
+    answer:
+      'The better question is why should it cost anything? The source data is published for free by the IRS. The site is hosted for free by Cloudflare. The search is provided for free by our friends at Algolia. There is virtually no cost in hosting and maintaining this site.',
   },
 ];
 export const footerNavigation = {

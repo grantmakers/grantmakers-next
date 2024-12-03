@@ -1,6 +1,6 @@
 <script lang="ts">
   import CountUp from '$lib/components/shared/CountUp.svelte';
-  const counterEnd = 9452158;
+  const counterEnd = 9872958;
   const counterStart = counterEnd - 50000;
 </script>
 
@@ -11,7 +11,7 @@
       <CountUp initial={counterStart} value={counterEnd} duration={500} step={1} roundto={1} format={true} />
     </h2>
     <p class="mt-6 text-lg leading-8 text-gray-600">
-      Visitors have generated over 8 million search queries on Grantmakers.io.<br />All for free. No login required.
+      Visitors have generated nearly 10 million search queries on Grantmakers.io.<br />All for free. No login required.
     </p>
   </div>
 </div>

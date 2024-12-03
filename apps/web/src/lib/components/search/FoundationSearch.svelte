@@ -68,7 +68,6 @@
       ...baseSearchClient,
       // @ts-expect-error SearchResponse could be a facetHits response. There's no need to go into the underpinnings of the Algolia client to resolve
       search(requests: CustomSearchRequest[]) {
-        console.log(JSON.stringify(requests));
         if (requests.every(({ params }) => !params.query)) {
           return Promise.resolve<SearchResponses<T>>({
             results: requests.map(() => ({

@@ -1,6 +1,7 @@
 <script lang="ts">
   import LogoMark from '$lib/components/shared/LogoMark.svelte';
   import ListItem from '$lib/components/profiles/root/ListItem.svelte';
+  import PrimaryNavLink from '$lib/components/nav/PrimaryNavLink.svelte';
   import { createTabs } from 'svelte-headlessui';
   import { demoLinks, profileRootLinks } from '$utils/trustedConstants';
   import FoundationSearch from '$lib/components/search/FoundationSearch.svelte';
@@ -21,7 +22,6 @@
 
   const searchInputPlaceholder = 'Search for a Foundation...';
 
-  // Search box focus shows search tab
   function activateSearchTabOnFocus() {
     tabs.set({
       selected: searchTab,
@@ -57,11 +57,8 @@
           </div>
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
-              <!-- Current: "bg-indigo-700 text-white", Default: "text-white hover:bg-indigo-500/75" -->
-              <a href="#" class="rounded-md bg-slate-700 px-3 py-2 text-sm font-medium text-white" aria-current="page"
-                >Foundation Profiles</a
-              >
-              <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-slate-500/75">Historical Grants</a>
+              <PrimaryNavLink href={'/profiles'} title={'Foundation Profiles'} />
+              <PrimaryNavLink href={'/grants'} title={'Historical Grants'} />
             </div>
           </div>
         </div>
@@ -70,9 +67,7 @@
         <div class="hidden lg:ml-4 lg:flex lg:items-center lg:pr-0.5">
           <!-- Profile dropdown -->
           <div class="relative ml-4 flex flex-auto shrink-0 items-center">
-            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-slate-500/75">About</a>
-            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-slate-500/75">Pricing</a>
-            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-slate-500/75">FAQ</a>
+            <PrimaryNavLink href={'/about'} title={'About'} />
             <div class="ml-4">
               <button
                 type="button"
@@ -94,12 +89,6 @@
                     ><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg
                   >
                 </div>
-
-                <!-- <img
-                  class="size-8 rounded-full"
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  alt=""
-                /> -->
               </button>
             </div>
 

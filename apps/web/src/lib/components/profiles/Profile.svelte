@@ -20,9 +20,9 @@
   import CharitableActivities from './activities/CharitableActivities.svelte';
   import SideNav from './sidenav/SideNav.svelte';
   import Rank from './ranking/Rank.svelte';
-  import DataSource from './about/DataSource.svelte';
+  import DataSource from './about/DataSourceSummaryBox.svelte';
   import Research from './research/Research.svelte';
-  import About from './about/About.svelte';
+  import About from './about/AboutSummaryBox.svelte';
   import { MagnifyingGlassCircle } from 'svelte-heros-v2';
   import type { AutocompleteInstance } from '@repo/shared/typings/algolia/autocomplete';
   import { browser } from '$app/environment';
@@ -252,7 +252,7 @@
                     areRestatement={profile.charitable_activities_are_restatement_of_grants}
                   />
                 {:else}
-                  <div class="p-6">No Direct Charitable Activities listed on Form 990 PF Part IX-A</div>
+                  <div class="p-6">No Direct Charitable Activities listed on Form 990-PF Part IX-A</div>
                 {/if}
               </div>
             </div>

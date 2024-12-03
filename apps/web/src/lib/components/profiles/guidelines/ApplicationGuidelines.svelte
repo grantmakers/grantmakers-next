@@ -179,7 +179,7 @@
             {:else}
               <p>No specific grant application guidance is provided in the tax filing.</p>
               <p>
-                Tip: General contact information can often be found elsewhere in the funders most recent Form 990 PF (see PDF links below).
+                Tip: General contact information can often be found elsewhere in the funders most recent Form 990-PF (see PDF links below).
               </p>
             {/if}
           </div>
