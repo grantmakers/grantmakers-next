@@ -46,7 +46,7 @@
 <div class="min-h-full">
   <header class="bg-slate-600 pb-24">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-      <div class="relative flex items-center justify-center py-5 lg:justify-between">
+      <div class="relative flex h-fit items-center justify-center py-5 lg:justify-between">
         <div class="flex items-center">
           <!-- Logo -->
           <div class="absolute left-0 hidden shrink-0 lg:static lg:block">

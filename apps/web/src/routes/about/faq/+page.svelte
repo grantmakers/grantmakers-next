@@ -17,7 +17,7 @@
           <section aria-labelledby="faq">
             <h2 class="sr-only" id="faq">FAQ</h2>
             <div class="overflow-hidden rounded-lg bg-white shadow">
-              <div class="p-6">
+              <div>
                 <FAQ />
               </div>
             </div>
@@ -25,7 +25,7 @@
         </div>
 
         <!-- Right column -->
-        <div class="grid grid-cols-1 gap-4 lg:col-span-1">
+        <div class="hidden grid-cols-1 gap-4 lg:col-span-1 lg:grid">
           <section aria-labelledby="faq">
             <h2 class="sr-only" id="faq-nav">On this page</h2>
             <div class="overflow-hidden rounded-lg bg-white shadow lg:min-h-60">

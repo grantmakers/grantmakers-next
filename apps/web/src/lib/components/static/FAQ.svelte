@@ -7,7 +7,8 @@
   <div class="mx-auto max-w-3xl text-base/7 text-gray-700">
     <div class="mx-auto max-w-4xl divide-y divide-gray-900/10">
       <div>
-        <p class="text-base/7 font-semibold text-indigo-600">Simple answers to common questions</p>
+        <p class="text-base/7 font-semibold text-indigo-600 md:hidden">FAQ</p>
+        <p class="hidden text-base/7 font-semibold text-indigo-600 md:block">Simple answers to common questions</p>
         <h1 class="mt-2 text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Frequently Asked Questions</h1>
         <!-- <p class="mt-6 text-xl/8"></p> -->
       </div>

@@ -16,7 +16,7 @@
           <section aria-labelledby="the-dataset">
             <h2 class="sr-only" id="the-dataset">The Dataset</h2>
             <div class="overflow-hidden rounded-lg bg-white shadow">
-              <div class="p-6">
+              <div>
                 <Dataset />
               </div>
             </div>
