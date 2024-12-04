@@ -12,6 +12,7 @@
   import '@algolia/autocomplete-theme-classic';
   import algoliaLogo from '$lib/assets/images/Algolia-logo-blue.svg';
   import { formatEin } from '@repo/shared/functions/formatters/ein';
+  import { badgeStyles } from '$utils/badgeStyles';
   import staticData from '@repo/shared/data/public/autocomplete-static-data.json';
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
   import type { BaseItem } from '@algolia/autocomplete-core';
@@ -45,27 +46,65 @@
 
   const mockResults = staticData;
 
+  const getLabel = (pct: number | 'N/A') => {
+    if (pct === 'N/A') return 'N/A';
+    if (pct >= 99) return 'Top 1%';
+    if (pct >= 90) return 'Top 10%';
+    if (pct >= 75) return 'Top 25%';
+    if (pct >= 50) return 'Top 50%';
+    if (pct < 50) return '<50%';
+    return `Top ${(100 - pct).toFixed(0)}%`;
+  };
+
+  let getColorClasses = (pct: number | 'N/A') => {
+    if (pct === 'N/A') return badgeStyles.default;
+    if (pct >= 99) return badgeStyles.success;
+    if (pct >= 90) return badgeStyles.success;
+    if (pct >= 75) return badgeStyles.info;
+    if (pct >= 50) return badgeStyles.indigo;
+    // if (pct >= 30) return badgeStyles.purple; // Purple
+    return badgeStyles.default;
+  };
+
   const algoliaTemplates = {
     header: ({ html }: { html: HTMLTemplate }) => html`
       <div class="flex items-center justify-between">
         <div class="px-3 py-2 text-xs font-semibold uppercase text-gray-500">Foundation Profiles</div>
+        <div class="px-3 py-2 text-xs font-semibold uppercase text-gray-500">Assets</div>
       </div>
     `,
-    item: ({ item, html }: AlgoliaItemTemplateProps) =>
-      html`<a href="/profiles/v0/${item.ein}-${item.organization_name_slug}" data-sveltekit-reload>
-        <div class="px-3 py-2 transition-colors duration-100 hover:bg-gray-100">
-          <div class="flex items-center justify-between gap-3">
-            <div class="min-w-0 flex-1">
-              <div class="truncate text-sm font-medium text-gray-900">${item.organization_name}</div>
-              ${item.city && item.state ? html` <div class="truncate text-xs text-gray-500">${item.city}, ${item.state}</div> ` : ''}
-            </div>
-            <div class="flex flex-col justify-end text-xs text-gray-500">
-              <div>${formatEin(item.ein)}</div>
-              <div class="text-right">${normalizeCurrencyToMillions(item.assets)}</div>
+    item: ({ item, html }: AlgoliaItemTemplateProps) => {
+      const url = `/profiles/v0/${item.ein}-${item.organization_name_slug}`;
+      let percentile: number | 'N/A' = item.rank !== undefined ? ((item.rank_total - item.rank) / item.rank_total) * 100 : 'N/A';
+      return html`<a href="/profiles/v0/${item.ein}-${item.organization_name_slug}" data-sveltekit-reload>
+        <div class="px-2 py-2 transition-colors duration-100 hover:bg-gray-100">
+          <div class="flex items-center justify-between gap-3 py-2">
+            <div class="w-full min-w-0 ">
+              <div class="flex items-start justify-between gap-x-3">
+                <div class="text-normal/6 font-semibold text-gray-900">${item.organization_name}</div>
+                <p
+                  class="${getColorClasses(
+                    percentile,
+                  )} mt-0.5 whitespace-nowrap rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset"
+                >
+                  ${getLabel(percentile)}
+                </p>
+              </div>
+              <div class="mt-1 flex w-full items-center justify-between gap-x-2 text-xs/5 text-gray-500">
+                <div class="flex items-center gap-x-2">
+                  <p class="whitespace-nowrap">${item.city}, ${item.state}</p>
+                  <svg viewBox="0 0 2 2" class="size-0.5 fill-current">
+                    <circle cx="1" cy="1" r="1" />
+                  </svg>
+                  <p class="truncate">${formatEin(item.ein)}</p>
+                </div>
+                <div>${normalizeCurrencyToMillions(item.assets)}</div>
+              </div>
             </div>
           </div>
         </div></a
-      > `,
+      >`;
+    },
     footer: ({ html }: { html: HTMLTemplate }) =>
       html`<div class="border-t px-3 py-2 text-xs text-gray-400">
         <a href="https://algolia.com" class="mt-2 flex items-center justify-end gap-2 hover:text-gray-500" target="_blank" rel="noopener">
@@ -194,3 +233,15 @@
 </div>
 
 <div id="#autocomplete" class="hidden" bind:this={container}></div>
+
+<style lang="postcss">
+  /* Add zebra stripes */
+  :global(.aa-Item) {
+    &:nth-child(odd) {
+      background-color: white;
+    }
+    &:nth-child(even) {
+      background-color: rgb(248 250 252);
+    }
+  }
+</style>

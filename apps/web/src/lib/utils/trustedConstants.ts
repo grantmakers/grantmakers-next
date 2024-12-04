@@ -74,15 +74,11 @@ export const profileNavItems: ProfileNavItems[] = [
 
 export const profileRootLinks = [
   {
-    title: 'Search',
-    id: 'foundation-search',
-    link: '/profiles',
-  },
-  {
     title: 'Demo Links',
     id: 'demo-links',
     link: '#demo-links',
   },
+
   {
     title: 'Popular',
     id: 'popular',
@@ -102,6 +98,11 @@ export const profileRootLinks = [
     title: 'All Active',
     id: 'all-active',
     link: '#all-active',
+  },
+  {
+    title: 'Search',
+    id: 'foundation-search',
+    link: '/profiles',
   },
 ];
 
@@ -180,7 +181,7 @@ export const demoLinks = [
 
 export const aboutLinks = [
   {
-    title: 'About',
+    title: 'The Project',
     id: 'about',
     link: '/about',
   },

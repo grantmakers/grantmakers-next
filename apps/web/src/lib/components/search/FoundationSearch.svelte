@@ -48,6 +48,7 @@
     return `Top ${(100 - pct).toFixed(0)}%`;
   };
 
+  // TODO Pull from new badgeStyles.ts utility
   let getColorClasses = (pct: number | 'N/A') => {
     if (pct === 'N/A') return 'bg-gray-50 text-gray-600 ring-gray-500/10';
     if (pct >= 99) return 'bg-green-50 text-green-700 ring-green-600/20';

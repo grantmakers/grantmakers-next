@@ -1,47 +1,44 @@
 <script lang="ts">
+  import { browser } from '$app/environment';
+  import Logo from '$lib/components/shared/icons/Logo.svelte';
   import LogoMark from '$lib/components/shared/LogoMark.svelte';
   import ListItem from '$lib/components/profiles/root/ListItem.svelte';
   import PrimaryNavLink from '$lib/components/nav/PrimaryNavLink.svelte';
   import { createTabs } from 'svelte-headlessui';
-  import { demoLinks, profileRootLinks } from '$utils/trustedConstants';
-  import FoundationSearch from '$lib/components/search/FoundationSearch.svelte';
-  import BackToTop from '$lib/components/shared/BackToTop.svelte';
-  import Logo from '$lib/components/shared/icons/Logo.svelte';
-  import { menuState, refs, toggleMobileMenu, toggleProfileMenu, handleClickOutside } from '$lib/components/search/menuState.svelte';
-  import { searchState, handleAlgoliaInit, handleSearchInput, restoreSearch } from '$lib/components/search/searchState.svelte';
-  import { onMount } from 'svelte';
-  import Tip from '$lib/components/profiles/alerts/Tip.svelte';
   import PrimaryNavLinkMobile from '$lib/components/nav/PrimaryNavLinkMobile.svelte';
+  import { demoLinks, profileRootLinks } from '$utils/trustedConstants';
+  import { menuState, refs, toggleMobileMenu, toggleProfileMenu, handleClickOutside } from '$lib/components/search/menuState.svelte';
+  import Autocomplete from '$lib/components/search/Autocomplete.svelte';
+  import type { AutocompleteInstance } from '@repo/shared/typings/algolia/autocomplete';
+  import BackToTop from '$lib/components/shared/BackToTop.svelte';
+  import Tip from '$lib/components/profiles/alerts/Tip.svelte';
 
-  const defaultTab = 'foundation-search';
-  const searchTab = defaultTab;
+  const defaultTab = 'demo-links';
   const tabs = createTabs({ selected: defaultTab });
   let activeTitle = $derived.by(() => {
     const target = profileRootLinks.find(({ id }) => id === $tabs.active);
     return target?.title;
   });
 
-  const searchInputPlaceholder = 'Search for a Foundation...';
+  let autocompleteInstance: AutocompleteInstance | null = $state(null);
 
-  function activateSearchTabOnFocus() {
-    tabs.set({
-      selected: searchTab,
-      active: 0, // The index for the 'foundation search' tab
-    });
+  function handleAutocompleteInit(instance: AutocompleteInstance) {
+    autocompleteInstance = instance;
   }
 
-  onMount(() => {
-    if (searchState.algoliaInstance) {
-      restoreSearch();
+  let openSearch = () => {
+    if (browser) {
+      autocompleteInstance?.setIsOpen(true);
     }
-  });
+  };
+
+  const searchInputPlaceholder = 'Quick search...';
 </script>
 
 <!-- https://tailwindui.com/components/application-ui/application-shells/stacked -->
 
 <svelte:body onclick={handleClickOutside} />
 
-<FoundationSearch onAlgoliaInit={handleAlgoliaInit} />
 <div id="instantsearch"></div>
 
 <div class="min-h-full">
@@ -143,9 +140,7 @@
               <!-- Secondary Nav Search Box -->
               <input
                 id="mobile-search"
-                bind:value={searchState.query}
-                onfocus={activateSearchTabOnFocus}
-                oninput={handleSearchInput}
+                onclick={openSearch}
                 class="block w-full rounded-md border-0 bg-white/20 py-1.5 pl-10 pr-3 text-white placeholder:text-white focus:bg-white focus:text-gray-900 focus:ring-0 focus:placeholder:text-gray-500 sm:text-sm/6"
                 placeholder={searchInputPlaceholder}
                 type="search"
@@ -201,7 +196,7 @@
         <div class="grid grid-cols-3 items-center gap-8">
           <div class="col-span-2">
             <nav use:tabs.list class="flex space-x-4">
-              {#each profileRootLinks.slice(0, 2) as item}
+              {#each profileRootLinks.slice(0, 1) as item}
                 {@const selected = $tabs.selected === item.id}
                 <button
                   use:tabs.tab={{ value: item.id }}
@@ -228,9 +223,7 @@
                 </div>
                 <input
                   id="desktop-search"
-                  bind:value={searchState.query}
-                  onfocus={activateSearchTabOnFocus}
-                  oninput={handleSearchInput}
+                  onclick={openSearch}
                   class="block w-full rounded-md border-0 bg-white/20 py-1.5 pl-10 pr-3 text-white placeholder:text-white focus:bg-white focus:text-gray-900 focus:ring-0 focus:placeholder:text-gray-500 sm:text-sm/6"
                   placeholder={searchInputPlaceholder}
                   type="search"
@@ -307,7 +300,7 @@
               <div use:tabs.list class="mt-3 space-y-1 border-t border-gray-200 px-1 py-3">
                 <div class="p-3 pb-1 text-xs font-semibold uppercase text-slate-500">Foundation Profiles</div>
                 <!-- Secondary Mobile Nav Links -->
-                {#each profileRootLinks.slice(0, 2) as item}
+                {#each profileRootLinks.slice(0, 1) as item}
                   {@const selected = $tabs.selected === item.id}
                   <button
                     use:tabs.tab={{ value: item.id }}
@@ -334,28 +327,6 @@
       <div class="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
         <!-- Left column -->
         <div class="grid grid-cols-1 gap-4 lg:col-span-2">
-          <section use:tabs.panel aria-labelledby="foundation-search" class={$tabs.selected === 'foundation-search' ? 'block' : 'hidden'}>
-            <h2 class="sr-only" id="foundation-search-results">Foundation Search</h2>
-            <div class="overflow-hidden rounded-lg bg-white shadow">
-              <div class="p-6">
-                <div class="flex w-full items-center justify-between pb-8">
-                  <div class="max-w-xl">
-                    <h1 id="order-history-heading" class="text-3xl font-bold tracking-tight text-gray-900">Foundation Search</h1>
-                    <p class="mt-2 text-sm text-gray-500">Search by name or ein</p>
-                  </div>
-                </div>
-                <div
-                  class="mx-auto mt-8 flex w-full max-w-xl justify-between border-b border-gray-200 text-xs font-semibold uppercase text-gray-500"
-                >
-                  <div>Foundation Name</div>
-                  <div>Assets</div>
-                </div>
-                <div id="hits" class="mx-auto mt-4 max-w-xl divide-y divide-gray-100"></div>
-                <div id="powered-by2" class="flex max-h-8 justify-center border-t border-gray-200 p-8"></div>
-              </div>
-            </div>
-          </section>
-
           <section use:tabs.panel aria-labelledby="demo-links" class={$tabs.selected === 'demo-links' ? 'block' : 'hidden'}>
             <h2 class="sr-only" id="demo-links">Demo Links</h2>
             <div class="overflow-hidden rounded-lg bg-white shadow">
@@ -417,5 +388,11 @@
   </main>
   <nav aria-label="Back to top navigation">
     <BackToTop />
+  </nav>
+</div>
+
+<div class="hidden">
+  <nav>
+    <Autocomplete onAutocompleteInit={handleAutocompleteInit} />
   </nav>
 </div>

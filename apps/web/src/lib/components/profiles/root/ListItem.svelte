@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { badgeStyles } from '$utils/badgeStyles';
   interface Props {
     name: string;
     ein: string;
@@ -7,25 +8,16 @@
 
   let { name, ein, category }: Props = $props();
 
-  let badgeVariation = $derived.by(() => {
-    if (category === 'Typical') return 'success';
-    if (category === 'Unique Orgs') return 'info';
-    if (category === 'Edge Cases') return 'warning';
-    if (category === 'Large People Array') return 'danger';
-    if (category === 'Direct Activities') return 'indigo';
-    if (category === 'See Attached') return 'purple';
-    return 'default';
+  let badgeClasses = $derived.by(() => {
+    if (category === 'Typical') return badgeStyles.success;
+    if (category === 'Unique Orgs') return badgeStyles.info;
+    if (category === 'Edge Cases') return badgeStyles.warning;
+    if (category === 'Large People Array') return badgeStyles.danger;
+    if (category === 'Direct Activities') return badgeStyles.indigo;
+    if (category === 'See Attached') return badgeStyles.purple;
+    return badgeStyles.default;
   });
 
-  let badgeClasses = $derived.by(() => {
-    if (badgeVariation === 'default') return 'bg-gray-50 text-gray-600 ring-gray-500/10';
-    if (badgeVariation === 'danger') return 'bg-red-50 text-red-700 ring-red-600/10';
-    if (badgeVariation === 'warning') return 'bg-yellow-50 text-yellow-800 ring-yellow-600/20';
-    if (badgeVariation === 'success') return 'bg-green-50 text-green-700 ring-green-600/20';
-    if (badgeVariation === 'info') return 'bg-blue-50 text-blue-700 ring-blue-700/10';
-    if (badgeVariation === 'indigo') return 'bg-indigo-50 text-indigo-700 ring-indigo-700/10';
-    if (badgeVariation === 'purple') return 'bg-purple-50 text-purple-700 ring-purple-700/10';
-  });
   let url = $derived('/profiles/v0/' + ein);
 </script>
 
