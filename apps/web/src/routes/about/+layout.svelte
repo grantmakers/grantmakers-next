@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { elementRefs, menuState, toggleMobileMenu, toggleProfileMenu } from '$lib/components/search/menuState.svelte';
-  import Logo from '$lib/components/shared/icons/Logo.svelte';
+  import { refs, menuState, toggleMobileMenu, toggleProfileMenu } from '$lib/components/search/menuState.svelte';
   import LogoMark from '$lib/components/shared/LogoMark.svelte';
   import PrimaryNavLink from '$lib/components/nav/PrimaryNavLink.svelte';
   import { aboutLinks } from '$utils/trustedConstants';
   import SecondaryNavLink from '$lib/components/nav/SecondaryNavLink.svelte';
+  import PrimaryNavLinkMobile from '$lib/components/nav/PrimaryNavLinkMobile.svelte';
+  import SecondaryNavLinkMobile from '$lib/components/nav/SecondaryNavLinkMobile.svelte';
 
   interface Props {
     children?: import('svelte').Snippet;
@@ -39,7 +40,7 @@
               <button
                 type="button"
                 class="relative flex rounded-full bg-white text-sm ring-2 ring-white/20 focus:outline-none focus:ring-white"
-                bind:this={elementRefs.profileButton}
+                bind:this={refs.profileButton}
                 aria-expanded={menuState.isProfileMenuOpen}
                 aria-haspopup="true"
                 onclick={toggleProfileMenu}
@@ -95,7 +96,7 @@
           <!-- Mobile menu button -->
           <button
             type="button"
-            bind:this={elementRefs.mobileMenuButton}
+            bind:this={refs.mobileMenuButton}
             class="relative inline-flex items-center justify-center rounded-md bg-transparent p-2 text-indigo-200 hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
             aria-controls="mobile-menu"
             aria-expanded={menuState.isMobileMenuOpen}
@@ -145,7 +146,7 @@
 
     <!-- Mobile menu, show/hide based on mobile menu state. -->
     {#if menuState.isMobileMenuOpen}
-      <div bind:this={elementRefs.mobileMenu} class="lg:hidden">
+      <div bind:this={refs.mobileMenu} class="lg:hidden">
         <!--
       Mobile menu overlay, show/hide based on mobile menu state.
 
@@ -197,13 +198,17 @@
                   </button>
                 </div>
               </div>
-              <div class="mt-3 space-y-1 px-2">
-                {#each aboutLinks.slice(0, 2) as item}
-                  <a
-                    href={item.link}
-                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
-                    >{item.title}</a
-                  >
+              <!-- Primary Mobile Nav Links -->
+              <div class="space-y-1 pb-1 pt-2">
+                <!-- Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" -->
+                <PrimaryNavLinkMobile href={'/profiles'} title={'Foundation Profiles'} />
+                <PrimaryNavLinkMobile href={'/grants'} title={'Historical Grants'} />
+                <PrimaryNavLinkMobile href={'/about'} title={'About'} />
+              </div>
+              <div class="mt-3 space-y-1 px-4 pb-3">
+                <!-- Secondary Mobile Nav Links -->
+                {#each aboutLinks as item}
+                  <SecondaryNavLinkMobile href={item.link} title={item.title} />
                 {/each}
               </div>
             </div>

@@ -3,7 +3,7 @@ export const menuState = $state({
   isProfileMenuOpen: false,
 });
 
-export const elementRefs = $state({
+export const refs = $state({
   profileButton: null as HTMLButtonElement | null,
   profileMenu: null as HTMLDivElement | null,
   mobileMenuButton: null as HTMLButtonElement | null,
@@ -21,20 +21,20 @@ export function toggleProfileMenu() {
 export function handleClickOutside(event: MouseEvent) {
   // Handle profile menu
   if (
-    elementRefs.profileButton &&
-    elementRefs.profileMenu &&
-    !elementRefs.profileButton.contains(event.target as Node) &&
-    !elementRefs.profileMenu.contains(event.target as Node)
+    refs.profileButton &&
+    refs.profileMenu &&
+    !refs.profileButton.contains(event.target as Node) &&
+    !refs.profileMenu.contains(event.target as Node)
   ) {
     menuState.isProfileMenuOpen = false;
   }
 
   // Handle mobile menu
   if (
-    elementRefs.mobileMenuButton &&
-    elementRefs.mobileMenu &&
-    !elementRefs.mobileMenuButton.contains(event.target as Node) &&
-    !elementRefs.mobileMenu.contains(event.target as Node)
+    refs.mobileMenuButton &&
+    refs.mobileMenu &&
+    !refs.mobileMenuButton.contains(event.target as Node) &&
+    !refs.mobileMenu.contains(event.target as Node)
   ) {
     menuState.isMobileMenuOpen = false;
   }

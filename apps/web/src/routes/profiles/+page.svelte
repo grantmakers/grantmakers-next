@@ -7,10 +7,12 @@
   import FoundationSearch from '$lib/components/search/FoundationSearch.svelte';
   import BackToTop from '$lib/components/shared/BackToTop.svelte';
   import Logo from '$lib/components/shared/icons/Logo.svelte';
-  import { menuState, elementRefs, toggleMobileMenu, toggleProfileMenu, handleClickOutside } from '$lib/components/search/menuState.svelte';
+  import { menuState, refs, toggleMobileMenu, toggleProfileMenu, handleClickOutside } from '$lib/components/search/menuState.svelte';
   import { searchState, handleAlgoliaInit, handleSearchInput, restoreSearch } from '$lib/components/search/searchState.svelte';
   import { onMount } from 'svelte';
   import Tip from '$lib/components/profiles/alerts/Tip.svelte';
+  import PrimaryNavLinkMobile from '$lib/components/nav/PrimaryNavLinkMobile.svelte';
+  import { Title } from 'chart.js';
 
   const defaultTab = 'foundation-search';
   const searchTab = defaultTab;
@@ -55,6 +57,7 @@
           <div class="absolute left-0 shrink-0 lg:hidden">
             <Logo variation={'title'} />
           </div>
+          <!-- Desktop Primary Nav: Left -->
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
               <PrimaryNavLink href={'/profiles'} title={'Foundation Profiles'} />
@@ -65,14 +68,15 @@
 
         <!-- Right section on desktop -->
         <div class="hidden lg:ml-4 lg:flex lg:items-center lg:pr-0.5">
-          <!-- Profile dropdown -->
+          <!-- Desktop Primary Nav: Right -->
           <div class="relative ml-4 flex flex-auto shrink-0 items-center">
             <PrimaryNavLink href={'/about'} title={'About'} />
             <div class="ml-4">
+              <!-- User Preferences Menu -->
               <button
                 type="button"
                 class="relative flex rounded-full bg-white text-sm ring-2 ring-white/20 focus:outline-none focus:ring-white"
-                bind:this={elementRefs.profileButton}
+                bind:this={refs.profileButton}
                 aria-expanded={menuState.isProfileMenuOpen}
                 aria-haspopup="true"
                 onclick={toggleProfileMenu}
@@ -123,7 +127,7 @@
           </div>
         </div>
 
-        <!-- Search -->
+        <!-- Secondary Nav Search -->
         <div class="min-w-0 flex-1 px-12 lg:hidden">
           <div id="searchBox" class="mx-auto w-full max-w-xs">
             <label for="mobile-search" class="sr-only">Foundation Search</label>
@@ -137,6 +141,7 @@
                   />
                 </svg>
               </div>
+              <!-- Secondary Nav Search Box -->
               <input
                 id="mobile-search"
                 bind:value={searchState.query}
@@ -156,7 +161,7 @@
           <!-- Mobile menu button -->
           <button
             type="button"
-            bind:this={elementRefs.mobileMenuButton}
+            bind:this={refs.mobileMenuButton}
             class="relative inline-flex items-center justify-center rounded-md bg-transparent p-2 text-indigo-200 hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
             aria-controls="mobile-menu"
             aria-expanded={menuState.isMobileMenuOpen}
@@ -241,7 +246,7 @@
 
     <!-- Mobile menu, show/hide based on mobile menu state. -->
     {#if menuState.isMobileMenuOpen}
-      <div bind:this={elementRefs.mobileMenu} class="lg:hidden">
+      <div bind:this={refs.mobileMenu} class="lg:hidden">
         <!--
         Mobile menu overlay, show/hide based on mobile menu state.
 
@@ -293,64 +298,31 @@
                   </button>
                 </div>
               </div>
-              <div class="mt-3 space-y-1 px-2">
+              <!-- Primary Mobile Nav Links -->
+              <div class="space-y-1 pb-3 pt-2">
+                <!-- Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" -->
+                <PrimaryNavLinkMobile href={'/profiles'} title={'Foundation Profiles'} />
+                <PrimaryNavLinkMobile href={'/grants'} title={'Historical Grants'} />
+                <PrimaryNavLinkMobile href={'/about'} title={'About'} />
+              </div>
+              <div use:tabs.list class="mt-3 space-y-1 border-t border-gray-200 px-1 py-3">
+                <div class="p-3 pb-1 text-xs font-semibold uppercase text-slate-500">Foundation Profiles</div>
+                <!-- Secondary Mobile Nav Links -->
                 {#each profileRootLinks.slice(0, 2) as item}
-                  <a
-                    href={item.link}
-                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
-                    >{item.title}</a
+                  {@const selected = $tabs.selected === item.id}
+                  <button
+                    use:tabs.tab={{ value: item.id }}
+                    onclick={toggleMobileMenu}
+                    class="block w-full rounded-md px-3 py-2 text-left text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800 {(
+                      selected
+                    ) ?
+                      'pointer-events-none cursor-default rounded-none bg-gray-100 text-gray-500'
+                    : ''}"
+                    aria-current="page">{item.title}</button
                   >
                 {/each}
               </div>
             </div>
-            <!-- <div class="pb-2 pt-4">
-              <div class="flex items-center px-5">
-                <div class="shrink-0">
-                  <div class="rounded- size-10">
-                    <svg
-                      class="absolute -left-1 h-12 w-12 text-gray-400"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                      ><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg
-                    >
-                  </div>
-                </div>
-                <div class="ml-3 min-w-0 flex-1">
-                  <div class="truncate text-base font-medium text-gray-800">Community Member</div>
-                </div>
-                <button
-                  type="button"
-                  class="relative ml-auto shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                  <span class="absolute -inset-1.5"></span>
-                  <span class="sr-only">View notifications</span>
-                  <svg
-                    class="size-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                    data-slot="icon"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <div class="mt-3 space-y-1 px-2">
-                <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
-                  >Recent Searches</a
-                >
-                <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
-                  >Watchlist</a
-                >
-              </div>
-            </div> -->
           </div>
         </div>
       </div>

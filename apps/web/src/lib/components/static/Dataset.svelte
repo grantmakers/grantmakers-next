@@ -1,13 +1,5 @@
 <script lang="ts"></script>
 
-<!-- <div class="border-b border-gray-200 pb-8">
-  <div class="max-w-xl">
-    <h1 id="order-history-heading" class="text-3xl font-bold tracking-tight text-gray-900">The Dataset</h1>
-    <p class="mt-2 text-sm text-gray-500">
-      The best way to get to know Grantmakers.io is to first understand the public dataset from which the site is derived.
-    </p>
-  </div>
-</div> -->
 <div class="bg-white px-6 py-8 lg:px-8">
   <div class="mx-auto max-w-3xl text-base/7 text-gray-700">
     <p class="text-base/7 font-semibold text-indigo-600">Open data</p>
