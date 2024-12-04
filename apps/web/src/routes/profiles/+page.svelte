@@ -12,7 +12,6 @@
   import { onMount } from 'svelte';
   import Tip from '$lib/components/profiles/alerts/Tip.svelte';
   import PrimaryNavLinkMobile from '$lib/components/nav/PrimaryNavLinkMobile.svelte';
-  import { Title } from 'chart.js';
 
   const defaultTab = 'foundation-search';
   const searchTab = defaultTab;
