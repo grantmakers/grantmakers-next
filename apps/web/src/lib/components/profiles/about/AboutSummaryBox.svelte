@@ -1,6 +1,7 @@
 <script lang="ts">
   import ContentBoxHeader from '../ContentBoxHeader.svelte';
   import logo from '$lib/assets/images/logo.svg';
+  import Tip from '../alerts/Tip.svelte';
 </script>
 
 <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
@@ -13,9 +14,18 @@
   <p>
     The project exists to move the philanthropic data industry away from expensive subscriptions and towards decentralized data sharing.
   </p>
+  <div class="">
+    <Tip
+      title="No Affiliation"
+      message="Grantmakers.io is not affiliated, associated, authorized, endorsed by, or in any way officially connected with any
+  foundation appearing on the site."
+      bg={true}
+      includeLogo
+    />
+  </div>
   <div class="flex justify-center">
     <a
-      href="https://www.grantmakers.io/about/"
+      href="/about"
       class="shrink rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-100"
     >
       <div class="flex flex-row items-center justify-center gap-1">Learn More</div>

@@ -4,13 +4,18 @@
     message: string;
     variation?: 'inline' | 'xs' | undefined;
     align?: 'right' | undefined;
+    bg?: boolean;
     includeLogo?: boolean;
   }
 
-  let { title = '', message, variation = undefined, align = undefined, includeLogo = false }: Props = $props();
+  let { title = '', message, variation = undefined, align = undefined, bg = false, includeLogo = false }: Props = $props();
 </script>
 
-<div class="rounded-md bg-transparent {variation === 'xs' ? 'p-4 ' : 'p-6 '}{variation === 'xs' ? 'text-xs ' : 'text-sm '}text-slate-700">
+<div
+  class="rounded-md {bg ? 'bg-slate-100' : 'bg-transparent'} {variation === 'xs' ? 'p-4 ' : 'p-6 '}{variation === 'xs' ? 'text-xs ' : (
+    'text-sm '
+  )}text-slate-700"
+>
   <div class="flex flex-row items-start {align === 'right' ? 'justify-end ' : ''}gap-2">
     {#if includeLogo}
       <div class="text-grantmakers-orange">
