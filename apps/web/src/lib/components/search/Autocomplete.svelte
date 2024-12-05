@@ -76,9 +76,9 @@
     item: ({ item, html }: AlgoliaItemTemplateProps) => {
       const url = `/profiles/v0/${item.ein}-${item.organization_name_slug}`;
       let percentile: number | 'N/A' = item.rank !== undefined ? ((item.rank_total - item.rank) / item.rank_total) * 100 : 'N/A';
-      return html`<a href="/profiles/v0/${item.ein}-${item.organization_name_slug}" data-sveltekit-reload>
-        <div class="px-2 py-2 transition-colors duration-100 hover:bg-slate-100">
-          <div class="flex items-center justify-between gap-3 py-2">
+      return html`<a href="${url}" data-sveltekit-reload>
+        <div class="px-2 py-3 transition-colors duration-100 hover:bg-slate-100">
+          <div class="flex items-center justify-between gap-3">
             <div class="w-full min-w-0 ">
               <div class="flex items-start justify-between gap-x-3">
                 <div class="text-normal/6 font-semibold text-gray-900">${item.organization_name}</div>
@@ -139,11 +139,9 @@
         placeholder: 'Quick search...',
         openOnFocus: true,
         classNames: {
-          detachedFormContainer: '!lg:rounded-t-2xl !border-b-0 !bg-slate-200',
+          // Docs: https://www.algolia.com/doc/ui-libraries/autocomplete/api-reference/autocomplete-js/autocomplete/#param-classnames
+          // Note: Most classes are set in Svelte style tag below
           detachedSearchButton: '!hidden', // Hide the navbar search box and use our SSR placeholder search box as the trigger.
-          detachedSearchButtonIcon: '!text-slate-500',
-          detachedSearchButtonPlaceholder: 'text-slate-500 text-sm',
-          // https://www.algolia.com/doc/ui-libraries/autocomplete/api-reference/autocomplete-js/autocomplete/#param-classnames
         },
         // @ts-expect-error The Algolia response is properly typed - thus, there's no need to go into the underpinnings of Autocomplete to satisfy this error
         getSources({ query }) {
@@ -152,7 +150,7 @@
               {
                 sourceId: 'recommended',
                 getItems() {
-                  return mockResults;
+                  return mockResults.slice(0, 5);
                 },
                 getItemUrl,
                 templates: algoliaTemplates,
@@ -236,12 +234,23 @@
 
 <style lang="postcss">
   /* Add zebra stripes */
+  :global(aa-DetachedContainer--modal) {
+    @apply lg:rounded-2xl;
+  }
+  :global(.aa-DetachedFormContainer) {
+    @apply border-b-0 bg-slate-200;
+  }
+  :global(.aa-Form) {
+    &:focus-within {
+      @apply border-slate-300;
+    }
+  }
   :global(.aa-Item) {
     &:nth-child(odd) {
-      background-color: white;
+      @apply bg-white;
     }
     &:nth-child(even) {
-      background-color: rgb(248 250 252);
+      @apply bg-slate-100;
     }
   }
 </style>
