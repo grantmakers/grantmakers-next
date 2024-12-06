@@ -190,7 +190,9 @@
           <!-- People Box (Third on desktop, fourth on mobile) -->
           <div class="order-4 xl:order-3">
             <ContentBoxWrapper id="people" classes="flex h-full">
-              <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+              <div
+                class="shadow-soft-xl relative flex h-full w-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border"
+              >
                 <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                   <ContentBoxHeader title={'People'} />
                 </div>
