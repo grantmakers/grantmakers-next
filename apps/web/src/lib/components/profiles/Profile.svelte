@@ -72,7 +72,7 @@
     class="ease-nav-brand z-990 sticky top-0 ml-4 hidden h-screen {sidebarWidthClass} shrink-0 overflow-y-auto rounded-2xl border-0 bg-white p-0 py-2 pt-2 text-slate-500 antialiased shadow-none transition-transform duration-200 md:block xl:left-0 xl:translate-x-0 xl:bg-transparent"
     id="sidenav-main"
   >
-    <div class="flex h-full flex-col">
+    <div class="flex h-full flex-row md:flex-col">
       <div class="mx-auto ml-3 flex w-full flex-col items-start p-4 lg:mb-10">
         <LogoMark isLandingOrFooter={false} />
         <div class="ml-10 text-sm"></div>
@@ -91,14 +91,25 @@
     >
       <div class="flex-wrap-inherit mx-auto flex w-full items-center justify-between px-4 py-1">
         <!-- Breadcrumbs -->
-        <nav class="flex flex-wrap items-center">
-          <!-- <LogoMark isLandingOrFooter={false} /> -->
-          <ol class="flex flex-wrap items-center bg-transparent">
+        <nav class="flex w-full flex-wrap items-center justify-between md:w-fit">
+          <div class="block md:hidden">
+            <LogoMark isLandingOrFooter={false} />
+          </div>
+          <div>
+            <a
+              type="button"
+              href="/profiles"
+              class="rounded bg-white px-2 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 md:hidden"
+              >All profiles</a
+            >
+          </div>
+
+          <ol class="hidden flex-wrap items-center bg-transparent md:flex">
             <li class="text-sm leading-normal">
               <a class="text-slate-700" href="/profiles">Foundation Profiles</a>
             </li>
             <li
-              class="hidden pl-2 text-sm capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/'] md:block"
+              class="pl-2 text-sm capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/']"
               aria-current="page"
             >
               {organization_name}
