@@ -13,8 +13,8 @@
   const getLabel = (pct: number | 'N/A') => {
     if (pct === 'N/A') return 'N/A';
     if (pct <= 50) return '<50% Percentile';
-    if (pct > 99) return 'Top 1%';
-    return `Top ${(100 - pct).toFixed(0)}%`;
+    if (pct >= 99) return 'Top 1%';
+    return `Top ${Math.ceil(100 - pct)}%`;
   };
 
   let getBarColor = (pct: number | 'N/A') => {
