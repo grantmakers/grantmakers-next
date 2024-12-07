@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { rankTotal } from '$utils/trustedConstants';
   import { formatNumber } from '@repo/shared/functions/formatters/numbers';
   interface Props {
     rank: number | undefined;
@@ -7,8 +8,9 @@
   }
 
   let { rank, total, classes = '' }: Props = $props();
+  let latestTotal = $derived(rankTotal > total ? rankTotal : total);
 
-  let percentile: number | 'N/A' = $derived(rank !== undefined ? ((total - rank) / total) * 100 : 'N/A');
+  let percentile: number | 'N/A' = $derived(rank !== undefined ? ((latestTotal - rank) / latestTotal) * 100 : 'N/A');
 
   const getLabel = (pct: number | 'N/A') => {
     if (pct === 'N/A') return 'N/A';
@@ -46,7 +48,7 @@
       <!-- Rank - hidden on mobile -->
       <div class="flex shrink flex-col gap-1 text-right">
         <span class="text-sm font-bold text-slate-700">#{formatNumber(rank)}</span>
-        <span class="text-xs text-slate-500">of 150,188</span>
+        <span class="text-xs text-slate-500">of {formatNumber(latestTotal)}</span>
       </div>
     </div>
   </div>

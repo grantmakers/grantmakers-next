@@ -31,6 +31,7 @@ export const hostnameNext = 'https://next.grantmakers.io';
 export const hostnameProd = 'https://www.grantmakers.io';
 
 export const cutoverDate = new Date('2024-12-01').toISOString().replace(/\.\d{3}Z$/, 'Z');
+export const rankTotal = 151195; // Interim helper
 
 export const articleLinks = {
   whyAlgolia: 'https://stories.algolia.com/why-hosted-search-made-sense-for-grantmakers-io-8974f5ed6bd6',
