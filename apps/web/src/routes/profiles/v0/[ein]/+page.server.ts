@@ -1,5 +1,5 @@
 import { dev } from '$app/environment';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import { WORKER_URL, PROFILES_API_ENDPOINT, AUTH_PRIVATE_KEY, WAF_AUTH_VERIFY_KEY } from '$env/static/private';
 import { isValidEin } from '@repo/shared/utils/validators';
 import type { PageServerLoad } from './$types';
@@ -80,11 +80,13 @@ const getProfile = async (ein: string): Promise<GrantmakersExtractedDataObj> => 
 };
 
 export const load: PageServerLoad = async ({ params }) => {
-  // This main dynamic route handles two scenarios:
-  // 1. The full canonical url: [ein]-[slugified-org-name]
-  // 2. The ein-only helper router: [ein]
+  // This main dynamic route handles three scenarios:
+  // 1. The full canonical url: [ein]-[org-name-slug]
+  // 2. The EIN-only helper route: [ein]
+  // 3. The EIN matches, but the slug does not: [ein]-[org-name-slug-alt]
   // We only need the EIN to fetch the data
-  // In the case of the full canonical route, we handle the full url expansion on the client to avoid duplicating the data fetch via a full redirect
+  // Slug mismatches are handled using proper server-side redirects - SEO equity outweighs minor cost of duplicate round trip to fetch data
+  // EIN-only helper routes get expanded to the full canonical URL on the client
   const ein = params.ein.split('-')[0];
 
   if (!isValidEin(ein)) {
@@ -93,14 +95,30 @@ export const load: PageServerLoad = async ({ params }) => {
     });
   }
 
+  let profile;
   try {
-    const profile = await getProfile(ein);
-    return { profile };
+    profile = await getProfile(ein);
   } catch (err) {
     console.error('Error in load function:', err);
-
     throw error(500, {
       message: 'An unexpected error occurred while fetching the foundation profile.',
     });
   }
+
+  // EIN-only helper
+  if (params.ein === ein) {
+    return { profile };
+  }
+
+  // Org name slug mismatches
+  // The profile data object has the proper slug
+  const currentSlug = `${profile.ein}-${profile.organization_name_slug}`;
+  const newUrl = `/profiles/v0/${currentSlug}`;
+  if (params.ein !== currentSlug) {
+    console.log('Redirect required to:', newUrl);
+    redirect(301, newUrl);
+  }
+
+  // Properly formatted routes
+  return { profile };
 };

@@ -64,6 +64,8 @@ export interface GrantmakersExtractedDataObj {
   grants_current_year_top_20?: GrantsArray;
   grants_all_years_top_20?: GrantsArray;
   people: PeopleArray;
+  organization_name_legacy_slug: string | null;
+  organization_name_legacy_slug_requires_redirect: boolean | null;
   organization_name_prior_year: string | null;
   organization_name_second_prior_year: string | null;
   enable_algolia_search: boolean;
