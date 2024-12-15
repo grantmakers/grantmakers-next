@@ -233,7 +233,6 @@
 <div id="#autocomplete" class="hidden" bind:this={container}></div>
 
 <style lang="postcss">
-  /* Add zebra stripes */
   :global(aa-DetachedContainer--modal) {
     @apply lg:rounded-2xl;
   }
@@ -245,7 +244,11 @@
       @apply border-slate-300;
     }
   }
+  :global(.aa-SourceHeader) {
+    @apply border-b;
+  }
   :global(.aa-Item) {
+    /* Zebra stripes */
     &:nth-child(odd) {
       @apply bg-white;
     }
