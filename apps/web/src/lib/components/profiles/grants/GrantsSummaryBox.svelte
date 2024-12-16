@@ -55,6 +55,36 @@
 <div class="items-justify flex h-full flex-col gap-2 p-4">
   <!-- Grant Statistics Section -->
   <dl class="flex w-full flex-row items-center justify-around text-2xl">
+    <!-- Grant Range -->
+    <div class="flex flex-col items-center">
+      <dt class="text-sm leading-normal text-inherit">Range</dt>
+      <dd class="flex items-center text-lg text-slate-700">
+        {#snippet hyphen()}
+          <span class="px-2 text-xs text-slate-500">·</span>
+        {/snippet}
+        {#if grantCount === 0}
+          N/A
+        {:else if grantCount === 1}
+          {humanizeCurrency(grantMax)}{@render hyphen()}N/A
+        {:else if grantMin < 0}
+          {humanizeCurrency(grantMax)}
+          &nbsp;-&nbsp;
+          <span use:tooltip={{ content: 'Negative values may reflect grant returns, adjustments, or modifications to prior disbursements' }}
+            >{humanizeCurrency(grantMin)}*</span
+          >
+        {:else if isHighlySkewed}
+          <span class="flex items-center">{humanizeCurrency(grantMax)}{@render hyphen()}{humanizeCurrency(grantMin)}</span>
+        {:else}
+          {humanizeCurrency(grantMax)}{@render hyphen()}{humanizeCurrency(grantMin)}
+        {/if}
+      </dd>
+    </div>
+
+    <!-- Decorative Divider -->
+    <div class="pointer-events-none inset-0 flex items-center justify-center" aria-hidden="true">
+      <div class="h-12 border-r border-slate-200"></div>
+    </div>
+
     <!-- Grant Count -->
     <div class="flex flex-col items-center">
       <dt class="text-sm leading-normal text-inherit">
@@ -72,7 +102,7 @@
       <!-- Median Grant Amount -->
       <div class="flex flex-col items-center">
         <HandDrawnBorder fill={`fill-${getHandDrawnClass(grantMedian)}`} show={highlightMedian}>
-          <div class="relative z-10 flex flex-col items-center rounded-full p-6">
+          <div class="relative z-10 flex flex-col items-center rounded-full px-6 py-4">
             <dt class="text-sm leading-normal text-inherit">Median</dt>
             <dd class="text-slate-700 {highlightMedian ? 'font-bold' : 'text-lg'}">
               {#if grantCount === 0 || grantCount < 3}
@@ -84,38 +114,10 @@
           </div>
         </HandDrawnBorder>
       </div>
-
-      <!-- Decorative Divider -->
-      <div class="pointer-events-none inset-0 flex items-center justify-center" aria-hidden="true">
-        <div class="h-12 border-r border-slate-200"></div>
-      </div>
-
-      <!-- Grant Range -->
-      <div class="flex flex-col items-center">
-        <dt class="text-sm leading-normal text-inherit">Range</dt>
-        <dd class="text-lg text-slate-700">
-          {#if grantCount === 0}
-            N/A
-          {:else if grantCount === 1}
-            {humanizeCurrency(grantMax)} - N/A
-          {:else if grantMin < 0}
-            {humanizeCurrency(grantMax)}
-            &nbsp;-&nbsp;
-            <span
-              use:tooltip={{ content: 'Negative values may reflect grant returns, adjustments, or modifications to prior disbursements' }}
-              >{humanizeCurrency(grantMin)}*</span
-            >
-          {:else if isHighlySkewed}
-            <span class="font-bold">{humanizeCurrency(grantMax)} - {humanizeCurrency(grantMin)}</span>
-          {:else}
-            {humanizeCurrency(grantMax)} - {humanizeCurrency(grantMin)}
-          {/if}
-        </dd>
-      </div>
     {:else}
       <div class="flex flex-col items-center">
         <dt class="text-sm leading-normal text-inherit">Amount</dt>
-        <dd class="font-bold text-slate-700">{humanizeCurrency(grantMax)}</dd>
+        <dd class="{highlightMedian ? 'font-bold' : 'text-lg'} text-slate-700">{humanizeCurrency(grantMax)}</dd>
       </div>
     {/if}
   </dl>
