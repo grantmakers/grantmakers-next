@@ -26,9 +26,13 @@ export const meta = {
   },
 };
 
-export const hostnameLegacy = 'https://legacy.grantmakers.io';
-export const hostnameNext = 'https://next.grantmakers.io';
-export const hostnameProd = 'https://www.grantmakers.io';
+export const originLegacy = 'https://legacy.grantmakers.io';
+export const originNext = 'https://next.grantmakers.io';
+export const originProd = 'https://www.grantmakers.io';
+
+export const profilesVersionLegacy = 'v0';
+export const profilesVersionNext = 'v1';
+export const profilesVersionProd = 'v0';
 
 export const cutoverDate = new Date('2024-12-01').toISOString().replace(/\.\d{3}Z$/, 'Z');
 export const rankTotal = 151195; // Interim helper

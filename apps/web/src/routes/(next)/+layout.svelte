@@ -1,6 +1,6 @@
 <script lang="ts">
   import '@fontsource/inter';
-  import '../app.pcss';
+  import '$src/app.pcss';
   import { page } from '$app/stores';
   import SEO from '$lib/components/shared/SEO.svelte';
   import { meta } from '$utils/trustedConstants';

@@ -21,6 +21,7 @@ const config = {
     }),
     alias: {
       '@repo/shared': '../../shared/*', // Monorepo 'shared' directory
+      $src: './src', // Svelte src root
       $utils: './src/lib/utils', // Svelte utils
     },
     csp: {
@@ -29,6 +30,7 @@ const config = {
         'script-src': [
           'self',
           'https://static.cloudflareinsights.com',
+          'https://cdnjs.cloudflare.com/',
           'https://docs.google.com/',
           'https://cdn.iubenda.com',
           'unsafe-eval',

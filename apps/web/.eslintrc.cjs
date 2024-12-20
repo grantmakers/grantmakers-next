@@ -7,7 +7,7 @@ module.exports = {
   parserOptions: {
     sourceType: 'module',
     ecmaVersion: 2020,
-    extraFileExtensions: ['**/*.svelte', '.svelte ', '**/*.svelte.ts', '*.svelte.ts', '**/*.svelte.js', '*.svelte.js'],
+    extraFileExtensions: ['**/*.svelte', '.svelte ', '**/*.svelte.ts', '*.svelte.ts', '**/*.svelte.js', '*.svelte.js', '*.js'],
   },
   env: {
     browser: true,

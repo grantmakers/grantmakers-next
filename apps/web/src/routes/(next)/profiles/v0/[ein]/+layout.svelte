@@ -1,10 +1,11 @@
 <script lang="ts">
   /**
    * Layouts in SvelteKit inherit parent layouts
-   * Thus, svelte:head and the footer for [ein] route is set in +layout at /routes root
+   * Tailwind is imported at root layout
+   * svelte:head is set in root layout
+   * footer is also set in root layout
    */
   import '@fontsource/open-sans';
-  import '../../../../app.pcss';
   interface Props {
     children?: import('svelte').Snippet;
   }

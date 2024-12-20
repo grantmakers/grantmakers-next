@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Autocomplete from '../../search/Autocomplete.svelte';
+  import Autocomplete from '$lib/components/search/Autocomplete.svelte';
   import type { AutocompleteInstance } from '@repo/shared/typings/algolia/autocomplete';
 
   interface Props {
