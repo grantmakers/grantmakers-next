@@ -15,7 +15,7 @@ import { connectHits, connectRefinementList, connectCurrentRefinements } from 'i
 import { highlight } from 'instantsearch.js/es/helpers';
 import { PUBLIC_ALGOLIA_APP_ID_GRANTS, PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS, PUBLIC_ALGOLIA_INDEX_NAME_GRANTS } from '$env/static/public';
 
-if (!PUBLIC_ALGOLIA_APP_ID_GRANTS || PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS || !PUBLIC_ALGOLIA_INDEX_NAME_GRANTS) {
+if (!PUBLIC_ALGOLIA_APP_ID_GRANTS || !PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS || !PUBLIC_ALGOLIA_INDEX_NAME_GRANTS) {
   throw new Error('Missing required Algolia public keys. Please ensure environment variables are set.');
 }
 
