@@ -1,5 +1,5 @@
 import type { Profile } from '@repo/shared/typings/sitemaps';
-import { hostnameNext as hostname, cutoverDate } from './trustedConstants';
+import { originNext as hostname, cutoverDate } from './trustedConstants';
 
 export const chooseDate = (now: string, processed: string, cutover: string) => {
   if (cutover > now) return now; // The cutover date hasn't happened yet, use today's date instead so it's a valid date

@@ -1,4 +1,4 @@
-import { hostnameNext as hostname } from '$utils/trustedConstants';
+import { originNext as hostname } from '$utils/trustedConstants';
 
 export const prerender = true;
 
