@@ -12,22 +12,32 @@
   let { activities, areRestatement }: Props = $props();
 </script>
 
-<div>
-  <div class="sm:flex sm:items-center">
-    <div class="w-1/2 sm:flex-auto">
-      <!-- Source: IRS core dataset via Grantmakers ETL -->
-      <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-      <div class="mt-2 px-3 text-sm text-gray-700">Summary of Direct Charitable Activities</div>
+<div class="mx-auto max-w-7xl px-4 pb-2 pt-8 text-sm text-slate-700 sm:px-6 lg:px-8">
+  <div class="flex gap-8">
+    <div class="grow">
+      <div class="flex h-full items-center rounded-lg bg-white p-4 shadow">Summary of Direct Charitable Activities</div>
     </div>
+    <!-- <aside class="hidden w-64 md:flex md:items-stretch">
+      <div class="flex grow items-center justify-center rounded-lg bg-white p-2 shadow">
+        <div class="inline-flex p-1 text-center hover:cursor-default">Learn more about Direct Charitable Activities</div>
+      </div>
+    </aside> -->
   </div>
-  <div class="mt-8 flow-root">
-    <div class="-my-2 overflow-x-auto sm:-mx-6">
-      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:mb-4 lg:px-8">
-        {#if areRestatement}
-          The listed Charitable Activities may be a restatement of their grants <Eyes />
-        {/if}
-        <table class="min-w-full table-auto divide-y divide-gray-300">
-          <thead>
+</div>
+
+<div class="flow-root">
+  <div class="-my-2 overflow-x-auto sm:-mx-6">
+    <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:mb-4 lg:px-8">
+      {#if areRestatement}
+        The listed Charitable Activities may be a restatement of their grants <Eyes />
+      {/if}
+      <div class="rounded-lg bg-white p-6">
+        <table class="min-w-full table-fixed">
+          <colgroup>
+            <col style="width: 100px" />
+            <col style="width: calc(100% - 100px)" />
+          </colgroup>
+          <thead class="border-b border-b-gray-300">
             <tr>
               <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Expenses</th>
               <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Description</th>
@@ -37,7 +47,9 @@
             {#if activities}
               {#each activities as activity}
                 <tr class="relative even:bg-gray-50">
-                  <td class="px-3 py-4 text-sm">{typeof activity?.expenses === 'number' ? formatToCurrency(activity.expenses) : 'N/A'}</td>
+                  <td class="px-3 py-4 text-right text-sm"
+                    >{typeof activity?.expenses === 'number' ? formatToCurrency(activity.expenses) : 'N/A'}</td
+                  >
                   <td class="px-3 py-4 text-sm">{activity?.description ? activity.description : 'N/A'}</td>
                 </tr>
               {/each}

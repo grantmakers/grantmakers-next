@@ -6,7 +6,7 @@
 </script>
 
 <tr class="relative even:bg-gray-50">
-  <td class="px-3 py-4 text-sm">{formatToCurrency(grant.amount)}</td>
+  <td class="px-3 py-4 text-right text-sm">{formatToCurrency(grant.amount)}</td>
   <td class="px-3 py-4 text-sm">
     <div class="text-md font-bold text-gray-900">{grant.name}</div>
   </td>
