@@ -83,7 +83,7 @@ export interface SummaryGrant {
   amount: number;
   purpose: string;
   tax_year: number;
-  isMalformedGrant?: boolean;
+  is_malformed_grant?: boolean;
 }
 
 export interface SummaryGrantsData extends GrantmakersExtractedDataObj {
@@ -358,6 +358,7 @@ export interface GrantsApplicationContact {
   email: string | null;
   phone: string | null;
   address: GrantsApplicationContactAddress;
+  is_foreign?: boolean | null;
 }
 
 export interface GrantsApplicationContactAddress {

@@ -7,7 +7,7 @@
 
 <tr class="relative even:bg-gray-50">
   <td class="px-3 py-4 text-sm">{formatToCurrency(grant.amount)}</td>
-  <td class="py-4 pl-4 pr-3 text-sm sm:pl-0">
+  <td class="px-3 py-4 text-sm">
     <div class="text-md font-bold text-gray-900">{grant.name}</div>
   </td>
   <!-- Source: IRS core dataset via Grantmakers ETL -->
