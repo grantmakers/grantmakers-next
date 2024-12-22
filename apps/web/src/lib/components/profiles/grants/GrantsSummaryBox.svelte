@@ -41,6 +41,8 @@
     return true;
   });
 
+  const negativeGrantMessage = 'Negative grant values may reflect grant returns, adjustments, or modifications to prior disbursements';
+
   function getHandDrawnClass(
     median: number,
   ): 'grantmakers-green' | 'grantmakers-blue' | 'yellow-500' | 'grantmakers-orange' | 'transparent' {
@@ -68,10 +70,8 @@
           {humanizeCurrency(grantMax)}{@render hyphen()}N/A
         {:else if grantMin < 0}
           {humanizeCurrency(grantMax)}
-          &nbsp;-&nbsp;
-          <span use:tooltip={{ content: 'Negative values may reflect grant returns, adjustments, or modifications to prior disbursements' }}
-            >{humanizeCurrency(grantMin)}*</span
-          >
+          {@render hyphen()}
+          <span>{humanizeCurrency(grantMin)}*</span>
         {:else if isHighlySkewed}
           <span class="flex items-center">{humanizeCurrency(grantMax)}{@render hyphen()}{humanizeCurrency(grantMin)}</span>
         {:else}
@@ -123,7 +123,11 @@
   </dl>
 
   {#if grantsReferenceAttachment && grantCount === 1}
-    <Tip title="Grantmaking reported as a single grant" message="See the Grants table below for details." includeLogo />
+    <Tip title="Grantmaking reported as a single grant" message="See the Grants table below for details." includeLogo bg={true} />
+  {/if}
+
+  {#if grantMin < 0}
+    <Tip message={negativeGrantMessage} includeLogo bg={true} />
   {/if}
 
   <!-- Grant Clusters Section -->
@@ -140,7 +144,7 @@
   {:else if grantsFacets && grantsFacets[0].grant_count > 0}
     <h2 class="mt-4 text-sm font-bold text-slate-700">Grant Clusters</h2>
     <div class="w-full">
-      <BarGrantsSnapshot rawData={grantsFacets[0].facets.amount} {grantCount} />
+      <BarGrantsSnapshot rawData={grantsFacets[0].facets.amount} />
     </div>
   {:else}
     <div class="mt-4 opacity-30">

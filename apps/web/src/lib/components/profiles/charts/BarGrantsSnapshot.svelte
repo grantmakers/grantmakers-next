@@ -2,8 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
   import type { Chart } from 'chart.js';
 
-  let { rawData, grantCount }: { rawData: RawData; grantCount: number } = $props();
-  console.log(rawData);
+  let { rawData }: { rawData: RawData } = $props();
 
   type RawData = {
     [key: string]: number;
@@ -83,7 +82,6 @@
     });
 
     processedData.sort((a, b) => b.min - a.min);
-    console.log(processedData);
     return processedData;
   }
 
@@ -115,10 +113,11 @@
     chart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: data.map((d) => d.displayRange),
+        labels: data.map((d: GrantRange) => d.displayRange),
         datasets: [
           {
-            data: data.map((d) => (d.count / grantCount) * 100),
+            // label: 'Amount Clusters',
+            data: data.map((d) => d.count),
             backgroundColor: data.map((d) => getColorForRange(d.displayRange)),
             borderColor: data.map((d) => getColorForRange(d.displayRange)),
             borderWidth: 1,
@@ -136,20 +135,14 @@
             beginAtZero: true,
             title: {
               display: true,
-              text: '% of Grants',
-            },
-            min: 0,
-            max: 100,
-            ticks: {
-              callback: function (value: string | number): string {
-                return `${Math.round(Number(value))}%`;
-              },
-              autoSkip: false,
-              stepSize: 25,
-              count: 5,
+              text: '# of Grants',
             },
             grid: {
               display: false,
+            },
+            ticks: {
+              maxTicksLimit: 5,
+              stepSize: 1,
             },
           },
           y: {
@@ -166,13 +159,8 @@
           },
           tooltip: {
             callbacks: {
-              title: () => '',
-              label: () => '',
-              footer: (tooltipItems) => {
-                const context = tooltipItems[0];
-                const percentage = Math.round(context.parsed.x);
-                const actualCount = data[context.dataIndex].count;
-                return `${actualCount} grants (${percentage}%)`;
+              label: (context) => {
+                return `${context.formattedValue} grants`;
               },
             },
           },
