@@ -3,6 +3,7 @@
   import type { Chart } from 'chart.js';
 
   let { rawData, grantCount }: { rawData: RawData; grantCount: number } = $props();
+  console.log(rawData);
 
   type RawData = {
     [key: string]: number;
@@ -18,12 +19,12 @@
 
   function prepareAndReduceChartData(rawData: RawData): GrantRange[] {
     const consolidatedData: { [range: string]: number } = {
-      '<$1k': 0,
-      '$1k-$10k': 0,
-      '$10k-$100k': 0,
-      '$100k-$1M': 0,
-      '$1M-$10M': 0,
-      '$10M+': 0,
+      '<$500': 0,
+      '$500-$5k': 0,
+      '$5k-$25k': 0,
+      '$25k-$100k': 0,
+      '$100k-$500k': 0,
+      '$500k+': 0,
     };
 
     for (const [range, count] of Object.entries(rawData)) {
@@ -31,46 +32,46 @@
       const min = parseInt(minStr);
       const max = maxStr === 'Infinity' ? Infinity : parseInt(maxStr);
 
-      if (max < 1000) {
-        consolidatedData['<$1k'] += count;
-      } else if (min >= 1000 && max <= 9999) {
-        consolidatedData['$1k-$10k'] += count;
-      } else if (min >= 10000 && max <= 99999) {
-        consolidatedData['$10k-$100k'] += count;
-      } else if (min >= 100000 && max <= 999999) {
-        consolidatedData['$100k-$1M'] += count;
-      } else if (min >= 1000000 && max <= 9999999) {
-        consolidatedData['$1M-$10M'] += count;
-      } else if (min >= 10000000) {
-        consolidatedData['$10M+'] += count;
+      if (max < 500) {
+        consolidatedData['<$500'] += count;
+      } else if (min >= 500 && max <= 4999) {
+        consolidatedData['$500-$5k'] += count;
+      } else if (min >= 5000 && max <= 24999) {
+        consolidatedData['$5k-$25k'] += count;
+      } else if (min >= 25000 && max <= 99999) {
+        consolidatedData['$25k-$100k'] += count;
+      } else if (min >= 100000 && max <= 499999) {
+        consolidatedData['$100k-$500k'] += count;
+      } else if (min >= 500000) {
+        consolidatedData['$500k+'] += count;
       }
     }
 
     const processedData: GrantRange[] = Object.entries(consolidatedData).map(([displayRange, count]) => {
       let min: number, max: number;
       switch (displayRange) {
-        case '<$1k':
+        case '<$500':
           min = 0;
-          max = 999;
+          max = 500;
           break;
-        case '$1k-$10k':
-          min = 1000;
-          max = 9999;
+        case '$500-$5k':
+          min = 500;
+          max = 4999;
           break;
-        case '$10k-$100k':
-          min = 10000;
+        case '$5k-$25k':
+          min = 5000;
+          max = 24999;
+          break;
+        case '$25k-$100k':
+          min = 25000;
           max = 99999;
           break;
-        case '$100k-$1M':
+        case '$100k-$500k':
           min = 100000;
-          max = 999999;
+          max = 499999;
           break;
-        case '$1M-$10M':
-          min = 1000000;
-          max = 9999999;
-          break;
-        case '$10M+':
-          min = 10000000;
+        case '$500k+':
+          min = 500000;
           max = Infinity;
           break;
         default:
@@ -82,6 +83,7 @@
     });
 
     processedData.sort((a, b) => b.min - a.min);
+    console.log(processedData);
     return processedData;
   }
 
@@ -102,11 +104,11 @@
     const colorPalette = ['#c54e00', '#e65c00', '#607d8b', '#7891a1', '#009688', '#00b3a1'];
 
     const getColorForRange = (range: string) => {
-      if (range.includes('$10M+')) return colorPalette[0];
-      if (range.includes('$1M-$10M')) return colorPalette[1];
-      if (range.includes('$100k-$1M')) return colorPalette[2];
-      if (range.includes('$10k-$100k')) return colorPalette[3];
-      if (range.includes('$1k-$10k')) return colorPalette[4];
+      if (range.includes('$500k+')) return colorPalette[0];
+      if (range.includes('$100k-$500k')) return colorPalette[1];
+      if (range.includes('$25k-$100k')) return colorPalette[2];
+      if (range.includes('$5k-$25k')) return colorPalette[3];
+      if (range.includes('$500-$5k')) return colorPalette[4];
       return colorPalette[5];
     };
 
