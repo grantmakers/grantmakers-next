@@ -144,7 +144,7 @@
   {:else if grantsFacets && grantsFacets[0].grant_count > 0}
     <h2 class="mt-4 text-sm font-bold text-slate-700">Grant Clusters</h2>
     <div class="w-full">
-      <BarGrantsSnapshot rawData={grantsFacets[0].facets.amount} />
+      <BarGrantsSnapshot rawData={grantsFacets[0].facets.amount} {grantCount} />
     </div>
   {:else}
     <div class="mt-4 opacity-30">

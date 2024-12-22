@@ -2,7 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
   import type { Chart } from 'chart.js';
 
-  let { rawData }: { rawData: RawData } = $props();
+  let { rawData, grantCount }: { rawData: RawData; grantCount: number } = $props();
 
   type RawData = {
     [key: string]: number;
@@ -14,6 +14,21 @@
     min: number;
     max: number;
     displayRange: string;
+  }
+
+  interface TicksConfig {
+    stepSize?: number;
+    maxTicksLimit: number;
+  }
+
+  const ticksConfig: TicksConfig = {
+    stepSize: 1,
+    maxTicksLimit: 5,
+  };
+  // Chart.js will generate an unlimited amount of ticks if stepSize set to 1
+  // Causes a performance hit, and a console warning, when the number of ticks is over 1k
+  if (grantCount > 5) {
+    delete ticksConfig.stepSize;
   }
 
   function prepareAndReduceChartData(rawData: RawData): GrantRange[] {
@@ -140,10 +155,7 @@
             grid: {
               display: false,
             },
-            ticks: {
-              maxTicksLimit: 5,
-              stepSize: 1,
-            },
+            ticks: ticksConfig,
           },
           y: {
             position: 'left',
