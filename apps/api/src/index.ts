@@ -29,7 +29,7 @@ export default {
     const profilesEndpoint = '/api/v1/profiles';
     const grantsEndpoint = '/api/v1/grants';
 
-    if (url.pathname.startsWith(profilesEndpoint || grantsEndpoint)) {
+    if (url.pathname.startsWith(profilesEndpoint) || url.pathname.startsWith(grantsEndpoint)) {
       return apiRouter.handle(request, env);
     }
 
