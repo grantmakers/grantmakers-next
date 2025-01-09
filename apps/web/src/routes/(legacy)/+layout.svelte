@@ -7,8 +7,6 @@
 
   import '@fontsource/roboto';
   import '@fontsource/material-icons';
-  import 'materialize-css/dist/css/materialize.min.css';
-  import '$lib/assets/legacy/css/main.css';
   import { page } from '$app/stores';
   import SEO from '$lib/components/shared/SEO.svelte';
   import { meta } from '$utils/trustedConstants';
@@ -37,7 +35,7 @@
 
 <style>
   :global(body) {
-    background-color: #f8f9fe;
+    background-color: #ccc;
   }
   :global(.material-icons) {
     font-family: 'Material Icons';

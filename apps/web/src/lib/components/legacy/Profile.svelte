@@ -6,14 +6,12 @@
   import irsLogo from '$lib/assets/legacy/images/irs-w-text.png';
   import irsLogoAlt from '$lib/assets/legacy/images/irs-w-text-alt.png';
   import proPublicaLogo from '$lib/assets/legacy/images/propublica.png';
-  import githubLogo from '$lib/assets/legacy/images/github.svg';
-  import twitterLogo from '$lib/assets/legacy/images/twitter.svg';
-  import emailLogo from '$lib/assets/legacy/images/email.svg';
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
   import { onMount } from 'svelte';
   import { formatNumber, formatToCurrency, humanizeCurrency, humanizeNumber } from '@repo/shared/functions/formatters/numbers';
   import { formatDateToMonthYear } from '@repo/shared/functions/formatters/dates';
   import { upperFirstLetter } from '@repo/shared/functions/formatters/names';
+  import Footer from './Footer.svelte';
   interface Props {
     profile: GrantmakersExtractedDataObj;
   }
@@ -93,7 +91,7 @@
       console.log(error);
     }
     if (page.enable_algolia_search) {
-      const { initSearchJs } = await import('$lib/assets/legacy/js/search');
+      const { initSearchJs } = await import('$src/lib/assets/legacy/js/profile-embedded-search');
       try {
         initSearchJs(M);
       } catch (error) {
@@ -107,7 +105,7 @@
   <nav id="scrollspy-target" class="navbar-profile affix-top pushpin-nav" data-target="main-nav">
     <div class="nav-wrapper">
       <div class="container-custom">
-        <a href="#" data-target="mobile-nav" class="sidenav-trigger right disable-primary-color print-hidden"
+        <a href={'#'} data-target="mobile-nav" class="sidenav-trigger right disable-primary-color print-hidden"
           ><i class="material-icons">menu</i></a
         >
         <div class="row">
@@ -141,7 +139,7 @@
               <li><a href="#application-info" data-ga="Application Guidelines">Guidelines</a></li>
               <li><a href="#financials" data-ga="Grants">Financials</a></li>
               <li>
-                <a href="#" data-target="navbar-more" class="dropdown-trigger print-hidden" id="primary-navbar-dropdown-trigger"
+                <a href={'#'} data-target="navbar-more" class="dropdown-trigger print-hidden" id="primary-navbar-dropdown-trigger"
                   >More <i style="margin-left:3px" class="material-icons right">arrow_drop_down</i></a
                 >
               </li>
@@ -187,13 +185,13 @@
       </div>
     </a>
   </li>
-  <li class="disabled"><a class="grey-text">Current Profile</a></li>
+  <li class="disabled"><a href={'#'} class="grey-text">Current Profile</a></li>
   <li><a href="#people">People</a></li>
   <li><a href="#grants">Grants</a></li>
   <li><a href="#application-info">Application Guidelines</a></li>
   <!-- <li><a href="#financial-overview">Financials</a></li> -->
   <li><hr class="divider" /></li>
-  <li class="disabled"><a class="title grey-text">Search</a></li>
+  <li class="disabled"><a href={'#'} class="title grey-text">Search</a></li>
   <li>
     <a href="{site.url}/search/profiles/" class="waves-effect waves-light"> Find a Foundation Profile </a>
   </li>
@@ -201,11 +199,11 @@
     <a href="{site.url}/search/grants" class="waves-effect waves-light"> Search all Grants </a>
   </li>
   <li><hr class="divider" /></li>
-  <li class="disabled"><a class="title grey-text">The Project</a></li>
+  <li class="disabled"><a href={'#'} class="title grey-text">The Project</a></li>
   <li><a href="{site.url}/about/" class="waves-effect waves-light" data-ga="About">About</a></li>
   <li><a href="{site.url}/about/faq/" class="waves-effect waves-light" data-ga="FAQ">FAQ</a></li>
   <li><hr class="divider" /></li>
-  <li class="disabled"><a class="title grey-text">Get Involved</a></li>
+  <li class="disabled"><a href={'#'} class="title grey-text">Get Involved</a></li>
   <li><a href="{site.url}/donate/" class="waves-effect waves-light" data-ga="Donate" title="Donate">Donate</a></li>
 </ul>
 
@@ -547,7 +545,7 @@
                               >Search powered by<br /><a href={site.algolia_referral_link} class="algolia-light-bg"
                                 ><img src={algoliaLightBg} alt="Powered by Algolia" /></a
                               ></span> -->
-                            <a href="#" data-target="algolia-mobile" class="sidenav-trigger right hide"
+                            <a href={'#'} data-target="algolia-mobile" class="sidenav-trigger right hide"
                               ><i class="material-icons text-muted">filter_list</i></a
                             >{/if}
                         </h4>
@@ -637,7 +635,7 @@
                                 <li>
                                   <span id="ais-widget-mobile-clear-all"></span>
                                   <a
-                                    href="#"
+                                    href={'#'}
                                     data-target="refinements-slide-out"
                                     class="sidenav-trigger show-on-med-and-down waves-effect waves-light button-collapse btn white grey-text text-darken-3"
                                     ><i class="material-icons right">filter_list</i> Filter</a
@@ -707,7 +705,7 @@
                           </div>
                         </div>
                         <div id="ais-widget-sort-by" class="col s12 m3 l3 right-align hidden">
-                          <a class="dropdown-trigger hide-on-med-and-down text-muted" data-target="tax-year-dropdown">
+                          <a href={'#'} class="dropdown-trigger hide-on-med-and-down text-muted" data-target="tax-year-dropdown">
                             {#if enable_tax_year_dropdown}
                               Tax Years<i class="material-icons right">arrow_drop_down</i>
                             {:else}
@@ -1284,7 +1282,7 @@
               <div class="card-panel">
                 <div class="card-panel-header">
                   <h4>
-                    Tax <a class="text-default">Filings</a>
+                    Tax <a href={'#'} class="text-default">Filings</a>
                     <a
                       class="right valign-wrapper"
                       style="height: 27px"
@@ -1367,81 +1365,7 @@
   </div>
 </div>
 
-<footer class="footer print-hidden js-enable-donorbox-popup">
-  <div class="container-custom">
-    <div class="row row-footer-primary-nav">
-      <div class="col s4 m3 l3">
-        <h6>The Project</h6>
-        <p><a href="{site.url}/about/the-dataset/">The 990 Dataset</a></p>
-        <p><a href="{site.url}/about/">About</a></p>
-        <p><a href="{site.url}/about/faq/">FAQ</a></p>
-      </div>
-      <div class="col s4 m3 l3">
-        <h6>Get Involved</h6>
-        <!--<p><a href="{ site.url }/share/">Tell your colleagues</a></p>-->
-        <!--<p><a href="{ site.donorbox_hosted_page_coffee }" class="custom-dbox-popup">Buy me a coffee</a></p>-->
-        <p><a href="{site.url}/donate/">Support open data</a></p>
-        <p><a href="{site.url}/donate/">Donate</a></p>
-      </div>
-      <div class="col s4 m3 l3">
-        <h6>Search</h6>
-        <p><a href="{site.url}/search/profiles/" title="Find a foundation profile">Profiles Search</a></p>
-        <p><a href="{site.url}/search/grants/" title="See who foundations are funding">Grants Search</a></p>
-      </div>
-      <div class="col s4 m3 l3 hide-on-small-only">
-        <h6 class="valign-wrapper">
-          <img src={legacyLogo} alt="Grantmakers.io logo" class="icon-logo" />Grantmakers.io
-        </h6>
-        <p>Discover insights into your next funder. Built for a friend. Open sourced for the world.</p>
-      </div>
-    </div>
-    <div class="divider divider-dark"></div>
-    <div class="row row-tight row-footer-secondary-nav">
-      <div class="col s12 m12 l4">
-        <div class="left-align">
-          <ul class="footer-nav list-inline">
-            <li><a href="{site.url}/profiles/">Profiles Index</a></li>
-            {#if page.ein}
-              <li>
-                <a href="mailto:feedback@grantmakers.io?body=%0D%0A%0D%0A{page.organization_name}%0D%0A{site.url}{site.baseurl}/{page.ein}/"
-                  >Feedback</a
-                >
-              </li>
-            {:else}
-              <li><a href="mailto:feedback@grantmakers.io">Feedback</a></li>
-            {/if}
-          </ul>
-        </div>
-      </div>
-      <div class="col s12 m12 l4">
-        <div class="center-align">
-          <ul class="footer-secondary-nav-icons list-inline">
-            <li>
-              <a data-ga="Github Share Icon" href="https://github.com/grantmakers/grantmakers.github.io"
-                ><img src={githubLogo} alt="Visit Grantmakers.io on Github" /></a
-              >
-            </li>
-            <li>
-              <a data-ga="Email Hello Icon" href="mailto:hello@grantmakers.io"><img src={emailLogo} alt="Say hello" /></a>
-            </li>
-            <li>
-              <a data-ga="Twitter Share Icon" href="https://twitter.com/Grantmakersio"
-                ><img src={twitterLogo} alt="Follow Grantmakers.io on Twitter" /></a
-              >
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="col s12 m12 l4">
-        <div class="copyright right-align">
-          Built with <i class="material-icons grantmakers-text">favorite</i> and
-          <i class="material-icons" title="Sometimes tea, but mostly coffee">emoji_food_beverage</i>
-          by <a data-ga="Github Chad Kruse Link" class="text-default" href="https://github.com/chadokruse"> Chad Kruse </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
+<Footer {profile} />
 
 <style lang="postcss">
   /* Dropdown width */
