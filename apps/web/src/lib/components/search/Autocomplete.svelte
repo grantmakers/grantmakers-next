@@ -74,7 +74,7 @@
       </div>
     `,
     item: ({ item, html }: AlgoliaItemTemplateProps) => {
-      const url = `/profiles/v0/${item.ein}-${item.organization_name_slug}`;
+      const url = `/profiles/v1/${item.ein}-${item.organization_name_slug}`;
       let percentile: number | 'N/A' = item.rank !== undefined ? ((item.rank_total - item.rank) / item.rank_total) * 100 : 'N/A';
       return html`<a href="${url}" data-sveltekit-reload>
         <div class="px-2 py-3 transition-colors duration-100 hover:bg-slate-100">
@@ -114,7 +114,7 @@
       </div>`,
   };
 
-  const getItemUrl = ({ item }: { item: AlgoliaProfilesItem }) => `/profiles/v0/${item.ein}-${item.organization_name_slug}`;
+  const getItemUrl = ({ item }: { item: AlgoliaProfilesItem }) => `/profiles/v1/${item.ein}-${item.organization_name_slug}`;
 
   let openSearch = () => {
     if (browser) {

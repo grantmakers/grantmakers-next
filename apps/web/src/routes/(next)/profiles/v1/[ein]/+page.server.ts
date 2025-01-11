@@ -113,7 +113,7 @@ export const load: PageServerLoad = async ({ params }) => {
   // Org name slug mismatches
   // The profile data object has the proper slug
   const currentSlug = `${profile.ein}-${profile.organization_name_slug}`;
-  const newUrl = `/profiles/v0/${currentSlug}`;
+  const newUrl = `/profiles/v1/${currentSlug}`;
   if (params.ein !== currentSlug) {
     console.log('Redirect required to:', newUrl);
     redirect(301, newUrl);

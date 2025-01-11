@@ -18,7 +18,7 @@
     return badgeStyles.default;
   });
 
-  let url = $derived('/profiles/v0/' + ein);
+  let url = $derived('/profiles/v1/' + ein);
 </script>
 
 <!-- https://tailwindui.com/components/application-ui/lists/stacked-lists -->

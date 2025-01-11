@@ -20,7 +20,7 @@ export const GET: RequestHandler = async () => {
   return new Response(null, {
     status: 307,
     headers: {
-      Location: `/profiles/v0/${paddedEIN}`,
+      Location: `/profiles/v1/${paddedEIN}`,
     },
   });
 };

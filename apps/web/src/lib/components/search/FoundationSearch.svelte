@@ -118,7 +118,7 @@
         },
         templates: {
           item: (item: PlaceholderHit, { html }) => {
-            const url = `/profiles/v0/${item.ein}-${item.organization_name_slug}`;
+            const url = `/profiles/v1/${item.ein}-${item.organization_name_slug}`;
             let percentile: number | 'N/A' = item.rank !== undefined ? ((item.rank_total - item.rank) / item.rank_total) * 100 : 'N/A';
             return html`<a href="${url}"
               ><div class="flex items-center justify-between gap-x-6 py-5">

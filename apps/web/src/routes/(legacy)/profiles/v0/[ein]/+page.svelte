@@ -15,7 +15,7 @@
   onMount(() => {
     const canonicalSlug = `${profile.ein}-${profile.organization_name_slug}`;
     if ($page.params.ein !== canonicalSlug) {
-      goto(`/profiles/vL/${canonicalSlug}`, { replaceState: true });
+      goto(`/profiles/v1/${canonicalSlug}`, { replaceState: true });
     }
   });
 </script>

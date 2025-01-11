@@ -4,7 +4,7 @@
    * However, this layout is in it's own namespace, 'legacy'
    * This ensures it does NOT inherit Tailwind specifically
    */
-  import 'materialize-css/dist/css/materialize.min.css';
+  // Materialize embedded in main.css
   import '$lib/assets/legacy/css/main.css';
 
   interface Props {

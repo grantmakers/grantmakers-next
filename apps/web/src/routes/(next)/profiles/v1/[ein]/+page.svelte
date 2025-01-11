@@ -21,12 +21,12 @@
         event_label: 'EIN Only Access',
         ein: profile.ein,
         original_url: $page.params.ein,
-        destination_url: `/profiles/v0/${profile.ein}-${profile.organization_name_slug}`,
+        destination_url: `/profiles/v1/${profile.ein}-${profile.organization_name_slug}`,
         organization_name: profile.organization_name,
       });
     }
     const referrer = document.referrer;
-    if (referrer && referrer.includes('/profiles/v0/')) {
+    if (referrer && referrer.includes('/profiles/v1/')) {
       trackEvent('redirect_slug_mismatch', {
         event_category: 'Navigation',
         event_label: 'Organization Name Slug Mismatch',
@@ -38,7 +38,7 @@
     }
     if ($page.params.ein !== canonicalSlug) {
       console.log('Detected power user - redirecting to full URL');
-      goto(`/profiles/v0/${canonicalSlug}`, { replaceState: true });
+      goto(`/profiles/v1/${canonicalSlug}`, { replaceState: true });
     }
   });
 </script>
