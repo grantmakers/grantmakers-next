@@ -63,7 +63,7 @@
   <li><a data-sveltekit-reload href="{site.baseurl}/about/faq/" class="waves-effect waves-light" data-ga="FAQ" title="FAQ">FAQ</a></li>
   <li class="divider"></li>
   <li class="disabled"><span class="title grey-text">Get Involved</span></li>
-  <li><a href="{site.baseurl}/donate/" class="waves-effect waves-light" data-ga="Donate" title="Donate">Donate</a></li>
+  <li><a href="{site.baseurl}/about/donate/" class="waves-effect waves-light" data-ga="Donate" title="Donate">Donate</a></li>
 </ul>
 <!-- End navbar dropdown -->
 
@@ -90,7 +90,7 @@
   <li><a data-sveltekit-reload href="{site.baseurl}/about/faq/" class="waves-effect waves-light" data-ga="FAQ">FAQ</a></li>
   <li><hr class="divider" /></li>
   <li class="disabled"><span class="title grey-text">Get Involved</span></li>
-  <li><a href="{site.baseurl}/donate/" class="waves-effect waves-light" data-ga="Donate" title="Donate">Donate</a></li>
+  <li><a href="{site.baseurl}/about/donate/" class="waves-effect waves-light" data-ga="Donate" title="Donate">Donate</a></li>
 </ul>
 
 <!-- End Mobile Navbar -->

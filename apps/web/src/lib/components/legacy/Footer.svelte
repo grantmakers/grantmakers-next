@@ -32,8 +32,8 @@
         <h6>Get Involved</h6>
         <!--<p><a href="{ site.url }/share/">Tell your colleagues</a></p>-->
         <!--<p><a href="{ site.donorbox_hosted_page_coffee }" class="custom-dbox-popup">Buy me a coffee</a></p>-->
-        <p><a href="{site.url}/donate/">Support open data</a></p>
-        <p><a href="{site.url}/donate/">Donate</a></p>
+        <p><a data-sveltekit-reload href="{site.url}/about/donate/">Support open data</a></p>
+        <p><a data-sveltekit-reload href="{site.url}/about/donate/">Donate</a></p>
       </div>
       <div class="col s4 m3 l3">
         <h6>Search</h6>

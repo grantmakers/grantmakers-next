@@ -203,8 +203,10 @@
   <li><a href="{site.url}/about/" class="waves-effect waves-light" data-ga="About">About</a></li>
   <li><a href="{site.url}/about/faq/" class="waves-effect waves-light" data-ga="FAQ">FAQ</a></li>
   <li><hr class="divider" /></li>
-  <li class="disabled"><a href={'#'} class="title grey-text">Get Involved</a></li>
-  <li><a href="{site.url}/donate/" class="waves-effect waves-light" data-ga="Donate" title="Donate">Donate</a></li>
+  <li class="disabled"><a data-sveltekit-reload href={'#'} class="title grey-text">Get Involved</a></li>
+  <li>
+    <a data-sveltekit-reload href="{site.url}/about/donate/" class="waves-effect waves-light" data-ga="Donate" title="Donate">Donate</a>
+  </li>
 </ul>
 
 <div class="wrapper min-h-full">
