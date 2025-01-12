@@ -14,7 +14,7 @@
 
   const site = {
     baseurl: '/profiles',
-    url: 'https://www.grantmakers.io',
+    url: '', //'https://www.grantmakers.io',
     algolia_referral_link: 'https://www.algolia.com/?utm_source=grantmakersio&utm_medium=referral',
   };
 </script>
@@ -24,9 +24,9 @@
     <div class="row row-footer-primary-nav">
       <div class="col s4 m3 l3">
         <h6>The Project</h6>
-        <p><a href="{site.url}/about/the-dataset/">The 990 Dataset</a></p>
-        <p><a href="{site.url}/about/">About</a></p>
-        <p><a href="{site.url}/about/faq/">FAQ</a></p>
+        <p><a data-sveltekit-reload href="{site.url}/about/the-dataset/">The 990 Dataset</a></p>
+        <p><a data-sveltekit-reload href="{site.url}/about/">About</a></p>
+        <p><a data-sveltekit-reload href="{site.url}/about/faq/">FAQ</a></p>
       </div>
       <div class="col s4 m3 l3">
         <h6>Get Involved</h6>
@@ -52,7 +52,7 @@
       <div class="col s12 m12 l4">
         <div class="left-align">
           <ul class="footer-nav list-inline">
-            <li><a href="{site.url}/profiles/">Profiles Index</a></li>
+            <li><a data-sveltekit-reload href="{site.url}/profiles/">Profiles Index</a></li>
             {#if page && page.ein}
               <li>
                 <a href="mailto:feedback@grantmakers.io?body=%0D%0A%0D%0A{page.organization_name}%0D%0A{site.url}{site.baseurl}/{page.ein}/"
@@ -69,7 +69,7 @@
         <div class="center-align">
           <ul class="footer-secondary-nav-icons list-inline">
             <li>
-              <a data-ga="Github Share Icon" href="https://github.com/grantmakers/grantmakers.github.io"
+              <a data-ga="Github Share Icon" href="https://github.com/grantmakers/grantmakers-next"
                 ><img src={githubLogo} alt="Visit Grantmakers.io on Github" /></a
               >
             </li>

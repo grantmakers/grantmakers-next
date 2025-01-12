@@ -49,7 +49,7 @@ const config = {
         'img-src': ['self', 'data:', 'https://images.unsplash.com', 'https://cdn.iubenda.com', 'https://tailwindui.com'], // Added Unsplash domain
         'font-src': ['self', 'data:'],
         'object-src': ['none'],
-        'base-uri': ['none'],
+        'base-uri': ['self'], // Move bak to 'none' when Materialize is fully removed
         'form-action': ['self'],
       },
     },

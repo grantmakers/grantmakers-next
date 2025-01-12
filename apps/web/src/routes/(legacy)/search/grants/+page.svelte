@@ -1,17 +1,16 @@
 <script lang="ts">
   import bg from '$lib/assets/legacy/images/bg.jpg';
-  import { humanizeNumber } from '@repo/shared/functions/formatters/numbers';
   import Header from '$lib/components/legacy/search/Header.svelte';
   import Footer from '$lib/components/legacy/Footer.svelte';
   const site = {
     baseurl: '',
-    number_of_searchable_grants: 5000000,
+    number_of_searchable_grants: 5026745,
   };
   import { onMount } from 'svelte';
 
   onMount(async () => {
-    let M = await import('materialize-css');
-
+    // const { M } = await import('$lib/assets/legacy/js/materialize.min.js'); // Forked Materialize
+    let M = await import('materialize-css'); // OG Materialize
     const { initSearchJs } = await import('$lib/assets/legacy/js/search-grants');
     try {
       initSearchJs(M);
@@ -21,7 +20,7 @@
   });
 </script>
 
-<div class="unified-search">
+<div class="unified-search" data-sveltekit-preload-data="false">
   <Header />
 
   <main>
@@ -33,7 +32,9 @@
         <div class="intro-text center-align white-text">
           <h1 class="text-bold">Grants Search</h1>
           <h5>Discover who foundations are funding</h5>
-          <p>Search through {humanizeNumber(site.number_of_searchable_grants)} million grants contained in the public IRS 990-PF dataset</p>
+          <p>
+            Search through {(site.number_of_searchable_grants / 1e6).toFixed(1)} million grants contained in the public IRS 990-PF dataset
+          </p>
         </div>
       </div>
       <canvas></canvas>

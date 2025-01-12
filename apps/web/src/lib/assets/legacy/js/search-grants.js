@@ -23,11 +23,15 @@ export function initSearchJs(M) {
   M.Parallax.init(elemsPA);
 
   const elemsNavMore = document.getElementById('primary-navbar-dropdown-trigger');
-  const optionsNavMore = {
-    container: 'primary-navbar',
-    constrainWidth: false,
-  };
-  M.Dropdown.init(elemsNavMore, optionsNavMore);
+  const containerNavMore = document.getElementById('primary-navbar');
+
+  if (elemsNavMore && containerNavMore) {
+    const optionsNavMore = {
+      container: containerNavMore,
+      constrainWidth: false,
+    };
+    M.Dropdown.init(elemsNavMore, optionsNavMore);
+  }
 
   const elemsSN = document.querySelectorAll('.sidenav');
   M.Sidenav.init(elemsSN);
@@ -174,13 +178,13 @@ export function initSearchJs(M) {
       <span class="text-bold">{{#helpers.highlight}}{ "attribute": "grantee_name" }{{/helpers.highlight}}</span> <!--<span class="text-muted small">({{ tax_year }})</span>-->
     </div>
     <div class="col s12 m5">
-      <a class="truncate text-light" href="https://www.grantmakers.io/profiles/{{ ein }}" title="View foundation profile">{{ organization_name }}</a>
+      <a class="truncate text-light" href="/profiles/v0/{{ ein }}" title="View foundation profile">{{ organization_name }}</a>
     </div>
     <div class="col m1 hide-on-small-only">
       <div class="actions-wrapper center-align">
         <a href="#" class="dropdown-trigger dropdown-trigger-hits blue-grey-text" data-target="{{ _id }}"><i class="material-icons md-18">more_vert</i></a>
         <ul id="{{ _id }}" class='dropdown-content'>
-          <li><a href="https://www.grantmakers.io/profiles/{{ ein }}"><i class="material-icons md-18 left">list_alt</i>View Foundation Profile</a></li>
+          <li><a href="/profiles/v0/{{ ein }}"><i class="material-icons md-18 left">list_alt</i>View Foundation Profile</a></li>
         </ul>
       </div>
     </div>
@@ -227,7 +231,7 @@ export function initSearchJs(M) {
     <div class="card z-depth-0 grey lighten-4">
       <div class="card-content">
         <div class="card-title">Get to know Grantmakers.io</div>
-        <p><a href="{{ site.baseurl }}/about/tips-and-tricks/" data-ga="Get to know link">Tips and tricks</a> to get the most out of your searches</p>
+        <p><a href="{{ site.baseurl }}/about/" data-ga="Get to know link">Tips and tricks</a> to get the most out of your searches</p>
       </div>
     </div>
   </div>`;

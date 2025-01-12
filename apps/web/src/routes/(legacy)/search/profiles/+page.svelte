@@ -5,13 +5,13 @@
   import Footer from '$lib/components/legacy/Footer.svelte';
   const site = {
     baseurl: '',
-    number_of_foundations: 151000,
+    number_of_foundations: 153013,
   };
   import { onMount } from 'svelte';
 
   onMount(async () => {
-    let M = await import('materialize-css');
-
+    // const { M } = await import('$lib/assets/legacy/js/materialize.min.js'); // Forked Materialize
+    let M = await import('materialize-css'); // OG Materialize
     const { initSearchJs } = await import('$lib/assets/legacy/js/search-profiles');
     try {
       initSearchJs(M);
@@ -21,7 +21,7 @@
   });
 </script>
 
-<div class="unified-search">
+<div class="unified-search" data-sveltekit-preload-data="false">
   <Header />
 
   <main>

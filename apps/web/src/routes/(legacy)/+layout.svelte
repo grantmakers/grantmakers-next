@@ -5,7 +5,11 @@
    * This ensures it does NOT inherit Tailwind specifically
    */
 
-  import '@fontsource/roboto';
+  import '@fontsource/roboto/100.css';
+  import '@fontsource/roboto/300.css';
+  import '@fontsource/roboto/400.css';
+  import '@fontsource/roboto/500.css';
+  import '@fontsource/roboto/700.css';
   import '@fontsource/material-icons';
   import { page } from '$app/stores';
   import SEO from '$lib/components/shared/SEO.svelte';

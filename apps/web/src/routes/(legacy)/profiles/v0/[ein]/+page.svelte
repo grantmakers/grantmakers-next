@@ -15,12 +15,12 @@
   onMount(() => {
     const canonicalSlug = `${profile.ein}-${profile.organization_name_slug}`;
     if ($page.params.ein !== canonicalSlug) {
-      goto(`/profiles/v1/${canonicalSlug}`, { replaceState: true });
+      goto(`/profiles/v0/${canonicalSlug}`, { replaceState: true });
     }
   });
 </script>
 
-<div class="profile-page">
+<div class="profile-page" data-sveltekit-preload-data="off">
   {#if profile}
     <Profile {profile} />
   {:else}

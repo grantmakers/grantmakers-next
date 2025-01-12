@@ -23,7 +23,9 @@ export function initSearchJs(M) {
   // Helper definitions
   const scrollAnchor = document.querySelector('.nav-search');
   const isMobile = window.matchMedia('only screen and (max-width: 992px)');
-  // Initialize Materialize components
+
+  // INITIALIZE MATERIALIZE COMPONENTS
+  // =================================
   // Note: if the element is created dynamically via Instantsearch widget,
   // the plugin needs to be initialized in the normal Instantsearch workflow
   // using the render method (e.g. search.on('render'...)
@@ -31,11 +33,15 @@ export function initSearchJs(M) {
   M.Parallax.init(elemsPA);
 
   const elemsNavMore = document.getElementById('primary-navbar-dropdown-trigger');
-  const optionsNavMore = {
-    container: 'primary-navbar',
-    constrainWidth: false,
-  };
-  M.Dropdown.init(elemsNavMore, optionsNavMore);
+  const containerNavMore = document.getElementById('primary-navbar');
+
+  if (elemsNavMore && containerNavMore) {
+    const optionsNavMore = {
+      container: containerNavMore,
+      constrainWidth: false,
+    };
+    M.Dropdown.init(elemsNavMore, optionsNavMore);
+  }
 
   const elemsCollapsible = document.querySelectorAll('.collapsible');
   M.Collapsible.init(elemsCollapsible);
@@ -209,10 +215,10 @@ export function initSearchJs(M) {
       </div>
       <span class="card-title">
         {{#_highlightResult.organization_name}}
-        <a class="hit-name" href="https://grantmakers.io/profiles/{{ ein }}" title="View Profile">{{#helpers.highlight}}{ "attribute": "organization_name" }{{/helpers.highlight}}</a>
+        <a class="hit-name" href="/profiles/v0/{{ ein }}" title="View Profile">{{#helpers.highlight}}{ "attribute": "organization_name" }{{/helpers.highlight}}</a>
         {{/_highlightResult.organization_name}}
         {{^_highlightResult.organization_name}}
-        <a class="hit-name" href="https://grantmakers.io/profiles/{{ ein }}" title="View Profile">{{{organization_name}}}</a>
+        <a class="hit-name" href="/profiles/v0/{{ ein }}" title="View Profile">{{{organization_name}}}</a>
         {{/_highlightResult.organization_name}}
       </span>
       {{#_highlightResult.city}}
@@ -703,7 +709,7 @@ export function initSearchJs(M) {
                 <div class="card-title">
                   Get to know Grantmakers.io
                 </div>
-                <p><a href="/about/tips-and-tricks/" data-ga="Get to know link">Tips and tricks</a> to get the most out of your searches</p>
+                <p><a href="/about/" data-ga="Get to know link">Tips and tricks</a> to get the most out of your searches</p>
               </div>
             </div>
           </div>`;
@@ -800,14 +806,15 @@ export function initSearchJs(M) {
   search.once('render', function () {
     // Search toggle
     initSelect();
+    initModals();
   });
 
-  search.on('render', function () {
+  search.on('render', async function () {
     // Destory any existing tooltips
     destroyTooltips();
     // Init Materialize items
     initTooltips();
-    initModals();
+    await initModals();
   });
 
   search.on('error', function (e) {

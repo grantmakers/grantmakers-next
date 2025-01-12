@@ -3,11 +3,12 @@
   import { toggleMobileMenu } from '$lib/components/search/menuState.svelte';
 
   interface Props {
+    reload?: boolean;
     href: string;
     title: string;
   }
 
-  let { href, title }: Props = $props();
+  let { href, title, reload = false }: Props = $props();
 
   let isActive = $derived($page.url.pathname === href || $page.url.pathname.startsWith(href));
   let linkClasses = $derived(
@@ -18,6 +19,7 @@
 </script>
 
 <a
+  data-sveltekit-reload={reload || undefined}
   {href}
   class="block border-l-4 py-2 pl-3 pr-4 text-base font-medium sm:pl-5 sm:pr-6 {linkClasses}"
   onclick={toggleMobileMenu}

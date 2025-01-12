@@ -15,7 +15,7 @@
           <a href={'#'} data-target="mobile-nav" class="sidenav-trigger right disable-primary-color"><i class="material-icons">menu</i></a>
           <div class="row">
             <div class="col s8 m4 l4">
-              <a href="{site.baseurl}/" data-ga="Homepage" class="brand-logo">
+              <a data-sveltekit-reload href="{site.baseurl}/" data-ga="Homepage" class="brand-logo">
                 <div class="logo-container">
                   <div class="logo">
                     <img src={logo} alt="Grantmakers Logo" />
@@ -59,8 +59,8 @@
 <!-- Navbar dropdown menu item -->
 <ul class="dropdown-content" id="navbar-more">
   <li class="disabled"><span class="title grey-text">The Project</span></li>
-  <li><a href="{site.baseurl}/about/" class="waves-effect waves-light" data-ga="About" title="About">About</a></li>
-  <li><a href="{site.baseurl}/about/faq/" class="waves-effect waves-light" data-ga="FAQ" title="FAQ">FAQ</a></li>
+  <li><a data-sveltekit-reload href="{site.baseurl}/about/" class="waves-effect waves-light" data-ga="About" title="About">About</a></li>
+  <li><a data-sveltekit-reload href="{site.baseurl}/about/faq/" class="waves-effect waves-light" data-ga="FAQ" title="FAQ">FAQ</a></li>
   <li class="divider"></li>
   <li class="disabled"><span class="title grey-text">Get Involved</span></li>
   <li><a href="{site.baseurl}/donate/" class="waves-effect waves-light" data-ga="Donate" title="Donate">Donate</a></li>
@@ -70,7 +70,7 @@
 <!-- Mobile Navbar -->
 <ul class="nav-primary sidenav" id="mobile-nav">
   <li class="grey darken-2 sidenav-header">
-    <a href="{site.baseurl}/" class="waves-effect waves-light" data-ga="Home">
+    <a data-sveltekit-reload href="{site.baseurl}/" class="waves-effect waves-light" data-ga="Home">
       <div class="valign-wrapper">
         <img src={logo} alt="Grantmakers Logo" />
         <span class="strong white-text"> Grantmakers.io</span>
@@ -86,9 +86,8 @@
   </li>
   <li><hr class="divider" /></li>
   <li class="disabled"><span class="title grey-text">The Project</span></li>
-  <li><a href="{site.baseurl}/about/tips-and-tricks/" class="waves-effect waves-light" data-ga="Tips">Tips & Tricks</a></li>
-  <li><a href="{site.baseurl}/about/" class="waves-effect waves-light" data-ga="About">About</a></li>
-  <li><a href="{site.baseurl}/about/faq/" class="waves-effect waves-light" data-ga="FAQ">FAQ</a></li>
+  <li><a data-sveltekit-reload href="{site.baseurl}/about/" class="waves-effect waves-light" data-ga="About">About</a></li>
+  <li><a data-sveltekit-reload href="{site.baseurl}/about/faq/" class="waves-effect waves-light" data-ga="FAQ">FAQ</a></li>
   <li><hr class="divider" /></li>
   <li class="disabled"><span class="title grey-text">Get Involved</span></li>
   <li><a href="{site.baseurl}/donate/" class="waves-effect waves-light" data-ga="Donate" title="Donate">Donate</a></li>

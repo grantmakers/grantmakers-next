@@ -21,7 +21,7 @@
   // Mimic Jekyll
   const site = {
     baseurl: '/profiles',
-    url: 'https://www.grantmakers.io',
+    url: '', //'https://www.grantmakers.io',
     algolia_referral_link: 'https://www.algolia.com/?utm_source=grantmakersio&utm_medium=referral',
   };
   const page = $derived(profile);
