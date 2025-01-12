@@ -5,8 +5,6 @@ import { isValidEin } from '@repo/shared/utils/validators';
 import type { PageServerLoad } from './$types';
 import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
 
-export const prerender = true;
-
 const remoteUrl = WORKER_URL + PROFILES_API_ENDPOINT + '/';
 
 const fetchRemoteProfile = async (ein: string, url: string): Promise<GrantmakersExtractedDataObj> => {
