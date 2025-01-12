@@ -132,22 +132,26 @@
 
       <!-- Desktop Page links -->
       <div class="hidden border-t border-white/20 py-5 lg:block">
-        <div class="grid grid-cols-3 items-center gap-8">
+        <div class="grid grid-cols-1 items-center gap-8">
           <div class="col-span-2">
-            <nav class="flex space-x-4">
-              {#each aboutLinks as item}
-                <SecondaryNavLink href={item.link} title={item.title} />
-              {/each}
-            </nav>
+            <div class="flex justify-between">
+              <nav class="flex space-x-4">
+                {#each aboutLinks as item}
+                  <SecondaryNavLink href={item.link} title={item.title} />
+                {/each}
+              </nav>
+              <div>
+                <SecondaryNavLink href="/about/donate" title="Support Open Data" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Mobile menu, show/hide based on mobile menu state. -->
-    {#if menuState.isMobileMenuOpen}
-      <div bind:this={refs.mobileMenu} class="lg:hidden">
-        <!--
+      <!-- Mobile menu, show/hide based on mobile menu state. -->
+      {#if menuState.isMobileMenuOpen}
+        <div bind:this={refs.mobileMenu} class="lg:hidden">
+          <!--
       Mobile menu overlay, show/hide based on mobile menu state.
 
       Entering: "duration-150 ease-out"
@@ -157,9 +161,9 @@
         From: "opacity-100"
         To: "opacity-0"
     -->
-        <div class="fixed inset-0 z-20 bg-black/25" aria-hidden="true"></div>
+          <div class="fixed inset-0 z-20 bg-black/25" aria-hidden="true"></div>
 
-        <!--
+          <!--
       Mobile menu, show/hide based on mobile menu state.
 
       Entering: "duration-150 ease-out"
@@ -169,50 +173,55 @@
         From: "opacity-100 scale-100"
         To: "opacity-0 scale-95"
     -->
-        <div class="absolute inset-x-0 top-0 z-30 mx-auto w-full max-w-3xl origin-top transform p-2 transition">
-          <div class="divide-y divide-gray-200 rounded-lg bg-white shadow-lg ring-1 ring-black/5">
-            <div class="pb-2 pt-3">
-              <div class="flex items-center justify-between px-4">
-                <div>
-                  <LogoMark isLandingOrFooter={false} />
-                </div>
-                <div class="-mr-2">
-                  <button
-                    type="button"
-                    class="relative inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-                    onclick={toggleMobileMenu}
-                  >
-                    <span class="absolute -inset-0.5"></span>
-                    <span class="sr-only">Close menu</span>
-                    <svg
-                      class="size-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                      data-slot="icon"
+          <div class="absolute inset-x-0 top-0 z-30 mx-auto w-full max-w-3xl origin-top transform p-2 transition">
+            <div class="divide-y divide-gray-200 rounded-lg bg-white shadow-lg ring-1 ring-black/5">
+              <div class="pb-2 pt-3">
+                <div class="flex items-center justify-between px-4">
+                  <div>
+                    <LogoMark isLandingOrFooter={false} />
+                  </div>
+                  <div class="-mr-2">
+                    <button
+                      type="button"
+                      class="relative inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                      onclick={toggleMobileMenu}
                     >
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                    </svg>
-                  </button>
+                      <span class="absolute -inset-0.5"></span>
+                      <span class="sr-only">Close menu</span>
+                      <svg
+                        class="size-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                        data-slot="icon"
+                      >
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <!-- Primary Mobile Nav Links -->
+                <div class="space-y-1 pb-1 pt-2">
+                  <!-- Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" -->
+                  <PrimaryNavLinkMobile href={'/profiles'} title={'Foundation Profiles'} />
+                  <PrimaryNavLinkMobile reload={true} href={'/search/grants'} title={'Historical Grants'} />
+                  <PrimaryNavLinkMobile href={'/about'} title={'About'} />
+                </div>
+                <div class="mt-3 space-y-1 px-4 pb-3">
+                  <!-- Secondary Mobile Nav Links -->
+                  <div class="flex justify-between">
+                    <div class="space-y-1">
+                      {#each aboutLinks as item}
+                        <SecondaryNavLinkMobile href={item.link} title={item.title} />
+                      {/each}
+                      <SecondaryNavLinkMobile href="/about/donate" title="Support Open Data" />
+                    </div>
+                  </div>
                 </div>
               </div>
-              <!-- Primary Mobile Nav Links -->
-              <div class="space-y-1 pb-1 pt-2">
-                <!-- Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" -->
-                <PrimaryNavLinkMobile href={'/profiles'} title={'Foundation Profiles'} />
-                <PrimaryNavLinkMobile reload={true} href={'/search/grants'} title={'Historical Grants'} />
-                <PrimaryNavLinkMobile href={'/about'} title={'About'} />
-              </div>
-              <div class="mt-3 space-y-1 px-4 pb-3">
-                <!-- Secondary Mobile Nav Links -->
-                {#each aboutLinks as item}
-                  <SecondaryNavLinkMobile href={item.link} title={item.title} />
-                {/each}
-              </div>
-            </div>
-            <!-- <div class="pb-2 pt-4">
+              <!-- <div class="pb-2 pt-4">
             <div class="flex items-center px-5">
               <div class="shrink-0">
                 <div class="rounded- size-10">
@@ -260,10 +269,11 @@
               >
             </div>
           </div> -->
+            </div>
           </div>
         </div>
-      </div>
-    {/if}
+      {/if}
+    </div>
   </header>
 
   {@render children?.()}
