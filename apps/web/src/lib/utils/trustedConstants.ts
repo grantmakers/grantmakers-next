@@ -268,20 +268,20 @@ export const faqData: EachFAQ[] = [
 ];
 export const footerNavigation = {
   search: [
-    { name: 'Profiles Search', href: 'https://www.grantmakers.io/search/profiles/' },
-    { name: 'Grants Search', href: 'https://www.grantmakers.io/search/grants/' },
+    { name: 'Profiles Search', href: '/search/profiles/' },
+    { name: 'Grants Search', href: '/search/grants/' },
   ],
   getInvolved: [
-    { name: 'Support Open Data', href: 'https://www.grantmakers.io/donate/' },
-    { name: 'Donate', href: 'https://www.grantmakers.io/donate/' },
+    { name: 'Support Open Data', href: '/about/donate/' },
+    { name: 'Donate', href: '/about/donate/' },
   ],
   project: [
-    { name: 'The 990 Dataset', href: 'https://www.grantmakers.io/about/the-dataset/' },
-    { name: 'About', href: 'https://www.grantmakers.io/about/' },
-    { name: 'FAQ', href: 'https://www.grantmakers.io/about/faq/' },
+    { name: 'The 990 Dataset', href: '/about/the-dataset/' },
+    { name: 'About', href: '/about/' },
+    { name: 'FAQ', href: '/about/faq/' },
   ],
   legal: [
     { name: 'Privacy', href: 'https://www.iubenda.com/privacy-policy/7996402/full-legal' },
-    { name: 'Terms', href: 'https://www.grantmakers.io/terms/' },
+    { name: 'Terms', href: '/about/terms/' },
   ],
 };
