@@ -64,7 +64,7 @@
   <li class="divider"></li>
   <li class="disabled"><span class="title grey-text">Get Involved</span></li>
   <li>
-    <a data-sveltekit-reload href="{site.baseurl}/about/donate/" class="waves-effect waves-light" data-ga="Donate" title="Donate">Donate</a>
+    <a data-sveltekit-reload href="{site.baseurl}/donate/" class="waves-effect waves-light" data-ga="Donate" title="Donate">Donate</a>
   </li>
 </ul>
 <!-- End navbar dropdown -->
@@ -93,7 +93,7 @@
   <li><hr class="divider" /></li>
   <li class="disabled"><span class="title grey-text">Get Involved</span></li>
   <li>
-    <a data-sveltekit-reload href="{site.baseurl}/about/donate/" class="waves-effect waves-light" data-ga="Donate" title="Donate">Donate</a>
+    <a data-sveltekit-reload href="{site.baseurl}/donate/" class="waves-effect waves-light" data-ga="Donate" title="Donate">Donate</a>
   </li>
 </ul>
 

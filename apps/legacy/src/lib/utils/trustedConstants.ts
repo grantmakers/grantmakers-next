@@ -272,8 +272,8 @@ export const footerNavigation = {
     { name: 'Grants Search', href: '/search/grants/' },
   ],
   getInvolved: [
-    { name: 'Support Open Data', href: '/about/donate/' },
-    { name: 'Donate', href: '/about/donate/' },
+    { name: 'Support Open Data', href: '/donate/' },
+    { name: 'Donate', href: '/donate/' },
   ],
   project: [
     { name: 'The 990 Dataset', href: '/about/the-dataset/' },

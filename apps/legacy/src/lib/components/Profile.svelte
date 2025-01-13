@@ -210,7 +210,7 @@
   <li><hr class="divider" /></li>
   <li class="disabled"><a data-sveltekit-reload href={'#'} class="title grey-text">Get Involved</a></li>
   <li>
-    <a data-sveltekit-reload href="/about/donate/" class="waves-effect waves-light" data-ga="Donate" title="Donate">Donate</a>
+    <a data-sveltekit-reload href="/donate/" class="waves-effect waves-light" data-ga="Donate" title="Donate">Donate</a>
   </li>
 </ul>
 
