@@ -1,6 +1,6 @@
 <script lang="ts"></script>
 
-<div class="min-h-screen">
+<div class="min-h-96">
   <div class="p-4">Coming soon</div>
 
   <div class="p-4">In the interim, the legacy grants search remains live - it just has the older grants data</div>
