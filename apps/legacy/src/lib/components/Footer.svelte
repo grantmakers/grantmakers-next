@@ -112,7 +112,7 @@
             </li>
             <li>
               <a
-                href="//www.iubenda.com/privacy-policy/7996402"
+                href="https://www.iubenda.com/privacy-policy/7996402"
                 class="iubenda-nostyle no-brand iub-legal-only iubenda-embed"
                 title="Privacy Policy">Privacy Policy</a
               >
