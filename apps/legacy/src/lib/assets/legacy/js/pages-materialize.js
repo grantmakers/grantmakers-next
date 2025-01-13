@@ -6,27 +6,28 @@ export function initJs(M) {
 
   const elemsNavMore = document.getElementById('primary-navbar-dropdown-trigger');
   const optionsNavMore = {
-    'container': 'primary-navbar',
-    'constrainWidth': false,
+    container: 'primary-navbar',
+    constrainWidth: false,
   };
   M.Dropdown.init(elemsNavMore, optionsNavMore);
 
   // About page secondary/scrollspy nav
   const elemsSS = document.querySelectorAll('.scrollspy');
   const optionsSS = {
-    'scrollOffset': 120, // Default is 200
+    scrollOffset: 120, // Default is 200
   };
   M.ScrollSpy.init(elemsSS, optionsSS);
 
   // About page secondary/scrollspy nav cont'd...
   const elemsPP = document.querySelectorAll('.pushpin');
   const pinAnchor = document.getElementById('main-content');
-  
-  if (pinAnchor && elemsPP.length > 0) { // Only init if needed
+
+  if (pinAnchor && elemsPP.length > 0) {
+    // Only init if needed
     const pinAnchorTop = getElementOffset(pinAnchor).top - 15; // HACK Remove hard coded offset buffer
     const optionsPP = {
-      'top': pinAnchorTop,
-      'bottom': pinAnchorTop + pinAnchor.offsetHeight - 90, // HACK Remove hard coded bottom buffer
+      top: pinAnchorTop,
+      bottom: pinAnchorTop + pinAnchor.offsetHeight - 90, // HACK Remove hard coded bottom buffer
     };
     M.Pushpin.init(elemsPP, optionsPP);
   }
@@ -81,7 +82,7 @@ function getElementOffset(element) {
   let box = element.getBoundingClientRect(); // FIX Will throw error if element null
   let top = box.top + window.pageYOffset - de.clientTop;
   let left = box.left + window.pageXOffset - de.clientLeft;
-  return { 'top': top, 'left': left };
+  return { top: top, left: left };
 }
 
 function initGoogleSheets() {
@@ -92,5 +93,3 @@ function initGoogleSheets() {
     }
   }
 }
-
-
