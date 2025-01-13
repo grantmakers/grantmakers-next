@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { browser } from '$app/environment';
   import BackToTop from '$lib/components/shared/BackToTop.svelte';
   import Donate from '$lib/components/static/Donate.svelte';
 </script>
@@ -28,19 +29,22 @@
             <!-- Right column -->
             <div class="hidden lg:col-span-2 lg:block">
               <section aria-labelledby="faq">
-                <script src="https://donorbox.org/widget.js" paypalExpress="false"></script>
-                <iframe
-                  title="Donation form"
-                  allowpaymentrequest=""
-                  frameborder="0"
-                  height="900px"
-                  name="donorbox"
-                  scrolling="no"
-                  seamless="seamless"
-                  src="https://donorbox.org/embed/buy-chad-a-coffee"
-                  style="max-width: 500px; min-width: 310px; max-height:none!important; border: none !important"
-                  width="100%"
-                ></iframe>
+                {#if browser}
+                  <script src="https://donorbox.org/widget.js" paypalExpress="false"></script>
+                  <!-- @ts-expect-error -->
+                  <iframe
+                    title="Donation form"
+                    allowpaymentrequest=""
+                    frameborder="0"
+                    height="900px"
+                    name="donorbox"
+                    scrolling="no"
+                    seamless="seamless"
+                    src="https://donorbox.org/embed/buy-chad-a-coffee"
+                    style="max-width: 500px; min-width: 310px; max-height:none!important; border: none !important"
+                    width="100%"
+                  ></iframe>
+                {/if}
               </section>
             </div>
           </div>
