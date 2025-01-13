@@ -44,8 +44,10 @@ jobs:
 
       # Wrangler handles the API build downstream
       # Thus, only need to build the web app
-      - name: Build
-        run: npx turbo run build --filter=web
+      - name: Build Web Apps
+        run: |
+          npx turbo run build --filter=web
+          npx turbo run build --filter=legacy
         env:
           WORKER_URL: ${{ secrets.WORKER_URL }}
           PROFILES_API_ENDPOINT: ${{ secrets.PROFILES_API_ENDPOINT }}
@@ -58,7 +60,7 @@ jobs:
           PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS: ${{ secrets.PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS }}
           PUBLIC_ALGOLIA_INDEX_NAME_GRANTS: ${{ secrets.PUBLIC_ALGOLIA_INDEX_NAME_GRANTS }}
 
-      - name: Publish Webapp
+      - name: Publish Web App
         uses: cloudflare/pages-action@1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN_PAGES }}
@@ -66,6 +68,17 @@ jobs:
           workingDirectory: './apps/web'
           directory: '.svelte-kit/cloudflare'
           projectName: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          wranglerVersion: '3'
+
+      - name: Publish Legacy Web App
+        uses: cloudflare/pages-action@1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN_PAGES }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: './apps/legacy'
+          directory: '.svelte-kit/cloudflare'
+          projectName: ${{ secrets.CLOUDFLARE_PROJECT_NAME_LEGACY }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           wranglerVersion: '3'
 

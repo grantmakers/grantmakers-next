@@ -16,6 +16,10 @@
       "name": "apps/web",
       "path": "../apps/web",
     },
+    {
+      "name": "apps/legacy",
+      "path": "../apps/legacy",
+    },
   ],
   "settings": {
     "prettier.enable": true,

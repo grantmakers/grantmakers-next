@@ -9,8 +9,7 @@
   import { onMount } from 'svelte';
 
   onMount(async () => {
-    // const { M } = await import('$lib/assets/legacy/js/materialize.min.js'); // Forked Materialize
-    let M = await import('materialize-css'); // OG Materialize
+    let M = await import('materialize-css');
     const { initSearchJs } = await import('$lib/assets/legacy/js/search-grants');
     try {
       initSearchJs(M);

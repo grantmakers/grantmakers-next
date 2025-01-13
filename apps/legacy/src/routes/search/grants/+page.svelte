@@ -1,17 +1,16 @@
 <script lang="ts">
   import bg from '$lib/assets/legacy/images/bg.jpg';
-  import { formatNumber } from '@repo/shared/functions/formatters/numbers';
-  import Header from '$lib/components/legacy/search/Header.svelte';
-  import Footer from '$lib/components/legacy/Footer.svelte';
+  import Header from '$lib/components/search/Header.svelte';
+  import Footer from '$lib/components/Footer.svelte';
   const site = {
     baseurl: '',
-    number_of_foundations: 153013,
+    number_of_searchable_grants: 5026745,
   };
   import { onMount } from 'svelte';
 
   onMount(async () => {
     let M = await import('materialize-css');
-    const { initSearchJs } = await import('$lib/assets/legacy/js/search-profiles');
+    const { initSearchJs } = await import('$lib/assets/legacy/js/search-grants');
     try {
       initSearchJs(M);
     } catch (error) {
@@ -30,9 +29,11 @@
       </div>
       <div class="intro valign-wrapper">
         <div class="intro-text center-align white-text">
-          <h1 class="text-bold">Profiles Search</h1>
-          <h5>Profiles of {formatNumber(site.number_of_foundations)} U.S. foundations</h5>
-          <p>Source: IRS electronic 990 dataset</p>
+          <h1 class="text-bold">Grants Search</h1>
+          <h5>Discover who foundations are funding</h5>
+          <p>
+            Search through {(site.number_of_searchable_grants / 1e6).toFixed(1)} million grants contained in the public IRS 990-PF dataset
+          </p>
         </div>
       </div>
       <canvas></canvas>
@@ -43,12 +44,12 @@
           <div class="row">
             <div class="col l2 hide-on-med-and-down">
               <div id="search-toggle" class="input-field valign-wrapper">
-                <select class="browser-default grantmakers white-text">
+                <select class="browser-default grants-search white-text">
                   <optgroup class="disabled" label="Research a foundation">
                     <option value="profiles">Profile Search</option>
                   </optgroup>
                   <optgroup class="disabled" label="Search all grants">
-                    <option value="grants">Grants Search</option>
+                    <option value="grants" selected>Grants Search</option>
                   </optgroup>
                 </select>
               </div>
@@ -68,27 +69,33 @@
                     <li class="valign-wrapper">
                       <label>
                         <input id="organization_name" type="checkbox" class="filled-in" checked />
-                        <span>Foundation name</span>
+                        <span>Funder</span>
                       </label>
                       <span class="checkbox-only" data-attribute="organization_name">only</span>
                     </li>
                     <li class="valign-wrapper">
                       <label>
-                        <input id="city" type="checkbox" class="filled-in" checked />
-                        <span>Foundation location</span>
+                        <input id="grantee_name" type="checkbox" class="filled-in" checked />
+                        <span>Recipient</span>
                       </label>
-                      <span class="checkbox-only" data-attribute="city">only</span>
+                      <span class="checkbox-only" data-attribute="grantee_name">only</span>
                     </li>
                     <li class="valign-wrapper">
                       <label>
-                        <input id="people.name" type="checkbox" class="filled-in" checked />
-                        <span>Trustees</span>
+                        <input id="grantee_city" type="checkbox" class="filled-in" checked />
+                        <span>Recipient city</span>
                       </label>
-                      <span class="checkbox-only" data-attribute="people.name">only</span>
+                      <span class="checkbox-only" data-attribute="grantee_city">only</span>
                     </li>
-                    <li class="valign-wrapper small text-light">
-                      EIN is always searchable
-                      <span id="select-all" class="right">SELECT ALL</span>
+                    <li class="valign-wrapper">
+                      <label>
+                        <input id="grant_purpose" type="checkbox" class="filled-in" checked />
+                        <span>Grant purpose</span>
+                      </label>
+                      <span class="checkbox-only" data-attribute="grant_purpose">only</span>
+                    </li>
+                    <li class="valign-wrapper small text-light left-align">
+                      <span id="select-all" style="margin:inherit">SELECT ALL</span>
                     </li>
                   </ul>
                 </div>
@@ -146,67 +153,44 @@
           </div>
         </div>
       </div>
-      <div id="algolia-hits-wrapper" class="row">
-        <div class="col s12 l3">
+      <div id="algolia-hits-wrapper" class="row js-hide-advanced-tools">
+        <div class="col s12 l4">
           <!-- Filters / Refinements header -->
           <div class="hide-on-med-and-down text-muted">
             Filters
             <div class="switch switch-refinements right">
-              <label class="search-toggle-advanced hidden">
+              <label class="search-toggle-advanced">
                 Show advanced tools
                 <input type="checkbox" />
                 <span class="lever"></span>
               </label>
             </div>
           </div>
-          <div class="hide-on-large-only center-align">
-            <ul class="actions list-inline">
+          <div class="hidden">
+            <ul class="actions">
               <li>
+                <span id="ais-widget-mobile-clear-all"></span>
                 <a
                   href={'#'}
                   data-target="refinements-slide-out"
-                  class="sidenav-trigger show-on-med-and-down waves-effect waves-light button-collapse btn white grey-text text-darken-3"
+                  class="sidenav-trigger waves-effect waves-light button-collapse btn white grey-text text-darken-3"
                   ><i class="material-icons right">filter_list</i> Filter</a
                 >
               </li>
-              <li>
-                <span id="ais-widget-mobile-clear-all"></span>
-              </li>
+              <li></li>
             </ul>
           </div>
           <div class="divider hide-on-med-and-down"></div>
-          <div class="section-refinements section-refinements-profiles-search hide-on-med-and-down">
+          <div class="section-refinements section-refinements-grants-search hide-on-med-and-down grants-search">
             <div>
               <!-- Add row class to remove added white space / padding -->
               <div class="col s12">
-                <div id="ais-widget-refinement-list--city"></div>
-                <div id="ais-widget-refinement-list--state"></div>
                 <div id="ais-widget-range-input"></div>
-                <div id="ais-widget-refinement-list--eobmf_recognized_exempt"></div>
-                <div id="ais-widget-refinement-list--has_recent_grants"></div>
-                <div id="ais-widget-refinement-list--grants_to_preselected_only"></div>
-                <div id="ais-widget-refinement-list--is_likely_staffed"></div>
+                <div id="ais-widget-refinement-list--grantee_name"></div>
+                <div id="ais-widget-refinement-list--organization_name"></div>
+                <div id="ais-widget-refinement-list--grantee_city"></div>
+                <div id="ais-widget-refinement-list--grantee_state"></div>
               </div>
-              <!-- Exclusion Definition Modals-->
-              <div id="modal-grants-to-preselected" class="modal">
-                <div class="modal-content">
-                  <h5>Excludes funders who checked Part XV Line 2</h5>
-                  <p>IRS Form 990PF text:</p>
-                  <blockquote>
-                    Check here [ ] if the foundation only makes contributions to preselected charitable organizations and does not accept
-                    unsolicited requests for funds.
-                  </blockquote>
-                  <p>
-                    Reference: <a class="blue-grey-text" href="https://www.irs.gov/instructions/i990pf#idm140500461586480" target="_blank"
-                      >IRS Form 990PF Instructions</a
-                    >
-                  </p>
-                </div>
-                <div class="modal-footer">
-                  <a href={'#'} class="modal-close waves-effect waves-green btn-flat">Close</a>
-                </div>
-              </div>
-
               <div class="col s12">
                 <div class="section">
                   <div id="ais-widget-clear-all" class="center-align"></div>
@@ -215,12 +199,12 @@
             </div>
           </div>
         </div>
-        <div class="col s12 l9">
+        <div class="col s12 l8">
           <div class="row row-tight">
             <div class="col s12 m9 l10">
               <div id="ais-widget-stats"></div>
             </div>
-            <div class="col m3 l2 hide-on-small-only">
+            <div class="col m3 l2 hide-on-med-and-down">
               <div id="ais-widget-sort-by" class="small text-muted-max right">
                 <a href="#modal-tips" class="modal-trigger text-muted-max"
                   >Search types <i class="tiny material-icons material-icons-rounded grey lighten-2 icon-idea left">wb_incandescent</i></a
@@ -235,90 +219,34 @@
           </div>
           <div class="row">
             <!-- Add row class to remove added white space / padding -->
-            <div class="col s12 l9">
+            <div class="col s12">
               <div id="ais-widget-current-refined-values"></div>
               <!-- Profiles ais-widget-hits goes here-->
-              <div>
+              <div class="card card-grants-search">
                 <!-- Use class card for grants results-->
-                <div>
+                <div class="card-content">
                   <!-- Use class card-content for grants results-->
+                  <div class="row row-tight hide-on-small-only">
+                    <div class="col m6">Recipient</div>
+                    <div class="col m5">Donor</div>
+                    <div class="col m1">Actions</div>
+                    <div class="col m12 divider"></div>
+                  </div>
                   <div id="ais-widget-hits"></div>
                 </div>
               </div>
             </div>
-            <div id="dataset-info" class="col l3">
-              <div class="card z-depth-0">
-                <div class="card-content">
-                  <h6 class="subheader">Get to know the data</h6>
-                  <p>Grantmakers.io pulls from an open dataset published by the IRS. The dataset is comprised of:</p>
-                  <ul class="collapsible z-depth-0">
-                    <li>
-                      <div class="collapsible-header"><i class="material-icons">arrow_right</i>Electronically filed returns</div>
-                      <div class="collapsible-body">
-                        <span
-                          >Recent legislation will soon require all private foundations to file their returns electronically. Until then,
-                          the dataset covers approx. 60-65% of private foundations.</span
-                        >
-                      </div>
-                    </li>
-                  </ul>
-                  <!--<p>Built exclusively for nonprofit fundraising professionals, Grantmakers.io focuses on:</p>-->
-                  <p>Data is extracted exclusively from Form 990 PF, the form filed by:</p>
-                  <ul class="collapsible z-depth-0">
-                    <li>
-                      <div class="collapsible-header"><i class="material-icons">arrow_right</i>Private foundations</div>
-                      <div class="collapsible-body">
-                        <span>Keep in mind many community foundations and certain other foundations file Form 990.</span>
-                      </div>
-                    </li>
-                  </ul>
-                  <p>If a private foundation files electronically, you'll find them on Grantmakers.io.</p>
-                </div>
-              </div>
-              <div class="center-align">
-                <div class="waves-effect waves-light btn-flat">
-                  <a href="{site.baseurl}/about/tips-and-tricks/">Learn more</a>
-                </div>
-              </div>
-              <!--
-              <div class="card z-depth-0 grey lighten-3">
-                <div class="card-content">
-                  <h6 class="subheader">Support open data</h6>
-                  <p>If you found this site useful, why not <a href="{ site.baseurl }/buy-chad-a-coffee/">buy me a coffee</a>?</p>
-                </div>
-              </div>
-            -->
-            </div>
           </div>
         </div>
-        <div class="col s12 l6 offset-l3">
+        <div class="col s12 l9 offset-l3">
           <div class="section center-align">
-            <div id="ais-widget-pagination"></div>
+            <div id="ais-widget-pagination" class="grants-search"></div>
           </div>
         </div>
       </div>
     </div>
   </main>
 
-  <Footer />
-  <!-- Filters Sidenav-->
-  <div class="row">
-    <div class="col s12">
-      <ul id="refinements-slide-out" class="sidenav section-refinements left-align grey lighten-5">
-        <li><div id="ais-widget-mobile-refinement-list--city"></div></li>
-        <li><div id="ais-widget-mobile-refinement-list--state"></div></li>
-        <div id="ais-widget-mobile-refinement-list--has_recent_grants"></div>
-        <div id="ais-widget-mobile-refinement-list--is_likely_staffed"></div>
-        <div id="ais-widget-mobile-refinement-list--grants_to_preselected_only"></div>
-        <div id="ais-widget-mobile-refinement-list--eobmf_recognized_exempt"></div>
-        <div id="ais-widget-mobile-refinement-list--grantee_name"></div>
-        <div id="ais-widget-mobile-refinement-list--organization_name"></div>
-        <div id="ais-widget-mobile-refinement-list--grantee_city"></div>
-        <div id="ais-widget-mobile-refinement-list--grantee_state"></div>
-      </ul>
-    </div>
-  </div>
-  <!-- End Filters sidenav -->
   <div id="modal-tips" class="modal">
     <div class="modal-content">
       <div class="card card-search-tips">

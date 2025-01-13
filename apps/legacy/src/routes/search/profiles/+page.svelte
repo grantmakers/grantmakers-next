@@ -1,8 +1,8 @@
 <script lang="ts">
   import bg from '$lib/assets/legacy/images/bg.jpg';
   import { formatNumber } from '@repo/shared/functions/formatters/numbers';
-  import Header from '$lib/components/legacy/search/Header.svelte';
-  import Footer from '$lib/components/legacy/Footer.svelte';
+  import Header from '$lib/components/search/Header.svelte';
+  import Footer from '$lib/components/Footer.svelte';
   const site = {
     baseurl: '',
     number_of_foundations: 153013,
@@ -300,7 +300,6 @@
     </div>
   </main>
 
-  <Footer />
   <!-- Filters Sidenav-->
   <div class="row">
     <div class="col s12">

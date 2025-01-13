@@ -1,0 +1,154 @@
+<div class="simple-page">
+  <main>
+    <div class="header header-filter" style="background-image: url('/assets/img/files.jpg')">
+      <div class="container valign-wrapper">
+        <div class="row">
+          <div class="col s12 left-align">
+            <h1 class="title">About</h1>
+            <h6></h6>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="main main-raised">
+      <nav class="clean grey darken-2 z-depth-1">
+        <div class="container-custom">
+          <div class="nav-wrapper">
+            <div class="col s12">
+              <ul class="list-inline left">
+                <li class="active disabled"><a href="/about/" class="white-text">About</a></li>
+                <li class=""><a href="/about/the-dataset/" class="white-text">The Dataset</a></li>
+                <li class=""><a href="/about/faq/" class="white-text">FAQ</a></li>
+              </ul>
+              <ul class="list-inline right hide-on-small-only">
+                <li class=""><a href="/donate/" class="white-text">Support Open Data</a></li>
+                <!--<li class=""><a href="/donate/buy-chad-a-coffee/" class="white-text">Buy Me a Coffee</a></li>-->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="container-custom">
+        <div class="section section-simple-page section-about">
+          <div id="main-content" class="row">
+            <div class="col s12 m9 offset-m1 l10 offset-l1 xl8 offset-xl1">
+              <div id="toc-intro" class="section scrollspy">
+                <h4>An open window into the IRS 990 dataset</h4>
+                <p>
+                  Grantmakers.io makes the machine-readable IRS 990 dataset usable for nonprofit professionals. It was created by me, Chad
+                  Kruse 👋. I originally <a href="https://medium.com/@chadkruser/building-grantmakers-io-d1f78326a0b5"
+                    >built the site for a friend</a
+                  >, and open sourced it for the world when I saw how useful the data was to her. Fewer trips to the library to conduct
+                  simple donor searches meant more time to run her nonprofit.
+                </p>
+                <p>
+                  Then the amazing folks at <a href="https://www.algolia.com/?utm_source=grantmakersio&utm_medium=referral">Algolia</a>
+                  stepped in and provided an expanded free tier to their search service which made the 990-PF portion of the dataset entirely
+                  searchable. The speed and accuracy of their search is truly remarkable - it's the
+                  <a href="https://medium.com/@chadkruser/unlocking-irs-form-990-pf-data-through-hosted-search-f1bfecac2d5e"
+                    >search nonprofits deserve</a
+                  >. From there it's been 🔥.
+                </p>
+                <p></p>
+              </div>
+              <div id="toc-freedom" class="section scrollspy">
+                <h4>Free as in freedom and free as in food</h4>
+                <p>
+                  Grantmakers.io serves as an example of the power of Free and Open Source Software (FOSS). Anyone can access it without
+                  paying (free as in food), and anyone can leverage the code to continue innovating in however they please (free as in
+                  freedom).
+                </p>
+                <p>
+                  I'm proud to work on Grantmakers.io and support all the amazing nonprofit professionals in their important work. Saying I
+                  "donate" my time doesn't feel right. Creating and running the site has been one of the most rewarding experiences of my
+                  career, and the countless thank you messages I receive from nonprofits truly warms my heart. Grantmakers.io will remain
+                  free and open forever. 💕
+                </p>
+              </div>
+              <div id="toc-transparency" class="section scrollspy">
+                <h4>Transparency 💯</h4>
+                <p>
+                  I run Grantmakers.io like I like to see any business run - completely transparent and self-sustaining. I also run it like
+                  I like to see any nonprofit run - completely transparent and self-sustaining. 😉
+                </p>
+                <p>
+                  To run the site at virtually no cost, I use a "static site generator" at the site's core. This technology allows a
+                  developer to generate the entire site contents once (even on their own laptop), then publish the package to any number of
+                  free or low-cost web hosts. Think of it like a physical bulletin board - perfect for posting things that don't change
+                  (like tax returns!).
+                </p>
+                <!-- Defer loading of iframe - see pages-materialize.js -->
+                <iframe
+                  title="Grantmakers.io Financial Spreadsheets"
+                  id="gsheets"
+                  src=""
+                  data-src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRd9v4_McKmXGjR-pA1cW33vNjwAnky1gtIQlfvaA1miv3PhbR6QXxHVMVV-5x7kqEOTdfIkVoy87YC/pubhtml?widget=true&amp;headers=false"
+                ></iframe>
+                <a
+                  target="_blank"
+                  href="https://docs.google.com/spreadsheets/d/e/2PACX-1vRd9v4_McKmXGjR-pA1cW33vNjwAnky1gtIQlfvaA1miv3PhbR6QXxHVMVV-5x7kqEOTdfIkVoy87YC/pubhtml?gid=0&single=true"
+                  >View full spreadsheet <i class="material-icons material-icons-inherit">open_in_new</i></a
+                >
+              </div>
+              <div id="toc-chad" class="section section-about scrollspy">
+                <h4>Meet Chad</h4>
+                <p>
+                  Before launching my own ventures and teaching myself to code, I was often brought on as the first "business hire" at
+                  startups of all shapes and sizes, online and offline. I've run development teams, owned product strategy, raised venture,
+                  seed, debt, and philanthropic capital, and closed business development deals with organizations both large and small. I'm
+                  a generalist through and through.
+                </p>
+                <p>
+                  My career started as a strategist and dealmaker for large tech companies, and I'm often told I have a unique ability to
+                  talk shop with programmers, VC's, designers, boards of directors, philanthropists and everyone in between. My head is in
+                  SF, my heart is in Bend (OR), and my body is currently in Chicago. <img
+                    class="material-icons-inherit material-icon-flag-emoji"
+                    src="/assets/img/emoji_chicago_flag.png"
+                    alt="Chicago Flag"
+                  />
+                </p>
+              </div>
+              <div id="next" class="section section-about scrollspy">
+                <div class="card info-card grey lighten-3">
+                  <div class="card-content">
+                    <h6 class="text-uppercase">NEXT UP</h6>
+                    <h5>Get to know <a href="/about/the-dataset/">the dataset.</a></h5>
+                    <p></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col m2 l1 xl2 offset-xl1 hide-on-small-only">
+              <div class="toc-wrapper pushpin pin-top">
+                <div>
+                  <ul class="table-of-contents">
+                    <li><a href="#toc-intro">Open access</a></li>
+                    <li><a href="#toc-freedom">Free forever</a></li>
+                    <li><a href="#toc-transparency">Transparent</a></li>
+                    <li><a href="#toc-chad">Meet Chad</a></li>
+                    <li id="pin-anchor-bottom"></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="toc-wrapper pushpin pin-top">
+                <ul class="table-of-contents"></ul>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12 m10 offset-m1 xl8 offset-xl1">
+              <div class="section section-about-cta center-align">
+                <h5>If you've found Grantmakers.io helpful, why not</h5>
+                <a href="/buy-chad-a-coffee/" class="btn btn-coffee"
+                  ><i class="material-icons left">emoji_food_beverage</i> Buy me a coffee</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
