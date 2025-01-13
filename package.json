@@ -11,8 +11,8 @@
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/prettier-config": "^0.0.0",
-    "@repo/typescript-config": "*",
     "@repo/shared": "*",
+    "@repo/typescript-config": "*",
     "turbo": "^2.2.3"
   },
   "packageManager": "npm@10.2.3",
