@@ -79,14 +79,12 @@ const getProfile = async (ein: string): Promise<GrantmakersExtractedDataObj> => 
   return await fetchRemoteProfile(ein, remoteUrl);
 };
 
-export const load: PageServerLoad = async ({ params }) => {
-  // This main dynamic route handles three scenarios:
-  // 1. The full canonical url: [ein]-[org-name-slug]
-  // 2. The EIN-only helper route: [ein]
-  // 3. The EIN matches, but the slug does not: [ein]-[org-name-slug-alt]
+export const load: PageServerLoad = async ({ params, url }) => {
+  // This main dynamic route handles two scenarios:
+  // 1. The full canonical url: [ein]-[slugified-org-name]
+  // 2. The ein-only helper router: [ein]
   // We only need the EIN to fetch the data
-  // Slug mismatches are handled using proper server-side redirects - SEO equity outweighs minor cost of duplicate round trip to fetch data
-  // EIN-only helper routes get expanded to the full canonical URL on the client
+  // In the case of the full canonical route, we handle the full url expansion on the client to avoid duplicating the data fetch via a full redirect
   const ein = params.ein.split('-')[0];
 
   if (!isValidEin(ein)) {
@@ -100,25 +98,19 @@ export const load: PageServerLoad = async ({ params }) => {
     profile = await getProfile(ein);
   } catch (err) {
     console.error('Error in load function:', err);
+
     throw error(500, {
       message: 'An unexpected error occurred while fetching the foundation profile.',
     });
   }
 
-  // EIN-only helper
-  if (params.ein === ein) {
-    return { profile };
+  // Maintain existing SEO link equity by throwing a proper 301
+  // This results in an extra round trip, but that's OK as Cloudflare is fast and we can add aggressive caching at the API level
+  const canonicalPath = `/profiles/v0/${ein}-${profile.organization_name_slug}/`;
+  const canonicalUrl = new URL(canonicalPath, url.origin).toString();
+  if (url.pathname !== canonicalPath) {
+    return redirect(301, canonicalUrl);
   }
 
-  // Org name slug mismatches
-  // The profile data object has the proper slug
-  const currentSlug = `${profile.ein}-${profile.organization_name_slug}`;
-  const newUrl = `/profiles/v1/${currentSlug}`;
-  if (params.ein !== currentSlug) {
-    console.log('Redirect required to:', newUrl);
-    redirect(301, newUrl);
-  }
-
-  // Properly formatted routes
   return { profile };
 };
