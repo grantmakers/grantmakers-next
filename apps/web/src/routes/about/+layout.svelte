@@ -26,7 +26,7 @@
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
               <PrimaryNavLink href={'/profiles'} title={'Foundation Profiles'} />
-              <PrimaryNavLink reload={true} href={'/search/grants'} title={'Historical Grants'} />
+              <PrimaryNavLink href={'/search/grants'} title={'Historical Grants'} />
             </div>
           </div>
         </div>
@@ -206,7 +206,7 @@
                 <div class="space-y-1 pb-1 pt-2">
                   <!-- Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" -->
                   <PrimaryNavLinkMobile href={'/profiles'} title={'Foundation Profiles'} />
-                  <PrimaryNavLinkMobile reload={true} href={'/search/grants'} title={'Historical Grants'} />
+                  <PrimaryNavLinkMobile href={'/search/grants'} title={'Historical Grants'} />
                   <PrimaryNavLinkMobile href={'/about'} title={'About'} />
                 </div>
                 <div class="mt-3 space-y-1 px-4 pb-3">
