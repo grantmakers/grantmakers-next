@@ -4,14 +4,12 @@
   import placeholder from '$lib/assets/images/placeholder-financial-trends.webp';
   import { humanizeCurrency } from '@repo/shared/functions/formatters/numbers';
   import { formatFullDate } from '@repo/shared/functions/formatters/dates';
-  import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
+  import type { FinancialStats } from '@repo/shared/typings/grantmakers/all';
   import Divider from '$lib/components/shared/Divider.svelte';
   import type { Chart } from 'chart.js';
 
-  type Stats = GrantmakersExtractedDataObj['financial_stats'];
-
   interface Props {
-    orgFinancialStats: GrantmakersExtractedDataObj['financial_stats'];
+    orgFinancialStats: FinancialStats[];
     lastUpdatedByIrs: string;
     formattedTaxPeriodEnd: string;
     chartsColorPrimary?: string;
@@ -28,10 +26,11 @@
     chartsColorTertiary = '#009688',
   }: Props = $props();
 
-  const assets = orgFinancialStats.map((value: Stats) => value.assets).reverse();
-  const distributions = orgFinancialStats.map((value: Stats) => value.distributions).reverse();
-  const contributions = orgFinancialStats.map((value: Stats) => value.contributions).reverse();
-  const years = orgFinancialStats.map((value: Stats) => value.tax_year).reverse();
+  const assets = orgFinancialStats.map((value: FinancialStats) => value.assets).reverse();
+  const distributions = orgFinancialStats.map((value: FinancialStats) => value.distributions).reverse();
+  const contributions = orgFinancialStats.map((value: FinancialStats) => value.contributions).reverse();
+  // Use Set to remove duplicates, e.g. from an amended return
+  const years = [...new Set(orgFinancialStats.map((value: FinancialStats) => value.tax_year))].reverse();
 
   let chartCanvas: HTMLCanvasElement | undefined = $state();
   let chart: Chart;
