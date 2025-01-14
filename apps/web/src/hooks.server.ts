@@ -1,8 +1,9 @@
+import { redirect } from '@sveltejs/kit';
 import type { HandleServerError } from '@sveltejs/kit';
 
-type Redirects = { [key: string]: string };
+type SitemapRedirects = { [key: string]: string };
 
-const legacySitemapRedirects: Redirects = {
+const legacySitemapRedirects: SitemapRedirects = {
   '/sitemap-main.xml': '/sitemaps/sitemap-main.xml',
 };
 
@@ -11,7 +12,13 @@ export async function handle({ event, resolve }) {
 
   // Handle legacy sitemap redirect
   if (legacySitemapRedirects[path]) {
-    return Response.redirect(new URL(legacySitemapRedirects[path], event.url.origin), 301);
+    return redirect(301, new URL(legacySitemapRedirects[path], event.url.origin));
+  }
+
+  // Handle legacy profiles 'v' redirect
+  if (path.startsWith('/profiles/v0/')) {
+    const newPath = path.replace('/profiles/v0/', '/profiles/v1/');
+    return redirect(301, newPath);
   }
 
   return resolve(event);
