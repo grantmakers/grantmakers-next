@@ -1,5 +1,5 @@
 import { dev } from '$app/environment';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import { WORKER_URL, PROFILES_API_ENDPOINT, AUTH_PRIVATE_KEY, WAF_AUTH_VERIFY_KEY } from '$env/static/private';
 import { isValidEin } from '@repo/shared/utils/validators';
 import type { PageServerLoad } from './$types';
@@ -79,7 +79,7 @@ const getProfile = async (ein: string): Promise<GrantmakersExtractedDataObj> => 
   return await fetchRemoteProfile(ein, remoteUrl);
 };
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params, url }) => {
   // This main dynamic route handles two scenarios:
   // 1. The full canonical url: [ein]-[slugified-org-name]
   // 2. The ein-only helper router: [ein]
@@ -93,9 +93,9 @@ export const load: PageServerLoad = async ({ params }) => {
     });
   }
 
+  let profile;
   try {
-    const profile = await getProfile(ein);
-    return { profile };
+    profile = await getProfile(ein);
   } catch (err) {
     console.error('Error in load function:', err);
 
@@ -103,4 +103,14 @@ export const load: PageServerLoad = async ({ params }) => {
       message: 'An unexpected error occurred while fetching the foundation profile.',
     });
   }
+
+  // Maintain existing SEO link equity by throwing a proper 301
+  // This results in an extra round trip, but that's OK as Cloudflare is fast and we can add aggressive caching at the API level
+  const canonicalPath = `/profiles/v0/${ein}-${profile.organization_name_slug}/`;
+  const canonicalUrl = new URL(canonicalPath, url.origin).toString();
+  if (url.pathname !== canonicalPath) {
+    return redirect(301, canonicalUrl);
+  }
+
+  return { profile };
 };

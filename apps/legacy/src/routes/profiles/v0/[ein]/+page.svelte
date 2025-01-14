@@ -11,13 +11,6 @@
 
   let { data }: Props = $props();
   const { profile } = data;
-
-  onMount(() => {
-    const canonicalSlug = `${profile.ein}-${profile.organization_name_slug}`;
-    if ($page.params.ein !== canonicalSlug) {
-      goto(`/profiles/v0/${canonicalSlug}`, { replaceState: true });
-    }
-  });
 </script>
 
 <div class="profile-page" data-sveltekit-preload-data="off">
