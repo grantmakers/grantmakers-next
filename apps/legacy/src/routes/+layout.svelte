@@ -11,7 +11,7 @@
   import '@fontsource/roboto/500.css';
   import '@fontsource/roboto/700.css';
   import '@fontsource/material-icons';
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import SEO from '$lib/components/SEO.svelte';
   import { meta } from '$utils/trustedConstants';
   import Footer from '$src/lib/components/Footer.svelte';
@@ -28,8 +28,8 @@
 </script>
 
 <svelte:head>
-  {#if $page.data.profile}
-    <SEO profile={$page.data.profile} />
+  {#if page.data.profile}
+    <SEO profile={page.data.profile} />
   {:else}
     <title>{title}</title>
     <meta name="description" content={description} />
