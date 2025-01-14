@@ -1,5 +1,6 @@
 import { algoliasearch } from 'algoliasearch';
 import instantsearch from 'instantsearch.js';
+import { history } from 'instantsearch.js/es/lib/routers';
 import { stats, hits, searchBox, panel, refinementList, clearRefinements, pagination, poweredBy } from 'instantsearch.js/es/widgets';
 import { connectRange, connectCurrentRefinements, connectConfigure } from 'instantsearch.js/es/connectors';
 
@@ -10,6 +11,14 @@ if (!PUBLIC_ALGOLIA_APP_ID_GRANTS || !PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS || !
 }
 
 export function initSearchJs(M) {
+  // Capture InstantSearch warnings re Hogan templates
+  const originalWarn = console.warn;
+  console.warn = (...args) => {
+    if (!args[0]?.includes('[InstantSearch.js]')) {
+      originalWarn.apply(console, args);
+    }
+  };
+  
   // Helper definitions
   const scrollAnchor = document.querySelector('.nav-search');
   const isMobile = window.matchMedia('only screen and (max-width: 992px)');
@@ -114,6 +123,9 @@ export function initSearchJs(M) {
       preserveSharedStateOnUnmount: true,
     },
     routing: {
+      router: history({
+        cleanUrlOnDispose: false
+      }),
       stateMapping: {
         stateToRoute(uiState) {
           /**

@@ -1,7 +1,6 @@
 <script lang="ts">
   import bg from '$lib/assets/legacy/images/bg.jpg';
   import Header from '$lib/components/search/Header.svelte';
-  import Footer from '$lib/components/Footer.svelte';
   const site = {
     baseurl: '',
     number_of_searchable_grants: 5026745,
