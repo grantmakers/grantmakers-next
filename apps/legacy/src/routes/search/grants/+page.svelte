@@ -1,11 +1,11 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import bg from '$lib/assets/legacy/images/bg.jpg';
   import Header from '$lib/components/search/Header.svelte';
   const site = {
     baseurl: '',
     number_of_searchable_grants: 5026745,
   };
-  import { onMount } from 'svelte';
 
   onMount(async () => {
     let M = await import('materialize-css');

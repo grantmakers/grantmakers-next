@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import bg from '$lib/assets/legacy/images/bg.jpg';
   import { formatNumber } from '@repo/shared/functions/formatters/numbers';
   import Header from '$lib/components/search/Header.svelte';
@@ -6,7 +7,6 @@
     baseurl: '',
     number_of_foundations: 153013,
   };
-  import { onMount } from 'svelte';
 
   onMount(async () => {
     let M = await import('materialize-css');

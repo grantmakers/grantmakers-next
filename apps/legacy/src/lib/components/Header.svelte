@@ -9,7 +9,7 @@
           <a href={'#'} data-target="mobile-nav" class="sidenav-trigger right disable-primary-color"><i class="material-icons">menu</i></a>
           <div class="row">
             <div class="col s8 m4 l4">
-              <a href="/" data-ga="Homepage" class="brand-logo">
+              <a data-sveltekit-reload href="/" data-ga="Homepage" class="brand-logo">
                 <div class="logo-container">
                   <div class="logo">
                     <img src="/assets/img/logo.png" alt="Grantmakers Logo" />
@@ -21,13 +21,13 @@
             <div class="col m4 l8">
               <ul class="collection right hide-on-med-and-down">
                 <li class="collection-item avatar">
-                  <a href="/search/profiles/" title="Profiles Search">
+                  <a data-sveltekit-reload href="/search/profiles/" title="Profiles Search">
                     <i class="material-icons circle grantmakers">search</i> <span class="title">Find a Foundation Profile</span>
                     <p class="grantmakers-text">Profiles Search</p>
                   </a>
                 </li>
                 <li class="collection-item avatar">
-                  <a href="/search/grants/" title="Grants Search">
+                  <a data-sveltekit-reload href="/search/grants/" title="Grants Search">
                     <i class="material-icons circle blue-grey">search</i> <span class="title">Search all Grants</span>
                     <p class="blue-grey-text text-lighten-1">Grants Search</p>
                   </a>

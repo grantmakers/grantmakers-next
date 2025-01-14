@@ -27,13 +27,13 @@
             <div class="col m4 l8">
               <ul class="collection right hide-on-med-and-down">
                 <li class="collection-item avatar">
-                  <a href="{site.baseurl}/search/profiles/" title="Profiles Search">
+                  <a data-sveltekit-reload href="{site.baseurl}/search/profiles/" title="Profiles Search">
                     <i class="material-icons circle grantmakers">search</i> <span class="title">Find a Foundation Profile</span>
                     <p class="grantmakers-text">Profiles Search</p>
                   </a>
                 </li>
                 <li class="collection-item avatar">
-                  <a href="{site.baseurl}/search/grants/" title="Grants Search">
+                  <a data-sveltekit-reload href="{site.baseurl}/search/grants/" title="Grants Search">
                     <i class="material-icons circle blue-grey">search</i> <span class="title">Search all Grants</span>
                     <p class="blue-grey-text text-lighten-1">Grants Search</p>
                   </a>
@@ -81,10 +81,10 @@
   </li>
   <li class="disabled"><span class="title grey-text">Search</span></li>
   <li>
-    <a href="{site.baseurl}/search/profiles/" class="waves-effect waves-light"> Find a Foundation Profile </a>
+    <a data-sveltekit-reload href="{site.baseurl}/search/profiles/" class="waves-effect waves-light"> Find a Foundation Profile </a>
   </li>
   <li>
-    <a href="{site.baseurl}/search/grants" class="waves-effect waves-light"> Search all Grants </a>
+    <a data-sveltekit-reload href="{site.baseurl}/search/grants" class="waves-effect waves-light"> Search all Grants </a>
   </li>
   <li><hr class="divider" /></li>
   <li class="disabled"><span class="title grey-text">The Project</span></li>
