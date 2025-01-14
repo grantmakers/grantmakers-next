@@ -28,7 +28,7 @@ export function initSearchJs(M) {
       originalWarn.apply(console, args);
     }
   };
-  
+
   // Helper definitions
   // =======================================================
   const targetEIN = document.querySelector('h1.org-name').dataset.ein;
@@ -85,7 +85,7 @@ export function initSearchJs(M) {
     },
     routing: {
       router: history({
-        cleanUrlOnDispose: false
+        cleanUrlOnDispose: false,
       }),
       stateMapping: {
         stateToRoute(uiState) {

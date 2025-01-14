@@ -18,7 +18,7 @@ export function initSearchJs(M) {
       originalWarn.apply(console, args);
     }
   };
-  
+
   // Helper definitions
   const scrollAnchor = document.querySelector('.nav-search');
   const isMobile = window.matchMedia('only screen and (max-width: 992px)');
@@ -124,7 +124,7 @@ export function initSearchJs(M) {
     },
     routing: {
       router: history({
-        cleanUrlOnDispose: false
+        cleanUrlOnDispose: false,
       }),
       stateMapping: {
         stateToRoute(uiState) {
