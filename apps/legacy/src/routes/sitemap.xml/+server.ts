@@ -1,8 +1,8 @@
 import type { RequestHandler } from '@sveltejs/kit';
+import { originLegacy as url } from '$utils/trustedConstants';
 export const prerender = true;
 
 export const GET: RequestHandler = async () => {
-  const url = 'https://legacy.grantmakers.io'; // TODO Update to www when ready
   const lastmod = new Date().toISOString().split('.')[0] + 'Z';
 
   return new Response(

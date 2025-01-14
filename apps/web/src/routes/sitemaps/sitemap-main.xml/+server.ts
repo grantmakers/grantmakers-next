@@ -2,7 +2,7 @@ import { originNext as hostname } from '$utils/trustedConstants';
 
 export const prerender = true;
 
-const routes = ['/', '/about'];
+const routes = ['/', '/profiles/', '/search/profiles/', '/search/grants', '/about/', '/about/the-dataset/', '/about/faq/'];
 
 export async function GET() {
   const now = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
