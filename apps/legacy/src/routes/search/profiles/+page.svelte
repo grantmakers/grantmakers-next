@@ -277,7 +277,7 @@
               </div>
               <div class="center-align">
                 <div class="waves-effect waves-light btn-flat">
-                  <a href="{site.baseurl}/about/tips-and-tricks/">Learn more</a>
+                  <a href="{site.baseurl}/about/the-dataset/">Learn more</a>
                 </div>
               </div>
               <!--

@@ -80,7 +80,6 @@
   </li>
   <li><hr class="divider" /></li>
   <li class="disabled"><a href={'#'} class="title grey-text">The Project</a></li>
-  <li><a href="/about/tips-and-tricks/" class="waves-effect waves-light" data-ga="Tips">Tips & Tricks</a></li>
   <li><a href="/about/" class="waves-effect waves-light" data-ga="About">About</a></li>
   <li><a href="/about/faq/" class="waves-effect waves-light" data-ga="FAQ">FAQ</a></li>
   <li><hr class="divider" /></li>
