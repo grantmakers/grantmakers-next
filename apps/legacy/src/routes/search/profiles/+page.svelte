@@ -2,7 +2,6 @@
   import bg from '$lib/assets/legacy/images/bg.jpg';
   import { formatNumber } from '@repo/shared/functions/formatters/numbers';
   import Header from '$lib/components/search/Header.svelte';
-  import Footer from '$lib/components/Footer.svelte';
   const site = {
     baseurl: '',
     number_of_foundations: 153013,

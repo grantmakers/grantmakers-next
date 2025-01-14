@@ -36,12 +36,6 @@ export function initJs(M) {
   const elemsC = document.querySelectorAll('.collapsible');
   M.Collapsible.init(elemsC);
 
-  /* Load Google Sheets iframe */
-  /* ************************* */
-  if (document.getElementById('gsheets')) {
-    initGoogleSheets();
-  }
-
   // Lazy Load Iubenda script
   // =======================================================
   function createIubendaObserver() {
@@ -83,13 +77,4 @@ function getElementOffset(element) {
   let top = box.top + window.pageYOffset - de.clientTop;
   let left = box.left + window.pageXOffset - de.clientLeft;
   return { top: top, left: left };
-}
-
-function initGoogleSheets() {
-  const gsDefer = document.getElementsByTagName('iframe');
-  for (let i = 0; i < gsDefer.length; i++) {
-    if (gsDefer[i].getAttribute('data-src')) {
-      gsDefer[i].setAttribute('src', gsDefer[i].getAttribute('data-src'));
-    }
-  }
 }

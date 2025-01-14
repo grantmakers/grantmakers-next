@@ -8,8 +8,17 @@
     const gsDefer = document.getElementsByTagName('iframe');
     for (let i = 0; i < gsDefer.length; i++) {
       const dataSrc = gsDefer[i].getAttribute('data-src');
-      if (dataSrc) {
+      if (dataSrc && isValidUrl(dataSrc)) {
         gsDefer[i].setAttribute('src', dataSrc);
+      }
+    }
+    function isValidUrl(url: string) {
+      const trustedDomains = ['docs.google.com'];
+      try {
+        const parsedUrl = new URL(url);
+        return trustedDomains.includes(parsedUrl.hostname);
+      } catch (e) {
+        return false;
       }
     }
   }

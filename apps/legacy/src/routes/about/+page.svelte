@@ -1,3 +1,30 @@
+<script lang="ts">
+  import { onMount } from 'svelte';
+
+  function initGoogleSheets() {
+    const gsDefer = document.getElementsByTagName('iframe');
+    for (let i = 0; i < gsDefer.length; i++) {
+      const dataSrc = gsDefer[i].getAttribute('data-src');
+      if (dataSrc && isValidUrl(dataSrc)) {
+        gsDefer[i].setAttribute('src', dataSrc);
+      }
+    }
+    function isValidUrl(url: string) {
+      const trustedDomains = ['docs.google.com'];
+      try {
+        const parsedUrl = new URL(url);
+        return trustedDomains.includes(parsedUrl.hostname);
+      } catch (e) {
+        return false;
+      }
+    }
+  }
+
+  onMount(() => {
+    initGoogleSheets();
+  });
+</script>
+
 <div class="simple-page">
   <main>
     <div class="header header-filter" style="background-image: url('/assets/img/files.jpg')">

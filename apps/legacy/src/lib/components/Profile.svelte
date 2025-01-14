@@ -11,7 +11,6 @@
   import { formatNumber, formatToCurrency, humanizeCurrency, humanizeNumber } from '@repo/shared/functions/formatters/numbers';
   import { formatDateToMonthYear } from '@repo/shared/functions/formatters/dates';
   import { upperFirstLetter } from '@repo/shared/functions/formatters/names';
-  import Footer from './Footer.svelte';
   interface Props {
     profile: GrantmakersExtractedDataObj;
   }
