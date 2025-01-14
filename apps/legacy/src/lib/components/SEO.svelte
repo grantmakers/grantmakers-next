@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import { originProd, profilesVersionProd } from '$utils/trustedConstants';
   import { upperFirstLetter } from '@repo/shared/functions/formatters/names';
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
@@ -16,7 +16,7 @@
 
   const title = createTitle(organization_name);
   const description = createDescription({ organization_name, city, state, ein, filings });
-  const canonicalUrl = createCanonical($page.url, originProd, profilesVersionProd);
+  const canonicalUrl = createCanonical(page.url, originProd, profilesVersionProd);
 
   function createTitle(organization_name: Title): string {
     return `Grantmakers.io Profile - ${organization_name}`;
@@ -31,8 +31,8 @@
 
   function createCanonical(url: URL, targetOrigin: string, profilesVersion: string) {
     const { pathname } = url;
-    const profileId = pathname.split('/').pop();
-    const canonicalUrl = `${targetOrigin}/profiles/${profilesVersion}/${profileId}`;
+    const profileId = pathname.split('/').slice(-2)[0];
+    const canonicalUrl = `${targetOrigin}/profiles/${profilesVersion}/${profileId}/`;
 
     return canonicalUrl;
   }
