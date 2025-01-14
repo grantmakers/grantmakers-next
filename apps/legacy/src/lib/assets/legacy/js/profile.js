@@ -154,7 +154,7 @@ export function initProfileJs(M, orgFinancialStats) {
     const distributions = orgFinancialStats.map((value) => value.distributions).reverse();
     const contributions = orgFinancialStats.map((value) => value.contributions).reverse();
     // Use Set to remove duplicates, e.g. from an amended return
-    const years = [...new Set(orgFinancialStats.map(value => value.tax_year))].reverse();
+    const years = [...new Set(orgFinancialStats.map((value) => value.tax_year))].reverse();
     const year1 = orgFinancialStats[0];
 
     const ctx = document.getElementById('chart-overview').getContext('2d');
