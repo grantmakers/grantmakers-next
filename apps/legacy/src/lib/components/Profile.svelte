@@ -547,35 +547,19 @@
               <div class="card-panel">
                 <div class="card-panel-header-wrapper">
                   <div class="card-panel-header">
-                    <div class="row valign-wrapper">
-                      <div class="col s3">
+                    <div class="row">
+                      <div class="col s5 m3 valign-wrapper">
                         <h4>
                           Grants{#if algolia()}
-                            <!-- <span class="algolia-logo right hide-on-med-and-up print-hidden text-muted"
-                              >Search powered by<br /><a href={site.algolia_referral_link} class="algolia-light-bg"
-                                ><img src={algoliaLightBg} alt="Powered by Algolia" /></a
-                              ></span> -->
                             <a href={'#'} data-target="algolia-mobile" class="sidenav-trigger right hide"
                               ><i class="material-icons text-muted">filter_list</i></a
                             >{/if}
                         </h4>
                       </div>
-                      <div class="col s9 m6 print-hidden">
+                      <div class="col s7 m3 push-m6 valign-wrapper print-hidden flex-hack">
                         {#if algolia()}
-                          <div class="search js-ie-check">
-                            <div class="input-field text-muted">
-                              <div id="ais-widget-search-box"></div>
-                            </div>
-                          </div>
-                        {/if}
-                      </div>
-                      <div class="col m3 right-align print-hidden">
-                        {#if algolia()}
-                          <div class="right-align algolia-logo hide-on-small-only text-muted">
-                            <div id="powered-by" class="right print-hidden valign-wrapper"></div>
-                            <!-- Search powered by<br /><a class="algolia-light-bg" href={site.algolia_referral_link}
-                              ><img src={algoliaLightBg} alt="Powered by Algolia" /></a
-                            > -->
+                          <div class="valign-wrapper algolia-logo text-muted">
+                            <div id="powered-by" class="right print-hidden"></div>
                           </div>
                         {:else}
                           <h4 class="right hide-on-small-only">
@@ -583,6 +567,15 @@
                               ><img src={irsLogoAlt} alt="IRS logo" class="icon-irs-alt" /></button
                             >
                           </h4>
+                        {/if}
+                      </div>
+                      <div class="col s12 m6 pull-m3 print-hidden">
+                        {#if algolia()}
+                          <div class="search js-ie-check">
+                            <div class="input-field text-muted">
+                              <div id="ais-widget-search-box"></div>
+                            </div>
+                          </div>
                         {/if}
                       </div>
                     </div>
@@ -1411,15 +1404,15 @@
   }
 
   .avatar-container {
-    margin: -50px auto 0;
+    margin: -100px auto 0;
     max-height: 160px;
     max-width: 160px;
   }
 
   .avatar-letter {
-    width: 48px;
-    height: 48px;
-    font-size: 1.25rem;
+    width: 148px;
+    height: 148px;
+    font-size: 6.25rem;
     background-color: #f97316;
     display: flex;
     align-items: center;
@@ -1438,6 +1431,17 @@
       height: 148px;
       font-size: 4.25rem;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  /* Search box */
+  .flex-hack {
+    height: 70px;
+    justify-content: right;
+  }
+  @media (min-width: 768px) {
+    .flex-hack {
+      height: 75px;
     }
   }
   /* Grants alert */
