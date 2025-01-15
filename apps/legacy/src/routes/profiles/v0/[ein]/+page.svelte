@@ -7,12 +7,12 @@
   }
 
   let { data }: Props = $props();
-  const { profile } = data;
+  const { profile, hasSurpriseMeAccess } = data;
 </script>
 
 <div class="profile-page" data-sveltekit-preload-data="off">
   {#if profile}
-    <Profile {profile} />
+    <Profile {profile} {hasSurpriseMeAccess} />
   {:else}
     <p>No profile data available</p>
   {/if}

@@ -13,9 +13,10 @@
   import { upperFirstLetter } from '@repo/shared/functions/formatters/names';
   interface Props {
     profile: GrantmakersExtractedDataObj;
+    hasSurpriseMeAccess: boolean;
   }
 
-  let { profile }: Props = $props();
+  let { profile, hasSurpriseMeAccess }: Props = $props();
 
   // Mimic Jekyll
   const site = {
@@ -137,8 +138,19 @@
             {/if}
           </div>
           <div class="col m6 l6 xl6 hide-on-med-and-down print-hidden">
+            {#if hasSurpriseMeAccess}
+              <div class="fixed-action-btn">
+                <a
+                  href={'/profiles/random/'}
+                  class="btn-floating btn-large blue-grey tooltipped"
+                  data-position="left"
+                  data-tooltip="Fetch a random profile"
+                >
+                  <i class="large material-icons">cached</i>
+                </a>
+              </div>
+            {/if}
             <ul class="nav-primary right">
-              <li><a href="/profiles/random/">Surprise me</a></li>
               <li><a href="#people" data-ga="People">People</a></li>
               <li><a href="#grants" data-ga="Grants">Grants</a></li>
               <li><a href="#application-info" data-ga="Application Guidelines">Guidelines</a></li>

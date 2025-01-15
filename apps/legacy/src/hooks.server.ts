@@ -1,4 +1,4 @@
-import type { HandleServerError } from '@sveltejs/kit';
+import { redirect, type HandleServerError } from '@sveltejs/kit';
 
 type Redirects = { [key: string]: string };
 
@@ -12,6 +12,20 @@ export async function handle({ event, resolve }) {
   // Handle legacy sitemap redirect
   if (legacySitemapRedirects[path]) {
     return Response.redirect(new URL(legacySitemapRedirects[path], event.url.origin), 301);
+  }
+
+  // Handle Surprise Me feature
+  const accessToken = event.url.searchParams.get('access');
+
+  if (accessToken === 'welcome-friend') {
+    event.cookies.set('surprise-me-access', 'granted', {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 30, // 30 days
+    });
+
+    // Redirect to the same page without the query param
+    const redirectTo = event.url.pathname;
+    redirect(302, redirectTo);
   }
 
   return resolve(event);
