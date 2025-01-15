@@ -118,7 +118,7 @@
               </div>
             </a>
           </div>
-          <div class="col l4 xl5 hide-on-med-and-down valign-wrapper" style="height: 64px">
+          <div class="col l4 xl4 hide-on-med-and-down valign-wrapper" style="height: 64px">
             <div class="breadcrumb-wrapper left">
               <a
                 data-sveltekit-reload
@@ -134,8 +134,9 @@
               >
             {/if}
           </div>
-          <div class="col m6 l6 xl5 hide-on-med-and-down print-hidden">
+          <div class="col m6 l6 xl6 hide-on-med-and-down print-hidden">
             <ul class="nav-primary right">
+              <li><a href="/profiles/random/">Surprise me</a></li>
               <li><a href="#people" data-ga="People">People</a></li>
               <li><a href="#grants" data-ga="Grants">Grants</a></li>
               <li><a href="#application-info" data-ga="Application Guidelines">Guidelines</a></li>
