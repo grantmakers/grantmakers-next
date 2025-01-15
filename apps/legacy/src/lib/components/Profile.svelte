@@ -33,6 +33,8 @@
 
   const orgFinancialStats = $derived(page.financial_stats);
 
+  const displayedFilingIsAmendment = $derived(page.filings.slice(0, 7).map((f) => f.filing_is_amendment));
+
   let algolia = $derived(() => {
     // Ensure profiles with only 2009, 2010, 2011, or 2012 grants do NOT use Algolia
     // Removed 2009-2012 grants from Algolia index to stay under the 6m record limit
@@ -1334,7 +1336,7 @@
                             rel="noopener"
                             data-ga="PDF View Latest"
                             data-ein={page.ein}
-                            title="View latest filing">{filing.tax_year}</a
+                            title="View latest filing">{filing.tax_year}{filing.filing_is_amendment ? '*' : ''}</a
                           >
                         </li>
                       {/if}
@@ -1352,6 +1354,14 @@
                       >
                     </li>
                   </ul>
+                  {#if displayedFilingIsAmendment}
+                    <ul class="list-inline">
+                      <li id="js-pdfs" data-ein={page.ein} class="hide-on-med-and-down" style="visibility: hidden;">
+                        <i class="material-icons">picture_as_pdf</i> <span class="show-on-medium-and-down text-muted">PDF</span>
+                      </li>
+                      <li class="grey-text text-darken-1">* Filing is an amendment</li>
+                    </ul>
+                  {/if}
                 </div>
               </div>
             </div>
