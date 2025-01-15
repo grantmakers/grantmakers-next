@@ -6,6 +6,8 @@ const legacySitemapRedirects: Redirects = {
   '/sitemap-main.xml': '/sitemaps/sitemap-main.xml',
 };
 
+const surpriseMeRoutes = ['/profiles/v0'];
+
 export async function handle({ event, resolve }) {
   const path = event.url.pathname;
 
@@ -15,17 +17,19 @@ export async function handle({ event, resolve }) {
   }
 
   // Handle Surprise Me feature
-  const accessToken = event.url.searchParams.get('access');
+  if (surpriseMeRoutes.some((route) => path.startsWith(route))) {
+    const accessToken = event.url.searchParams.get('access');
 
-  if (accessToken === 'welcome-friend') {
-    event.cookies.set('surprise-me-access', 'granted', {
-      path: '/',
-      maxAge: 60 * 60 * 24 * 30, // 30 days
-    });
+    if (accessToken === 'welcome-friend') {
+      event.cookies.set('surprise-me-access', 'granted', {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+      });
 
-    // Redirect to the same page without the query param
-    const redirectTo = event.url.pathname;
-    redirect(302, redirectTo);
+      // Clean the query param
+      const redirectTo = event.url.pathname;
+      redirect(302, redirectTo);
+    }
   }
 
   return resolve(event);
