@@ -33,7 +33,7 @@
 
   const orgFinancialStats = $derived(page.financial_stats);
 
-  const displayedFilingIsAmendment = $derived(page.filings.slice(0, 7).map((f) => f.filing_is_amendment));
+  const displayedFilingIsAmendment = $derived(page.filings.some((f) => f.filing_is_amendment));
 
   let algolia = $derived(() => {
     // Ensure profiles with only 2009, 2010, 2011, or 2012 grants do NOT use Algolia
