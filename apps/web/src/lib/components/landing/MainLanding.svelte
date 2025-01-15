@@ -47,7 +47,7 @@
         <div class="mx-auto max-w-2xl shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
           <div class="text-left">
             <h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-              Grants research<br />
+              Foundation research<br />
               <span class="text-slate-500"><del>is expensive</del></span><br /> just got easier
             </h1>
             <!-- Overriding h2 defaults is an anti-pattern. Consider removing all header tag defaults -->
