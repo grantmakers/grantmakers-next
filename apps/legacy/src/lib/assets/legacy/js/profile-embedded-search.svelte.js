@@ -24,7 +24,7 @@ if (!PUBLIC_ALGOLIA_APP_ID_GRANTS || !PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS || !
 export let searchState = $state({
   initialEmptyQuery: false,
   noHits: false,
-})
+});
 // export async function initSearchJs(M, onEmptyInitialSearch) {
 export async function initSearchJs(M) {
   // Capture InstantSearch warnings re Hogan templates
@@ -69,7 +69,7 @@ export async function initSearchJs(M) {
       //   searchState.initialEmptyQuery = true;
       //   // Render an initial set of results here
       //   return [];
-      // }    
+      // }
       return algoliaClient.search(requests);
     },
   };
@@ -184,7 +184,7 @@ export async function initSearchJs(M) {
   const renderHits = (renderOptions) => {
     const { hits, results, widgetParams } = renderOptions;
 
-    if (!hits.length && results) {      
+    if (!hits.length && results) {
       document.getElementById('ais-widget-pagination').classList.add('hidden');
 
       widgetParams.container.innerHTML = `
