@@ -1,4 +1,4 @@
-import { originLegacy as hostname } from '$utils/trustedConstants';
+import { originProd as hostname } from '$utils/trustedConstants';
 
 export const prerender = true;
 

@@ -34,8 +34,8 @@ export const profilesVersionLegacy = 'v0';
 export const profilesVersionNext = 'v1';
 export const profilesVersionProd = 'v0';
 
-export const cutoverDate = new Date('2024-12-01').toISOString().replace(/\.\d{3}Z$/, 'Z');
-export const rankTotal = 151195; // Interim helper
+export const cutoverDate = new Date('2025-01-18').toISOString().replace(/\.\d{3}Z$/, 'Z');
+export const rankTotal = 153236; // Interim helper
 
 export const articleLinks = {
   whyAlgolia: 'https://stories.algolia.com/why-hosted-search-made-sense-for-grantmakers-io-8974f5ed6bd6',
