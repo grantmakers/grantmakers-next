@@ -15,7 +15,7 @@
 
 <div class="main-landing">
   <div class="top-cta black white-text center-align">
-    🎉 After seven years and millions of searches, <span class="text-bold">Grantmakers.io is going 2.0!</span>
+    🎉 After eight years and millions of searches, <span class="text-bold">Grantmakers.io is going 2.0!</span>
     <a class="grantmakers-color-light" href="https://next.grantmakers.io" target="_blank">Take a sneak peek.</a>
   </div>
   <header>
@@ -218,7 +218,7 @@
                 </div>
                 <div class="col s12 m7 center-align">
                   <h6 class="subheader">Research</h6>
-                  <h5 class="title">Search through 5.4 million grants</h5>
+                  <h5 class="title">Search through 4.7 million grants</h5>
                   <p>
                     Thanks to the generosity of our friends at <a
                       href="https://www.algolia.com/?utm_source=grantmakersio&utm_medium=referral">Algolia</a
@@ -274,13 +274,13 @@
       <div class="section section-extra-padding section-current-stats white-text">
         <div class="row row-tight">
           <div class="col s12 l6 offset-l3 center-align">
-            <h5 class="white-text">Last updated Jan 06, 2024</h5>
+            <h5 class="white-text">Last updated Jan 17, 2025</h5>
             <div class="row row-tight">
               <div class="col s12 m4">
                 <div class="card">
                   <div class="card-content">
                     <div class="card-title grantmakers">Foundations</div>
-                    <h1>145k</h1>
+                    <h1>153k</h1>
                   </div>
                 </div>
               </div>
@@ -288,7 +288,7 @@
                 <div class="card">
                   <div class="card-content">
                     <div class="card-title grantmakers">Filings</div>
-                    <h1>889k</h1>
+                    <h1>1.0m</h1>
                   </div>
                 </div>
               </div>
@@ -296,7 +296,7 @@
                 <div class="card">
                   <div class="card-content">
                     <div class="card-title grantmakers">Grants</div>
-                    <h1>11.4m</h1>
+                    <h1>13.1m</h1>
                   </div>
                 </div>
               </div>
@@ -327,7 +327,7 @@
           <div class="col s12 l6 offset-l3 center-align">
             <h6 class="grey-text text-lighten-4">🎉 Announcing 🎉</h6>
             <h4>Grantmakers.io NEXT</h4>
-            <h6>After seven years and millions of searches, Grantmakers.io is going 2.0</h6>
+            <h6>After eight years and millions of searches, Grantmakers.io is going 2.0</h6>
             <ul class="list-inline">
               <li>
                 <a
