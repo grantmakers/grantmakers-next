@@ -1,3 +1,4 @@
+//import type $state from './$types'
 import { algoliasearch } from 'algoliasearch';
 import instantsearch from 'instantsearch.js';
 import { history } from 'instantsearch.js/es/lib/routers';
@@ -20,7 +21,12 @@ if (!PUBLIC_ALGOLIA_APP_ID_GRANTS || !PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS || !
   throw new Error('Missing required Algolia public keys. Please ensure environment variables are set.');
 }
 
-export function initSearchJs(M) {
+export let searchState = $state({
+  initialEmptyQuery: false,
+  noHits: false,
+})
+// export async function initSearchJs(M, onEmptyInitialSearch) {
+export async function initSearchJs(M) {
   // Capture InstantSearch warnings re Hogan templates
   const originalWarn = console.warn;
   console.warn = (...args) => {
@@ -48,7 +54,25 @@ export function initSearchJs(M) {
   // Algolia Instantsearch
   // =======================================================
   // Config
-  const searchClient = algoliasearch(PUBLIC_ALGOLIA_APP_ID_GRANTS, PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS);
+  const algoliaClient = algoliasearch(PUBLIC_ALGOLIA_APP_ID_GRANTS, PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS);
+  //const searchClient = algoliasearch(PUBLIC_ALGOLIA_APP_ID_GRANTS, PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS);
+  // To set initial state w/out a query...
+  // ...need to wrap a custom searchClient around Algolia's
+  // https://www.algolia.com/doc/guides/building-search-ui/going-further/conditional-requests/js/#implementing-a-proxy
+  const searchClient = {
+    ...algoliaClient,
+    // Capture empty requests
+    // https://www.algolia.com/doc/guides/building-search-ui/going-further/conditional-requests/js/#detecting-empty-search-requests
+    search(requests) {
+      // TODO Use InstantSearch to show initial results, instead of legacy ais-placeholder-hits strategy
+      // if (requests.every(({ params }) => !params.query)) {
+      //   searchState.initialEmptyQuery = true;
+      //   // Render an initial set of results here
+      //   return [];
+      // }    
+      return algoliaClient.search(requests);
+    },
+  };
   const algoliaIndex = PUBLIC_ALGOLIA_INDEX_NAME_GRANTS;
   const facets = [
     {
@@ -160,7 +184,7 @@ export function initSearchJs(M) {
   const renderHits = (renderOptions) => {
     const { hits, results, widgetParams } = renderOptions;
 
-    if (!hits.length && results) {
+    if (!hits.length && results) {      
       document.getElementById('ais-widget-pagination').classList.add('hidden');
 
       widgetParams.container.innerHTML = `
@@ -433,9 +457,10 @@ export function initSearchJs(M) {
       placeholder: 'Search by keyword or recipient name',
       autofocus: false,
       reset: true,
-      queryHook: function (query, searchInstance) {
-        searchInstance(query);
-      },
+      // QueryHook Docs: https://www.algolia.com/doc/api-reference/widgets/search-box/js/#widget-param-queryhook
+      // queryHook: function (query, searchInstance) {
+      //   searchInstance(query);
+      // },
     }),
 
     configure({
@@ -518,7 +543,7 @@ export function initSearchJs(M) {
   /* ---------------------------- */
   /* Render Widgets
   /* ---------------------------- */
-  search.once('render', function () {
+  search.once('render', async function () {
     const elemsFS = document.querySelectorAll('select');
     M.FormSelect.init(elemsFS);
     hideSeoPlaceholders();
@@ -534,7 +559,7 @@ export function initSearchJs(M) {
       renderForbidden();
       console.log('Origin forbidden'); // eslint-disable-line no-console
     }
-    console.log(e);
+    //console.log(e);
   });
 
   /* ---------------------------- */

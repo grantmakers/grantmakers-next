@@ -44,12 +44,12 @@ const fetchLocalProfile = async (ein: string): Promise<GrantmakersExtractedDataO
       { ein },
       {
         projection: {
+          // These will only exist if pulling from the 'aggregated' collection
+          // These are filtered out from the aggregated collection in the to-r2-profiles reducer
           phone: 0,
           organization_name_legacy_slug: 0,
           organization_names_all_years: 0,
-          grants_all_years: 0,
-          grants: 0,
-          // grants_current_year_top_20: 0,
+          grants_last_three_years: 0,
         },
       },
     );

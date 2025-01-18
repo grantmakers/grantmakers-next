@@ -11,12 +11,16 @@
   import { formatNumber, formatToCurrency, humanizeCurrency, humanizeNumber } from '@repo/shared/functions/formatters/numbers';
   import { formatDateToMonthYear } from '@repo/shared/functions/formatters/dates';
   import { upperFirstLetter } from '@repo/shared/functions/formatters/names';
+  import { searchState } from '$src/lib/assets/legacy/js/profile-embedded-search.svelte.js';
+
   interface Props {
     profile: GrantmakersExtractedDataObj;
     hasSurpriseMeAccess: boolean;
   }
 
   let { profile, hasSurpriseMeAccess }: Props = $props();
+
+  $inspect('searchState', searchState);
 
   // Mimic Jekyll
   const site = {
@@ -36,23 +40,12 @@
 
   const displayedFilingIsAmendment = $derived(page.filings.some((f) => f.filing_is_amendment));
 
-  let algolia = $derived(() => {
-    // Ensure profiles with only 2009, 2010, 2011, or 2012 grants do NOT use Algolia
-    // Removed 2009-2012 grants from Algolia index to stay under the 6m record limit
-    if (
-      page.filings[0].tax_year == 2009 ||
-      page.filings[0].tax_year == 2010 ||
-      page.filings[0].tax_year == 2011 ||
-      page.filings[0].tax_year == 2012
-    )
-      return false;
-
-    return page.grant_count > 5 || (page.grant_count > 0 && page.filings[1]);
-  });
+  let algolia = $derived(page.enable_algolia_search && !page._tags.includes('exclude_from_legacy_search'));
+  $inspect('Enabling Algolia,', algolia);
 
   let filingCount = $derived(page.grants_facets.filter((filing) => filing.grant_count > 0).length);
 
-  let simplify = $derived(page.grant_count_all_years < 20 || (filingCount <= 1 && page.grant_count <= 20));
+  let simplify = $derived(page.grant_count_last_three_years < 20 || (filingCount <= 1 && page.grant_count <= 20));
 
   let enable_tax_year_dropdown = $derived(page.filings[1] && page.grants_facets[1].grant_count > 0);
 
@@ -71,7 +64,7 @@
   const cardPanelClasses = $derived(`card-panel-body${lastUpdatedYear < currentYearMinusOne ? ' yellow lighten-4' : ''}`);
 
   // Handle static grants
-  let staticGrants = $derived(page.grants_current_year_top_20);
+  let staticGrants = $derived(page.grants_last_three_years_top_20);
   const hasForeignGrantRecipients = $derived(() => {
     if (staticGrants && staticGrants.length > 0) {
       for (const grant of staticGrants) {
@@ -92,9 +85,10 @@
     } catch (error) {
       console.log(error);
     }
-    if (page.enable_algolia_search) {
-      const { initSearchJs } = await import('$lib/assets/legacy/js/profile-embedded-search');
+    if (algolia) {
+      const { initSearchJs } = await import('$src/lib/assets/legacy/js/profile-embedded-search.svelte');
       try {
+        //initSearchJs(M, handleEmptySearch);
         initSearchJs(M);
       } catch (error) {
         console.log(error);
@@ -131,7 +125,7 @@
               >
               <span class="breadcrumb">{page.organization_name}</span>
             </div>
-            {#if algolia()}
+            {#if algolia}
               <span class="algolia-partnership-logo print-hidden"
                 ><a href={site.algolia_referral_link}><img src={algoliaPartnership} alt="Algolia Partnership Logo" /></a></span
               >
@@ -549,7 +543,7 @@
         <div id="grants-scroll-anchor" class="row">
           <div class="col s12">
             <div id="grants" class="scrollspy">
-              {#if page.enable_algolia_search}
+              {#if algolia}
                 <div class="center-align valign-wrapper justify-center">
                   <i class="material-icons yellow-text text-darken-3">error</i> Searchable grants are currently 2-3 tax years behind. Grant updates
                   coming soon.
@@ -562,14 +556,14 @@
                     <div class="row">
                       <div class="col s5 m3 valign-wrapper">
                         <h4>
-                          Grants{#if algolia()}
+                          Grants{#if algolia}
                             <a href={'#'} data-target="algolia-mobile" class="sidenav-trigger right hide"
                               ><i class="material-icons text-muted">filter_list</i></a
                             >{/if}
                         </h4>
                       </div>
                       <div class="col s7 m3 push-m6 valign-wrapper print-hidden flex-hack">
-                        {#if algolia()}
+                        {#if algolia}
                           <div class="valign-wrapper algolia-logo text-muted">
                             <div id="powered-by" class="right print-hidden"></div>
                           </div>
@@ -582,7 +576,7 @@
                         {/if}
                       </div>
                       <div class="col s12 m6 pull-m3 print-hidden">
-                        {#if algolia()}
+                        {#if algolia}
                           <div class="search js-ie-check">
                             <div class="input-field text-muted">
                               <div id="ais-widget-search-box"></div>
@@ -593,7 +587,9 @@
                     </div>
                   </div>
                 </div>
-                {#if algolia()}
+                <!-- TODO Consider limiting algolia init until full grants sync complete -->
+                <!-- e.g. {#if algolia && !searchState.initialEmptyQuery && !searchState.noHits} -->
+                {#if algolia}
                   <div class="section section-results js-ie-check">
                     <div id="rate-limit-message" class="hidden">
                       <div class="row">
@@ -673,7 +669,7 @@
                                     <div>
                                       <div class="ais-RefinementList">
                                         <ul class="ais-RefinementList-list">
-                                          {#each page.grants_facets as each}
+                                          {#each page.grants_facets.slice(0, 3) as each}
                                             {#if each.grant_count > 0}
                                               <li class="ais-RefinementList-item">
                                                 <div>
@@ -715,7 +711,8 @@
                         <div class="col s12 m9 l9">
                           <div id="ais-widget-stats">
                             <div class="ais-Stats">
-                              <span class="ais-Stats-text hide-on-med-and-down text-muted">{page.grant_count_all_years} results</span>
+                              <span class="ais-Stats-text hide-on-med-and-down text-muted">{page.grant_count_last_three_years} results</span
+                              >
                             </div>
                           </div>
                         </div>
@@ -745,7 +742,7 @@
                                           <table id="grantsPlaceholderTable" class="striped bordered">
                                             <thead>
                                               <tr>
-                                                <th class="right-align text-nowrap" data-sort="int"><span>Amount ($)</span></th>
+                                                <th class="right-align text-nowrap" data-sort="int"><span>Amount</span></th>
                                                 <th data-sort="string"><span>Name</span></th>
                                                 <th data-sort="string"><span>Purpose</span></th>
                                                 <th data-sort="string"><span>Location</span></th>
@@ -753,11 +750,11 @@
                                               </tr>
                                             </thead>
                                             <tbody>
-                                              {#if page.grants_current_year_top_20 && page.grants_current_year_top_20.length > 0}
-                                                {#each page.grants_current_year_top_20.slice(0, 20) as each}
+                                              {#if staticGrants && staticGrants.length > 0}
+                                                {#each staticGrants.slice(0, 20) as each}
                                                   <tr>
                                                     <td class="right-align" data-sort-value={each.amount}
-                                                      >{humanizeCurrency(each.amount)}</td
+                                                      >{formatToCurrency(each.amount)}</td
                                                     >
                                                     <td>{each.name}</td>
                                                     <td>{each.purpose}</td>
@@ -830,38 +827,26 @@
                       <div class="col s12">
                         <div id="grantsTableWrapper" class="card-panel-body">
                           <div class="responsive-table-wrapper">
-                            {#if page.grant_count > 1000}
-                              <div class="row">
-                                <div class="col s12">
-                                  <div class="card blue-grey lighten-2">
-                                    <div class="card-content white-text">
-                                      <i class="material-icons">warning</i> You may experience a delay when sorting. This foundation has a large
-                                      number of grants.
-                                    </div>
-                                  </div>
-                                </div>
+                            <!-- <div class="row">
+                              <div class="col s12 text-light right-align">
+                                Latest Filing: Tax Year {page.filings[0].tax_year}
                               </div>
-                            {/if}
-                            <div class="row">
-                              <div class="col s12 text-light">
-                                Tax Year {page.filings[0].tax_year}
-                              </div>
-                            </div>
+                            </div> -->
                             <table id="grantsTable" class="striped bordered">
                               <thead>
                                 <tr>
-                                  <th data-sort="int" class="text-center"><span>#</span></th>
+                                  <th data-sort="int" class="right-align text-nowrap"><span>Amount</span></th>
                                   <th data-sort="string"><span>Name</span></th>
                                   <th data-sort="string"><span>Purpose</span></th>
                                   <th data-sort="string"><span>Location</span></th>
-                                  <th class="right-align text-nowrap" data-sort="int"><span>Amount ($)</span></th>
+                                  <th class="text-center" data-sort="int"><span>Year</span></th>
                                 </tr>
                               </thead>
                               <tbody id="grantsTableBody">
                                 {#if staticGrants && staticGrants.length > 0}
-                                  {#each staticGrants.slice(0, 50) as each, i}
+                                  {#each staticGrants as each}
                                     <tr>
-                                      <td class="left-align">{i + 1}</td>
+                                      <td class="right-align" data-sort-value={each.amount}>{formatToCurrency(each.amount)}</td>
                                       <td>{each.name}</td>
                                       <td>{each.purpose}</td>
                                       {#if each.is_foreign == true}
@@ -873,7 +858,8 @@
                                           >{#if each.city != null}{each.city}, {each.state}{/if}</td
                                         >
                                       {/if}
-                                      <td class="right-align" data-sort-value={each.amount}>{humanizeCurrency(each.amount)}</td>
+
+                                      <td class="left-align">{each.tax_year}</td>
                                     </tr>
                                   {/each}
                                 {:else}

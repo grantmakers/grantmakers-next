@@ -39,6 +39,7 @@ export interface GrantmakersExtractedDataObj {
   eobmf_recognized_exempt: boolean;
   eobmf_ruling_date: string | undefined; // yyyymm
   is_likely_staffed: boolean;
+  is_likely_inactive: boolean;
   has_website: WebsiteObj['filingHasValidWebsite'];
   has_charitable_activities: boolean;
   charitable_activities_count: number;
@@ -51,6 +52,7 @@ export interface GrantmakersExtractedDataObj {
   grant_median: number;
   grant_count: number;
   grant_count_all_years: number;
+  grant_count_last_three_years: number;
   grants_to_preselected_only: true | null; // This field either exists as an 'X' in the raw filing or is not provided
   // TODO May have to change structure to handle arrays of Application Info (2k outliers)
   grants_application_info: string | null;
@@ -60,9 +62,13 @@ export interface GrantmakersExtractedDataObj {
   grants_reference_attachment: boolean;
   charitable_activities: CharitableActivitiesArray;
   grants_facets: Facets[];
-  grants?: GrantsArray;
+  // TODO Need to create new interfaces matching downstream structures
+  grants?: GrantsArray; // ✅ filings, ❌ aggregated, ❌ r2
+  grants_last_three_years?: GrantsArray; // ❌filings, ✅ aggregated, ❌ r2
+  grants_last_three_years_top_20?: GrantsArray;
   grants_current_year_top_20?: GrantsArray;
-  grants_all_years_top_20?: GrantsArray;
+  //grants_all_years_top_20?: GrantsArray;
+  //grants_latest_20: GrantsArray;
   people: PeopleArray;
   organization_name_legacy_slug: string | null;
   organization_name_legacy_slug_requires_redirect: boolean | null;
@@ -72,6 +78,7 @@ export interface GrantmakersExtractedDataObj {
   rank: number;
   rank_total: number;
   rank_giving: number;
+  _tags: 'exclude_from_legacy_search'[];
 }
 
 export interface SummaryGrant {
@@ -239,7 +246,7 @@ interface LegacyPersonNameWithAttributes {
   attributes: unknown;
 }
 
-export type GrantsArray = Grant[] | null; // This is normalized: Filings with only 1 grant will be normalized to be have one grant in an array
+export type GrantsArray = Grant[] | []; // This is normalized: Filings with only 1 grant will be normalized to be have one grant in an array
 
 export interface Grant {
   name: string;
