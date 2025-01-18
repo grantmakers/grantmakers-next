@@ -52,7 +52,7 @@
       <div class="col s12 m12 l4">
         <div class="left-align">
           <ul class="footer-nav list-inline">
-            <li><a data-sveltekit-reload href="/profiles/">Profiles Index</a></li>
+            <!-- <li><a data-sveltekit-reload href="/profiles/">Profiles Index</a></li> -->
             {#if page && page.ein}
               <li>
                 <a href="mailto:feedback@grantmakers.io?body=%0D%0A%0D%0A{page.organization_name}%0D%0A{site.baseurl}/{page.ein}/"

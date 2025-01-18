@@ -8,6 +8,9 @@ const legacySitemapRedirects: Redirects = {
 
 const surpriseMeRoutes = ['/profiles/v0'];
 
+const deprecatedFullIndexRoute = '/profiles/';
+const fullIndexRedirect = '/search/profiles/';
+
 export async function handle({ event, resolve }) {
   const path = event.url.pathname;
 
@@ -30,6 +33,11 @@ export async function handle({ event, resolve }) {
       const redirectTo = event.url.pathname;
       redirect(302, redirectTo);
     }
+  }
+
+  // Handle deprecated profiles full index route
+  if (event.url.pathname === deprecatedFullIndexRoute) {
+    redirect(301, fullIndexRedirect);
   }
 
   return resolve(event);
