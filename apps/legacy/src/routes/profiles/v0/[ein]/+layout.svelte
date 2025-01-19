@@ -15,7 +15,7 @@
 </script>
 
 <svelte:head>
-  <link rel="preload" as="image" href="/assets/img/NY.jpg" fetchpriority="high" />
+  <link rel="preload" as="image" href="/assets/img/NY.webp" fetchpriority="high" />
 </svelte:head>
 
 {@render children?.()}
