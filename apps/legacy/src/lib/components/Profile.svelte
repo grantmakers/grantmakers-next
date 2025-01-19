@@ -554,13 +554,6 @@
         <div id="grants-scroll-anchor" class="row">
           <div class="col s12">
             <div id="grants" class="scrollspy">
-              {#if algolia}
-                <div class="center-align valign-wrapper justify-center">
-                  <i class="material-icons yellow-text text-darken-3">error</i> Searchable grants are currently 2-3 tax years behind. Grant updates
-                  coming soon.
-                </div>
-              {/if}
-
               <div class="card-panel">
                 <div class="card-panel-header-wrapper">
                   <div class="card-panel-header">
