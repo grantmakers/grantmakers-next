@@ -224,12 +224,13 @@
 
 <div class="wrapper min-h-full">
   <div class="header header-bg">
+    <!-- srcset="/assets/img/NY.webp 1024w, /assets/img/NY.jpg 1024w" -->
     <img
       class="header-bg-img"
-      srcset="/assets/img/NY.webp 1024w, /assets/img/NY.jpg 1024w"
+      srcset="/assets/img/bg.webp 1024w, /assets/img/bg.jpg 1024w"
       sizes="100vw"
-      src="/assets/img/NY.jpg"
-      alt="New York City"
+      src="/assets/img/bg.jpg"
+      alt=""
       loading="eager"
       fetchpriority="high"
     />
