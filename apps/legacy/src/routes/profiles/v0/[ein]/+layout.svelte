@@ -14,4 +14,8 @@
   let { children }: Props = $props();
 </script>
 
+<svelte:head>
+  <link rel="preload" as="image" href="/assets/img/NY.jpg" fetchpriority="high" />
+</svelte:head>
+
 {@render children?.()}
