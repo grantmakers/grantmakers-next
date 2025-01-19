@@ -305,3 +305,13 @@
     </div>
   </div>
 </div>
+
+<style>
+  #algolia-hits-wrapper {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+  :global(#algolia-hits-wrapper.loaded) {
+    opacity: 1;
+  }
+</style>

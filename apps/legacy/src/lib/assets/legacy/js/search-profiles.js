@@ -816,6 +816,8 @@ export function initSearchJs(M) {
   /* Render Widgets
   /* ---------------------------- */
   search.once('render', function () {
+    const loader = document.getElementById('algolia-hits-wrapper');
+    loader?.classList.add('loaded');
     // Search toggle
     initSelect();
     initModals();

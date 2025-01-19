@@ -713,6 +713,8 @@ export function initSearchJs(M) {
   /* Render Widgets
   /* ---------------------------- */
   search.once('render', function () {
+    const loader = document.getElementById('algolia-hits-wrapper');
+    loader?.classList.add('loaded');
     // Initialize static Materialize JS components created by Instantsearch widgets
     initSelect();
     // Show range input if initial URL contains an amount refinement
