@@ -226,7 +226,7 @@
   <div class="header header-bg">
     <img
       class="header-bg-img"
-      srcset="/assets/img/NY.webp 1920w, /assets/img/NY.jpg 1920w"
+      srcset="/assets/img/NY.webp 1024w, /assets/img/NY.jpg 1024w"
       sizes="100vw"
       src="/assets/img/NY.jpg"
       alt="New York City"
