@@ -16,6 +16,7 @@
 
 <svelte:head>
   <link rel="preload" as="image" href="/assets/img/NY.webp" fetchpriority="high" />
+  <link rel="preconnect" href="https://qa1231c5w9-dsn.algolia.net" crossorigin="anonymous" />
 </svelte:head>
 
 {@render children?.()}

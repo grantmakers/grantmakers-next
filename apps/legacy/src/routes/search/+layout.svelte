@@ -8,4 +8,9 @@
   let { children }: Props = $props();
 </script>
 
+<svelte:head>
+  <link rel="preconnect" href="https://qa1231c5w9-dsn.algolia.net" crossorigin="anonymous" />
+  <link rel="preconnect" href="https://kdwvszvs1i-dsn.algolia.net" crossorigin="anonymous" />
+</svelte:head>
+
 {@render children?.()}
