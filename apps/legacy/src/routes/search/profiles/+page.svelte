@@ -30,7 +30,7 @@
       <div class="intro valign-wrapper">
         <div class="intro-text center-align white-text">
           <h1 class="text-bold">Profiles Search</h1>
-          <h5>Profiles of {formatNumber(site.number_of_foundations)} U.S. foundations</h5>
+          <h5>Profiles of {formatNumber(Math.floor(site.number_of_foundations / 1000) * 1000)} U.S. foundations</h5>
           <p>Source: IRS electronic 990 dataset</p>
         </div>
       </div>

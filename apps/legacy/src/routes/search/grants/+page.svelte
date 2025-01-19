@@ -4,7 +4,7 @@
   import Header from '$lib/components/search/Header.svelte';
   const site = {
     baseurl: '',
-    number_of_searchable_grants: 5026745,
+    number_of_searchable_grants: 4748595,
   };
 
   onMount(async () => {
