@@ -9414,11 +9414,11 @@ ul#navbar-more.dropdown-content li.dropdown-bottom-cta i {
   z-index: 4;
 }
 
-.header-bg {
+/* .header-bg {
   position: relative;
   background-image: url(/profiles/assets/img/bg.jpg);
   background-size: cover;
-}
+} */
 
 .header-bg:after {
   position: absolute;

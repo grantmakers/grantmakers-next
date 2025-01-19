@@ -8158,11 +8158,11 @@ div.simple-page .header .container h1.title {
   cursor: pointer;
   z-index: 4;
 }
-.header-bg {
+/* .header-bg {
   position: relative;
   background-image: url(/assets/img/bg.jpg);
   background-size: cover;
-}
+} */
 .header-bg:after {
   position: absolute;
   z-index: 1;
