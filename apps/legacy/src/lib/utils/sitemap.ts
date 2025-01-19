@@ -13,7 +13,7 @@ export const generateSitemap = (profiles: Profile[]) => {
     .map(
       (profile) => `
     <url>
-      <loc>${hostname}/profiles/${profile.ein}-${profile.organization_name_slug}</loc>
+      <loc>${hostname}/profiles/v0/${profile.ein}-${profile.organization_name_slug}</loc>
       <lastmod>${chooseDate(now, profile.last_updated_grantmakers, cutoverDate)}</lastmod>
     </url>`,
     )
