@@ -5,7 +5,7 @@
   import Header from '$lib/components/search/Header.svelte';
   const site = {
     baseurl: '',
-    number_of_foundations: 153013,
+    number_of_foundations: 153236,
   };
 
   onMount(async () => {
