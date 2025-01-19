@@ -224,7 +224,15 @@
 
 <div class="wrapper min-h-full">
   <div class="header header-bg">
-    <img src="/assets/img/NY.jpg" alt="New York City" loading="eager" fetchpriority="high" class="header-bg-img" />
+    <img
+      class="header-bg-img"
+      srcset="/assets/img/NY.webp 1920w, /assets/img/NY.jpg 1920w"
+      sizes="100vw"
+      src="/assets/img/NY.jpg"
+      alt="New York City"
+      loading="eager"
+      fetchpriority="high"
+    />
   </div>
   <div class="main main-raised">
     <div class="profile-content">
