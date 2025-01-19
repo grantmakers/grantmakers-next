@@ -2,7 +2,7 @@ import { originProd as hostname } from '$utils/trustedConstants';
 
 export const prerender = true;
 
-const routes = ['/', '/profiles/', '/search/profiles/', '/search/grants', '/about/', '/about/the-dataset/', '/about/faq/'];
+const routes = ['/', '/search/profiles/', '/search/grants', '/about/', '/about/the-dataset/', '/about/faq/'];
 
 export async function GET() {
   const now = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
