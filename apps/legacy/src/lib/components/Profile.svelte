@@ -2,7 +2,6 @@
   import legacyFavicon from '$lib/assets/legacy/images/favicon.png';
   import legacyLogo from '$lib/assets/legacy/images/logo.png';
   import algoliaPartnership from '$lib/assets/legacy/images/algolia-partnership-logo.svg';
-  import nyc from '$lib/assets/legacy/images/NY.jpg';
   import irsLogo from '$lib/assets/legacy/images/irs-w-text.png';
   import irsLogoAlt from '$lib/assets/legacy/images/irs-w-text-alt.png';
   import proPublicaLogo from '$lib/assets/legacy/images/propublica.png';
@@ -223,7 +222,7 @@
 </ul>
 
 <div class="wrapper min-h-full">
-  <div class="header header-bg" style="background-image: url({nyc});"></div>
+  <div class="header header-bg" style="background-image: url('/assets/img/NY.jpg');"></div>
   <div class="main main-raised">
     <div class="profile-content">
       <div class="row row-alert-fixed-to-top grey darken-4">
