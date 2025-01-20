@@ -336,12 +336,12 @@ export function initProfileJs(M, orgFinancialStats) {
   }
 
   function gaChartsEvents(label) {
-    let gaCheck = window[window['GoogleAnalyticsObject'] || 'ga']; // eslint-disable-line dot-notation
-    if (typeof gaCheck === 'function') {
-      ga('send', 'event', {
-        eventCategory: 'Profile Events',
-        eventAction: 'Charts Loading Sequence',
-        eventLabel: label,
+    if (typeof gtag === 'function') {
+      // eslint-disable-next-line no-undef
+      gtag('event', 'profile_events', {
+        event_category: 'Profile Events',
+        event_action: 'Charts Loading Sequence',
+        event_label: label,
       });
     }
   }

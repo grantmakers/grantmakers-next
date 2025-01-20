@@ -11,6 +11,7 @@
   import { formatDateToMonthYear } from '@repo/shared/functions/formatters/dates';
   import { upperFirstLetter } from '@repo/shared/functions/formatters/names';
   import { searchState } from '$src/lib/assets/legacy/js/profile-embedded-search.svelte.js';
+  import { initGaEvents } from '../assets/legacy/js/ga-events';
 
   interface Props {
     profile: GrantmakersExtractedDataObj;
@@ -40,7 +41,7 @@
   const displayedFilingIsAmendment = $derived(page.filings.some((f) => f.filing_is_amendment));
 
   let algolia = $derived(page.enable_algolia_search);
-  $inspect('Enabling Algolia,', algolia);
+  //$inspect('Enabling Algolia,', algolia);
 
   let filingCount = $derived(page.grants_facets.filter((filing) => filing.grant_count > 0).length);
 
@@ -93,6 +94,8 @@
         console.log(error);
       }
     }
+    const { initGaEvents } = await import('$src/lib/assets/legacy/js/ga-events');
+    initGaEvents();
   });
 </script>
 
