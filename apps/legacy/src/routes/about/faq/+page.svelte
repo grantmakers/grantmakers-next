@@ -56,8 +56,8 @@
               </p>
               <h5 id="toc-missing">Why can't I find a foundation?</h5>
               <p>
-                It's likely they either do not file their taxes electronically or they do not file Form 990 PF. Only private foundations
-                that file electronically in the U.S. are shown on Grantmakers.io.
+                Grantmakers.io focuses exclusively on US private foundations, those that file IRS Form 990-PF. Other types of foundations
+                including community foundations, operating foundations, and public foundations are beyond the current scope of the project.
               </p>
               <h5 id="toc-changes">Do you make any changes to the data?</h5>
               <div>
@@ -66,7 +66,7 @@
                     <div class="collapsible-header">
                       <p>
                         All data found on Grantmakers.io is presented exactly as found in the tax filings, with the exception of two minor
-                        formatting changes to improve readability. <a href={'#'}>Details...</a>
+                        formatting changes to improve readability. <span class="trigger">Details...</span>
                       </p>
                     </div>
                     <div class="collapsible-body">
@@ -83,19 +83,19 @@
               </div>
               <h5 id="toc-grants">Do you exclude any data?</h5>
               <div>
-                <ul class="collapsible collapsible-faq">
+                <ul class="collapsible collapsible-faq-data">
                   <li>
                     <div class="collapsible-header">
                       <p>
-                        Only to stay within the free tier limits of our search partner. Generally speaking, this affects only older grants
-                        e.g. tax years 2009 and 2010. <a href={'#'}>Details...</a>
+                        Due to the high number of very small grants, two donor-advised-fund providers and one now-closed corporate giving
+                        program do not appear on the site. <span class="trigger">Details...</span>
                       </p>
                     </div>
                     <div class="collapsible-body">
                       <ul class="browser-default">
-                        <li>Grant listings for 2009-2012 tax years are excluded from the searchable database.</li>
-                        <li>Grant listings for Bank of America Charitable Foundation are limited to tax years 2017 and later.</li>
-                        <li>Profiles based on tax years 2009-2012 only show the 50 largest grants.</li>
+                        <li>Amazonsmile Foundation (EIN 462626883)</li>
+                        <li>Bank of America Charitable Foundation Inc. (EIN 200721133)</li>
+                        <li>JPMorgan Chase Foundation (EIN 237049738)</li>
                       </ul>
                     </div>
                   </li>
@@ -104,16 +104,20 @@
               <h5 id="toc-free">Why is Grantmakers.io free?</h5>
               <p>
                 The better question is why should it cost anything? The source data is published for free by the IRS. The site is hosted for
-                free by Github Pages. The search is provided for free by Algolia. There is virtually <a href="/about/#toc-transparency"
+                free by Cloudflare Pages. The search is provided for free by Algolia. There is virtually <a href="/about/#toc-transparency"
                   >no cost</a
                 > in hosting and maintaining this site.
               </p>
               <h5 id="toc-open">Does open source mean I can copy this site?</h5>
               <p>
-                Yes, and I hope you do! All source code and content is <a href="https://github.com/grantmakers/grantmakers.github.io"
-                  >published on Github</a
-                > and liberally licensed for open use with the following exceptions: 1) I reserve all rights to the Grantmakers.io brand and
-                logo, and 2) all third party logos and brands are property of their respective owners. In short, don't use any logos.
+                Yes, and I hope you do! All source code is <a
+                  href="https://github.com/grantmakers/grantmakers-next"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Github">published on Github</a
+                >
+                and liberally licensed for open use with the following exceptions: 1) I reserve all rights to the Grantmakers.io brand and logo,
+                and 2) all third party logos and brands are property of their respective owners. In short, don't use any logos.
               </p>
               <div id="next" class="section section-about scrollspy">
                 <div class="card info-card grey lighten-3">
@@ -131,3 +135,10 @@
     </div>
   </main>
 </div>
+
+<style>
+  .collapsible-header .trigger {
+    color: #c54e00;
+    text-decoration: none;
+  }
+</style>

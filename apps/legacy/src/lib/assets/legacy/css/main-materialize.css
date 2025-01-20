@@ -1919,7 +1919,8 @@ a {
   clear: both;
 }
 .z-depth-0,
-.collapsible-faq {
+.collapsible-faq,
+.collapsible-faq-data {
   box-shadow: none !important;
 }
 .z-depth-1,
@@ -8347,21 +8348,27 @@ main .section-simple-page {
 span.emoji {
   margin-right: 10px;
 }
-.collapsible-faq {
+.collapsible-faq,
+.collapsible-faq-data {
   border: none;
 }
 .collapsible-faq .collapsible-header,
-.collapsible-faq .collapsible-body {
+.collapsible-faq .collapsible-body,
+.collapsible-faq-data .collapsible-header,
+.collapsible-faq-data .collapsible-body {
   padding: 0;
   border-bottom: none;
 }
-.collapsible-faq .collapsible-header p {
+.collapsible-faq .collapsible-header p,
+.collapsible-faq-data .collapsible-header p {
   margin: 0;
 }
-.collapsible-faq .collapsible-body ul {
+.collapsible-faq .collapsible-body ul,
+.collapsible-faq-data .collapsible-body ul {
   margin-top: 15px;
 }
-.collapsible-faq .collapsible-body li {
+.collapsible-faq .collapsible-body li,
+.collapsible-faq-data .collapsible-body li {
   list-style-type: disc;
 }
 .material-icon-flag-emoji {

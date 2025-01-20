@@ -52,27 +52,12 @@
                   The IRS started publishing foundation tax returns in "machine-readable format" for the first time in 2016. Grantmakers.io
                   pulls data exclusively from this dataset. It's open...it's free...it's awesome.
                 </p>
+
                 <p>
-                  It does have its limitations though. The dataset only contains <strong>electronically filed tax returns</strong>.
-                  Currently, approximately 50-60% of private foundations file in this manner, which means Grantmakers.io covers
-                  approximately half of all private foundations.
-                </p>
-                <div class="card info-card grey lighten-4">
-                  <div class="card-content">
-                    <p><span class="emoji">✅</span>Electronically filed tax returns</p>
-                    <p><span class="emoji">🔲</span>Paper filed tax returns</p>
-                  </div>
-                </div>
-                <p>
-                  The good news is recent legislation now requires tax-exempt organizations to file tax returns electronically (for tax
-                  years ending July 31, 2020, and later). COVID-related delays at the IRS mean these filings have yet to be published, but
-                  once they are, Grantmakers.io will effectively cover 100% of all US private foundations.
-                </p>
-                <p>
-                  Also, keep in mind Grantmakers.io focuses exclusively on <strong>Form 990 PF</strong>, the tax filing used by private
-                  foundations. If a foundation files a different tax form, they will not be included in search results and will not have a
-                  profile on Grantmakers.io. Consider community foundations, for example. Most community foundations file Form 990 (not Form
-                  990 PF), so they will not appear on Grantmakers.io.
+                  Grantmakers.io focuses exclusively on Form 990-PF, the tax filing used by private foundations. If a foundation files a
+                  different tax form, they will not be included in search results and will not have a profile on Grantmakers.io. For
+                  example, community foundations and operating foundations file Form 990 (not Form 990-PF), so they will not appear on
+                  Grantmakers.io.
                 </p>
                 <div class="card info-card grey lighten-4">
                   <div class="card-content">
@@ -83,40 +68,22 @@
                 </div>
               </div>
               <div id="toc-research" class="section section-about scrollspy">
-                <h4>Great for basic research, improving as a prospecting tool</h4>
+                <h4>Great for quick research and initial prospecting</h4>
                 <p>
                   Grantmakers.io was originally built to help a friend find information on a specific funding prospect previously
-                  identified. <a class="text-bold" href="/search/profiles/">Profiles Search</a> was the first search tool created and is optimized
-                  to quickly find a funder's profile (if one exists). If you don't find your target in results, the foundation likely does not
-                  file electronically, or they do not file Form 990PF.
+                  identified. <a class="text-bold bg-grantmakers-orange" href="/search/profiles/">Profiles Search</a> was the first search tool
+                  created and is optimized to quickly find a funder's profile (if one exists).
                 </p>
-                <div class="card info-card grey lighten-4">
-                  <div class="card-content">
-                    <p>Quickly find a foundation profile using <a class="text-bold" href="/search/profiles/">Profiles Search</a>.</p>
-                  </div>
-                </div>
                 <p>
                   The <a class="text-bold blue-grey-text" href="/search/grants/">Grants Search</a> tool was developed to allow fundraisers to
-                  do basic prospecting by exploring which foundations have donated to similar grantees in the past. Just remember the limitations
-                  mentioned above, specifically that the dataset only covers 50-60% of private foundations.
+                  do basic prospecting by exploring which foundations have donated to similar grantees in the past.
                 </p>
-                <div class="card info-card grey lighten-4">
-                  <div class="card-content">
-                    <p>
-                      Discover foundations that have donated to similar organizations in the past using <a
-                        class="text-bold blue-grey-text"
-                        href="/search/grants/">Grants Search</a
-                      >.
-                    </p>
-                  </div>
-                </div>
               </div>
               <div id="toc-updates" class="section scrollspy">
                 <h4>IRS controls the frequency of updates</h4>
                 <p>
-                  Prior to COVID, the IRS published updates on a roughly monthly cadence. Grantmakers.io, in turn, uses automated scripts to
-                  fetch, parse, and publish these updates. Updates are typically live on Grantmakers.io a day or two after being published
-                  by the IRS.
+                  The IRS publishes updates on a roughly monthly cadence. Updates are typically live on Grantmakers.io within a week of
+                  being published by the IRS.
                 </p>
                 <p>
                   When using the Grant Search tool for basic prospecting, be mindful of the delay from the time a foundation makes a grant
@@ -134,7 +101,7 @@
                 <p>
                   You can certainly reach out to the foundation to give them a heads up on any errors you find, but the only way a
                   foundation can adjust their filing content is to file a full amendment to their return. This might come at significant
-                  expense. For this reason, Grantmakers.io has a "Community Insights" section on each profile to provide context behind
+                  expense. For this reason, Grantmakers.io has a "Community Intelligence" section on each profile to provide context behind
                   suggested edits and adjustments.
                 </p>
                 <p>
