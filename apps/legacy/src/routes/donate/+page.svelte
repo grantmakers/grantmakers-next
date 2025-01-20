@@ -1,4 +1,10 @@
-<script lang="ts"></script>
+<script>
+  const title = 'Grantmakers.io - Support Open Data';
+</script>
+
+<svelte:head>
+  <title>{title}</title>
+</svelte:head>
 
 <div class="simple-page">
   <main>

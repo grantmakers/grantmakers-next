@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
+  const title = 'Grantmakers.io - About';
+
   function initGoogleSheets() {
     const gsDefer = document.getElementsByTagName('iframe');
     for (let i = 0; i < gsDefer.length; i++) {
@@ -24,6 +26,10 @@
     initGoogleSheets();
   });
 </script>
+
+<svelte:head>
+  <title>{title}</title>
+</svelte:head>
 
 <div class="simple-page">
   <main>

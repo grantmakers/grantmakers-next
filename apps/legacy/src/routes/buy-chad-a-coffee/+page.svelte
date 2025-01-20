@@ -1,3 +1,10 @@
+<script>
+  const title = 'Grantmakers.io - Buy Chad a Coffee';
+</script>
+
+<svelte:head>
+  <title>{title}</title>
+</svelte:head>
 <div class="simple-page">
   <main>
     <div class="header header-filter" style="background-image: url('/assets/img/files.jpg')">
