@@ -1,8 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import '$lib/assets/legacy/css/main-materialize.css';
+
+  let loaded = false;
 
   onMount(async () => {
+    loaded = true;
     let M = await import('materialize-css');
     const { initJs } = await import('$lib/assets/legacy/js/pages-materialize');
     try {
@@ -12,6 +14,11 @@
     }
   });
 </script>
+
+<!-- Import via svelte:head to test improved separation of legacy css between legacy pages -->
+<svelte:head>
+  <link rel="stylesheet" href="/assets/legacy/css/main-materialize.css" />
+</svelte:head>
 
 <div class="main-landing">
   <div class="top-cta black white-text center-align">
@@ -109,7 +116,7 @@
 
   <main>
     <div class="header header-filter" style="background-image: url('/assets/img/files.jpg')">
-      <div class="container valign-wrapper">
+      <div class="container container-loader valign-wrapper" class:loaded>
         <div class="row">
           <div class="col s12 m10 l8 left-align">
             <h1 class="title">Discover insights into your next funder</h1>

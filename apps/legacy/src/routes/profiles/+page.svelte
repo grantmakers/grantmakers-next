@@ -7,7 +7,6 @@
   import Header from '$src/lib/components/Header.svelte';
   import logo from '$src/lib/assets/legacy/images/logo.png';
   import '$lib/assets/legacy/css/main-materialize.css';
-  import { Server } from '@sveltejs/kit';
 
   onMount(async () => {
     let M = await import('materialize-css');

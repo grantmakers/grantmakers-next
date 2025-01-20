@@ -44,6 +44,17 @@
   :global(body) {
     background-color: #ccc;
   }
+  :global(.container-loader) {
+    animation: fadeIn 0.4s ease-in forwards;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
   :global(.material-icons) {
     font-family: 'Material Icons';
     font-weight: normal;
@@ -59,5 +70,7 @@
     font-feature-settings: 'liga';
     -webkit-font-feature-settings: 'liga';
     -webkit-font-smoothing: antialiased;
+    width: 24px;
+    overflow: hidden;
   }
 </style>

@@ -2,7 +2,6 @@
   import legacyFavicon from '$lib/assets/legacy/images/favicon.png';
   import legacyLogo from '$lib/assets/legacy/images/logo.png';
   import algoliaPartnership from '$lib/assets/legacy/images/algolia-partnership-logo.svg';
-  // import nyc from '$lib/assets/legacy/images/NY.jpg';
   import irsLogo from '$lib/assets/legacy/images/irs-w-text.png';
   import irsLogoAlt from '$lib/assets/legacy/images/irs-w-text-alt.png';
   import proPublicaLogo from '$lib/assets/legacy/images/propublica.png';
@@ -224,7 +223,6 @@
 
 <div class="wrapper min-h-full">
   <div class="header header-bg">
-    <!-- srcset="/assets/img/NY.webp 1024w, /assets/img/NY.jpg 1024w" -->
     <img
       class="header-bg-img"
       srcset="/assets/img/bg.webp 1024w, /assets/img/bg.jpg 1024w"
