@@ -39,7 +39,7 @@
 
   const displayedFilingIsAmendment = $derived(page.filings.some((f) => f.filing_is_amendment));
 
-  let algolia = $derived(page.enable_algolia_search && !page._tags.includes('exclude_from_legacy_search'));
+  let algolia = $derived(page.enable_algolia_search);
   $inspect('Enabling Algolia,', algolia);
 
   let filingCount = $derived(page.grants_facets.filter((filing) => filing.grant_count > 0).length);
