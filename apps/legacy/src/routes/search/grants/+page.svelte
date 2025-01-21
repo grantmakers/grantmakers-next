@@ -10,7 +10,7 @@
   };
 
   const hostname = browser ? window.location.hostname : '';
-  const allowedDomain = 'grantmakers.io';
+  const allowedDomain = 'www.grantmakers.io';
   let isAllowedDomain = $derived(hostname === allowedDomain);
 
   onMount(async () => {

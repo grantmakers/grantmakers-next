@@ -42,7 +42,7 @@
 
   let algolia = $derived(page.enable_algolia_search);
   const hostname = browser ? window.location.hostname : '';
-  const allowedDomain = 'grantmakers.io';
+  const allowedDomain = 'www.grantmakers.io';
   let isAllowedDomain = $derived(hostname === allowedDomain);
 
   let filingCount = $derived(page.grants_facets.filter((filing) => filing.grant_count > 0).length);
