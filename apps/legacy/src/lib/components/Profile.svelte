@@ -11,6 +11,7 @@
   import { formatDateToMonthYear } from '@repo/shared/functions/formatters/dates';
   import { upperFirstLetter } from '@repo/shared/functions/formatters/names';
   import { searchState } from '$src/lib/assets/legacy/js/profile-embedded-search.svelte.js';
+  import { browser } from '$app/environment';
 
   interface Props {
     profile: GrantmakersExtractedDataObj;
@@ -40,7 +41,9 @@
   const displayedFilingIsAmendment = $derived(page.filings.some((f) => f.filing_is_amendment));
 
   let algolia = $derived(page.enable_algolia_search);
-  //$inspect('Enabling Algolia,', algolia);
+  const hostname = browser ? window.location.hostname : '';
+  const allowedDomain = 'grantmakers.io';
+  let isAllowedDomain = $derived(hostname === allowedDomain);
 
   let filingCount = $derived(page.grants_facets.filter((filing) => filing.grant_count > 0).length);
 
@@ -623,18 +626,26 @@
                         <div class="col s12">
                           <div class="card">
                             <div class="card-content">
-                              <span class="card-title"
-                                ><strong>Coming soon</strong> <br />We're working with our search partner to deploy millions of new grants!</span
-                              >
-                              <p>
-                                Please check back tomorrow.
-                                <!-- We limit search results to Grantmakers.io to allow the maximum number of people access to this free service. The page you
-                  landed on is not Grantmakers.io. -->
-                              </p>
+                              {#if isAllowedDomain}
+                                <span class="card-title"
+                                  ><strong>Coming soon</strong> <br />We're working with our search partner to deploy millions of new
+                                  grants!</span
+                                >
+                                <p>Please check back tomorrow.</p>
+                              {:else}
+                                <span class="card-title"
+                                  ><strong>Check your url</strong> <br />Search results are only available at
+                                  <a data-sveltekit-reload href="/">Grantmakers.io</a></span
+                                >
+                                <p>
+                                  We limit search results to Grantmakers.io to allow the maximum number of people access to this free
+                                  service. The page you landed on is not Grantmakers.io.
+                                </p>
+                                <div class="card-action">
+                                  <p><a class="btn-flat blue-grey white-text" href="https://www.grantmakers.io/">Go to Grantmakers</a></p>
+                                </div>
+                              {/if}
                             </div>
-                            <!-- <div class="card-action">
-                              <p><a class="btn-flat blue-grey white-text" href="https://www.grantmakers.io/">Go to Grantmakers</a></p>
-                            </div> -->
                           </div>
                         </div>
                       </div>

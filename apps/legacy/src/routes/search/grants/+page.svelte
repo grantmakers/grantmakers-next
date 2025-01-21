@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { browser } from '$app/environment';
   import bg from '$lib/assets/legacy/images/bg.jpg';
   import Header from '$lib/components/search/Header.svelte';
   const site = {
@@ -7,6 +8,10 @@
     number_of_searchable_grants: 4748595,
     title: 'Grantmakers.io - Search Foundation Grants',
   };
+
+  const hostname = browser ? window.location.hostname : '';
+  const allowedDomain = 'grantmakers.io';
+  let isAllowedDomain = $derived(hostname === allowedDomain);
 
   onMount(async () => {
     let M = await import('materialize-css');
@@ -142,113 +147,117 @@
           <div class="col s12">
             <div class="card">
               <div class="card-content">
-                <!-- <span class="card-title"
-                  ><strong>Check your url</strong> <br />Search results are only available at <a href="/">Grantmakers.io</a></span
-                > -->
-                <span class="card-title"
-                  ><strong>Coming soon</strong> <br />We're working with our search partner to deploy millions of new grants!</span
-                >
-                <p>
-                  Please check back tomorrow.
-                  <!-- We limit search results to Grantmakers.io to allow the maximum number of people access to this free service. The page you
-                  landed on is not Grantmakers.io. -->
-                </p>
+                {#if isAllowedDomain}
+                  <span class="card-title"
+                    ><strong>Coming soon</strong> <br />We're working with our search partner to deploy millions of new grants!</span
+                  >
+                  <p>Please check back tomorrow.</p>
+                {:else}
+                  <span class="card-title"
+                    ><strong>Check your url</strong> <br />Search results are only available at
+                    <a data-sveltekit-reload href="/">Grantmakers.io</a></span
+                  >
+                  <p>
+                    We limit search results to Grantmakers.io to allow the maximum number of people access to this free service. The page
+                    you landed on is not Grantmakers.io.
+                  </p>
+                  <div class="card-action">
+                    <p><a class="btn-flat blue-grey white-text" href="https://www.grantmakers.io/">Go to Grantmakers</a></p>
+                  </div>
+                {/if}
               </div>
-              <!-- <div class="card-action">
-                <a class="btn-flat blue-grey white-text" href="https://www.grantmakers.io/">Go to Grantmakers</a>
-              </div> -->
             </div>
           </div>
         </div>
-      </div>
-      <div id="algolia-hits-wrapper" class="row js-hide-advanced-tools">
-        <div class="col s12 l4">
-          <!-- Filters / Refinements header -->
-          <div class="hide-on-med-and-down text-muted">
-            Filters
-            <div class="switch switch-refinements right">
-              <label class="search-toggle-advanced">
-                Show advanced tools
-                <input type="checkbox" />
-                <span class="lever"></span>
-              </label>
+        <div id="algolia-hits-wrapper" class="row js-hide-advanced-tools">
+          <div class="col s12 l4">
+            <!-- Filters / Refinements header -->
+            <div class="hide-on-med-and-down text-muted">
+              Filters
+              <div class="switch switch-refinements right">
+                <label class="search-toggle-advanced">
+                  Show advanced tools
+                  <input type="checkbox" />
+                  <span class="lever"></span>
+                </label>
+              </div>
+            </div>
+            <div class="hidden">
+              <ul class="actions">
+                <li>
+                  <span id="ais-widget-mobile-clear-all"></span>
+                  <a
+                    href={'#'}
+                    data-target="refinements-slide-out"
+                    class="sidenav-trigger waves-effect waves-light button-collapse btn white grey-text text-darken-3"
+                    ><i class="material-icons right">filter_list</i> Filter</a
+                  >
+                </li>
+                <li></li>
+              </ul>
+            </div>
+            <div class="divider hide-on-med-and-down"></div>
+            <div class="section-refinements section-refinements-grants-search hide-on-med-and-down grants-search">
+              <div>
+                <!-- Add row class to remove added white space / padding -->
+                <div class="col s12">
+                  <div id="ais-widget-range-input"></div>
+                  <div id="ais-widget-refinement-list--grantee_name"></div>
+                  <div id="ais-widget-refinement-list--organization_name"></div>
+                  <div id="ais-widget-refinement-list--grantee_city"></div>
+                  <div id="ais-widget-refinement-list--grantee_state"></div>
+                </div>
+                <div class="col s12">
+                  <div class="section">
+                    <div id="ais-widget-clear-all" class="center-align"></div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="hidden">
-            <ul class="actions">
-              <li>
-                <span id="ais-widget-mobile-clear-all"></span>
-                <a
-                  href={'#'}
-                  data-target="refinements-slide-out"
-                  class="sidenav-trigger waves-effect waves-light button-collapse btn white grey-text text-darken-3"
-                  ><i class="material-icons right">filter_list</i> Filter</a
-                >
-              </li>
-              <li></li>
-            </ul>
-          </div>
-          <div class="divider hide-on-med-and-down"></div>
-          <div class="section-refinements section-refinements-grants-search hide-on-med-and-down grants-search">
-            <div>
+          <div class="col s12 l8">
+            <div class="row row-tight">
+              <div class="col s12 m9 l10">
+                <div id="ais-widget-stats"></div>
+              </div>
+              <div class="col m3 l2 hide-on-med-and-down">
+                <div id="ais-widget-sort-by" class="small text-muted-max right">
+                  <a href="#modal-tips" class="modal-trigger text-muted-max"
+                    >Search types <i class="tiny material-icons material-icons-rounded grey lighten-2 icon-idea left">wb_incandescent</i></a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="">
+              <div class="">
+                <div class="divider"></div>
+              </div>
+            </div>
+            <div class="row">
               <!-- Add row class to remove added white space / padding -->
               <div class="col s12">
-                <div id="ais-widget-range-input"></div>
-                <div id="ais-widget-refinement-list--grantee_name"></div>
-                <div id="ais-widget-refinement-list--organization_name"></div>
-                <div id="ais-widget-refinement-list--grantee_city"></div>
-                <div id="ais-widget-refinement-list--grantee_state"></div>
-              </div>
-              <div class="col s12">
-                <div class="section">
-                  <div id="ais-widget-clear-all" class="center-align"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col s12 l8">
-          <div class="row row-tight">
-            <div class="col s12 m9 l10">
-              <div id="ais-widget-stats"></div>
-            </div>
-            <div class="col m3 l2 hide-on-med-and-down">
-              <div id="ais-widget-sort-by" class="small text-muted-max right">
-                <a href="#modal-tips" class="modal-trigger text-muted-max"
-                  >Search types <i class="tiny material-icons material-icons-rounded grey lighten-2 icon-idea left">wb_incandescent</i></a
-                >
-              </div>
-            </div>
-          </div>
-          <div class="">
-            <div class="">
-              <div class="divider"></div>
-            </div>
-          </div>
-          <div class="row">
-            <!-- Add row class to remove added white space / padding -->
-            <div class="col s12">
-              <div id="ais-widget-current-refined-values"></div>
-              <!-- Profiles ais-widget-hits goes here-->
-              <div class="card card-grants-search">
-                <!-- Use class card for grants results-->
-                <div class="card-content">
-                  <!-- Use class card-content for grants results-->
-                  <div class="row row-tight hide-on-small-only">
-                    <div class="col m6">Recipient</div>
-                    <div class="col m5">Donor</div>
-                    <div class="col m1">Actions</div>
-                    <div class="col m12 divider"></div>
+                <div id="ais-widget-current-refined-values"></div>
+                <!-- Profiles ais-widget-hits goes here-->
+                <div class="card card-grants-search">
+                  <!-- Use class card for grants results-->
+                  <div class="card-content">
+                    <!-- Use class card-content for grants results-->
+                    <div class="row row-tight hide-on-small-only">
+                      <div class="col m6">Recipient</div>
+                      <div class="col m5">Donor</div>
+                      <div class="col m1">Actions</div>
+                      <div class="col m12 divider"></div>
+                    </div>
+                    <div id="ais-widget-hits"></div>
                   </div>
-                  <div id="ais-widget-hits"></div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col s12 l9 offset-l3">
-          <div class="section center-align">
-            <div id="ais-widget-pagination" class="grants-search"></div>
+          <div class="col s12 l9 offset-l3">
+            <div class="section center-align">
+              <div id="ais-widget-pagination" class="grants-search"></div>
+            </div>
           </div>
         </div>
       </div>
