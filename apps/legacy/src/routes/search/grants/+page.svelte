@@ -37,7 +37,7 @@
       </div>
       <canvas></canvas>
     </div>
-    <h5 class="center-align">Stay tuned! Six millions grant updates coming in a few hours.</h5>
+    <h5 class="center-align">Stay tuned! Six million grant updates coming in a few hours.</h5>
     <!-- <div class="nav-search">
       <nav class="nav-center grey lighten-3 z-depth-1">
         <div class="nav-wrapper">
