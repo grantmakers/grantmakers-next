@@ -40,11 +40,6 @@
           </p>
         </div>
       </div>
-      <div id="stay-tuned-message">
-        <h5 class="center-align white-text">Grants are syncing - 3.8 million to go!</h5>
-        <p class="center-align white-text">Come back in a few hours</p>
-      </div>
-
       <canvas></canvas>
     </div>
     <div class="nav-search">
