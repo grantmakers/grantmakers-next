@@ -551,11 +551,11 @@ export async function initSearchJs(M) {
   });
 
   search.on('error', function (e) {
-    if (e.statusCode === 429) {
+    if (e.status === 429) {
       renderRateLimit();
       console.log('Rate limit reached'); // eslint-disable-line no-console
     }
-    if (e.statusCode === 403) {
+    if (e.status === 403) {
       renderForbidden();
       console.log('Origin forbidden'); // eslint-disable-line no-console
     }

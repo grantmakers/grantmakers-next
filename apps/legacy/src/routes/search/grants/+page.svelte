@@ -142,17 +142,21 @@
           <div class="col s12">
             <div class="card">
               <div class="card-content">
-                <span class="card-title"
+                <!-- <span class="card-title"
                   ><strong>Check your url</strong> <br />Search results are only available at <a href="/">Grantmakers.io</a></span
+                > -->
+                <span class="card-title"
+                  ><strong>Coming soon</strong> <br />We're working with our search partner to deploy millions of new grants!</span
                 >
                 <p>
-                  We limit search results to Grantmakers.io to allow the maximum number of people access to this free service. The page you
-                  landed on is not Grantmakers.io.
+                  Please check back tomorrow.
+                  <!-- We limit search results to Grantmakers.io to allow the maximum number of people access to this free service. The page you
+                  landed on is not Grantmakers.io. -->
                 </p>
               </div>
-              <div class="card-action">
+              <!-- <div class="card-action">
                 <a class="btn-flat blue-grey white-text" href="https://www.grantmakers.io/">Go to Grantmakers</a>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
