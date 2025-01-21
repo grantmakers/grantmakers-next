@@ -6,6 +6,7 @@
   const site = {
     baseurl: '',
     number_of_foundations: 153236,
+    title: 'Grantmakers.io - Search Foundation Profiles',
   };
 
   onMount(async () => {
@@ -18,6 +19,10 @@
     }
   });
 </script>
+
+<svelte:head>
+  <title>{site.title}</title>
+</svelte:head>
 
 <div class="unified-search" data-sveltekit-preload-data="false">
   <Header />
