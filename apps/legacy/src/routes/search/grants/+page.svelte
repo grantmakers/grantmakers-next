@@ -37,7 +37,8 @@
       </div>
       <canvas></canvas>
     </div>
-    <div class="nav-search">
+    <h5 class="center-align">Stay tuned! Six millions grant updates coming in a few hours.</h5>
+    <!-- <div class="nav-search">
       <nav class="nav-center grey lighten-3 z-depth-1">
         <div class="nav-wrapper">
           <div class="row">
@@ -154,7 +155,7 @@
       </div>
       <div id="algolia-hits-wrapper" class="row js-hide-advanced-tools">
         <div class="col s12 l4">
-          <!-- Filters / Refinements header -->
+
           <div class="hide-on-med-and-down text-muted">
             Filters
             <div class="switch switch-refinements right">
@@ -182,7 +183,7 @@
           <div class="divider hide-on-med-and-down"></div>
           <div class="section-refinements section-refinements-grants-search hide-on-med-and-down grants-search">
             <div>
-              <!-- Add row class to remove added white space / padding -->
+
               <div class="col s12">
                 <div id="ais-widget-range-input"></div>
                 <div id="ais-widget-refinement-list--grantee_name"></div>
@@ -217,14 +218,14 @@
             </div>
           </div>
           <div class="row">
-            <!-- Add row class to remove added white space / padding -->
+
             <div class="col s12">
               <div id="ais-widget-current-refined-values"></div>
-              <!-- Profiles ais-widget-hits goes here-->
+
               <div class="card card-grants-search">
-                <!-- Use class card for grants results-->
+
                 <div class="card-content">
-                  <!-- Use class card-content for grants results-->
+
                   <div class="row row-tight hide-on-small-only">
                     <div class="col m6">Recipient</div>
                     <div class="col m5">Donor</div>
@@ -243,7 +244,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </main>
 
   <div id="modal-tips" class="modal">
