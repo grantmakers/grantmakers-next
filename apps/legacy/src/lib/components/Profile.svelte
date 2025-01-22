@@ -22,6 +22,12 @@
 
   $inspect('searchState', searchState);
 
+  let hasInsights = false;
+  let insight = undefined;
+  // let hasInsights = true;
+  // let insight =
+  //   'It appears this funder changed its name and EIN in 2013. For the current org, see the profile for "Edward M & Henrietta M Knabusch Tr 2 011894"';
+
   // Mimic Jekyll
   const site = {
     baseurl: '/profiles',
@@ -376,6 +382,29 @@
             </div>
           </div>
         </div>
+        {#if hasInsights}
+          <div class="row">
+            <div class="col s12 l8 offset-l2">
+              <div id="alerts">
+                <div class="card-title left-align valign-wrapper">
+                  <img src="/logo.svg" alt="Grantmakers.io logo" class="icon-logo-small" style="margin-right:4px" /><span
+                    >Community Insights</span
+                  >
+                </div>
+                <div class="card white left-align z-depth-0">
+                  <div class="card-content info-card">
+                    <div class="card-title"></div>
+                    <ul class="collection">
+                      {#if insight}
+                        {insight}
+                      {/if}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {/if}
         <div class="row">
           <div class="col s12 l4">
             <div id="summary">
@@ -594,8 +623,6 @@
                     </div>
                   </div>
                 </div>
-                <!-- TODO Consider limiting algolia init until full grants sync complete -->
-                <!-- e.g. {#if algolia && !searchState.initialEmptyQuery && !searchState.noHits} -->
                 {#if algolia}
                   <div class="section section-results js-ie-check">
                     <div id="rate-limit-message" class="hidden">

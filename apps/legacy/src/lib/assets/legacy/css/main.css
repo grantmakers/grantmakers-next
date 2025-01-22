@@ -9891,14 +9891,12 @@ Mimic Algolia them - only the good parts
   outline: none;
 }
 .profile-content #alerts {
-  margin-top: 75px;
+  margin-top: 0px;
+  margin-bottom: 75px;
 }
 .profile-content #alerts .card-title img {
   width: 16px;
   height: 16px;
-}
-.profile-content #alerts .card {
-  margin-bottom: 0px;
 }
 .profile-content #summary p,
 .profile-content #summary h1,
@@ -10846,6 +10844,9 @@ Mimic Algolia them - only the good parts
 .profile-content #about .card-panel-body {
   padding: 15px 20px;
 }
+.profile-content #alerts .collection {
+  margin-bottom: 0.5rem;
+}
 .profile-content #alerts .collection,
 .profile-content #alerts .collection-item,
 .profile-content #about .collection,
@@ -10868,7 +10869,9 @@ Mimic Algolia them - only the good parts
 .profile-content #about .collection-item-empty-state p {
   margin-bottom: 1em;
 }
-.profile-content #alerts .card-title,
+.profile-content #alerts .card-title {
+  line-height: 1em;
+}
 .profile-content #about .card-title {
   font-size: 0.9rem;
   text-transform: uppercase;
