@@ -2,17 +2,32 @@ import { redirect, type HandleServerError } from '@sveltejs/kit';
 
 type Redirects = { [key: string]: string };
 
+const deprecatedProfileSearchHelper = /^\/profiles\/(\d{9})\/?$/;
+const profileRoutes = (ein: string) => `/profiles/v0/${ein}`;
+
+const deprecatedProfilesIndexRoute = '/profiles/';
+const profilesIndexRedirect = '/search/profiles/';
+
 const legacySitemapRedirects: Redirects = {
   '/sitemap-main.xml': '/sitemaps/sitemap-main.xml',
 };
 
 const surpriseMeRoutes = ['/profiles/v0'];
 
-const deprecatedFullIndexRoute = '/profiles/';
-const fullIndexRedirect = '/search/profiles/';
-
 export async function handle({ event, resolve }) {
   const path = event.url.pathname;
+
+  // Handle deprecated profile search helper redirect
+  const legacyProfileHelperMatch = path.match(deprecatedProfileSearchHelper);
+  if (legacyProfileHelperMatch) {
+    const ein = legacyProfileHelperMatch[1];
+    redirect(301, profileRoutes(ein));
+  }
+
+  // Handle deprecated profiles full index route
+  if (event.url.pathname === deprecatedProfilesIndexRoute) {
+    redirect(301, profilesIndexRedirect);
+  }
 
   // Handle legacy sitemap redirect
   if (legacySitemapRedirects[path]) {
@@ -33,11 +48,6 @@ export async function handle({ event, resolve }) {
       const redirectTo = event.url.pathname;
       redirect(302, redirectTo);
     }
-  }
-
-  // Handle deprecated profiles full index route
-  if (event.url.pathname === deprecatedFullIndexRoute) {
-    redirect(301, fullIndexRedirect);
   }
 
   return resolve(event);
