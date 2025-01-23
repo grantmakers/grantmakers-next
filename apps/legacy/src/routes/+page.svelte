@@ -192,11 +192,11 @@
       </div>
       <!-- End Profiles Search -->
       <!-- Grants Search -->
-      <div class="section section-extra-padding section-feature-grants-search blue-grey darken-1">
+      <div class="section section-extra-padding section-feature-grants-search blue-grey darken-4">
         <div class="row row-tight">
           <div class="col s12 m8 offset-m2 center-align">
             <h6 class="subheader white-text">Featuring</h6>
-            <h4 class="title">
+            <h4 class="white-text font-light">
               In partnership with <a href="https://www.algolia.com/?utm_source=grantmakersio&utm_medium=referral"
                 ><img src="/assets/img/algolia-logo-white.svg" alt="Algolia logo" /></a
               >
@@ -352,5 +352,17 @@
 <style>
   header {
     position: relative;
+  }
+  .section-feature-grants-search {
+    margin-left: 25px;
+    margin-right: 25px;
+    border-radius: 6px;
+  }
+  .font-light {
+    font-weight: 300;
+  }
+  .section-feature-grants-search h4 img {
+    width: 165px;
+    vertical-align: sub;
   }
 </style>
