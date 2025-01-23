@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Banner from '$src/lib/components/Banner.svelte';
   import { onMount } from 'svelte';
 
   let loaded = false;
@@ -21,10 +22,7 @@
 </svelte:head>
 
 <div class="main-landing">
-  <div class="top-cta black white-text center-align">
-    🎉 After eight years and millions of searches, <span class="text-bold">Grantmakers.io is going 2.0!</span>
-    <a class="grantmakers-color-light" href="https://next.grantmakers.io" target="_blank">Take a sneak peek.</a>
-  </div>
+  <Banner />
   <header>
     <!-- Navbar -->
     <div>
