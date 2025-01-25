@@ -6,7 +6,7 @@
   import PrimaryNavLink from '$lib/components/nav/PrimaryNavLink.svelte';
   import { createTabs } from 'svelte-headlessui';
   import PrimaryNavLinkMobile from '$lib/components/nav/PrimaryNavLinkMobile.svelte';
-  import { demoLinks, profileRootLinks } from '$utils/trustedConstants';
+  import { demoLinks, profileRootLinks } from '@repo/shared/constants/trustedConstants';
   import { menuState, refs, toggleMobileMenu, toggleProfileMenu, handleClickOutside } from '$lib/components/search/menuState.svelte';
   import Autocomplete from '$lib/components/search/Autocomplete.svelte';
   import type { AutocompleteInstance } from '@repo/shared/typings/algolia/autocomplete';

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import { originProd, profilesVersionProd } from '$utils/trustedConstants';
+  import { originProd, profilesVersionProd } from '@repo/shared/constants/trustedConstants';
   import { upperFirstLetter } from '@repo/shared/functions/formatters/names';
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
 

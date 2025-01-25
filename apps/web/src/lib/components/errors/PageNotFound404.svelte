@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { meta } from '$lib/utils/trustedConstants';
+  import { meta } from '@repo/shared/constants/trustedConstants';
   const linkToHome = '/';
   const linkToSupport = meta.emails.support;
 </script>

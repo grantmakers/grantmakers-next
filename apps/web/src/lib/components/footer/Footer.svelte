@@ -1,6 +1,6 @@
 <script lang="ts">
   import LogoMark from '../shared/LogoMark.svelte';
-  import { footerNavigation } from '$utils/trustedConstants';
+  import { footerNavigation } from '@repo/shared/constants/trustedConstants';
   import { Heart } from 'svelte-heros-v2';
   import PrivacyPolicy from './PrivacyPolicy.svelte';
   import Divider from '../shared/Divider.svelte';

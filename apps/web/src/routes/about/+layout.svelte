@@ -2,7 +2,7 @@
   import { refs, menuState, toggleMobileMenu, toggleProfileMenu } from '$lib/components/search/menuState.svelte';
   import LogoMark from '$lib/components/shared/LogoMark.svelte';
   import PrimaryNavLink from '$lib/components/nav/PrimaryNavLink.svelte';
-  import { aboutLinks } from '$utils/trustedConstants';
+  import { aboutLinks } from '@repo/shared/constants/trustedConstants';
   import SecondaryNavLink from '$lib/components/nav/SecondaryNavLink.svelte';
   import PrimaryNavLinkMobile from '$lib/components/nav/PrimaryNavLinkMobile.svelte';
   import SecondaryNavLinkMobile from '$lib/components/nav/SecondaryNavLinkMobile.svelte';

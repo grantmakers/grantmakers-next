@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { faqData } from '$lib/utils/trustedConstants';
+  import { faqData } from '@repo/shared/constants/trustedConstants';
   import Disclosure from './Disclosure.svelte';
 </script>
 

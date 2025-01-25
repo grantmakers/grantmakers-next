@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { rankTotal } from '$utils/trustedConstants';
+  import { rankTotal } from '@repo/shared/constants/trustedConstants';
   import { formatNumber } from '@repo/shared/functions/formatters/numbers';
   interface Props {
     rank: number | undefined;

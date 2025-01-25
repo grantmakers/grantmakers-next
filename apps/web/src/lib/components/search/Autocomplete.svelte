@@ -13,6 +13,7 @@
   import algoliaLogo from '$lib/assets/images/Algolia-logo-blue.svg';
   import { formatEin } from '@repo/shared/functions/formatters/ein';
   import { badgeStyles } from '$utils/badgeStyles';
+  import { datasetStats } from '@repo/shared/constants/trustedConstants';
   import staticData from '@repo/shared/data/public/autocomplete-static-data.json';
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
   import type { BaseItem } from '@algolia/autocomplete-core';

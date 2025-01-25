@@ -2,7 +2,7 @@
   import { inview, type Options } from 'svelte-inview';
   import { setActiveSection } from './sidenav/ActiveLink.svelte';
   import { slugify } from '@repo/shared/functions/formatters/names';
-  import { profileNavItems, type SideNavIds } from '$lib/utils/trustedConstants';
+  import { profileNavItems, type SideNavIds } from '@repo/shared/constants/trustedConstants';
 
   interface Props {
     id: SideNavIds;
