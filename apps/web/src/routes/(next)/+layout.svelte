@@ -1,7 +1,7 @@
 <script lang="ts">
   import '@fontsource/inter';
   import '$src/app.pcss';
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import SEO from '$lib/components/shared/SEO.svelte';
   import { meta } from '@repo/shared/constants/trustedConstants';
   import Footer from '$lib/components/footer/Footer.svelte';
@@ -17,8 +17,8 @@
 </script>
 
 <svelte:head>
-  {#if $page.data.profile}
-    <SEO profile={$page.data.profile} />
+  {#if page.data.profile}
+    <SEO profile={page.data.profile} />
   {:else}
     <title>{title}</title>
     <meta name="description" content={description} />

@@ -43,7 +43,7 @@
             </svg>
           </div>
           <div class="flex-auto">
-            <a href="/search/profiles/" class="block text-base text-white">
+            <a data-sveltekit-reload href="/search/profiles/" class="block text-base text-white">
               Find a Foundation Profile
               <span class="absolute inset-0"></span>
             </a>
@@ -61,7 +61,7 @@
             </svg>
           </div>
           <div class="flex-auto">
-            <a href="/search/grants/" class="block text-base text-white">
+            <a data-sveltekit-reload href="/search/grants/" class="block text-base text-white">
               Search Historical Grants
               <span class="absolute inset-0"></span>
             </a>

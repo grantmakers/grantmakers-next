@@ -15,12 +15,6 @@ export async function handle({ event, resolve }) {
     return redirect(301, new URL(legacySitemapRedirects[path], event.url.origin));
   }
 
-  // Handle legacy profiles version redirect, e.g. /v0
-  if (path.startsWith('/profiles/v0/')) {
-    const newPath = path.replace('/profiles/v0/', '/profiles/v1/');
-    return redirect(301, newPath);
-  }
-
   return resolve(event);
 }
 
