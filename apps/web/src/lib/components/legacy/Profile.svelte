@@ -20,8 +20,6 @@
 
   let { profile, hasSurpriseMeAccess }: Props = $props();
 
-  $inspect('searchState', searchState);
-
   let hasInsights = false;
   let insight = undefined;
   // let hasInsights = true;
