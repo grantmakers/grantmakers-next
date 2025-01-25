@@ -1,6 +1,8 @@
 <script lang="ts">
   import screenshot from '$lib/assets/images/screenshot.webp';
   import LogoMark from '../shared/LogoMark.svelte';
+  import Autocomplete from '$lib/components/search/Autocomplete.svelte';
+  import type { AutocompleteInstance } from '@repo/shared/typings/algolia/autocomplete';
   import Features from './sections/Features.svelte';
   import Stats from './sections/Stats.svelte';
   import StatsSearches from './sections/StatsSearches.svelte';
@@ -11,15 +13,61 @@
   import Market from './sections/Market.svelte';
   import Education from './sections/Education.svelte';
   import BottomCTA from './sections/BottomCTA.svelte';
-  import { features, articleLinks } from '$utils/trustedConstants';
-  import ClosingStatement from './sections/ClosingStatement.svelte';
+  import { features, articleLinks } from '@repo/shared/constants/trustedConstants';
+  import ClosingStatement from '$lib/components/landing/sections/ClosingStatement.svelte';
+
+  interface Props {
+    handleAutocompleteInit: (instance: AutocompleteInstance) => void;
+  }
+
+  let { handleAutocompleteInit }: Props = $props();
 </script>
 
-<div class="bg-white">
+<div class="relative bg-white">
   <header class="absolute inset-x-0 top-0 z-50">
-    <nav class="flex items-center justify-start p-6 md:justify-end lg:px-8" aria-label="Global">
-      <div class="">
+    <nav class="mx-auto flex max-w-7xl items-center justify-start p-2 md:justify-between lg:px-8" aria-label="Global">
+      <div class="flex items-center gap-8 text-white">
         <LogoMark isLandingOrFooter={true} />
+        <a href="/about/">About</a>
+        <a href="/about/donate/">Support Open Data</a>
+      </div>
+      <div class="hidden items-center justify-end gap-4 text-white md:flex">
+        <div class="group relative flex items-center gap-x-4 rounded-lg p-4 text-sm/6">
+          <div class="flex size-11 flex-none items-center justify-center rounded-full bg-grantmakers-orange">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+              <path
+                fill-rule="evenodd"
+                d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </div>
+          <div class="flex-auto">
+            <a href="/search/profiles/" class="block text-base text-white">
+              Find a Foundation Profile
+              <span class="absolute inset-0"></span>
+            </a>
+            <p class="text-base font-semibold text-grantmakers-orange">Foundation Search</p>
+          </div>
+        </div>
+        <div class="group relative flex items-center gap-x-4 rounded-lg p-4 text-sm/6">
+          <div class="flex size-11 flex-none items-center justify-center rounded-full bg-grantmakers-blue">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+              <path
+                fill-rule="evenodd"
+                d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </div>
+          <div class="flex-auto">
+            <a href="/search/grants/" class="block text-base text-white">
+              Search Historical Grants
+              <span class="absolute inset-0"></span>
+            </a>
+            <p class="text-base font-semibold text-grantmakers-blue">Grants Search</p>
+          </div>
+        </div>
       </div>
     </nav>
   </header>
@@ -43,20 +91,53 @@
       </div>
 
       <!-- Primary message -->
-      <div class="mx-auto max-w-7xl px-6 pb-24 pt-32 sm:pb-32 lg:flex lg:flex-col lg:px-8 lg:py-36">
-        <div class="mx-auto max-w-2xl shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
-          <div class="text-left">
+      <div class="mx-auto max-w-7xl px-6 pb-24 pt-32 sm:pb-32 lg:flex lg:flex-col lg:px-8 lg:py-52">
+        <div class="flex shrink-0 flex-col justify-between gap-8 md:flex-row lg:gap-0 lg:pt-8">
+          <div class="mx-auto max-w-2xl text-left lg:mx-0 lg:max-w-xl">
             <h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">
               Foundation research<br />
               <span class="text-slate-500"><del>is expensive</del></span><br /> just got easier
             </h1>
-            <!-- Overriding h2 defaults is an anti-pattern. Consider removing all header tag defaults -->
+            <!-- Overriding h2 defaults is an anti-pattern. Consider removing all header tag defaults at the app.css level -->
             <h2 class="mt-6 text-lg font-normal leading-8 tracking-normal text-gray-300">
-              Grantmakers.io makes the public <span class="font-extrabold text-orange-600">IRS 990-PF dataset</span> useful to any nonprofit
-              with an Internet connection. Ensuring equitable access to a critical information source for nonprofits since 2016.
-              <!-- If a foundation files taxes electronically, you'll find them here. -->
+              Grantmakers.io's mission is to be the antidote to the continued industry practice of charging for basic <span
+                class="font-extrabold text-grantmakers-orange">foundation 990 data</span
+              >. It's a grassroots project created for grassroots changemakers.
+              <span class="lg:display hidden">World-class foundation research for everyone, not just those with large budgets.</span>
             </h2>
           </div>
+          <div class="my-auto flex h-fit justify-end gap-x-4 rounded-xl bg-white/5 p-6 ring-1 ring-inset ring-white/10">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-7 w-5 flex-none text-indigo-400">
+              <path
+                fill-rule="evenodd"
+                d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
+                clip-path="evenodd"
+              ></path>
+            </svg>
+
+            <div class="flex flex-col gap-4 text-base leading-7">
+              <div class="text-xl font-semibold text-white">Foundation Quick Search</div>
+              <div class="mt-2 grow text-gray-300">
+                <Autocomplete
+                  size={'large'}
+                  profilesVersion={'v0'}
+                  placeholderVersion={'foundation'}
+                  onAutocompleteInit={handleAutocompleteInit}
+                />
+              </div>
+            </div>
+          </div>
+          <!-- <div
+            class="flex w-1/2 flex-col items-center justify-center gap-4 rounded-xl bg-white/5 p-12 text-left text-white ring-1 ring-inset ring-white/10"
+          >
+            <div class="w-1/2 text-left text-base">Foundation Quick Search</div>
+            <Autocomplete
+              size={'large'}
+              profilesVersion={'v0'}
+              placeholderVersion={'foundation'}
+              onAutocompleteInit={handleAutocompleteInit}
+            />
+          </div> -->
         </div>
 
         <!-- Features -->
