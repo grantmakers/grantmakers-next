@@ -1,6 +1,6 @@
 <script lang="ts"></script>
 
-<div class="p-2 bg-black text-white text-center font-light">
+<div class="bg-black p-2 text-center font-light text-white">
   🎉 <span class="font-bold">2025 updates are live!</span> Millions of grants to search from 150k private foundations.
 </div>
 
