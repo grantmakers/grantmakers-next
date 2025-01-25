@@ -1,5 +1,5 @@
 import type { RequestHandler } from '@sveltejs/kit';
-import { originProd as url } from '$utils/trustedConstants';
+import { originProd as url } from '@repo/shared/constants/trustedConstants';
 export const prerender = true;
 
 export const GET: RequestHandler = async () => {

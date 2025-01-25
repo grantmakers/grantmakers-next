@@ -13,7 +13,7 @@
   import '@fontsource/material-icons';
   import { page } from '$app/state';
   import SEO from '$lib/components/SEO.svelte';
-  import { meta } from '$utils/trustedConstants';
+  import { meta } from '@repo/shared/constants/trustedConstants';
   import Footer from '$src/lib/components/Footer.svelte';
 
   interface Props {
