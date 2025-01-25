@@ -332,9 +332,4 @@
   :global(#algolia-hits-wrapper.loaded) {
     opacity: 1;
   }
-  #stay-tuned-message {
-    position: relative;
-    top: -100px;
-    z-index: 9999;
-  }
 </style>

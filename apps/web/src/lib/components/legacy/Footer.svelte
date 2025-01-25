@@ -30,8 +30,8 @@
       </div>
       <div class="col s4 m3 l3">
         <h6>Get Involved</h6>
-        <p><a data-sveltekit-reload href="/donate/">Support open data</a></p>
-        <p><a data-sveltekit-reload href="/donate/">Donate</a></p>
+        <p><a data-sveltekit-reload href="/about/donate/">Support open data</a></p>
+        <p><a data-sveltekit-reload href="/about/donate/">Donate</a></p>
       </div>
       <div class="col s4 m3 l3">
         <h6>Search</h6>
@@ -106,7 +106,7 @@
         <div class="col m3 print-hidden">
           <ul class="list-inline right-align">
             <li>
-              <a data-sveltekit-reload href="/terms/">Terms of Service</a>
+              <a data-sveltekit-reload href="/about/terms/">Terms of Service</a>
             </li>
             <li>
               <a

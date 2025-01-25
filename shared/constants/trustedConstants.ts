@@ -278,8 +278,8 @@ export const footerNavigation = {
     { name: 'Grants Search', href: '/search/grants/' },
   ],
   getInvolved: [
-    { name: 'Support Open Data', href: '/donate/' },
-    { name: 'Donate', href: '/donate/' },
+    { name: 'Support Open Data', href: '/about/donate/' },
+    { name: 'Donate', href: '/about/donate/' },
   ],
   project: [
     { name: 'The 990 Dataset', href: '/about/the-dataset/' },
@@ -288,6 +288,6 @@ export const footerNavigation = {
   ],
   legal: [
     { name: 'Privacy', href: 'https://www.iubenda.com/privacy-policy/7996402/full-legal' },
-    { name: 'Terms', href: '/terms/' },
+    { name: 'Terms', href: '/about/terms/' },
   ],
 };
