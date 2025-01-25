@@ -18,12 +18,13 @@
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
   import type { BaseItem } from '@algolia/autocomplete-core';
   import type { AutocompleteInstance } from '@repo/shared/typings/algolia/autocomplete';
+  import type { AutocompleteState } from '@algolia/autocomplete-shared';
   import type { HTMLTemplate } from '@algolia/autocomplete-shared';
   import type { LiteClient } from 'algoliasearch/lite';
   import type { AlgoliaProfilesResponseLegacy } from '@repo/shared/typings/algolia/profiles';
 
   import { PUBLIC_ALGOLIA_APP_ID, PUBLIC_ALGOLIA_SEARCH_ONLY_KEY, PUBLIC_ALGOLIA_INDEX_NAME } from '$env/static/public';
-  import { normalizeCurrencyToMillions } from '@repo/shared/functions/formatters/numbers';
+  import { formatNumber, normalizeCurrencyToMillions } from '@repo/shared/functions/formatters/numbers';
 
   interface AlgoliaProfilesItem extends BaseItem, AlgoliaProfilesResponseLegacy {}
 
@@ -32,17 +33,32 @@
     html: HTMLTemplate;
   }
 
+  interface AlgoliaNoResultsTemplateProps {
+    html: HTMLTemplate;
+    state: AutocompleteState<BaseItem>;
+  }
+
   interface Props {
+    size?: 'large' | undefined;
+    profilesVersion?: 'v0' | 'v1';
+    placeholderVersion?: 'foundation' | 'quick';
     onAutocompleteInit: (instance: AutocompleteInstance) => void;
   }
 
-  let { onAutocompleteInit }: Props = $props();
+  if (!datasetStats) {
+    throw new Error('Missing dataset stats');
+  }
+
+  let profilesCount = $derived(formatNumber(datasetStats?.profiles));
+
+  let { size = undefined, profilesVersion = 'v0', placeholderVersion = 'quick', onAutocompleteInit = () => {} }: Props = $props();
+
+  let placeholderText = $derived(placeholderVersion === 'foundation' ? 'Search by Name or EIN...' : 'Quick search...');
 
   let searchClient: LiteClient;
   const indexName = PUBLIC_ALGOLIA_INDEX_NAME;
 
   let container: HTMLElement | undefined = $state();
-  let panelContainer: HTMLElement;
   let autocompleteInstance: AutocompleteInstance;
 
   const mockResults = staticData;
@@ -75,7 +91,7 @@
       </div>
     `,
     item: ({ item, html }: AlgoliaItemTemplateProps) => {
-      const url = `/profiles/v1/${item.ein}-${item.organization_name_slug}`;
+      const url = `/profiles/${profilesVersion}/${item.ein}-${item.organization_name_slug}`;
       let percentile: number | 'N/A' = item.rank !== undefined ? ((item.rank_total - item.rank) / item.rank_total) * 100 : 'N/A';
       return html`<a href="${url}" data-sveltekit-reload>
         <div class="px-2 py-3 transition-colors duration-100 hover:bg-slate-100">
@@ -107,15 +123,92 @@
       >`;
     },
     footer: ({ html }: { html: HTMLTemplate }) =>
-      html`<div class="border-t px-3 py-2 text-xs text-gray-400">
-        <a href="https://algolia.com" class="mt-2 flex items-center justify-end gap-2 hover:text-gray-500" target="_blank" rel="noopener">
-          Search by
-          <img src="${algoliaLogo}" alt="Algolia Logo" style="height: 1rem;" />
-        </a>
+      html`<div class="h-full border-t px-3 py-4 text-base">
+        <div class="flex items-center justify-between">
+          <a
+            data-sveltekit-reload
+            class="flex items-center gap-2 text-grantmakers-blue hover:text-grantmakers-orange"
+            href="/search/profiles/"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
+              <path d="M11.625 16.5a1.875 1.875 0 1 0 0-3.75 1.875 1.875 0 0 0 0 3.75Z" />
+              <path
+                fill-rule="evenodd"
+                d="M5.625 1.5H9a3.75 3.75 0 0 1 3.75 3.75v1.875c0 1.036.84 1.875 1.875 1.875H16.5a3.75 3.75 0 0 1 3.75 3.75v7.875c0 1.035-.84 1.875-1.875 1.875H5.625a1.875 1.875 0 0 1-1.875-1.875V3.375c0-1.036.84-1.875 1.875-1.875Zm6 16.5c.66 0 1.277-.19 1.797-.518l1.048 1.048a.75.75 0 0 0 1.06-1.06l-1.047-1.048A3.375 3.375 0 1 0 11.625 18Z"
+                clip-rule="evenodd"
+              />
+              <path
+                d="M14.25 5.25a5.23 5.23 0 0 0-1.279-3.434 9.768 9.768 0 0 1 6.963 6.963A5.23 5.23 0 0 0 16.5 7.5h-1.875a.375.375 0 0 1-.375-.375V5.25Z"
+              />
+            </svg>
+            <span>Advanced Search</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
+              <path
+                fill-rule="evenodd"
+                d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </a>
+          <a
+            href="https://algolia.com"
+            class="mt-2 flex items-center justify-end gap-2 text-xs text-gray-400 hover:text-gray-500"
+            target="_blank"
+            rel="noopener"
+          >
+            Search by
+            <img src="${algoliaLogo}" alt="Algolia Logo" style="height: 1rem;" />
+          </a>
+        </div>
       </div>`,
+    noResults: ({ html, state }: AlgoliaNoResultsTemplateProps) => {
+      const { query } = state;
+      return html`<div class="px-2 py-3 transition-colors duration-100">
+        <div class="flex items-center justify-between gap-3">
+          <div class="w-full min-w-0 ">
+            <div class="flex items-start justify-between gap-x-3">
+              <div class="text-normal/6 font-semibold text-gray-900">No matches found</div>
+            </div>
+            <div class="mt-2 flex  w-full items-center justify-between gap-x-2 text-sm text-gray-500">
+              <div class="flex flex-col gap-y-4">
+                <p class="w-3/4">
+                  We searched the IRS dataset of ${profilesCount} private foundations, but didn't find any matches for:
+                  <span class="ml-1 font-bold text-indigo-500">${query}</span>
+                </p>
+                <div class="flex flex-col gap-2 bg-slate-100 p-4">
+                  <div>
+                    <div class="flex flex-row items-center gap-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+                        <path
+                          fill-rule="evenodd"
+                          d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 0 1 .67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 1 1-.671-1.34l.041-.022ZM12 9a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      Community and Operating Foundations are not yet included
+                    </div>
+                  </div>
+                </div>
+                <a class="flex flex-row items-center gap-1 text-grantmakers-blue" href="/about/the-dataset/"
+                  >Learn more about the dataset
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
+                    <path
+                      fill-rule="evenodd"
+                      d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm4.28 10.28a.75.75 0 0 0 0-1.06l-3-3a.75.75 0 1 0-1.06 1.06l1.72 1.72H8.25a.75.75 0 0 0 0 1.5h5.69l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3Z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </a>
+              </div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    },
   };
 
-  const getItemUrl = ({ item }: { item: AlgoliaProfilesItem }) => `/profiles/v1/${item.ein}-${item.organization_name_slug}`;
+  const getItemUrl = ({ item }: { item: AlgoliaProfilesItem }) => `/profiles/${profilesVersion}/${item.ein}-${item.organization_name_slug}`;
 
   let openSearch = () => {
     if (browser) {
@@ -135,9 +228,8 @@
     if (container) {
       autocompleteInstance = autocomplete({
         container,
-        panelContainer,
         detachedMediaQuery: '',
-        placeholder: 'Quick search...',
+        placeholder: placeholderText,
         openOnFocus: true,
         classNames: {
           // Docs: https://www.algolia.com/doc/ui-libraries/autocomplete/api-reference/autocomplete-js/autocomplete/#param-classnames
@@ -213,10 +305,12 @@
 
 <!-- SSR Placeholder -->
 <!-- This mimics the Autocomplete-generated search box -->
-<div class="relative mt-0 rounded-md shadow-sm transition-opacity duration-200">
+<div class="relative mt-0 rounded-md shadow-sm transition-opacity duration-200 {size === 'large' ? 'w-fit' : ''}">
   <button
     type="button"
-    class="aa-DetachedSearchButton !placeholder:text-red-900 !sm:text-sm !sm:leading-6 !min-w-48 !rounded-md !border-0 ring-1 ring-inset !ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+    class="aa-DetachedSearchButton !placeholder:text-red-900 {size === 'large' ?
+      '!min-w-72 ring-4 ring-indigo-400 focus:!ring-indigo-600 sm:!text-base'
+    : '!min-w-48 ring-1 ring-inset !ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:!text-sm'} !rounded-md !border-0 sm:!leading-6"
     title="Search"
     onclick={openSearch}
     ><div class="aa-DetachedSearchButtonIcon !cursor-pointer !text-slate-500">
@@ -226,7 +320,7 @@
         ></path></svg
       >
     </div>
-    <div class="aa-DetachedSearchButtonPlaceholder text-sm text-slate-500">Quick search...</div>
+    <div class="aa-DetachedSearchButtonPlaceholder {size === 'large' ? 'text-base' : 'text-sm'} text-slate-500">{placeholderText}</div>
     <div class="aa-DetachedSearchButtonQuery"></div></button
   >
 </div>
@@ -239,6 +333,9 @@
   }
   :global(.aa-DetachedFormContainer) {
     @apply border-b-0 bg-slate-200;
+  }
+  :global(.aa-DetachedContainer--modal .aa-PanelLayout) {
+    max-height: 515px;
   }
   :global(.aa-Form) {
     &:focus-within {
