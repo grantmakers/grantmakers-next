@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
 
   interface Props {
     href: string;
@@ -8,8 +8,14 @@
 
   let { href, title }: Props = $props();
 
-  let isActive = $derived($page.url.pathname === href || $page.url.pathname.startsWith(href));
+  let isActive = $derived(page.url.pathname === href || page.url.pathname.startsWith(href));
   let linkClasses = $derived(isActive ? 'bg-slate-700 cursor-default pointer-events-none' : 'hover:bg-slate-500/75');
+  let requiresReload = $derived(href.startsWith('/search'));
 </script>
 
-<a {href} class="rounded-md px-3 py-2 text-sm font-medium text-white {linkClasses}" aria-current={isActive ? 'page' : undefined}>{title}</a>
+<a
+  data-sveltekit-reload={requiresReload}
+  {href}
+  class="rounded-md px-3 py-2 text-sm font-medium text-white {linkClasses}"
+  aria-current={isActive ? 'page' : undefined}>{title}</a
+>

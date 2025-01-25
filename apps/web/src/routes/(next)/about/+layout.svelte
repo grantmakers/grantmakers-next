@@ -25,8 +25,8 @@
           </div>
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
-              <PrimaryNavLink href={'/profiles'} title={'Foundation Profiles'} />
-              <PrimaryNavLink href={'/search/grants'} title={'Historical Grants'} />
+              <PrimaryNavLink href={'/search/profiles/'} title={'Foundation Profiles'} />
+              <PrimaryNavLink href={'/search/grants/'} title={'Historical Grants'} />
             </div>
           </div>
         </div>
@@ -35,7 +35,7 @@
         <div class="hidden lg:ml-4 lg:flex lg:items-center lg:pr-0.5">
           <!-- Profile dropdown -->
           <div class="relative ml-4 flex flex-auto shrink-0 items-center">
-            <PrimaryNavLink href={'/about'} title={'About'} />
+            <PrimaryNavLink href={'/about/'} title={'About'} />
             <div class="ml-4">
               <button
                 type="button"
@@ -141,7 +141,7 @@
                 {/each}
               </nav>
               <div>
-                <SecondaryNavLink href="/about/donate" title="Support Open Data" />
+                <SecondaryNavLink href="/about/donate/" title="Support Open Data" />
               </div>
             </div>
           </div>
@@ -205,9 +205,9 @@
                 <!-- Primary Mobile Nav Links -->
                 <div class="space-y-1 pb-1 pt-2">
                   <!-- Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" -->
-                  <PrimaryNavLinkMobile href={'/profiles'} title={'Foundation Profiles'} />
-                  <PrimaryNavLinkMobile href={'/search/grants'} title={'Historical Grants'} />
-                  <PrimaryNavLinkMobile href={'/about'} title={'About'} />
+                  <PrimaryNavLinkMobile href={'/search/profiles/'} title={'Foundation Profiles'} />
+                  <PrimaryNavLinkMobile href={'/search/grants/'} title={'Historical Grants'} />
+                  <PrimaryNavLinkMobile href={'/about/'} title={'About'} />
                 </div>
                 <div class="mt-3 space-y-1 px-4 pb-3">
                   <!-- Secondary Mobile Nav Links -->
@@ -216,7 +216,7 @@
                       {#each aboutLinks as item}
                         <SecondaryNavLinkMobile href={item.link} title={item.title} />
                       {/each}
-                      <SecondaryNavLinkMobile href="/about/donate" title="Support Open Data" />
+                      <SecondaryNavLinkMobile href="/about/donate/" title="Support Open Data" />
                     </div>
                   </div>
                 </div>
