@@ -25,7 +25,7 @@
 
 <div class="relative bg-white">
   <header class="absolute inset-x-0 top-0 z-50">
-    <nav class="mx-auto flex max-w-7xl items-center justify-start md:justify-between lg:px-8" aria-label="Global">
+    <nav class="mx-auto flex max-w-7xl items-center justify-start px-6 py-8 md:justify-between lg:px-8 lg:py-0" aria-label="Global">
       <div class="flex items-center gap-10 text-white">
         <LogoMark isLandingOrFooter={true} />
         <!-- <a href="/about/">About</a> -->
