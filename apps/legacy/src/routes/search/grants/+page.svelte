@@ -3,9 +3,9 @@
   import { browser } from '$app/environment';
   import bg from '$lib/assets/legacy/images/bg.jpg';
   import Header from '$lib/components/search/Header.svelte';
+  import { datasetStats } from '@repo/shared/constants/trustedConstants';
   const site = {
     baseurl: '',
-    number_of_searchable_grants: 4748595,
     title: 'Grantmakers.io - Search Foundation Grants',
   };
 
@@ -41,7 +41,7 @@
           <h1 class="text-bold">Grants Search</h1>
           <h5>Discover who foundations are funding</h5>
           <p>
-            Search through {(site.number_of_searchable_grants / 1e6).toFixed(1)} million grants contained in the public IRS 990-PF dataset
+            Search through {(datasetStats.grants_searchable / 1e6).toFixed(1)} million grants contained in the public IRS 990-PF dataset
           </p>
         </div>
       </div>
@@ -271,9 +271,7 @@
           <i class="material-icons icon-idea left">wb_incandescent</i> How to search on Grantmakers.io like a pro
         </div>
         <div class="card-content">
-          <span
-            >There are two ways to search for information, driven by the primary goal of your search.<!-- Grantmakers.io provides direct access to the electronic IRS 990 datatset. We've pulled the useful components and made them fully searchable.--></span
-          >
+          <span>There are two ways to search for information, driven by the primary goal of your search.</span>
           <div class="divider"></div>
           <div class="row flex">
             <div class="col s12 m6 flex-direction-column flex">
@@ -313,8 +311,6 @@
               </div>
             </div>
           </div>
-
-          <!-- <p class="text-light">Use our <a href="{ site.baseurl }/search/grants/" class="blue-grey-text text-bold">Grants Search</a> tool for basic prospecting.</p> -->
         </div>
         <div class="card-action">
           <small>DATA SOURCE: Public electronic IRS 990 dataset</small>
@@ -331,10 +327,5 @@
   }
   :global(#algolia-hits-wrapper.loaded) {
     opacity: 1;
-  }
-  #stay-tuned-message {
-    position: relative;
-    top: -100px;
-    z-index: 9999;
   }
 </style>

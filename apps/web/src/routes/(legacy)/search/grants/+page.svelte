@@ -314,8 +314,6 @@
               </div>
             </div>
           </div>
-
-          <!-- <p class="text-light">Use our <a href="{ site.baseurl }/search/grants/" class="blue-grey-text text-bold">Grants Search</a> tool for basic prospecting.</p> -->
         </div>
         <div class="card-action">
           <small>DATA SOURCE: Public electronic IRS 990 dataset</small>

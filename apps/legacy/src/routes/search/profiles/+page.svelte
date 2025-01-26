@@ -1,11 +1,11 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import bg from '$lib/assets/legacy/images/bg.jpg';
-  import { formatNumber } from '@repo/shared/functions/formatters/numbers';
+  import { humanizeNumber } from '@repo/shared/functions/formatters/numbers';
   import Header from '$lib/components/search/Header.svelte';
+  import { datasetStats } from '@repo/shared/constants/trustedConstants';
   const site = {
     baseurl: '',
-    number_of_foundations: 153236,
     title: 'Grantmakers.io - Search Foundation Profiles',
   };
 
@@ -35,7 +35,7 @@
       <div class="intro valign-wrapper">
         <div class="intro-text center-align white-text">
           <h1 class="text-bold">Profiles Search</h1>
-          <h5>Profiles of {formatNumber(Math.floor(site.number_of_foundations / 1000) * 1000)} U.S. foundations</h5>
+          <h5>Profiles of {humanizeNumber(datasetStats?.profiles)} U.S. foundations</h5>
           <p>Source: IRS electronic 990 dataset</p>
         </div>
       </div>
@@ -284,14 +284,6 @@
                   <a href="{site.baseurl}/about/the-dataset/">Learn more</a>
                 </div>
               </div>
-              <!--
-              <div class="card z-depth-0 grey lighten-3">
-                <div class="card-content">
-                  <h6 class="subheader">Support open data</h6>
-                  <p>If you found this site useful, why not <a href="{ site.baseurl }/buy-chad-a-coffee/">buy me a coffee</a>?</p>
-                </div>
-              </div>
-            -->
             </div>
           </div>
         </div>
@@ -329,9 +321,7 @@
           <i class="material-icons icon-idea left">wb_incandescent</i> How to search on Grantmakers.io like a pro
         </div>
         <div class="card-content">
-          <span
-            >There are two ways to search for information, driven by the primary goal of your search.<!-- Grantmakers.io provides direct access to the electronic IRS 990 datatset. We've pulled the useful components and made them fully searchable.--></span
-          >
+          <span>There are two ways to search for information, driven by the primary goal of your search.</span>
           <div class="divider"></div>
           <div class="row flex">
             <div class="col s12 m6 flex-direction-column flex">
@@ -371,8 +361,6 @@
               </div>
             </div>
           </div>
-
-          <!-- <p class="text-light">Use our <a href="{ site.baseurl }/search/grants/" class="blue-grey-text text-bold">Grants Search</a> tool for basic prospecting.</p> -->
         </div>
         <div class="card-action">
           <small>DATA SOURCE: Public electronic IRS 990 dataset</small>

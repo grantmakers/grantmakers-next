@@ -136,7 +136,8 @@
             <div class="card">
               <div class="card-content">
                 <span class="card-title"
-                  ><strong>Check your url</strong> <br />Search results are only available at <a href="/">Grantmakers.io</a></span
+                  ><strong>Check your url</strong> <br />Search results are only available at
+                  <a data-sveltekit-reload href="/">Grantmakers.io</a></span
                 >
                 <p>
                   We limit search results to Grantmakers.io to allow the maximum number of people access to this free service. The page you
@@ -281,17 +282,9 @@
               </div>
               <div class="center-align">
                 <div class="waves-effect waves-light btn-flat">
-                  <a href="{site.baseurl}/about/the-dataset/">Learn more</a>
+                  <a data-sveltekit-reload href="{site.baseurl}/about/the-dataset/">Learn more</a>
                 </div>
               </div>
-              <!--
-              <div class="card z-depth-0 grey lighten-3">
-                <div class="card-content">
-                  <h6 class="subheader">Support open data</h6>
-                  <p>If you found this site useful, why not <a href="{ site.baseurl }/buy-chad-a-coffee/">buy me a coffee</a>?</p>
-                </div>
-              </div>
-            -->
             </div>
           </div>
         </div>
@@ -329,9 +322,7 @@
           <i class="material-icons icon-idea left">wb_incandescent</i> How to search on Grantmakers.io like a pro
         </div>
         <div class="card-content">
-          <span
-            >There are two ways to search for information, driven by the primary goal of your search.<!-- Grantmakers.io provides direct access to the electronic IRS 990 datatset. We've pulled the useful components and made them fully searchable.--></span
-          >
+          <span>There are two ways to search for information, driven by the primary goal of your search.</span>
           <div class="divider"></div>
           <div class="row flex">
             <div class="col s12 m6 flex-direction-column flex">
@@ -371,8 +362,6 @@
               </div>
             </div>
           </div>
-
-          <!-- <p class="text-light">Use our <a href="{ site.baseurl }/search/grants/" class="blue-grey-text text-bold">Grants Search</a> tool for basic prospecting.</p> -->
         </div>
         <div class="card-action">
           <small>DATA SOURCE: Public electronic IRS 990 dataset</small>
