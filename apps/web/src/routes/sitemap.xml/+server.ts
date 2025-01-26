@@ -2,7 +2,7 @@ import type { RequestHandler } from '@sveltejs/kit';
 export const prerender = true;
 
 export const GET: RequestHandler = async () => {
-  const url = 'https://next.grantmakers.io'; // TODO Update to www when ready
+  const url = 'https://www.grantmakers.io';
   const lastmod = new Date().toISOString().split('.')[0] + 'Z';
 
   return new Response(
