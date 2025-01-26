@@ -28,7 +28,7 @@
     <nav class="mx-auto flex max-w-7xl items-center justify-start md:justify-between lg:px-8" aria-label="Global">
       <div class="flex items-center gap-10 text-white">
         <LogoMark isLandingOrFooter={true} />
-        <a href="/about/">About</a>
+        <!-- <a href="/about/">About</a> -->
         <!-- <a href="/about/donate/">Support Open Data</a> -->
       </div>
       <div class="hidden items-center justify-end gap-4 text-white md:flex">
