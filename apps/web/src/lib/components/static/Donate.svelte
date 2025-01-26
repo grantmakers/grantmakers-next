@@ -9,8 +9,8 @@
     <p class="mt-6 text-xl/8">Hi, I'm Chad 👋</p>
     <p class="mt-6">I'm the creator of Grantmakers.io.</p>
     <p class="mt-6">
-      Grantmakers.io is just me. I built this tool because I believe grants data should be accessible to everyone. It's a grassroots project
-      that proves we don't need big budgets to make data freely available.
+      I built this tool because I believe grants data should be accessible to everyone. It's an open source project that proves we don't
+      need big budgets to make data freely available. 88% of nonprofits are grassroots organizations - Grantmakers.io exists for them.
     </p>
     <div class="mt-10 max-w-2xl">
       <h2 id="toc-impact" class="mt-16 text-pretty text-3xl font-semibold tracking-tight text-gray-900">The impact of your contribution</h2>

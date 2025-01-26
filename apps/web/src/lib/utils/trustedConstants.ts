@@ -16,6 +16,12 @@ export interface EachFAQ {
   answer: string;
 }
 
+export const datasetStats = {
+  profiles: 153236,
+  grants: 13134850,
+  grants_searchable: 4748595,
+};
+
 export const meta = {
   defaults: {
     title: 'Grantmakers.io - A Community Project',

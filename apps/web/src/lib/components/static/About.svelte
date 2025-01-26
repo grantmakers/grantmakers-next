@@ -30,7 +30,7 @@
 
 <!-- https://tailwindui.com/components/marketing/sections/content-sections#component-3f7a35fa653498b2c62441a98df3dc08 -->
 
-<div class="bg-white px-6 py-8 lg:px-8">
+<div class="flex flex-col gap-12 bg-white px-6 py-8 lg:px-8">
   <div class="mx-auto max-w-3xl text-base/7 text-gray-700">
     <p class="text-base/7 font-semibold text-indigo-600">Leading the industry forward</p>
     <h1 class="mt-2 text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Truly open data</h1>
@@ -40,8 +40,8 @@
     </p>
     <div class="mt-10 max-w-2xl">
       <p>
-        The project was created to demonstrate that searchable access to 990 data can be offered for free, even at significant scale. To us,
-        truly free means:
+        The project demonstrates that searchable access to 990 data can be offered for free, even at significant scale. To us, truly free
+        means:
       </p>
       <ul role="list" class="mt-8 max-w-xl space-y-8 text-gray-600">
         <li class="flex gap-x-3">
@@ -178,6 +178,21 @@
           alt="Chicago Flag"
         />
       </p>
+    </div>
+  </div>
+  <div class="rounded-lg bg-indigo-100">
+    <div class="mx-auto max-w-7xl px-6 py-24 sm:py-24 lg:flex lg:items-center lg:justify-between lg:px-8">
+      <h2 class="max-w-2xl text-4xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
+        New to Grantmakers.io? <br />Read more about the IRS dataset.
+      </h2>
+      <div class="mt-10 flex items-center gap-x-6 lg:mt-0 lg:shrink-0">
+        <a
+          href="/about/the-dataset/"
+          class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >Learn more <span aria-hidden="true">→</span></a
+        >
+        <!-- <a href="#" class="text-sm/6 font-semibold text-gray-900">Learn more <span aria-hidden="true">→</span></a> -->
+      </div>
     </div>
   </div>
 </div>

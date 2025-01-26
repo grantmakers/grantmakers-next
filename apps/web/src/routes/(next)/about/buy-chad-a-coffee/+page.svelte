@@ -62,7 +62,6 @@
 <!-- https://tailwindui.com/components/application-ui/application-shells/stacked -->
 
 <div class="min-h-full">
-  <!-- @ts-expect-error paypalExpress option is a valid DonorBox attribute-->
   <main class="-mt-24 pb-8">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
       <h1 class="sr-only">Support Open Data</h1>
@@ -73,7 +72,7 @@
             <!-- Left column -->
             <div class="lg:col-span-3">
               <section aria-labelledby="support-open-data">
-                <h2 class="sr-only" id="support-open-data">Donate</h2>
+                <h2 class="sr-only" id="support-open-data">Buy Chad a Coffee</h2>
                 <div class="overflow-hidden rounded-lg">
                   <div>
                     <Donate />
@@ -86,12 +85,11 @@
             <div class="lg:col-span-2">
               <section aria-labelledby="faq">
                 {#if browser}
-                  <!-- @ts-expect-error paypalExpress attribute is a valid DonorBox attribute-->
+                  <!-- @ts-expect-error paypalExpress option is valid DonorBox attribute-->
                   <script src="https://donorbox.org/widget.js" paypalExpress="false"></script>
                   {#if !isLoaded}
                     {@render skeleton()}
                   {/if}
-
                   <!-- @ts-expect-error seamless attribute is a valid DonorBox attribute-->
                   <iframe
                     onload={handleLoader}
@@ -103,7 +101,7 @@
                     name="donorbox"
                     scrolling="no"
                     seamless="seamless"
-                    src="https://donorbox.org/embed/grantmakersio"
+                    src="https://donorbox.org/embed/buy-chad-a-coffee"
                     style="max-width: 500px; min-width: 310px; max-height:none!important; border: none !important"
                     width="100%"
                   ></iframe>

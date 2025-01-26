@@ -264,12 +264,12 @@ export const faqData: EachFAQ[] = [
   {
     question: 'Do you exclude any data?',
     answer:
-      'Only to stay within the free tier limits of our search partner. Generally speaking, this affects only older grants e.g. tax years 2009 and 2010.',
+      'Due to the high number of very small grants, two donor-advised-fund providers (Bank of American Charitable Foundation and JPMorgan Chase Foundation) and one now-closed corporate giving program (Amazonsmile Foundation) do not appear on the site.',
   },
   {
     question: 'Why is Grantmakers.io free?',
     answer:
-      'The better question is why should it cost anything? The source data is published for free by the IRS. The site is hosted for free by Cloudflare. The search is provided for free by our friends at Algolia. There is virtually no cost in hosting and maintaining this site.',
+      'The better question is why should it cost anything? The source data is published for free by the IRS. The site is hosted for free by Cloudflare. The search is provided for free by our friends at Algolia. The few direct costs, generally less than a monthly subscription to Netflix, are generously covered by the community.',
   },
 ];
 export const footerNavigation = {

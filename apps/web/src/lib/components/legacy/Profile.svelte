@@ -1328,7 +1328,7 @@
               <h5>If this free profile helped you, why not</h5>
               <a
                 data-sveltekit-reload
-                href="/buy-chad-a-coffee/"
+                href="/about/buy-chad-a-coffee/"
                 class="waves-effect waves-light btn white grey-text text-darken-1"
                 data-ga="Buy Me a Coffee CTA"><i class="material-icons left">emoji_food_beverage</i> Buy me a coffee</a
               >
