@@ -23,4 +23,17 @@
   :global(header) {
     position: relative;
   }
+  :global(#algolia-hits-wrapper) {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+  :global(#algolia-hits-wrapper.loaded) {
+    opacity: 1;
+  }
+  :global(#ais-widget-sort-by i, #search-box-dropdown-trigger i) {
+    width: auto;
+  }
+  :global(#ais-widget-sort-by i) {
+    padding: 2px;
+  }
 </style>
