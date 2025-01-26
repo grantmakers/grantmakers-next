@@ -62,7 +62,7 @@
 
 <div class="min-h-full">
   <!-- @ts-expect-error paypalExpress option is a valid DonorBox attribute-->
-  <main class="-mt-24 pb-8">
+  <main class="relative -mt-24 pb-8">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
       <h1 class="sr-only">Support Open Data</h1>
       <div class="overflow-hidden rounded-lg bg-white shadow">
@@ -82,7 +82,7 @@
             </div>
 
             <!-- Right column -->
-            <div class="lg:col-span-2">
+            <div class="h-full lg:col-span-2">
               <section aria-labelledby="faq">
                 {#if browser}
                   <!-- @ts-expect-error paypalExpress attribute is a valid DonorBox attribute-->
@@ -98,7 +98,7 @@
                     title="Donation form"
                     allowpaymentrequest=""
                     frameborder="0"
-                    height="900px"
+                    height="1050px"
                     name="donorbox"
                     scrolling="no"
                     seamless="seamless"

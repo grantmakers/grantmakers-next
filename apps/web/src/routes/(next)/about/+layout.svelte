@@ -15,9 +15,15 @@
 </script>
 
 <div class="min-h-full">
-  <header class="bg-slate-600 pb-24">
+  <header class="relative isolate overflow-hidden bg-slate-900 pb-24">
+    <div class="absolute inset-x-0 top-0 -z-10 transform-gpu overflow-hidden blur-3xl" aria-hidden="true">
+      <div
+        class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+        style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',"
+      ></div>
+    </div>
     <div class="mx-auto max-w-3xl px-4 py-2 sm:px-6 lg:max-w-7xl lg:px-8 lg:py-0">
-      <div class="relative flex h-16 items-center justify-center py-5 lg:h-fit lg:justify-between">
+      <div class="relative flex h-16 items-center justify-center lg:h-fit lg:justify-between">
         <div class="flex items-center">
           <!-- Logo -->
           <div class="absolute left-0 shrink-0 lg:static lg:block">
@@ -31,11 +37,49 @@
         </div>
 
         <!-- Right section on desktop -->
-        <div class="hidden lg:ml-4 lg:flex lg:items-center lg:pr-0.5">
+        <div class="hidden lg:ml-4 lg:flex lg:items-center lg:justify-end">
+          <div class="hidden items-center justify-end gap-4 text-white md:flex">
+            <div class="group relative flex items-center gap-x-4 rounded-lg p-4 text-sm/6">
+              <div class="flex size-11 flex-none items-center justify-center rounded-full bg-grantmakers-orange">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
+              <div class="flex-auto">
+                <a data-sveltekit-reload href="/search/profiles/" class="block text-base text-white">
+                  Find a Foundation Profile
+                  <span class="absolute inset-0"></span>
+                </a>
+                <p class="text-base font-semibold text-grantmakers-orange">Foundation Search</p>
+              </div>
+            </div>
+            <div class="group relative flex items-center gap-x-4 rounded-lg p-4 pr-0 text-sm/6">
+              <div class="flex size-11 flex-none items-center justify-center rounded-full bg-grantmakers-blue">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
+              <div class="flex-auto">
+                <a data-sveltekit-reload href="/search/grants/" class="block text-base text-white">
+                  Search Historical Grants
+                  <span class="absolute inset-0"></span>
+                </a>
+                <p class="text-base font-semibold text-grantmakers-blue">Grants Search</p>
+              </div>
+            </div>
+          </div>
           <!-- Profile dropdown -->
           <div class="relative ml-4 flex flex-auto shrink-0 items-center">
-            <PrimaryNavLink href={'/search/profiles/'} title={'Foundation Profiles'} />
-            <PrimaryNavLink href={'/search/grants/'} title={'Historical Grants'} />
+            <!-- <PrimaryNavLink href={'/search/profiles/'} title={'Foundation Profiles'} />
+            <PrimaryNavLink href={'/search/grants/'} title={'Historical Grants'} /> -->
 
             <!-- FEAT: Future preferences -->
             <!-- <div class="ml-4">
@@ -227,6 +271,15 @@
           </div>
         </div>
       {/if}
+    </div>
+    <div
+      class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
+      aria-hidden="true"
+    >
+      <div
+        class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
+        style="clipPath: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"
+      ></div>
     </div>
   </header>
 

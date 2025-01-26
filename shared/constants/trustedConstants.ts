@@ -194,17 +194,17 @@ export const aboutLinks = [
   {
     title: 'The Project',
     id: 'about',
-    link: '/about',
+    link: '/about/',
   },
   {
     title: 'The Dataset',
     id: 'the-dataset',
-    link: '/about/the-dataset',
+    link: '/about/the-dataset/',
   },
   {
     title: 'FAQ',
     id: 'faq',
-    link: '/about/faq',
+    link: '/about/faq/',
   },
 ];
 

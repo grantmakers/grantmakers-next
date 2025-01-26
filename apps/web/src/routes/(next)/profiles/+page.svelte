@@ -42,7 +42,7 @@
 <div id="instantsearch"></div>
 
 <div class="min-h-full">
-  <header class="bg-slate-600 pb-24">
+  <header class="bg-slate-900 pb-24">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
       <div class="relative flex h-fit items-center justify-center py-5 lg:justify-between">
         <div class="flex items-center">
@@ -320,7 +320,7 @@
       </div>
     {/if}
   </header>
-  <main class="-mt-24 pb-8">
+  <main class="relative -mt-24 pb-8">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
       <h1 class="sr-only">{activeTitle}</h1>
       <!-- Main 3 column grid -->

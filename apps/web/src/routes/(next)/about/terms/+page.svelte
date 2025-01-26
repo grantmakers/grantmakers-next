@@ -7,7 +7,7 @@
 <!-- https://tailwindui.com/components/application-ui/application-shells/stacked -->
 
 <div class="min-h-full">
-  <main class="-mt-24 pb-8">
+  <main class="relative -mt-24 pb-8">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
       <h1 class="sr-only">Terms</h1>
       <!-- Main 3 column grid -->
