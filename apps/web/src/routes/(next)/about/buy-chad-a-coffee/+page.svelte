@@ -5,7 +5,6 @@
 
   let isLoaded = $state(false);
   function handleLoader() {
-    console.log('Loaded!');
     isLoaded = true;
   }
 </script>
