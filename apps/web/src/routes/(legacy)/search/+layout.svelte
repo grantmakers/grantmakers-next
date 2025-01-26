@@ -15,8 +15,9 @@
   <link rel="preconnect" href="https://kdwvszvs1i-dsn.algolia.net" crossorigin="anonymous" />
 </svelte:head>
 <Banner />
-
-{@render children?.()}
+<div class="legacy-materialize-css">
+  {@render children?.()}
+</div>
 
 <style>
   :global(header) {
