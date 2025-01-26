@@ -15,6 +15,8 @@ const legacySitemapRedirects: Redirects = {
 
 const surpriseMeRoutes = ['/profiles/v0'];
 
+const donationRoutes = ['/donate', '/buy-chad-a-coffee'];
+
 export async function handle({ event, resolve }) {
   const path = event.url.pathname;
 
@@ -33,6 +35,12 @@ export async function handle({ event, resolve }) {
   // Handle legacy sitemap redirect
   if (legacySitemapRedirects[path]) {
     return Response.redirect(new URL(legacySitemapRedirects[path], event.url.origin), 301);
+  }
+
+  // Handle new donation paths
+  if (donationRoutes.some((route) => path.startsWith(route))) {
+    const redirectTo = `/about${event.url.pathname}`;
+    redirect(302, redirectTo);
   }
 
   // Handle Surprise Me feature
