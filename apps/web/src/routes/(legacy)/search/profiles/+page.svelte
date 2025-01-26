@@ -1,11 +1,11 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import bg from '$lib/assets/legacy/images/bg.jpg';
-  import { formatNumber } from '@repo/shared/functions/formatters/numbers';
+  import { humanizeNumber } from '@repo/shared/functions/formatters/numbers';
+  import { datasetStats } from '@repo/shared/constants/trustedConstants';
   import Header from '$lib/components/legacy/Header.svelte';
   const site = {
     baseurl: '',
-    number_of_foundations: 153236,
     title: 'Grantmakers.io - Search Foundation Profiles',
   };
 
@@ -35,7 +35,7 @@
       <div class="intro valign-wrapper">
         <div class="intro-text center-align white-text">
           <h1 class="text-bold">Profiles Search</h1>
-          <h5>Profiles of {formatNumber(Math.floor(site.number_of_foundations / 1000) * 1000)} U.S. foundations</h5>
+          <h5>Profiles of {humanizeNumber(datasetStats?.profiles)} U.S. foundations</h5>
           <p>Source: IRS electronic 990 dataset</p>
         </div>
       </div>

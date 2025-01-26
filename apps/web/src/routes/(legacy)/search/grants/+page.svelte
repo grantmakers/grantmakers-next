@@ -3,9 +3,10 @@
   import { browser } from '$app/environment';
   import bg from '$lib/assets/legacy/images/bg.jpg';
   import Header from '$lib/components/legacy/Header.svelte';
+  import { datasetStats } from '@repo/shared/constants/trustedConstants';
+
   const site = {
     baseurl: '',
-    number_of_searchable_grants: 4748595,
     title: 'Grantmakers.io - Search Foundation Grants',
   };
 
@@ -41,7 +42,7 @@
           <h1 class="text-bold">Grants Search</h1>
           <h5>Discover who foundations are funding</h5>
           <p>
-            Search through {(site.number_of_searchable_grants / 1e6).toFixed(1)} million grants contained in the public IRS 990-PF dataset
+            Search through {(datasetStats?.grants_searchable / 1e6).toFixed(1)} million grants contained in the public IRS 990-PF dataset
           </p>
         </div>
       </div>
