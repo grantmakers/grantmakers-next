@@ -1,4 +1,2 @@
 User-agent: *
-Disallow: /cdn-cgi/
-Disallow: /profiles/v0/*/\?page=*
-Disallow: /profiles/v0/*\?page=*
+Disallow: /
