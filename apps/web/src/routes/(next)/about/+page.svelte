@@ -4,8 +4,8 @@
 </script>
 
 <!-- https://tailwindui.com/components/application-ui/application-shells/stacked -->
-
-<main class="relative -mt-24 pb-8">
+<!-- The "relative z-20" classes are required for proper stacking context on desktop due to header background gradients -->
+<main class="relative z-20 -mt-24 pb-8">
   <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
     <h1 class="sr-only">About</h1>
     <!-- Main 3 column grid -->
