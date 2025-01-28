@@ -9,8 +9,13 @@
     <p class="mt-6 text-xl/8">Hi, I'm Chad 👋</p>
     <p class="mt-6">I'm the creator of Grantmakers.io.</p>
     <p class="mt-6">
-      I built this tool because I believe grants data should be accessible to everyone. It's an open source project that proves we don't
-      need big budgets to make data freely available. 88% of nonprofits are grassroots organizations - Grantmakers.io exists for them.
+      I launched the project in 2016 with a simple belief: <span class="font-semibold text-slate-900"
+        >grants data should be available to every nonprofit</span
+      >, not just those with big budgets. I am completely rebuilding the platform in 2025 because I continue to see how unfettered access to
+      good data helps organizations make a deeper impact in their communities.
+    </p>
+    <p class="mt-6 rounded-lg bg-blue-100 p-6">
+      Every week, 8,000 users visit Grantmakers.io to conduct their foundation and grant searches. No login required. No limits.
     </p>
     <div class="mt-10 max-w-2xl">
       <h2 id="toc-impact" class="mt-16 text-pretty text-3xl font-semibold tracking-tight text-gray-900">The impact of your contribution</h2>
