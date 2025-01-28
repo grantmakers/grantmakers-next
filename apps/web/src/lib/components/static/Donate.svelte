@@ -14,7 +14,7 @@
       >, not just those with big budgets. I am completely rebuilding the platform in 2025 because I continue to see how unfettered access to
       good data helps organizations make a deeper impact in their communities.
     </p>
-    <div class="mt-10 rounded-lg bg-blue-100 p-6">
+    <div class="mt-10 rounded-lg bg-indigo-50 p-6">
       <!-- <strong class="font-semibold text-gray-900">By the numbers</strong> -->
       <ul role="list" class="max-w-xl space-y-4 text-gray-600">
         <li class="flex gap-x-3">
