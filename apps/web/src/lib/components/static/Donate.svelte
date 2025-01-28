@@ -14,9 +14,41 @@
       >, not just those with big budgets. I am completely rebuilding the platform in 2025 because I continue to see how unfettered access to
       good data helps organizations make a deeper impact in their communities.
     </p>
-    <p class="mt-6 rounded-lg bg-blue-100 p-6">
-      Every week, 8,000 users visit Grantmakers.io to conduct their foundation and grant searches. No login required. No limits.
-    </p>
+    <div class="mt-10 rounded-lg bg-blue-100 p-6">
+      <!-- <strong class="font-semibold text-gray-900">By the numbers</strong> -->
+      <ul role="list" class="max-w-xl space-y-4 text-gray-600">
+        <li class="flex gap-x-3">
+          <svg class="mt-1 size-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          <span>10 million searches conducted </span>
+        </li>
+        <li class="flex gap-x-3">
+          <svg class="mt-1 size-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          <span>8,000 weekly visitors</span>
+        </li>
+        <li class="flex gap-x-3">
+          <svg class="mt-1 size-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          <span>100% community supported</span>
+        </li>
+      </ul>
+    </div>
     <div class="mt-10 max-w-2xl">
       <h2 id="toc-impact" class="mt-16 text-pretty text-3xl font-semibold tracking-tight text-gray-900">The impact of your contribution</h2>
       <p class="mt-6">
