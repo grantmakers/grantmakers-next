@@ -134,17 +134,6 @@
               </div>
             </div>
           </div>
-          <!-- <div
-            class="flex w-1/2 flex-col items-center justify-center gap-4 rounded-xl bg-white/5 p-12 text-left text-white ring-1 ring-inset ring-white/10"
-          >
-            <div class="w-1/2 text-left text-base">Foundation Quick Search</div>
-            <Autocomplete
-              size={'large'}
-              profilesVersion={'v0'}
-              placeholderVersion={'foundation'}
-              onAutocompleteInit={handleAutocompleteInit}
-            />
-          </div> -->
         </div>
 
         <!-- Features -->
@@ -271,13 +260,8 @@
       </PillLink>
     </div>
 
-    <!-- FAQ section -->
-    <!-- <div class="mx-auto mt-32 max-w-7xl px-6 sm:mt-56 lg:px-8">
-      <FAQ {faqData} />
-    </div> -->
-
     <!-- CTA -->
-    <div class="relative isolate mt-32 bg-gray-900 px-6 sm:mt-56 lg:px-8">
+    <div class="relative my-32 px-6 lg:mt-56 lg:px-12">
       <BottomCTA />
     </div>
   </main>
