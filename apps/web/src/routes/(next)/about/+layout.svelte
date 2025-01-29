@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { refs, menuState, toggleMobileMenu, toggleProfileMenu } from '$lib/components/search/menuState.svelte';
+  import { refs, menuState, toggleMobileMenu } from '$lib/components/search/menuState.svelte';
   import LogoMark from '$lib/components/shared/LogoMark.svelte';
   import PrimaryNavLink from '$lib/components/nav/PrimaryNavLink.svelte';
   import { aboutLinks } from '@repo/shared/constants/trustedConstants';
   import SecondaryNavLink from '$lib/components/nav/SecondaryNavLink.svelte';
   import PrimaryNavLinkMobile from '$lib/components/nav/PrimaryNavLinkMobile.svelte';
   import SecondaryNavLinkMobile from '$lib/components/nav/SecondaryNavLinkMobile.svelte';
+  import Banner from '$src/lib/components/legacy/Banner.svelte';
 
   interface Props {
     children?: import('svelte').Snippet;
@@ -14,6 +15,7 @@
   let { children }: Props = $props();
 </script>
 
+<Banner />
 <div class="min-h-full">
   <header class="bg-slate-900 pb-24 lg:relative lg:isolate lg:overflow-hidden">
     <div class="hidden lg:block">
