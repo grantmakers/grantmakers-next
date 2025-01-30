@@ -10,7 +10,7 @@
 
   let landingOrFooterClasses = {
     img: 'mr-3 h-10',
-    span: 'text-slate-200 text-2xl lg:text-xl',
+    span: 'text-slate-50 text-2xl lg:text-lg',
   };
 </script>
 

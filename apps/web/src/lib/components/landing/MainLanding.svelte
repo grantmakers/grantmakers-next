@@ -16,6 +16,7 @@
   import { features, articleLinks } from '@repo/shared/constants/trustedConstants';
   import ClosingStatement from '$lib/components/landing/sections/ClosingStatement.svelte';
   import Banner from '$lib/components/legacy/Banner.svelte';
+  import PrimaryNavLink from '../nav/PrimaryNavLink.svelte';
 
   interface Props {
     handleAutocompleteInit: (instance: AutocompleteInstance) => void;
@@ -28,10 +29,16 @@
 <div class="relative bg-white">
   <header class="absolute inset-x-0 top-0 z-20">
     <nav class="mx-auto flex max-w-7xl items-center justify-start px-6 py-8 md:justify-between lg:px-8 lg:py-0" aria-label="Global">
-      <div class="flex items-center gap-10 text-white">
-        <LogoMark isLandingOrFooter={true} />
-        <a href="/about/">About</a>
-        <!-- <a href="/about/donate/">Support Open Data</a> -->
+      <div class="flex items-center">
+        <!-- Logo -->
+        <div class="absolute left-0 shrink-0 lg:static lg:block">
+          <LogoMark isLandingOrFooter />
+        </div>
+        <div class="hidden md:block">
+          <div class="ml-10 flex items-baseline space-x-4">
+            <PrimaryNavLink href={'/about/'} title={'About'} />
+          </div>
+        </div>
       </div>
       <div class="hidden items-center justify-end gap-4 text-white md:flex">
         <div class="group relative flex items-center gap-x-4 rounded-lg p-4 text-sm/6">
