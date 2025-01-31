@@ -72,4 +72,7 @@
   :global(#ais-widget-sort-by i) {
     padding: 2px;
   }
+  :global(.tabular-nums) {
+    font-variant-numeric: tabular-nums;
+  }
 </style>

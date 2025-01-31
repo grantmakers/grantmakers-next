@@ -548,7 +548,7 @@ export function initSearchJs(M) {
         cssClasses: {
           checkbox: 'filled-in',
           labelText: 'small',
-          count: ['right', 'small'],
+          count: ['right', 'small', 'tabular-nums'],
           showMore: 'btn-flat blue-grey-text small',
           disabledShowMore: 'hidden',
         },

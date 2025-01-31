@@ -5,7 +5,7 @@ import forms from '@tailwindcss/forms';
 const config = {
   darkMode: ['class'],
   content: ['./src/**/*.{html,js,svelte,ts}'],
-  safelist: ['dark'],
+  safelist: ['dark', 'tabular-nums'],
   theme: {
     container: {
       center: true,
