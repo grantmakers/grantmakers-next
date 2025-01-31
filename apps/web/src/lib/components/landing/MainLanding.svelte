@@ -15,7 +15,7 @@
   import BottomCTA from './sections/BottomCTA.svelte';
   import { features, articleLinks } from '@repo/shared/constants/trustedConstants';
   import ClosingStatement from '$lib/components/landing/sections/ClosingStatement.svelte';
-  import Banner from '$lib/components/legacy/Banner.svelte';
+  import Banner from '$lib/components/banner/Banner.svelte';
   import PrimaryNavLink from '../nav/PrimaryNavLink.svelte';
 
   interface Props {

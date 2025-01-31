@@ -41,7 +41,7 @@
   "dependencies": {
     "@algolia/autocomplete-js": "^1.17.6",
     "@algolia/autocomplete-theme-classic": "^1.17.6",
-    "@fontsource/inter": "^5.0.16",
+    "@fontsource-variable/inter": "^5.1.1",
     "@fontsource/material-icons": "^5.1.0",
     "@fontsource/open-sans": "^5.0.22",
     "@fontsource/roboto": "^5.1.0",

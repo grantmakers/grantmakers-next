@@ -6,7 +6,7 @@
   import SecondaryNavLink from '$lib/components/nav/SecondaryNavLink.svelte';
   import PrimaryNavLinkMobile from '$lib/components/nav/PrimaryNavLinkMobile.svelte';
   import SecondaryNavLinkMobile from '$lib/components/nav/SecondaryNavLinkMobile.svelte';
-  import Banner from '$src/lib/components/legacy/Banner.svelte';
+  import Banner from '$src/lib/components/banner/Banner.svelte';
 
   interface Props {
     children?: import('svelte').Snippet;
