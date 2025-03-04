@@ -40,7 +40,7 @@
 
       <!-- Bar -->
       <div class="grow">
-        <div class="h-2 overflow-hidden rounded-full bg-slate-200">
+        <div class="h-3 overflow-hidden rounded-full bg-slate-200">
           <div class="h-full {getBarColor(percentile)} rounded-full transition-all duration-500" style:width="{percentile}%"></div>
         </div>
       </div>
