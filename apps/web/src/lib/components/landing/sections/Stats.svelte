@@ -23,7 +23,7 @@
           <dd
             class="order-first inline-block bg-gradient-to-r from-indigo-100 to-indigo-400 bg-clip-text text-5xl font-semibold tracking-tight text-transparent"
           >
-            $2.9M
+            $3.1M
           </dd>
         </div>
       </dl>
