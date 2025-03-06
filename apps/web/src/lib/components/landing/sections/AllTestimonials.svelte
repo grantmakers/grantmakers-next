@@ -57,7 +57,7 @@
     ></div>
   </div>
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
-    <div class="mx-auto max-w-xl text-center">
+    <div class="mx-auto max-w-2xl text-center">
       <h2 class="text-lg font-semibold leading-8 tracking-tight text-indigo-600">Every stage, every cause</h2>
       <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Loved by nonprofits just like yours</p>
       <p class="mt-2 text-lg">

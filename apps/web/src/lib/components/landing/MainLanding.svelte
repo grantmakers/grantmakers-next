@@ -249,7 +249,7 @@
         <h2 class="text-base font-semibold leading-7 text-indigo-600">Thank 🙏 You</h2>
         <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Grateful for our friends</p>
       </div>
-      <p class="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600">
+      <p class="mx-auto mt-6 max-w-3xl text-center text-lg leading-8 text-gray-600">
         Grantmakers.io deeply appreciates <a
           class="text-indigo-600 underline decoration-indigo-300"
           href="https://www.algolia.com/"

@@ -4,7 +4,7 @@
       <div class="flex flex-col justify-center text-center">
         <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Impact</h2>
         <!-- <p class="mt-4 text-lg leading-8 text-gray-300">What did we learn over the past seven years?</p> -->
-        <p class="m-auto mt-4 text-lg leading-8 text-gray-300 lg:max-w-2xl">
+        <p class="m-auto mt-4 text-lg leading-8 text-gray-300 lg:max-w-3xl">
           It doesn't take a large engineering team to <span class="font-bold text-indigo-300">deliver equitable access</span> to 990 data.<br
           /> In fact, it doesn't take an engineering team at all.
         </p>
