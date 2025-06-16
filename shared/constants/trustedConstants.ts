@@ -17,9 +17,9 @@ export interface EachFAQ {
 }
 
 export const datasetStats = {
-  profiles: 154000,
-  grants: 13280860,
-  grants_searchable: 4957885,
+  profiles: 154597,
+  grants: 13365809,
+  grants_searchable: 5043280,
 };
 
 export const meta = {
