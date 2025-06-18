@@ -793,21 +793,21 @@
                                               {#if staticGrants && staticGrants.length > 0}
                                                 {#each staticGrants.slice(0, 20) as each}
                                                   <tr>
-                                                    <td class="right-align" data-sort-value={each.amount}
+                                                    <td class="valign-top right-align" data-sort-value={each.amount}
                                                       >{formatToCurrency(each.amount)}</td
                                                     >
-                                                    <td>{each.name}</td>
-                                                    <td>{each.purpose}</td>
+                                                    <td class="valign-top">{each.name}</td>
+                                                    <td class="valign-top">{each.purpose}</td>
                                                     {#if each.is_foreign == true}
-                                                      <td class="text-nowrap"
+                                                      <td class="valign-top text-nowrap"
                                                         >{#if each.city != null}{each.city}, {each.country}*{/if}</td
                                                       >
                                                     {:else}
-                                                      <td class="text-nowrap"
+                                                      <td class="valign-top text-nowrap"
                                                         >{#if each.city != null}{each.city}, {each.state}{/if}</td
                                                       >
                                                     {/if}
-                                                    <td class="left-align">{page.filings[0].tax_year}</td>
+                                                    <td class="valign-top left-align">{page.filings[0].tax_year}</td>
                                                   </tr>
                                                 {/each}
                                               {:else}
@@ -886,20 +886,20 @@
                                 {#if staticGrants && staticGrants.length > 0}
                                   {#each staticGrants as each}
                                     <tr>
-                                      <td class="right-align" data-sort-value={each.amount}>{formatToCurrency(each.amount)}</td>
-                                      <td>{each.name}</td>
-                                      <td>{each.purpose}</td>
+                                      <td class="valign-top right-align" data-sort-value={each.amount}>{formatToCurrency(each.amount)}</td>
+                                      <td class="valign-top">{each.name}</td>
+                                      <td class="valign-top">{each.purpose}</td>
                                       {#if each.is_foreign == true}
-                                        <td class="text-nowrap"
+                                        <td class="valign-top text-nowrap"
                                           >{#if each.city != null}{each.city}, {each.country}*{/if}</td
                                         >
                                       {:else}
-                                        <td class="text-nowrap"
+                                        <td class="valign-top text-nowrap"
                                           >{#if each.city != null}{each.city}, {each.state}{/if}</td
                                         >
                                       {/if}
 
-                                      <td class="left-align">{each.tax_year}</td>
+                                      <td class="valign-top left-align">{each.tax_year}</td>
                                     </tr>
                                   {/each}
                                 {:else}
@@ -1489,6 +1489,10 @@
     .flex-hack {
       height: 75px;
     }
+  }
+  /* Grants Table */
+  :global(.valign-top) {
+    vertical-align: top;
   }
   /* Grants alert */
   #grants .valign-wrapper {

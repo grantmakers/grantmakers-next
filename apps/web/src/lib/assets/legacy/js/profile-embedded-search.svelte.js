@@ -240,16 +240,16 @@ export async function initSearchJs(M) {
               .map(
                 (item) => `
               <tr>
-                <td class="right-align" data-facet="grant_amount" data-facet-value="${item.grant_amount}">$${item.grant_amount.toLocaleString()}</td>
-                <td class="pointer" data-facet="grantee_name" data-facet-value="${item.grantee_name}">${highlight({ attribute: 'grantee_name', hit: item })}</td>
-                <td class="pointer" data-facet="grant_purpose" data-facet-value="${item.grant_purpose}">${highlight({ attribute: 'grant_purpose', hit: item })}</td>
-                <td class="pointer no-wrap" 
+                <td class="valign-top right-align" data-facet="grant_amount" data-facet-value="${item.grant_amount}">$${item.grant_amount.toLocaleString()}</td>
+                <td class="valign-top pointer" data-facet="grantee_name" data-facet-value="${item.grantee_name}">${highlight({ attribute: 'grantee_name', hit: item })}</td>
+                <td class="valign-top pointer" data-facet="grant_purpose" data-facet-value="${item.grant_purpose}">${highlight({ attribute: 'grant_purpose', hit: item })}</td>
+                <td class="valign-top pointer no-wrap" 
                   data-facet="${item.grantee_city ? 'grantee_city' : 'grantee_state'}" 
                   data-facet-value="${item.grantee_city && item.grantee_city.length ? item.grantee_city : item.grantee_state}"
                 >
                   ${item.grantee_city && item.grantee_city.length ? highlight({ attribute: 'grantee_city', hit: item }) + ',&nbsp;' + item.grantee_state : item.grantee_state || ''}
                 </td>
-                <td class="pointer" data-facet="tax_year" data-facet-value="${item.tax_year}">${item.tax_year}</td>
+                <td class="valign-top pointer" data-facet="tax_year" data-facet-value="${item.tax_year}">${item.tax_year}</td>
               </tr>
             `,
               )
