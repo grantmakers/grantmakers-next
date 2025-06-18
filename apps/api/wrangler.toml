@@ -7,6 +7,7 @@ workers_dev = false
 [[r2_buckets]]
 binding = "API_V1_POC0"
 bucket_name = "grantmakers-static-api-v1-poc0"
+preview_bucket_name = "grantmakers-static-api-v1-poc0"
 
 # Necessary secrets:
 # - AUTH_PRIVATE_KEY
