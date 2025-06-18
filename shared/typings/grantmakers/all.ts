@@ -65,10 +65,8 @@ export interface GrantmakersExtractedDataObj {
   // TODO Need to create new interfaces matching downstream structures
   grants?: GrantsArray; // ✅ filings, ❌ aggregated, ❌ r2
   grants_last_three_years?: GrantsArray; // ❌filings, ✅ aggregated, ❌ r2
-  grants_last_three_years_top_20?: GrantsArray;
-  grants_current_year_top_20?: GrantsArray;
-  //grants_all_years_top_20?: GrantsArray;
-  //grants_latest_20: GrantsArray;
+  grants_last_three_years_top_20: GrantsArray;
+  grants_current_year_top_20: GrantsArray;
   people: PeopleArray;
   organization_name_legacy_slug: string | null;
   organization_name_legacy_slug_requires_redirect: boolean | null;
@@ -248,6 +246,8 @@ interface LegacyPersonNameWithAttributes {
 
 export type GrantsArray = Grant[] | []; // This is normalized: Filings with only 1 grant will be normalized to be have one grant in an array
 
+// Embedded grants use the simplified key naming scheme
+// The grants-specific collections use the more descriptive naming scheme
 export interface Grant {
   name: string;
   city: string;
