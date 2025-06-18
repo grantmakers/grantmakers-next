@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { browser } from '$app/environment';
   import bg from '$lib/assets/legacy/images/bg.jpg';
   import Header from '$lib/components/legacy/Header.svelte';
   import { datasetStats } from '@repo/shared/constants/trustedConstants';
@@ -9,10 +8,6 @@
     baseurl: '',
     title: 'Grantmakers.io - Search Foundation Grants',
   };
-
-  const hostname = browser ? window.location.hostname : '';
-  const allowedDomains = ['localhost, www.grantmakers.io'];
-  let isAllowedDomain = $derived(allowedDomains.includes(hostname));
 
   onMount(async () => {
     let M = await import('materialize-css');
@@ -148,24 +143,17 @@
           <div class="col s12">
             <div class="card">
               <div class="card-content">
-                {#if isAllowedDomain}
-                  <span class="card-title"
-                    ><strong>Coming soon</strong> <br />We're working with our search partner to deploy millions of new grants!</span
-                  >
-                  <p>Please check back tomorrow.</p>
-                {:else}
-                  <span class="card-title"
-                    ><strong>Check your url</strong> <br />Search results are only available at
-                    <a data-sveltekit-reload href="/">Grantmakers.io</a></span
-                  >
-                  <p>
-                    We limit search results to Grantmakers.io to allow the maximum number of people access to this free service. The page
-                    you landed on is not Grantmakers.io.
-                  </p>
-                  <div class="card-action">
-                    <p><a class="btn-flat blue-grey white-text" href="https://www.grantmakers.io/">Go to Grantmakers</a></p>
-                  </div>
-                {/if}
+                <span class="card-title"
+                  ><strong>Check your url</strong> <br />Search results are only available at
+                  <a data-sveltekit-reload href="/">Grantmakers.io</a></span
+                >
+                <p>
+                  We limit search results to Grantmakers.io to allow the maximum number of people access to this free service. The page you
+                  landed on is not Grantmakers.io.
+                </p>
+                <div class="card-action">
+                  <p><a class="btn-flat blue-grey white-text" href="https://www.grantmakers.io/">Go to Grantmakers</a></p>
+                </div>
               </div>
             </div>
           </div>
