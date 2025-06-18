@@ -5,55 +5,51 @@
   import { humanizeNumber } from '@repo/shared/functions/formatters/numbers';
   import Tip from '../alerts/Tip.svelte';
   interface Props {
-    grantsAllYears?: GrantsArray | null;
-    grantsCurrent?: GrantsArray | null;
+    grantsLastThreeYears?: GrantsArray;
+    grantsCurrent?: GrantsArray;
     grantCount: GrantmakersExtractedDataObj['grant_count'];
-    grantCountAllYears: GrantmakersExtractedDataObj['grant_count_all_years'];
-    filingsAvailable?: number | null;
+    grantCountLastThreeYears: GrantmakersExtractedDataObj['grant_count_all_years'];
     grantsReferenceAttachment: GrantmakersExtractedDataObj['grants_reference_attachment'];
   }
 
-  type ViewMode = 'all-time' | 'latest';
+  type ViewMode = 'last-three-years' | 'latest';
 
-  let {
-    grantsAllYears = null,
-    grantsCurrent = null,
-    grantCount,
-    grantCountAllYears,
-    filingsAvailable = null,
-    grantsReferenceAttachment = false,
-  }: Props = $props();
+  let { grantsLastThreeYears, grantsCurrent, grantCount, grantCountLastThreeYears, grantsReferenceAttachment = false }: Props = $props();
 
   const numberOfGrantsToDisplay = 10;
 
   function determineInitialViewMode(
     grantCount: GrantmakersExtractedDataObj['grant_count'],
-    grantCountAllYears: GrantmakersExtractedDataObj['grant_count_all_years'],
+    grantCountLastThreeYears: GrantmakersExtractedDataObj['grant_count_last_three_years'],
   ): ViewMode {
-    if (!grantCount) return 'all-time';
-    if (!grantCountAllYears) return 'latest';
-    return grantCount >= 3 ? 'latest' : 'all-time';
+    if (!grantCount) return 'last-three-years';
+    if (!grantCountLastThreeYears) return 'latest';
+    return grantCount >= 3 ? 'latest' : 'last-three-years';
   }
 
-  let viewMode = $state<ViewMode>(determineInitialViewMode(grantCount, grantCountAllYears));
-  let grants = $derived(viewMode === 'all-time' ? grantsAllYears : grantsCurrent);
+  let viewMode = $state<ViewMode>(determineInitialViewMode(grantCount, grantCountLastThreeYears));
+  let grants = $derived(viewMode === 'last-three-years' ? grantsLastThreeYears : grantsCurrent);
+
+  $inspect('View Mode', viewMode);
+  $inspect('Grants', grants);
 </script>
 
 <div>
-  {#if grantCountAllYears > 0}
+  {#if grantCountLastThreeYears > 0}
     <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div class="flex flex-wrap justify-center gap-8 lg:flex-nowrap">
         <div class="grow">
           <div class="flex h-full items-center rounded-lg bg-white p-4 shadow">
             <div class="text-sm text-slate-700">
-              {#if viewMode === 'all-time'}
-                {#if grantCountAllYears < numberOfGrantsToDisplay}
-                  Showing all <span class="font-bold">{grantCountAllYears} grants</span> made across
-                  <span class="font-bold">{filingsAvailable} years</span>
+              {#if viewMode === 'last-three-years'}
+                {#if grantCountLastThreeYears < numberOfGrantsToDisplay}
+                  Showing all <span class="font-bold">{grantCountLastThreeYears} grants</span> made across the
+                  <span class="font-bold">last three years</span>
                 {:else}
                   Showing the largest <span class="font-bold">{numberOfGrantsToDisplay} grants</span> from
-                  <span class="font-bold">{grantCountAllYears ? humanizeNumber(grantCountAllYears) : 'N/A'} grants</span> made across
-                  <span class="font-bold">{filingsAvailable} years</span>
+                  <span class="font-bold">{grantCountLastThreeYears ? humanizeNumber(grantCountLastThreeYears) : 'N/A'} grants</span> made
+                  across the
+                  <span class="font-bold">last three years</span>
                 {/if}
               {:else if grantCount === 0}
                 No grants listed in the latest available tax filing
@@ -82,12 +78,12 @@
                 </button>
               {/if}
               <button
-                onclick={() => (viewMode = 'all-time')}
-                class="cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium {viewMode === 'all-time' ?
+                onclick={() => (viewMode = 'last-three-years')}
+                class="cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium {viewMode === 'last-three-years' ?
                   'bg-slate-200 text-slate-700 hover:cursor-default'
                 : 'text-slate-700 hover:text-slate-900'}"
               >
-                All Time
+                Last 3 Years
               </button>
             </div>
           </div>
