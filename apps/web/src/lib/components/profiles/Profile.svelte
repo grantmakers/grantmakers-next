@@ -241,7 +241,6 @@
                   {#if !grantsCurrentTop20}
                     <div class="p-6">Unable to find an available free source of grants data</div>
                   {/if}
-                  {/if}
                 </div>
               </div>
             </div>
