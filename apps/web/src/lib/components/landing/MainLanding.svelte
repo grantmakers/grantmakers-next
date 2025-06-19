@@ -100,22 +100,18 @@
       </div>
 
       <!-- Primary message -->
-      <div class="mx-auto max-w-7xl px-6 pb-24 pt-32 sm:pb-32 lg:flex lg:flex-col lg:px-8 lg:py-52">
-        <div class="flex shrink-0 flex-col justify-between gap-8 md:flex-row lg:gap-0 lg:pt-8">
-          <div class="mx-auto max-w-2xl text-left lg:mx-0 lg:max-w-xl">
+      <div class="mx-auto max-w-7xl px-6 pb-24 pt-32 sm:pb-32 lg:flex lg:flex-col lg:items-center lg:px-8 lg:py-52">
+        <div class="flex shrink-0 flex-col items-center justify-between gap-8 lg:gap-0 lg:pt-8">
+          <div class="mx-auto max-w-2xl text-center lg:mx-0 lg:max-w-xl">
             <h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-              Foundation research<br />
-              <span class="text-slate-500"><del>is expensive</del></span><br /> just got easier
+              Find Funding. Faster. Smarter.
             </h1>
             <!-- Overriding h2 defaults is an anti-pattern. Consider removing all header tag defaults at the app.css level -->
             <h2 class="mt-6 text-lg font-normal leading-8 tracking-normal text-gray-300">
-              Grantmakers.io's mission is to be the antidote to the continued industry practice of charging for basic <span
-                class="font-extrabold text-grantmakers-orange">foundation 990 data</span
-              >. It's a grassroots project created for grassroots changemakers.
-              <span class="lg:display hidden">World-class foundation research for everyone, not just those with large budgets.</span>
+              Grantmakers.io provides free, powerful search tools to help your nonprofit discover and connect with foundations.
             </h2>
           </div>
-          <div class="my-auto flex h-fit justify-end gap-x-4 rounded-xl bg-white/5 p-6 ring-1 ring-inset ring-white/10">
+          <div class="my-auto flex h-fit w-full max-w-2xl flex-col items-center justify-center gap-x-4 rounded-xl bg-white/5 p-6 ring-1 ring-inset ring-white/10 mt-8">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -129,9 +125,9 @@
               ></path>
             </svg>
 
-            <div class="flex flex-col gap-4 text-base leading-7">
+            <div class="flex w-full flex-col items-center gap-4 text-base leading-7">
               <div class="text-xl font-semibold text-white">Foundation Quick Search</div>
-              <div class="mt-2 grow text-gray-300">
+              <div class="mt-2 w-full grow text-gray-300">
                 <Autocomplete
                   size={'large'}
                   profilesVersion={'v0'}
