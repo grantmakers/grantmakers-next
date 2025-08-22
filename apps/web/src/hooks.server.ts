@@ -59,7 +59,13 @@ export async function handle({ event, resolve }) {
     }
   }
 
-  return resolve(event);
+  // Preload fonts - only needed during legacy to NEXT transition
+  // https://svelte.dev/docs/kit/performance#Optimizing-assets-Fonts
+  return resolve(event, {
+    preload: ({ type }) => type === 'font' || type === 'js' || type === 'css',
+  });
+
+  //return resolve(event);
 }
 
 /**
