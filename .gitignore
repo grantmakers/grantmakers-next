@@ -42,3 +42,4 @@ yarn-error.log*
 *.pem
 /shared/functions/mongodb-queries
 /shared/data/private
+.aiexclude
