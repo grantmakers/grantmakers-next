@@ -27,65 +27,69 @@
   let chart: Chart;
 
   onMount(async () => {
-    if (!chartCanvas) return;
+    try {
+      if (!chartCanvas) return;
 
-    const ctx = chartCanvas.getContext('2d');
-    if (!ctx) return;
+      const ctx = chartCanvas.getContext('2d');
+      if (!ctx) return;
 
-    const { Chart, BarController, CategoryScale, LinearScale, BarElement, Title, Tooltip } = await import('chart.js');
+      const { Chart, BarController, CategoryScale, LinearScale, BarElement, Title, Tooltip } = await import('chart.js');
 
-    Chart.register(BarController, CategoryScale, LinearScale, BarElement, Title, Tooltip);
-    chart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Assets EOY', 'Distributions', 'Contributions'],
-        datasets: [
-          {
-            data: [year1.assets, year1.distributions, year1.contributions],
-            backgroundColor: [chartsColorPrimary, chartsColorSecondary, chartsColorTertiary],
-          },
-        ],
-      },
-      options: {
-        indexAxis: 'y',
-        responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: `Latest Available Tax Filing`,
-          },
-          legend: {
-            display: false,
-          },
-          tooltip: {
-            callbacks: {
-              label: (context) => {
-                return new Intl.NumberFormat('en-US', {
-                  style: 'currency',
-                  currency: 'USD',
-                  minimumFractionDigits: 0,
-                }).format(context.raw as number);
-              },
+      Chart.register(BarController, CategoryScale, LinearScale, BarElement, Title, Tooltip);
+      chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Assets EOY', 'Distributions', 'Contributions'],
+          datasets: [
+            {
+              data: [year1.assets, year1.distributions, year1.contributions],
+              backgroundColor: [chartsColorPrimary, chartsColorSecondary, chartsColorTertiary],
             },
-          },
+          ],
         },
-        scales: {
-          x: {
-            beginAtZero: true,
-            ticks: {
-              callback: (value) => {
-                return humanizeCurrency(value as number);
-              },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: `Latest Available Tax Filing`,
             },
-          },
-          y: {
-            grid: {
+            legend: {
               display: false,
             },
+            tooltip: {
+              callbacks: {
+                label: (context) => {
+                  return new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                    minimumFractionDigits: 0,
+                  }).format(context.raw as number);
+                },
+              },
+            },
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              ticks: {
+                callback: (value) => {
+                  return humanizeCurrency(value as number);
+                },
+              },
+            },
+            y: {
+              grid: {
+                display: false,
+              },
+            },
           },
         },
-      },
-    });
+      });
+    } catch (error) {
+      console.error('Error initializing chart:', error);
+    }
   });
 
   onDestroy(() => {
