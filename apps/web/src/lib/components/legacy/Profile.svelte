@@ -8,6 +8,7 @@
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
   import { onMount } from 'svelte';
   import { formatNumber, formatToCurrency, humanizeCurrency, humanizeNumber } from '@repo/shared/functions/formatters/numbers';
+  import { formatCompensation } from '$src/lib/utils/peopleComp';
   import { formatDateToMonthYear } from '@repo/shared/functions/formatters/dates';
   import { upperFirstLetter } from '@repo/shared/functions/formatters/names';
   //import { searchState } from '$src/lib/assets/legacy/js/profile-embedded-search.svelte.js';
@@ -515,9 +516,7 @@
                             <td>{each.name}</td>
                             <td>{each.title}</td>
                             <td class="right-align">{each.hours}</td>
-                            <td class="right-align">
-                              {each.compensation ? humanizeCurrency(each.compensation) : 'N/A'}
-                            </td>
+                            <td class="right-align">{formatCompensation(each.compensation)}</td>
                           </tr>
                         {/each}
                       </tbody>

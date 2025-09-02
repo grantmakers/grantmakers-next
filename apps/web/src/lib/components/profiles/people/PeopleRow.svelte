@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { humanizeCurrency } from '@repo/shared/functions/formatters/numbers';
+  import { formatCompensation } from '$src/lib/utils/peopleComp';
   import type { Person } from '@repo/shared/typings/grantmakers/all';
 
   let { person }: { person: Person } = $props();
@@ -17,5 +17,5 @@
   </td>
   <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{person.title}</td>
   <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{person.hours}</td>
-  <td class="px-3 py-4 text-sm text-gray-500">{humanizeCurrency(person.compensation)}</td>
+  <td class="px-3 py-4 text-sm text-gray-500">{formatCompensation(person.compensation)}</td>
 </tr>
