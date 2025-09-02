@@ -165,9 +165,9 @@ export function initProfileJs(M, orgFinancialStats) {
       gaChartsEvents('ChartsJS successfully loaded');
       let hideLoaderOverviewExecuted = false;
       if (typeof Chart === 'undefined') {
-      console.error('Chart.js failed to load');
-      return;
-    }
+        console.error('Chart.js failed to load');
+        return;
+      }
       new Chart(ctx, {
         type: 'horizontalBar',
         responsive: true,
