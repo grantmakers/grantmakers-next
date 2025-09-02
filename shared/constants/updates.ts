@@ -1,5 +1,8 @@
 // Updated as of May 14, 2025
 export const filingZipUrls = [
+  'https://apps.irs.gov/pub/epostcard/990/xml/2025/2025_TEOS_XML_07A.zip',
+  'https://apps.irs.gov/pub/epostcard/990/xml/2025/2025_TEOS_XML_06A.zip',
+  'https://apps.irs.gov/pub/epostcard/990/xml/2025/2025_TEOS_XML_05A.zip',
   'https://apps.irs.gov/pub/epostcard/990/xml/2025/2025_TEOS_XML_04A.zip',
   'https://apps.irs.gov/pub/epostcard/990/xml/2025/2025_TEOS_XML_03A.zip',
   'https://apps.irs.gov/pub/epostcard/990/xml/2025/2025_TEOS_XML_02A.zip',
