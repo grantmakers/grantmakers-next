@@ -6,7 +6,6 @@
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
   import placeholderImage from '$lib/assets/images/placeholder-no-grants.webp';
   import Tip from '../alerts/Tip.svelte';
-  import { tooltip } from '$utils/tooltip';
 
   interface Props {
     grantMin: number;

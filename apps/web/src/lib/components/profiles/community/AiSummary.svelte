@@ -7,7 +7,7 @@
     aiSummarySource: 'chatgpt' | 'claude';
   }
 
-  let { aiSummary, aiSummarySource }: Props = $props();
+  let { aiSummarySource }: Props = $props();
 
   const aiImgDetails = {
     chatgpt: { src: chatgptIcon, width: 280, height: 54, maxHeightClass: 'max-h-6' },
@@ -23,6 +23,7 @@
 
   sourceName = aiSummarySource?.startsWith('chatgpt') ? 'chatgpt' : 'claude';
   if (isAiImgDetailsKey(sourceName)) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     currentAiIconDetails = aiImgDetails[sourceName];
   }
 </script>

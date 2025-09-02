@@ -517,7 +517,7 @@
                             <td>{each.name}</td>
                             <td>{each.title}</td>
                             <td class="right-align">{each.hours}</td>
-                            <td class="right-align">{humanizeCurrency(each.compensation)}</td>
+                            <td class="right-align">{each.compensation ? humanizeCurrency(each.compensation) : 'N/A'}</td>
                           </tr>
                         {/each}
                       </tbody>

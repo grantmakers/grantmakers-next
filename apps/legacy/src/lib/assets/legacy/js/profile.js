@@ -161,10 +161,15 @@ export function initProfileJs(M, orgFinancialStats) {
     const ctxTrends = document.getElementById('chart-trends').getContext('2d');
 
     init.onload = function () {
+      /* global Chart */
       gaChartsEvents('ChartsJS successfully loaded');
       let hideLoaderOverviewExecuted = false;
-      const chartsFinancialOverview = new Chart(ctx, {
-        /* eslint-disable-line no-unused-vars */ type: 'horizontalBar',
+      if (typeof Chart === 'undefined') {
+      console.error('Chart.js failed to load');
+      return;
+    }
+      new Chart(ctx, {
+        type: 'horizontalBar',
         responsive: true,
         data: {
           labels: ['Assets EOY', 'Distributions', 'Contributions'],
@@ -229,8 +234,8 @@ export function initProfileJs(M, orgFinancialStats) {
       // Only need to show Trends chart if more than one tax year is available
       if (orgFinancialStats.length > 1) {
         let hideLoaderTrendsExecuted = false;
-        const chartsFinancialTrends = new Chart(ctxTrends, {
-          /* eslint-disable-line no-unused-vars */ type: 'bar',
+        new Chart(ctxTrends, {
+          type: 'bar',
           responsive: true,
           data: {
             labels: years,

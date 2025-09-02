@@ -1,4 +1,3 @@
-//import type $state from './$types'
 import { algoliasearch } from 'algoliasearch';
 import instantsearch from 'instantsearch.js';
 import { history } from 'instantsearch.js/es/lib/routers';
