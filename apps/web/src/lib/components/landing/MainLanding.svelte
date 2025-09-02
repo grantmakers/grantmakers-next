@@ -15,7 +15,6 @@
   import BottomCTA from './sections/BottomCTA.svelte';
   import { features, articleLinks } from '@repo/shared/constants/trustedConstants';
   import ClosingStatement from '$lib/components/landing/sections/ClosingStatement.svelte';
-  import Banner from '$lib/components/banner/Banner.svelte';
   import PrimaryNavLink from '../nav/PrimaryNavLink.svelte';
 
   interface Props {
@@ -25,7 +24,7 @@
   let { handleAutocompleteInit }: Props = $props();
 </script>
 
-<Banner />
+<!-- <Banner /> -->
 <div class="relative bg-white">
   <header class="absolute inset-x-0 top-0 z-20">
     <nav class="mx-auto flex max-w-7xl items-center justify-start px-6 py-8 md:justify-between lg:px-8 lg:py-0" aria-label="Global">
