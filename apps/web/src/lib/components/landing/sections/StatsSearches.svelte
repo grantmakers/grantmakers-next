@@ -1,6 +1,8 @@
 <script lang="ts">
   import CountUp from '$lib/components/shared/CountUp.svelte';
-  const counterEnd = 10100248;
+  import { allTimeSearchCount } from '@repo/shared/constants/trustedConstants';
+  const countInMillions = Math.floor(allTimeSearchCount / 1_000_000);
+  const counterEnd = allTimeSearchCount;
   const counterStart = counterEnd - 50000;
 </script>
 
@@ -11,7 +13,7 @@
       <CountUp initial={counterStart} value={counterEnd} duration={500} step={1} roundto={1} format={true} />
     </h2>
     <p class="mt-6 text-lg leading-8 text-gray-600">
-      Visitors have generated over 10 million search queries on Grantmakers.io.<br />All for free. No login required.
+      Visitors have generated over {countInMillions} million search queries on Grantmakers.io.<br />All for free. No login required.
     </p>
   </div>
 </div>

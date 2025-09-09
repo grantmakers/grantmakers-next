@@ -22,6 +22,8 @@ export const datasetStats = {
   grants_searchable: 5372457,
 };
 
+export const allTimeSearchCount = 11_015_668;
+
 export const meta = {
   defaults: {
     title: 'Grantmakers.io - A Community Project',
