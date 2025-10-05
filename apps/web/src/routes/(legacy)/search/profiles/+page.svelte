@@ -6,7 +6,7 @@
   import Header from '$lib/components/legacy/Header.svelte';
   const site = {
     baseurl: '',
-    title: 'Grantmakers.io - Search Foundation Profiles',
+    title: 'Search Foundation Profiles - Grantmakers.io',
   };
 
   onMount(async () => {

@@ -4,6 +4,10 @@
   import placeholder from '$lib/assets/images/placeholder-faq.webp';
 </script>
 
+<svelte:head>
+  <title>Grantmakers.io - FAQ</title>
+</svelte:head>
+
 <!-- https://tailwindui.com/components/application-ui/application-shells/stacked -->
 
 <div class="min-h-full">

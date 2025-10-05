@@ -6,7 +6,7 @@
 
   const site = {
     baseurl: '',
-    title: 'Grantmakers.io - Search Foundation Grants',
+    title: 'Search Foundation Grants - Grantmakers.io',
   };
 
   onMount(async () => {

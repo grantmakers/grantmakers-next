@@ -10,6 +10,7 @@
 </script>
 
 <svelte:head>
+  <title>Grantmakers.io - Support Open Data</title>
   <link rel="preload" href="https://donorbox.org/widget.js" as="script" />
 </svelte:head>
 

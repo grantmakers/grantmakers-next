@@ -3,6 +3,10 @@
   import About from '$lib/components/static/About.svelte';
 </script>
 
+<svelte:head>
+  <title>Grantmakers.io - About</title>
+</svelte:head>
+
 <!-- https://tailwindui.com/components/application-ui/application-shells/stacked -->
 <!-- The "relative z-20" classes are required for proper stacking context on desktop due to header background gradients -->
 <main class="relative z-20 -mt-24 pb-8">

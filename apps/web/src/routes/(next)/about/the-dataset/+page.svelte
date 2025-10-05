@@ -3,6 +3,10 @@
   import Dataset from '$lib/components/static/Dataset.svelte';
 </script>
 
+<svelte:head>
+  <title>Grantmakers.io - The IRS 990 Dataset</title>
+</svelte:head>
+
 <!-- https://tailwindui.com/components/application-ui/application-shells/stacked -->
 
 <div class="min-h-full">
