@@ -26,7 +26,7 @@ export const allTimeSearchCount = 11_015_668;
 
 export const meta = {
   defaults: {
-    title: 'Grantmakers.io - A Community Project',
+    title: 'Grantmakers.io - Unlocking Foundation Research for Nonprofits',
     description: 'Quickly find data on 156,000 grantmaking institutions in the US. A free, open source project.',
   },
   emails: {
