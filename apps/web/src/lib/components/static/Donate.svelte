@@ -11,8 +11,8 @@
     <p class="mt-6">
       I launched the project in 2016 with a simple belief: <span class="font-semibold text-slate-900"
         >grants data should be available to every nonprofit</span
-      >, not just those with big budgets. I am completely rebuilding the platform in 2025 because I continue to see how unfettered access to
-      good data helps organizations make a deeper impact in their communities.
+      >, not just those with big budgets. I completely rebuilt the platform in 2025 because I continue to see how unfettered access to good
+      data helps organizations make a deeper impact in their communities.
     </p>
     <div class="mt-10 rounded-lg bg-indigo-50 p-6">
       <!-- <strong class="font-semibold text-gray-900">By the numbers</strong> -->
@@ -25,7 +25,7 @@
               clip-rule="evenodd"
             />
           </svg>
-          <span>10 million searches conducted </span>
+          <span>11 million searches conducted </span>
         </li>
         <li class="flex gap-x-3">
           <svg class="mt-1 size-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">

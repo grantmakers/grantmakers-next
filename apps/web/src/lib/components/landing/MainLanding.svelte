@@ -1,8 +1,9 @@
 <script lang="ts">
-  import screenshot from '$lib/assets/images/screenshot.webp';
   import LogoMark from '../shared/LogoMark.svelte';
   import Autocomplete from '$lib/components/search/Autocomplete.svelte';
   import type { AutocompleteInstance } from '@repo/shared/typings/algolia/autocomplete';
+  import Bento from './sections/Bento.svelte';
+  import Ethos from './sections/Ethos.svelte';
   import Features from './sections/Features.svelte';
   import Stats from './sections/Stats.svelte';
   import StatsSearches from './sections/StatsSearches.svelte';
@@ -13,7 +14,7 @@
   import Market from './sections/Market.svelte';
   import Education from './sections/Education.svelte';
   import BottomCTA from './sections/BottomCTA.svelte';
-  import { features, articleLinks } from '@repo/shared/constants/trustedConstants';
+  import { articleLinks } from '@repo/shared/constants/trustedConstants';
   import ClosingStatement from '$lib/components/landing/sections/ClosingStatement.svelte';
   import PrimaryNavLink from '../nav/PrimaryNavLink.svelte';
 
@@ -158,55 +159,11 @@
       </div>
     </div>
 
-    <!-- Grantmakers NEXT announcement -->
-    <div class="mt-12 sm:mt-24" id="announcement">
-      <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <div class="mx-auto max-w-2xl sm:text-center">
-          <div class="text-base font-semibold leading-7 text-indigo-600">Announcing</div>
-          <h1 class="mt-4 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-6xl">
-            Grantmakers <span class="bg-gradient-to-r from-indigo-600 to-indigo-300 bg-clip-text text-transparent">NEXT</span>
-          </h1>
-          <p class="mt-6 p-2 text-lg leading-8 text-gray-600 lg:p-6">
-            Grantmakers.io is evolving from its roots as a <a
-              class="text-indigo-600 underline decoration-indigo-300 hover:cursor-pointer"
-              href="https://medium.com/@chadkruser/building-grantmakers-io-d1f78326a0b5"
-              target="_blank"
-              rel="noopener noreferrer">weekend project</a
-            >
-            built for a friend. Uncomplicated and community-driven, just like before.
-          </p>
-        </div>
-      </div>
-      <div class="relative overflow-hidden pt-16">
-        <div class="mx-auto max-w-7xl px-6 lg:px-8">
-          <img
-            src={screenshot}
-            alt="App screenshot"
-            class="mb-[-12%] rounded-xl shadow-2xl ring-1 ring-gray-900/10"
-            width={2432}
-            height={1442}
-          />
-          <div class="relative" aria-hidden="true">
-            <div class="absolute -inset-x-20 bottom-0 bg-gradient-to-t from-white pt-[7%]"></div>
-          </div>
-        </div>
-      </div>
-      <div class="mx-auto mt-16 max-w-7xl px-6 sm:mt-20 md:mt-24 lg:px-8">
-        <dl
-          class="mx-auto grid max-w-2xl grid-cols-1 gap-x-6 gap-y-10 text-base leading-7 text-gray-600 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16"
-        >
-          {#each features as feature}
-            <div class="relative pl-9">
-              <dt class="inline font-semibold text-gray-900">
-                <feature.icon class="absolute left-1 top-1 size-5 text-indigo-600" aria-hidden="true" />
-                {feature.name}
-              </dt>
-              {' '}
-              <dd class="inline">{feature.description}</dd>
-            </div>
-          {/each}
-        </dl>
-      </div>
+    <Bento />
+
+    <!-- Ethos -->
+    <div class="mt-12 sm:mt-24" id="ethos">
+      <Ethos />
     </div>
 
     <!-- Stats -->
