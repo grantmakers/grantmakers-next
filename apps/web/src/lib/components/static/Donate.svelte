@@ -11,8 +11,8 @@
     <p class="mt-6">
       I launched the project in 2016 with a simple belief: <span class="font-semibold text-slate-900"
         >grants data should be available to every nonprofit</span
-      >, not just those with big budgets. I completely rebuilt the platform in 2025 because I continue to see how unfettered access to good
-      data helps organizations make a deeper impact in their communities.
+      >, not just those with big budgets. The response from the nonprofit community has been incredible, and together, we've created
+      something powerful.
     </p>
     <div class="mt-10 rounded-lg bg-indigo-50 p-6">
       <!-- <strong class="font-semibold text-gray-900">By the numbers</strong> -->

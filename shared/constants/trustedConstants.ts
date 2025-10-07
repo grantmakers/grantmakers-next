@@ -218,7 +218,7 @@ export const features = [
   },
   {
     name: 'Forever free.',
-    description: 'Fully community supported and forever free. No changes here.',
+    description: 'With a budget of just $200 per year, the site was architected to last forever.',
     icon: Gift,
   },
   {
@@ -238,7 +238,7 @@ export const features = [
   },
   {
     name: 'The search you deserve.',
-    description: 'The same great search experience you know and love.',
+    description: 'Results as you type. No submit button, no waiting. Just search.',
     icon: MagnifyingGlassCircle,
   },
 ];
