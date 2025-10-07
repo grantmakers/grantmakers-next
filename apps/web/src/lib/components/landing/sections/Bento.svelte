@@ -51,7 +51,7 @@
               Search the entire public history of foundation giving. This is the raw material for finding funders who believe in your cause.
             </p>
           </div>
-          <img src={grantXml} alt="" class="h-80 object-contain" />
+          <img src={grantXml} alt="" class="h-80 w-full object-cover object-left" />
           <!-- <img
             src="https://tailwindcss.com/plus-assets/img/component-images/dark-bento-01-releases.png"
             alt=""
