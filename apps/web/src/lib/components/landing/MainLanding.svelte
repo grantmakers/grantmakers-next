@@ -25,7 +25,6 @@
   let { handleAutocompleteInit }: Props = $props();
 </script>
 
-<!-- <Banner /> -->
 <div class="relative bg-white">
   <header class="absolute inset-x-0 top-0 z-20">
     <nav class="mx-auto flex max-w-7xl items-center justify-start px-6 py-8 md:justify-between lg:px-8 lg:py-0" aria-label="Global">

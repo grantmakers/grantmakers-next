@@ -3,7 +3,6 @@
   import People from './people/People.svelte';
   import ContentBoxWrapper from './ContentBoxWrapper.svelte';
   import ContentBoxHeader from './ContentBoxHeader.svelte';
-  import Banner from './alerts/Banner.svelte';
   import NavSearch from './topnav/Nav.svelte';
   import SurpriseMe from './topnav/SurpriseMe.svelte';
   import FoundationHeader from './header/FoundationHeader.svelte';
@@ -64,7 +63,6 @@
 </script>
 
 <Toaster />
-<Banner />
 <div class="relative flex min-h-screen">
   <!-- Left Navigation -->
   <aside

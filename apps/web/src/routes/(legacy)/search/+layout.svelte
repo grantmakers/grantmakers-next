@@ -2,7 +2,6 @@
   import '$lib/assets/legacy/css/instantsearch-reset-min.css';
   import '$lib/assets/legacy/css/unified-search.css';
   import Inter from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2';
-  import Banner from '$src/lib/components/legacy/Banner.svelte';
 
   interface Props {
     children?: import('svelte').Snippet;
@@ -17,7 +16,6 @@
   <link rel="preconnect" href="https://kdwvszvs1i-dsn.algolia.net" crossorigin="anonymous" />
 </svelte:head>
 
-<Banner />
 <div class="materialize-wrapper">
   {@render children?.()}
 </div>
