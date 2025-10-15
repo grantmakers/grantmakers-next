@@ -1,3 +1,9 @@
+/**
+ * Server-side hooks for request handling and security headers
+ *
+ * Redirect logic (legacy routes, deprecated paths) returns early.
+ * All other requests receive security headers before being returned to the client.
+ */
 import { redirect } from '@sveltejs/kit';
 import type { HandleServerError } from '@sveltejs/kit';
 
@@ -61,11 +67,18 @@ export async function handle({ event, resolve }) {
 
   // Preload fonts - only needed during legacy to NEXT transition
   // https://svelte.dev/docs/kit/performance#Optimizing-assets-Fonts
-  return resolve(event, {
+  const response = await resolve(event, {
     preload: ({ type }) => type === 'font' || type === 'js' || type === 'css',
   });
 
-  //return resolve(event);
+  // Add security headers to all responses
+  response.headers.set('X-Frame-Options', 'DENY');
+  response.headers.set('X-Content-Type-Options', 'nosniff');
+  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+  response.headers.set('Permissions-Policy', 'geolocation=(), microphone=(), camera=(), usb=(), interest-cohort=()');
+
+  return response;
 }
 
 /**

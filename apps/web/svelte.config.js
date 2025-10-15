@@ -38,7 +38,7 @@ const config = {
         ], // The unsafe-eval requirement is for Zaraz, a known CF issue required for now - Hashes will be added automatically
         'style-src': ['self', 'unsafe-inline', 'https://cdn.iubenda.com'], // Include 'unsafe-inline' for inline styles
         'frame-src': ['https://www.iubenda.com', 'https://docs.google.com/', 'https://donorbox.org/', 'https://www.recaptcha.net/'],
-        'frame-ancestors': ['https://docs.google.com/'],
+        'frame-ancestors': ['none'],
         'connect-src': [
           'self',
           'https://cloudflareinsights.com',
