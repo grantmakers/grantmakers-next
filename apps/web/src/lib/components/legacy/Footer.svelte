@@ -23,23 +23,23 @@
   <div class="container-custom">
     <div class="row row-footer-primary-nav">
       <div class="col s4 m3 l3">
-        <h6>The Project</h6>
+        <h6 class="mb-2 text-base font-semibold text-slate-700">The Project</h6>
         <p><a data-sveltekit-reload href="/about/the-dataset/">The 990 Dataset</a></p>
         <p><a data-sveltekit-reload href="/about/">About</a></p>
         <p><a data-sveltekit-reload href="/about/faq/">FAQ</a></p>
       </div>
       <div class="col s4 m3 l3">
-        <h6>Get Involved</h6>
+        <h6 class="mb-2 text-base font-semibold text-slate-700">Get Involved</h6>
         <p><a data-sveltekit-reload href="/about/donate/">Support open data</a></p>
         <p><a data-sveltekit-reload href="/about/donate/">Donate</a></p>
       </div>
       <div class="col s4 m3 l3">
-        <h6>Search</h6>
+        <h6 class="mb-2 text-base font-semibold text-slate-700">Search</h6>
         <p><a data-sveltekit-reload href="/search/profiles/" title="Find a foundation profile">Profiles Search</a></p>
         <p><a data-sveltekit-reload href="/search/grants/" title="See who foundations are funding">Grants Search</a></p>
       </div>
       <div class="col s4 m3 l3 hide-on-small-only">
-        <h6 class="valign-wrapper">
+        <h6 class="valign-wrapper mb-2 text-base font-semibold text-slate-700">
           <img src={legacyLogo} alt="Grantmakers.io logo" class="icon-logo" />Grantmakers.io
         </h6>
         <p>Discover insights into your next funder. Built for a friend. Open sourced for the world.</p>

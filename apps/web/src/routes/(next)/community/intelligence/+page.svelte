@@ -44,7 +44,7 @@
 <main class="mx-auto max-w-3xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
   <div class="max-2-xl mx-auto">
     <h2 class="text-base/7 font-semibold text-indigo-600">Community Intelligence</h2>
-    <h1>Submit AI Output</h1>
+    <h1 class="mb-2 text-5xl font-bold tracking-tighter text-slate-700">Submit AI Output</h1>
     <form>
       <div class="space-y-12">
         <div class="border-b border-gray-900/10 pb-12">

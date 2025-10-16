@@ -13,6 +13,6 @@
 {:else if $page.status === 400}
   <BadRequest400 message={$page.error?.message} />
 {:else}
-  <h1>Error {$page.status}</h1>
+  <h1 class="mb-2 text-5xl font-bold tracking-tighter text-slate-700">Error {$page.status}</h1>
   <p>{$page.error?.message}</p>
 {/if}
