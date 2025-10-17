@@ -2,19 +2,17 @@
   /**
    * Layouts in SvelteKit inherit parent layouts
    * However, this layout is in it's own namespace, 'legacy'
-   * This ensures it does NOT inherit Tailwind specifically
+   * This layout is in transition. It uses the global Tailwind-based components for the header and footer
+   * Subsequent layouts handle the importing of the legacy CSS, in an effort to keep the legacy CSS as separated as possible
    */
 
-  // import '@fontsource/inter/100.css';
-  // import '@fontsource/inter/300.css';
-  // import '@fontsource/inter/400.css';
-  // import '@fontsource/inter/500.css';
-  // import '@fontsource/inter/700.css';
   import '@fontsource/material-icons';
+  import '$src/app.pcss';
   import { page } from '$app/state';
   import SEO from '$lib/components/shared/SEO.svelte';
   import { meta } from '@repo/shared/constants/trustedConstants';
-  import Footer from '$src/lib/components/legacy/Footer.svelte';
+  import Footer from '$src/lib/components/footer/Footer.svelte';
+  import GlobalNav from '$lib/components/nav/GlobalNav.svelte';
 
   interface Props {
     children?: import('svelte').Snippet;
@@ -36,6 +34,8 @@
   {/if}
 </svelte:head>
 
+<GlobalNav showSecondaryNav={false} transparentBg={false} absolute={false} />
+
 {@render children?.()}
 
 <Footer />
@@ -52,7 +52,7 @@
       U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
   }
   :global(body) {
-    background-color: #ccc;
+    background-color: #e2e8f0;
   }
   :global(.container-loader) {
     animation: fadeIn 0.4s ease-in forwards;

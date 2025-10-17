@@ -27,6 +27,9 @@
   <link rel="preload" as="font" href={Inter} type="font/woff2" crossorigin="anonymous" />
 </svelte:head>
 
+<!-- The Header is handled individually in children +layouts -->
+
 {@render children?.()}
 
+<!-- The Footer is consistent across all routes - so we place it here to be inherited across all child and grandchild routes -->
 <Footer />

@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import bg from '$lib/assets/legacy/images/bg.jpg';
-  import Header from '$lib/components/legacy/Header.svelte';
   import { datasetStats } from '@repo/shared/constants/trustedConstants';
 
   const site = {
@@ -25,8 +24,6 @@
 </svelte:head>
 
 <div class="unified-search" data-sveltekit-preload-data="false">
-  <Header />
-
   <main>
     <div class="parallax-container overlay">
       <div class="parallax">

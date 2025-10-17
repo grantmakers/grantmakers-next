@@ -1,6 +1,9 @@
 <script lang="ts">
   import '$lib/assets/legacy/css/instantsearch-reset-min.css';
   import '$lib/assets/legacy/css/unified-search.css';
+  import { page } from '$app/state';
+  import GrantsHero from '$src/lib/components/search/hero/GrantsHero.svelte';
+  import ProfilesHero from '$src/lib/components/search/hero/ProfilesHero.svelte';
   import Inter from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2';
 
   interface Props {
@@ -15,6 +18,14 @@
   <link rel="preconnect" href="https://qa1231c5w9-dsn.algolia.net" crossorigin="anonymous" />
   <link rel="preconnect" href="https://kdwvszvs1i-dsn.algolia.net" crossorigin="anonymous" />
 </svelte:head>
+
+<!-- Conditionally render the correct Hero depending on the path
+Note: This is a legacy approach, and should eventually be refactored when the need for wrapping the legacy CSS goes away -->
+{#if page.url.pathname.includes('/profiles')}
+  <ProfilesHero />
+{:else if page.url.pathname.includes('/grants')}
+  <GrantsHero />
+{/if}
 
 <div class="materialize-wrapper">
   {@render children?.()}
@@ -37,9 +48,9 @@
     color: rgba(0, 0, 0, 0.87);
   }
 
-  @media only screen and (min-width: 0) {
+  /* @media only screen and (min-width: 0) {
     .materialize-wrapper {
-      font-size: 14px;
+      font-size: 16px;
     }
   }
 
@@ -53,7 +64,7 @@
     .materialize-wrapper {
       font-size: 15px;
     }
-  }
+  } */
   :global(header) {
     position: relative;
   }

@@ -2,6 +2,7 @@
   import LogoMark from '../shared/LogoMark.svelte';
   import Autocomplete from '$lib/components/search/Autocomplete.svelte';
   import type { AutocompleteInstance } from '@repo/shared/typings/algolia/autocomplete';
+  import GlobalNav from '../nav/GlobalNav.svelte';
   import Bento from './sections/Bento.svelte';
   import Ethos from './sections/Ethos.svelte';
   import Features from './sections/Features.svelte';
@@ -26,59 +27,7 @@
 </script>
 
 <div class="relative bg-white">
-  <header class="absolute inset-x-0 top-0 z-20">
-    <nav class="mx-auto flex max-w-7xl items-center justify-start px-6 py-8 md:justify-between lg:px-8 lg:py-0" aria-label="Global">
-      <div class="flex items-center">
-        <!-- Logo -->
-        <div class="absolute left-0 shrink-0 lg:static lg:block">
-          <LogoMark isLandingOrFooter />
-        </div>
-        <div class="hidden md:block">
-          <div class="ml-10 flex items-baseline space-x-4">
-            <PrimaryNavLink href={'/about/'} title={'About'} />
-          </div>
-        </div>
-      </div>
-      <div class="hidden items-center justify-end gap-4 text-white md:flex">
-        <div class="group relative flex items-center gap-x-4 rounded-lg p-4 text-sm/6">
-          <div class="flex size-11 flex-none items-center justify-center rounded-full bg-grantmakers-orange">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
-              <path
-                fill-rule="evenodd"
-                d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </div>
-          <div class="flex-auto">
-            <a data-sveltekit-reload href="/search/profiles/" class="block text-base text-white">
-              Find a Foundation Profile
-              <span class="absolute inset-0"></span>
-            </a>
-            <p class="text-base font-semibold text-grantmakers-orange">Foundation Search</p>
-          </div>
-        </div>
-        <div class="group relative flex items-center gap-x-4 rounded-lg p-4 text-sm/6">
-          <div class="flex size-11 flex-none items-center justify-center rounded-full bg-grantmakers-blue">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
-              <path
-                fill-rule="evenodd"
-                d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </div>
-          <div class="flex-auto">
-            <a data-sveltekit-reload href="/search/grants/" class="block text-base text-white">
-              Search Historical Grants
-              <span class="absolute inset-0"></span>
-            </a>
-            <p class="text-base font-semibold text-grantmakers-blue">Grants Search</p>
-          </div>
-        </div>
-      </div>
-    </nav>
-  </header>
+  <GlobalNav showSecondaryNav={false} transparentBg={true} absolute={true} />
 
   <main>
     <!-- Hero section -->

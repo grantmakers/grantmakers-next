@@ -3,7 +3,7 @@
   import bg from '$lib/assets/legacy/images/bg.jpg';
   import { humanizeNumber } from '@repo/shared/functions/formatters/numbers';
   import { datasetStats } from '@repo/shared/constants/trustedConstants';
-  import Header from '$lib/components/legacy/Header.svelte';
+
   const site = {
     baseurl: '',
     title: 'Search Foundation Profiles - Grantmakers.io',
@@ -25,8 +25,6 @@
 </svelte:head>
 
 <div class="unified-search" data-sveltekit-preload-data="false">
-  <Header />
-
   <main>
     <div class="parallax-container overlay">
       <div class="parallax">
