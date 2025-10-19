@@ -6,7 +6,7 @@
   <div class="mx-auto max-w-2xl sm:text-center">
     <div class="text-base font-semibold leading-7 text-indigo-600">Ethos</div>
     <h1 class="mt-4 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-6xl">
-      Truly open access to <span class="text-indigo-600">Foundation 990 Data</span> is a public right
+      Truly open access to <span class="text-indigo-600">Foundation 990 Data</span>
     </h1>
     <p class="mt-6 p-2 text-lg leading-8 text-gray-600 lg:p-6">
       Foundation tax filings have been public since the 1950s, but remain inaccessible, stuck behind subscriptions, paywalls, and the growth
