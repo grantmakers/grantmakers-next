@@ -394,7 +394,7 @@ export function initSearchJs(M) {
     widgetParams.container.querySelector('form').innerHTML = `
       <label class="ais-RangeInput-label">
         <input
-          class="ais-RangeInput-input ais-RangeInput-input--min"
+          class="ais-RangeInput-input ais-RangeInput-input--min !outline !outline-1 !-outline-offset-1 !outline-gray-200"
           type="number"
           name="min"
           placeholder="${rangeMin}"
@@ -404,7 +404,7 @@ export function initSearchJs(M) {
       <span>to</span>
       <label class="ais-RangeInput-label">
         <input
-          class="ais-RangeInput-input ais-RangeInput-input--max"
+          class="ais-RangeInput-input ais-RangeInput-input--max !outline !outline-1 !-outline-offset-1 !outline-gray-200"
           type="number"
           name="max"
           placeholder="${rangeMax}"
@@ -608,7 +608,7 @@ export function initSearchJs(M) {
       showReset: true,
       showLoadingIndicator: false,
       cssClasses: {
-        input: 'flex-grow h-12 pl-10 pr-4 w-full bg-white text-gray-900 text-base rounded-lg border-0 appearance-none shadow-none transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500'
+        input: 'flex-grow h-12 pl-10 pr-4 w-full bg-white text-gray-900 text-base rounded-lg border-0 appearance-none shadow-none transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 !outline !outline-1 !-outline-offset-1 !outline-gray-200'
       },
       queryHook: function (query, searchInstance) {
         const queryCleaned = checkForEIN(query);

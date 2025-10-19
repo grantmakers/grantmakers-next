@@ -232,7 +232,9 @@
             <div class="col m3 l2 hide-on-med-and-down">
               <div id="ais-widget-sort-by" class="small text-muted-max right">
                 <a href="#modal-tips" class="modal-trigger text-muted-max"
-                  >Search types <i class="tiny material-icons material-icons-rounded grey lighten-2 icon-idea left">wb_incandescent</i></a
+                  >Search types <i class="tiny material-icons material-icons-rounded grey lighten-2 icon-idea left flex justify-center"
+                    >wb_incandescent</i
+                  ></a
                 >
               </div>
             </div>
