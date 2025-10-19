@@ -20,6 +20,8 @@ if (!PUBLIC_ALGOLIA_APP_ID || !PUBLIC_ALGOLIA_SEARCH_ONLY_KEY || !PUBLIC_ALGOLIA
   throw new Error('Missing required Algolia public keys. Please ensure environment variables are set.');
 }
 
+let search;
+
 export function initSearchJs(M) {
   // Capture InstantSearch warnings re Hogan templates
   const originalWarn = console.warn;
@@ -38,8 +40,6 @@ export function initSearchJs(M) {
   // Note: if the element is created dynamically via Instantsearch widget,
   // the plugin needs to be initialized in the normal Instantsearch workflow
   // using the render method (e.g. search.on('render'...)
-  const elemsPA = document.querySelectorAll('.parallax');
-  M.Parallax.init(elemsPA);
 
   const elemsNavMore = document.getElementById('primary-navbar-dropdown-trigger');
   const containerNavMore = document.getElementById('primary-navbar');
@@ -55,13 +55,10 @@ export function initSearchJs(M) {
   const elemsCollapsible = document.querySelectorAll('.collapsible');
   M.Collapsible.init(elemsCollapsible);
 
-  const elemsSN = document.querySelectorAll('.sidenav');
-  M.Sidenav.init(elemsSN);
-
   const elemsMO = document.querySelectorAll('.modal');
   M.Modal.init(elemsMO);
 
-  const elSearchBoxDropdown = document.querySelectorAll('.dropdown-trigger')[1]; // HACK Hard coding using bracket notation is precarious
+  const elSearchBoxDropdown = document.querySelectorAll('.dropdown-trigger')[0]; // HACK Hard coding using bracket notation is precarious
   const optionsSearchBoxDropdown = {
     alignment: 'right',
     constrainWidth: false,
@@ -72,15 +69,6 @@ export function initSearchJs(M) {
     },
   };
   M.Dropdown.init(elSearchBoxDropdown, optionsSearchBoxDropdown);
-
-  if (!isMobile.matches) {
-    // Use pushpin on desktop only
-    const elemPP = document.querySelector('.nav-search nav');
-    const optionsPP = {
-      top: elemPP.offsetTop,
-    };
-    M.Pushpin.init(elemPP, optionsPP);
-  }
 
   const searchClient = algoliasearch(PUBLIC_ALGOLIA_APP_ID, PUBLIC_ALGOLIA_SEARCH_ONLY_KEY);
   const algoliaIndex = PUBLIC_ALGOLIA_INDEX_NAME;
@@ -118,7 +106,7 @@ export function initSearchJs(M) {
   /* ---------------------------- */
   /* Algolia configuration        */
   /* ---------------------------- */
-  const search = instantsearch({
+  search = instantsearch({
     indexName: algoliaIndex,
     searchClient,
     numberLocale: 'en-US',
@@ -389,13 +377,13 @@ export function initSearchJs(M) {
     const inputEl = document.querySelector('input[class="ais-SearchBox-input"]');
     const triggerEl = document.getElementById('search-box-dropdown-trigger').querySelector('.search-box-dropdown-trigger-wrapper');
 
-    if (widgetParams.searchParameters.restrictSearchableAttributes.length === 5) {
-      triggerEl.classList.remove('adjusted');
-      inputEl.placeholder = 'Search by foundation name, location, trustees, or EIN';
-    } else {
-      triggerEl.classList.add('adjusted');
-      inputEl.placeholder = 'Search by custom fields selected';
-    }
+    // if (widgetParams.searchParameters.restrictSearchableAttributes.length === 5) {
+    //   triggerEl.classList.remove('adjusted');
+    //   inputEl.placeholder = 'Search by foundation name, location, trustees, or EIN';
+    // } else {
+    //   triggerEl.classList.add('adjusted');
+    //   inputEl.placeholder = 'Search by custom fields selected';
+    // }
   };
 
   // Create the custom widget
@@ -505,7 +493,7 @@ export function initSearchJs(M) {
       <div id="range-input-min" class="label-wrapper">
         <label class="ais-RangeInput-label valign-wrapper">
           <input
-            class="ais-RangeInput-input ais-RangeInput-input--min"
+            class="ais-RangeInput-input ais-RangeInput-input--min !outline !outline-1 !-outline-offset-1 !outline-gray-200"
             type="number"
             name="min"
             placeholder="$0"
@@ -517,7 +505,7 @@ export function initSearchJs(M) {
       <div id="range-input-max" class="label-wrapper">
         <label class="ais-RangeInput-label valign-wrapper">
           <input
-            class="ais-RangeInput-input ais-RangeInput-input--max"
+            class="ais-RangeInput-input ais-RangeInput-input--max !outline !outline-1 !-outline-offset-1 !outline-gray-200"
             type="number"
             name="max"
             placeholder="$0"
@@ -662,10 +650,13 @@ export function initSearchJs(M) {
     searchBox({
       container: '#ais-widget-search-box',
       placeholder: 'Search by foundation name, location, trustees, or EIN',
-      autofocus: true,
+      autofocus: false,
       showSubmit: true,
       showReset: true,
       showLoadingIndicator: false,
+      cssClasses: {
+        input: 'flex-grow h-12 pl-10 pr-4 w-full bg-white text-gray-900 text-base rounded-lg border-0 appearance-none shadow-none transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 !outline !outline-1 !-outline-offset-1 !outline-gray-200'
+      },
       queryHook: function (query, searchInstance) {
         // Query hook is called just before search is triggered
         const queryCleaned = checkForEIN(query);
@@ -707,7 +698,7 @@ export function initSearchJs(M) {
             </div>
             <div class="card">
               <div class="card-content">
-                <p>You conducted a Profiles Search ${paramsText}</p>
+                <p>You conducted a Foundation Search ${paramsText}</p>
               </div>
             </div>
             <div class="card z-depth-0 grey lighten-4">
@@ -1079,5 +1070,13 @@ export function initSearchJs(M) {
 
   if ('IntersectionObserver' in window) {
     createIubendaObserver();
+  }
+}
+
+export function destroySearchJs() {
+  if (search) {
+    search.dispose();
+    search = null;
+    console.log('Profile search instance destroyed.');
   }
 }

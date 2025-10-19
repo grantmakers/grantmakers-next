@@ -1,6 +1,5 @@
 <script lang="ts">
   import '@fontsource-variable/inter';
-  import Inter from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2';
   import '$src/app.pcss';
   import { page } from '$app/state';
   import SEO from '$lib/components/shared/SEO.svelte';
@@ -24,7 +23,6 @@
     <title>{title}</title>
     <meta name="description" content={description} />
   {/if}
-  <link rel="preload" as="font" href={Inter} type="font/woff2" crossorigin="anonymous" />
 </svelte:head>
 
 <!-- The Header is handled individually in children +layouts -->

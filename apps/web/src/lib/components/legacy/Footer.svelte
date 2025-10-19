@@ -35,7 +35,7 @@
       </div>
       <div class="col s4 m3 l3">
         <h6 class="mb-2 text-base font-semibold text-slate-700">Search</h6>
-        <p><a data-sveltekit-reload href="/search/profiles/" title="Find a foundation profile">Profiles Search</a></p>
+        <p><a data-sveltekit-reload href="/search/profiles/" title="Find a foundation profile">Foundation Search</a></p>
         <p><a data-sveltekit-reload href="/search/grants/" title="See who foundations are funding">Grants Search</a></p>
       </div>
       <div class="col s4 m3 l3 hide-on-small-only">

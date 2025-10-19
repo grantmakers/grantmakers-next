@@ -1,10 +1,9 @@
 <script lang="ts">
   import '$lib/assets/legacy/css/instantsearch-reset-min.css';
-  import '$lib/assets/legacy/css/unified-search.css';
+  import '$lib/assets/legacy/css/unified-search-wrapped.css';
   import { page } from '$app/state';
-  import GrantsHero from '$src/lib/components/search/hero/GrantsHero.svelte';
   import ProfilesHero from '$src/lib/components/search/hero/ProfilesHero.svelte';
-  import Inter from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2';
+  import GrantsHero from '$src/lib/components/search/hero/GrantsHero.svelte';
 
   interface Props {
     children?: import('svelte').Snippet;
@@ -14,13 +13,16 @@
 </script>
 
 <svelte:head>
-  <link rel="preload" as="font" href={Inter} type="font/woff2" crossorigin="anonymous" />
+  <!-- <link rel="preload" as="font" href={Inter} type="font/woff2" crossorigin="anonymous" /> -->
   <link rel="preconnect" href="https://qa1231c5w9-dsn.algolia.net" crossorigin="anonymous" />
   <link rel="preconnect" href="https://kdwvszvs1i-dsn.algolia.net" crossorigin="anonymous" />
 </svelte:head>
 
-<!-- Conditionally render the correct Hero depending on the path
-Note: This is a legacy approach, and should eventually be refactored when the need for wrapping the legacy CSS goes away -->
+<!-- 
+  Conditionally render the correct Hero depending on the path
+  Note: This is a legacy approach, and should eventually be refactored when the need for wrapping the legacy CSS goes away
+-->
+
 {#if page.url.pathname.includes('/profiles')}
   <ProfilesHero />
 {:else if page.url.pathname.includes('/grants')}
@@ -32,7 +34,7 @@ Note: This is a legacy approach, and should eventually be refactored when the ne
 </div>
 
 <style>
-  .materialize-wrapper {
+  /* .materialize-wrapper {
     line-height: 1.5;
     font-family:
       'Inter Variable',
@@ -46,7 +48,7 @@ Note: This is a legacy approach, and should eventually be refactored when the ne
       sans-serif;
     font-weight: normal;
     color: rgba(0, 0, 0, 0.87);
-  }
+  } */
 
   /* @media only screen and (min-width: 0) {
     .materialize-wrapper {
@@ -65,7 +67,7 @@ Note: This is a legacy approach, and should eventually be refactored when the ne
       font-size: 15px;
     }
   } */
-  :global(header) {
+  /* :global(header) {
     position: relative;
   }
   :global(#algolia-hits-wrapper) {
@@ -83,5 +85,5 @@ Note: This is a legacy approach, and should eventually be refactored when the ne
   }
   :global(.tabular-nums) {
     font-variant-numeric: tabular-nums;
-  }
+  } */
 </style>

@@ -34,6 +34,8 @@
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
+
+    --device-pixel-ratio: 1;
   }
 
   .dark {
@@ -74,6 +76,18 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .dot-pattern {
+    --dot-color: #0008;
+    --dot-size: 0.9px;
+    --dot-step: 24px;
+    --dot-stop: calc(var(--dot-size) - min(0.5px, 1px / var(--device-pixel-ratio)));
+    background-size: var(--dot-step) var(--dot-step);
+    background-position: calc(50% + var(--dot-step) / 2) 0;
+    background-image: radial-gradient(var(--dot-step) circle, var(--dot-color) var(--dot-stop), transparent var(--dot-size));
   }
 }
 

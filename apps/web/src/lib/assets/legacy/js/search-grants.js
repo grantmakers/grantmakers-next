@@ -10,6 +10,8 @@ if (!PUBLIC_ALGOLIA_APP_ID_GRANTS || !PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS || !
   throw new Error('Missing required Algolia public keys. Please ensure environment variables are set.');
 }
 
+let search;
+
 export function initSearchJs(M) {
   // Capture InstantSearch warnings re Hogan templates
   const originalWarn = console.warn;
@@ -28,8 +30,6 @@ export function initSearchJs(M) {
   // Note: if the element is created dynamically via Instantsearch widget,
   // the plugin needs to be initialized in the normal Instantsearch workflow
   // using the render method (e.g. search.on('render'...)
-  const elemsPA = document.querySelectorAll('.parallax');
-  M.Parallax.init(elemsPA);
 
   const elemsNavMore = document.getElementById('primary-navbar-dropdown-trigger');
   const containerNavMore = document.getElementById('primary-navbar');
@@ -42,13 +42,10 @@ export function initSearchJs(M) {
     M.Dropdown.init(elemsNavMore, optionsNavMore);
   }
 
-  const elemsSN = document.querySelectorAll('.sidenav');
-  M.Sidenav.init(elemsSN);
-
   const elemsMO = document.querySelectorAll('.modal');
   M.Modal.init(elemsMO);
 
-  const elSearchBoxDropdown = document.querySelectorAll('.dropdown-trigger')[1]; // HACK Hard coding using bracket notation is precarious
+  const elSearchBoxDropdown = document.querySelectorAll('.dropdown-trigger')[0]; // HACK Hard coding using bracket notation is precarious
   const optionsSearchBoxDropdown = {
     alignment: 'right',
     constrainWidth: false,
@@ -56,15 +53,6 @@ export function initSearchJs(M) {
     closeOnClick: false,
   };
   M.Dropdown.init(elSearchBoxDropdown, optionsSearchBoxDropdown);
-
-  if (!isMobile.matches) {
-    // Use pushpin on desktop only
-    const elemPP = document.querySelector('.nav-search nav');
-    const optionsPP = {
-      top: elemPP.offsetTop,
-    };
-    M.Pushpin.init(elemPP, optionsPP);
-  }
 
   // ALGOLIA
   // ==============
@@ -115,7 +103,7 @@ export function initSearchJs(M) {
   // Even listener set in search.once InstantSearch event
   const toggleAdvancedElem = document.querySelector('.search-toggle-advanced input[type="checkbox"]');
 
-  const search = instantsearch({
+  search = instantsearch({
     indexName: algoliaIndex,
     searchClient,
     numberLocale: 'en-US',
@@ -343,13 +331,13 @@ export function initSearchJs(M) {
     // Change input placeholder text => default is somewhat redundant as also declared in searchBox widget
     const inputEl = document.querySelector('input[class="ais-SearchBox-input"]');
     const triggerEl = document.getElementById('search-box-dropdown-trigger').querySelector('.search-box-dropdown-trigger-wrapper');
-    if (widgetParams.searchParameters.restrictSearchableAttributes.length === 5) {
-      triggerEl.classList.remove('adjusted');
-      inputEl.placeholder = 'Search by keywords, location, or grantee name';
-    } else {
-      triggerEl.classList.add('adjusted');
-      inputEl.placeholder = 'Search by custom fields selected';
-    }
+    // if (widgetParams.searchParameters.restrictSearchableAttributes.length === 5) {
+    //   triggerEl.classList.remove('adjusted');
+    //   inputEl.placeholder = 'Search by keywords, location, or grantee name';
+    // } else {
+    //   triggerEl.classList.add('adjusted');
+    //   inputEl.placeholder = 'Search by custom fields selected';
+    // }
   };
 
   // Create the custom widget
@@ -628,6 +616,9 @@ export function initSearchJs(M) {
       showSubmit: true,
       showReset: true,
       showLoadingIndicator: false,
+      cssClasses: {
+        input: 'flex-grow h-12 pl-10 pr-4 w-full bg-white text-gray-900 text-base rounded-lg border-0 appearance-none shadow-none transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500'
+      },
       queryHook: function (query, searchInstance) {
         const queryCleaned = checkForEIN(query);
         readyToSearchScrollPosition();
@@ -699,7 +690,7 @@ export function initSearchJs(M) {
     pagination({
       container: '#ais-widget-pagination',
       maxPages: 20,
-      scrollTo: '.nav-search',
+      //scrollTo: '.nav-search',
       cssClasses: {
         root: 'pagination',
         page: 'waves-effect',
@@ -935,5 +926,13 @@ export function initSearchJs(M) {
 
   if ('IntersectionObserver' in window) {
     createIubendaObserver();
+  }
+}
+
+export function destroySearchJs() {
+  if (search) {
+    search.dispose();
+    search = null;
+    console.log('Profile search instance destroyed.');
   }
 }

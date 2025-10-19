@@ -18,6 +18,7 @@ const config = {
       colors: {
         'grantmakers-orange': '#c54e00',
         'grantmakers-blue': '#607d8b',
+        'grantmakers-blue-dark-bg': '#7fa8c4',
         'grantmakers-green': '#009688',
         'grantmakers-orange-light': '#e65c00',
         border: 'hsl(var(--border) / <alpha-value>)',

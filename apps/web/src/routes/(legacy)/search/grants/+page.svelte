@@ -1,12 +1,14 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import bg from '$lib/assets/legacy/images/bg.jpg';
-  import { datasetStats } from '@repo/shared/constants/trustedConstants';
+  import { onMount, onDestroy } from 'svelte';
+  import { sticky } from '$src/lib/utils/sticky';
 
   const site = {
     baseurl: '',
     title: 'Search Foundation Grants - Grantmakers.io',
   };
+
+  // Search box sticky header
+  let searchAnchor: HTMLElement;
 
   onMount(async () => {
     let M = await import('materialize-css');
@@ -15,6 +17,18 @@
       initSearchJs(M);
     } catch (error) {
       console.log(error);
+    }
+
+    // TODO This is unreliable and a HACK
+    if (searchAnchor) {
+      const originalTop = searchAnchor.offsetTop;
+      searchAnchor.dataset.originalTop = originalTop.toString();
+    }
+  });
+  onDestroy(async () => {
+    const { destroySearchJs } = await import('$lib/assets/legacy/js/search-grants');
+    if (destroySearchJs) {
+      destroySearchJs();
     }
   });
 </script>
@@ -25,33 +39,24 @@
 
 <div class="unified-search" data-sveltekit-preload-data="false">
   <main>
-    <div class="parallax-container overlay">
-      <div class="parallax">
-        <img src={bg} alt="" />
-      </div>
-      <div class="intro valign-wrapper">
-        <div class="intro-text center-align white-text">
-          <h1 class="text-bold">Grants Search</h1>
-          <h5>Discover who foundations are funding</h5>
-          <p>
-            Search through {(datasetStats?.grants_searchable / 1e6).toFixed(1)} million grants contained in the public IRS 990-PF dataset
-          </p>
-        </div>
-      </div>
-      <canvas></canvas>
-    </div>
-    <div class="nav-search">
-      <nav class="nav-center grey lighten-3 z-depth-1">
+    <div class="nav-search" bind:this={searchAnchor}>
+      <nav
+        class="nav-center grey lighten-3 z-depth-1"
+        use:sticky={{
+          minWidth: 992,
+          placeholder: true,
+        }}
+      >
         <div class="nav-wrapper">
           <div class="row">
             <div class="col l2 hide-on-med-and-down">
               <div id="search-toggle" class="input-field valign-wrapper">
                 <select class="browser-default grants-search white-text">
                   <optgroup class="disabled" label="Research a foundation">
-                    <option value="profiles">Profile Search</option>
+                    <option value="profiles">Foundations</option>
                   </optgroup>
                   <optgroup class="disabled" label="Search all grants">
-                    <option value="grants" selected>Grants Search</option>
+                    <option value="grants" selected>Grants</option>
                   </optgroup>
                 </select>
               </div>
@@ -265,9 +270,7 @@
             <div class="col s12 m6 flex-direction-column flex">
               <ul class="search-details-header">
                 <li class="text-bold">
-                  <a class="grantmakers-text" href="{site.baseurl}/search/profiles/"
-                    ><i class="material-icons left">find_in_page</i> Profiles Search</a
-                  >
+                  <a class="grantmakers-text" href="/search/profiles/"><i class="material-icons left">find_in_page</i> Foundation Search</a>
                 </li>
                 <li class="small">Perfect for researching a specific foundation</li>
               </ul>
@@ -282,9 +285,7 @@
             <div class="col s12 m6 flex-direction-column flex">
               <ul class="search-details-header">
                 <li class="text-bold">
-                  <a class="blue-grey-text" href="{site.baseurl}/search/grants/"
-                    ><i class="material-icons left">find_in_page</i> Grants Search</a
-                  >
+                  <a class="blue-grey-text" href="/search/grants/"><i class="material-icons left">find_in_page</i> Grants Search</a>
                 </li>
                 <li class="small">Discover new prospects</li>
               </ul>

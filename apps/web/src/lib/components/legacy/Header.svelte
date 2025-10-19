@@ -23,9 +23,9 @@
             <div class="col m4 l8">
               <ul class="collection right hide-on-med-and-down">
                 <li class="collection-item avatar">
-                  <a data-sveltekit-reload href="/search/profiles/" title="Profiles Search">
+                  <a data-sveltekit-reload href="/search/profiles/" title="Foundation Search">
                     <i class="material-icons circle grantmakers">search</i> <span class="title">Find a Foundation Profile</span>
-                    <p class="grantmakers-text">Profiles Search</p>
+                    <p class="grantmakers-text">Foundation Search</p>
                   </a>
                 </li>
                 <li class="collection-item avatar">

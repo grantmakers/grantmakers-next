@@ -22,7 +22,7 @@
             <h3 class="tracking normal text-sm/4 font-semibold tracking-normal text-grantmakers-orange dark:text-indigo-400">
               Foundation Search
             </h3>
-            <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 dark:text-white">Fast research. No barriers</p>
+            <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 dark:text-white">Fast research. No barriers.</p>
             <p class="mt-2 max-w-lg text-sm/6 text-gray-600 dark:text-gray-400">
               Access any foundation's complete public record in seconds. No barriers, no paywalls—just the data you have a right to. Forever
               free.
@@ -90,7 +90,7 @@
         <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)]">
           <div class="p-10 pt-4">
             <h3 class="tracking normal text-sm/4 font-semibold tracking-normal text-indigo-600 dark:text-indigo-400">Better</h3>
-            <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 dark:text-white">Uncover Local Support</p>
+            <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 dark:text-white">Uncover local support</p>
             <p class="mt-2 max-w-lg text-sm/6 text-gray-600 dark:text-gray-400">
               They say all philanthropy is local. Use the public data to find foundations that are already invested in your community.
             </p>
@@ -111,7 +111,7 @@
         >
           <div class="p-10 pt-4">
             <h3 class="tracking normal text-sm/4 font-semibold tracking-normal text-indigo-600 dark:text-indigo-400">Best</h3>
-            <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 dark:text-white">Build a List of True Believers.</p>
+            <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 dark:text-white">Build a list of true believers</p>
             <p class="mt-2 max-w-lg text-sm/6 text-gray-600 dark:text-gray-400">
               This is where the data shines. Find foundations that share your vision by seeing who funds your peers.
             </p>

@@ -1,13 +1,14 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import bg from '$lib/assets/legacy/images/bg.jpg';
-  import { humanizeNumber } from '@repo/shared/functions/formatters/numbers';
-  import { datasetStats } from '@repo/shared/constants/trustedConstants';
+  import { onMount, onDestroy } from 'svelte';
+  import { sticky } from '$src/lib/utils/sticky';
 
   const site = {
     baseurl: '',
     title: 'Search Foundation Profiles - Grantmakers.io',
   };
+
+  // Search box sticky header
+  let searchAnchor: HTMLElement;
 
   onMount(async () => {
     let M = await import('materialize-css');
@@ -18,6 +19,12 @@
       console.log(error);
     }
   });
+  onDestroy(async () => {
+    const { destroySearchJs } = await import('$lib/assets/legacy/js/search-profiles');
+    if (destroySearchJs) {
+      destroySearchJs();
+    }
+  });
 </script>
 
 <svelte:head>
@@ -26,31 +33,24 @@
 
 <div class="unified-search" data-sveltekit-preload-data="false">
   <main>
-    <div class="parallax-container overlay">
-      <div class="parallax">
-        <img src={bg} alt="" />
-      </div>
-      <div class="intro valign-wrapper">
-        <div class="intro-text center-align white-text">
-          <h1 class="text-bold">Profiles Search</h1>
-          <h5>Profiles of {humanizeNumber(datasetStats?.profiles)} U.S. foundations</h5>
-          <p>Source: IRS electronic 990 dataset</p>
-        </div>
-      </div>
-      <canvas></canvas>
-    </div>
-    <div class="nav-search">
-      <nav class="nav-center grey lighten-3 z-depth-1">
+    <div class="nav-search" bind:this={searchAnchor}>
+      <nav
+        class="nav-center grey lighten-3 z-depth-1"
+        use:sticky={{
+          minWidth: 992,
+          placeholder: true,
+        }}
+      >
         <div class="nav-wrapper">
           <div class="row">
             <div class="col l2 hide-on-med-and-down">
               <div id="search-toggle" class="input-field valign-wrapper">
                 <select class="browser-default grantmakers white-text">
                   <optgroup class="disabled" label="Research a foundation">
-                    <option value="profiles">Profile Search</option>
+                    <option value="profiles">Foundations</option>
                   </optgroup>
                   <optgroup class="disabled" label="Search all grants">
-                    <option value="grants">Grants Search</option>
+                    <option value="grants">Grants</option>
                   </optgroup>
                 </select>
               </div>
@@ -253,14 +253,13 @@
               <div class="card z-depth-0">
                 <div class="card-content">
                   <h6 class="subheader">Get to know the data</h6>
-                  <p>Grantmakers.io pulls from an open dataset published by the IRS. The dataset is comprised of:</p>
+                  <p>Grantmakers.io pulls from the public IRS 990 dataset. The dataset is comprised of:</p>
                   <ul class="collapsible z-depth-0">
                     <li>
                       <div class="collapsible-header"><i class="material-icons">arrow_right</i>Electronically filed returns</div>
                       <div class="collapsible-body">
                         <span
-                          >Recent legislation will soon require all private foundations to file their returns electronically. Until then,
-                          the dataset covers approx. 60-65% of private foundations.</span
+                          >All foundations are now required to e-file returns. Historical tax filings only appear if filed electronically.</span
                         >
                       </div>
                     </li>
@@ -326,9 +325,7 @@
             <div class="col s12 m6 flex-direction-column flex">
               <ul class="search-details-header">
                 <li class="text-bold">
-                  <a class="grantmakers-text" href="{site.baseurl}/search/profiles/"
-                    ><i class="material-icons left">find_in_page</i> Profiles Search</a
-                  >
+                  <a class="grantmakers-text" href="/search/profiles/"><i class="material-icons left">find_in_page</i> Foundation Search</a>
                 </li>
                 <li class="small">Perfect for researching a specific foundation</li>
               </ul>
@@ -343,9 +340,7 @@
             <div class="col s12 m6 flex-direction-column flex">
               <ul class="search-details-header">
                 <li class="text-bold">
-                  <a class="blue-grey-text" href="{site.baseurl}/search/grants/"
-                    ><i class="material-icons left">find_in_page</i> Grants Search</a
-                  >
+                  <a class="blue-grey-text" href="/search/grants/"><i class="material-icons left">find_in_page</i> Grants Search</a>
                 </li>
                 <li class="small">Discover new prospects</li>
               </ul>

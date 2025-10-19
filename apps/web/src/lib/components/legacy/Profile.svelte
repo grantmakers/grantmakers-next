@@ -177,8 +177,8 @@
     <img src={legacyFavicon} alt="Grantmakers.io Logo" />Grantmakers.io
   </li>
   <li>
-    <a data-sveltekit-reload href="/search/profiles/" class="waves-effect waves-light" data-ga="Profiles Search" title="Profiles Search"
-      >Profiles Search</a
+    <a data-sveltekit-reload href="/search/profiles/" class="waves-effect waves-light" data-ga="Profiles Search" title="Foundation Search"
+      >Foundation Search</a
     >
   </li>
   <li>

@@ -7243,9 +7243,10 @@ ul#navbar-more.dropdown-content li a {
   font-size: 85% !important;
 }
 
-.hidden {
+/* Let Tailwind handle the hidden class */
+/* .hidden {
   display: none;
-}
+} */
 
 @media only screen and (min-width: 601px) {
   .flex {

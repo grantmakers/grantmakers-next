@@ -6,6 +6,7 @@
   import SecondaryNavLink from '$lib/components/nav/SecondaryNavLink.svelte';
   import PrimaryNavLinkMobile from '$lib/components/nav/PrimaryNavLinkMobile.svelte';
   import SecondaryNavLinkMobile from '$lib/components/nav/SecondaryNavLinkMobile.svelte';
+  import PrimarySearchNavLink from './PrimarySearchNavLink.svelte';
 
   interface Props {
     showSecondaryNav?: boolean;
@@ -50,27 +51,11 @@
         <!-- Right section on desktop -->
         <div class="hidden lg:ml-4 lg:flex lg:items-center lg:justify-end">
           <div class="flex items-center gap-6 text-white">
-            <a
-              data-sveltekit-reload
-              href="/search/profiles/"
-              class="rounded-lg px-4 py-2 font-bold text-grantmakers-orange-light transition-colors hover:bg-white/10"
-            >
-              Foundations
-            </a>
-            <a
-              data-sveltekit-reload
-              href="/search/grants/"
-              class="rounded-lg px-4 py-2 font-bold text-grantmakers-blue-dark-bg transition-colors hover:bg-white/10"
-            >
-              Grants
-            </a>
+            <PrimarySearchNavLink href={'/search/profiles/'} title={'Foundations'} />
+            <PrimarySearchNavLink href={'/search/grants/'} title={'Grants'} />
           </div>
           <!-- Profile dropdown -->
           <div class="relative ml-4 flex flex-auto shrink-0 items-center">
-            <!--  <PrimaryNavLink href={'/search/profiles/'} title={'Foundation Profiles'} />
-                  <PrimaryNavLink href={'/search/grants/'} title={'Historical Grants'} /> 
-            -->
-
             <!-- FEAT: Future preferences -->
             <!-- <div class="ml-4">
             <button

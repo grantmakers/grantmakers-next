@@ -276,7 +276,7 @@ export const faqData: EachFAQ[] = [
 ];
 export const footerNavigation = {
   search: [
-    { name: 'Profiles Search', href: '/search/profiles/' },
+    { name: 'Foundation Search', href: '/search/profiles/' },
     { name: 'Grants Search', href: '/search/grants/' },
   ],
   getInvolved: [
