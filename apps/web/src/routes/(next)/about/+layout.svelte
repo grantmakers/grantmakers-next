@@ -8,7 +8,7 @@
   let { children }: Props = $props();
 </script>
 
-<div class="min-h-full">
+<div class="min-h-full bg-slate-200">
   <GlobalNav />
 
   {@render children?.()}

@@ -25,9 +25,12 @@
   {/if}
 </svelte:head>
 
-<!-- The Header is handled individually in children +layouts -->
+<!-- Wrap the layout to add a layout-specific background color -->
+<div class="min-h-screen bg-white">
+  <!-- The Header is handled individually in children +layouts -->
 
-{@render children?.()}
+  {@render children?.()}
 
-<!-- The Footer is consistent across all routes - so we place it here to be inherited across all child and grandchild routes -->
-<Footer />
+  <!-- The Footer is consistent across all routes - so we place it here to be inherited across all child and grandchild routes -->
+  <Footer />
+</div>

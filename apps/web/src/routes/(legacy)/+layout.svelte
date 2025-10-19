@@ -35,16 +35,16 @@
   {/if}
 </svelte:head>
 
-<GlobalNav showSecondaryNav={false} transparentBg={false} absolute={false} />
+<!-- Wrap the layout to add a layout-specific background color -->
+<div class="min-h-screen bg-slate-200">
+  <GlobalNav showSecondaryNav={false} transparentBg={false} absolute={false} />
 
-{@render children?.()}
+  {@render children?.()}
 
-<Footer />
+  <Footer />
+</div>
 
 <style>
-  :global(body) {
-    background-color: #e2e8f0;
-  }
   :global(.container-loader) {
     animation: fadeIn 0.4s ease-in forwards;
   }
