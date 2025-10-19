@@ -14,7 +14,7 @@
       'bg-slate-100 text-slate-700 cursor-default pointer-events-none'
     : ' text-slate-700 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-500',
   );
-  let requiresReload = $derived(href.startsWith('/search'));
+  let requiresReload = $derived(href.startsWith('/profiles'));
 </script>
 
 <a

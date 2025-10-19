@@ -12,7 +12,7 @@
   let linkClasses = $derived(
     isActive ? 'rounded-none border-white text-white pointer-events-none' : 'border-transparent text-indigo-100 hover:bg-white/10',
   );
-  let requiresReload = $derived(href.startsWith('/search'));
+  let requiresReload = $derived(href.startsWith('/profiles'));
 </script>
 
 <a

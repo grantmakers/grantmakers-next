@@ -50,7 +50,7 @@
               <ul class="mt-6 space-y-4">
                 {#each footerNavigation.search as item}
                   <li>
-                    <a data-sveltekit-reload href={item.href} class="leading-6 text-gray-300 hover:text-white">
+                    <a href={item.href} class="leading-6 text-gray-300 hover:text-white">
                       {item.name}
                     </a>
                   </li>

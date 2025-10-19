@@ -10,10 +10,10 @@
 
   let isActive = $derived(
     page.url.pathname === href ||
-    (page.url.pathname.startsWith(href) && !(href === '/about/' && page.url.pathname.startsWith('/about/donate/')))
+      (page.url.pathname.startsWith(href) && !(href === '/about/' && page.url.pathname.startsWith('/about/donate/'))),
   );
   let linkClasses = $derived(isActive ? 'bg-white/10 cursor-default pointer-events-none' : 'hover:bg-white/25');
-  let requiresReload = $derived(href.startsWith('/search'));
+  let requiresReload = $derived(href.startsWith('/profiles'));
 </script>
 
 <a
