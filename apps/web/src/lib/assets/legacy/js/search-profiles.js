@@ -91,18 +91,6 @@ export function initSearchJs(M) {
     },
   ];
 
-  // Define toggle helpers
-  const toggleParent = document.getElementById('search-toggle');
-  const toggleSelect = toggleParent.querySelector('select');
-
-  // Ensure initial toggle state set to grants search
-  toggleSelect.value = 'profiles';
-
-  // Toggle search type
-  toggleSelect.onchange = function () {
-    window.location.href = '/search/grants/';
-  };
-
   /* ---------------------------- */
   /* Algolia configuration        */
   /* ---------------------------- */

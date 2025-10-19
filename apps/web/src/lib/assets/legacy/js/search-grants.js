@@ -81,21 +81,9 @@ export function initSearchJs(M) {
     },
   ];
 
-  // Define toggle helpers
-  const toggleParent = document.getElementById('search-toggle');
-  const toggle = toggleParent.querySelector('select');
-
   // Define RangeInput min/max - for placeholders only
   const rangeMin = 0;
   const rangeMax = 1051049025;
-
-  // Ensure initial toggle state set to grants search
-  toggle.value = 'grants';
-
-  // Toggle search type
-  toggle.onchange = function () {
-    window.location.href = '/search/profiles/';
-  };
 
   // Toogle Advanced Search tools
   // Advanced search features are hidden by default via css
@@ -103,6 +91,9 @@ export function initSearchJs(M) {
   // Even listener set in search.once InstantSearch event
   const toggleAdvancedElem = document.querySelector('.search-toggle-advanced input[type="checkbox"]');
 
+  /* ---------------------------- */
+  /* Algolia configuration        */
+  /* ---------------------------- */
   search = instantsearch({
     indexName: algoliaIndex,
     searchClient,
@@ -933,6 +924,6 @@ export function destroySearchJs() {
   if (search) {
     search.dispose();
     search = null;
-    console.log('Profile search instance destroyed.');
+    console.log('Grants search instance destroyed.');
   }
 }

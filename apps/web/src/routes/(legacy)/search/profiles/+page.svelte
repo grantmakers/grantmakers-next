@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
+  import { goto } from '$app/navigation';
   import { sticky } from '$src/lib/utils/sticky';
 
   const site = {
@@ -9,6 +10,20 @@
 
   // Search box sticky header
   let searchAnchor: HTMLElement;
+
+  // Initial search-type toggle state
+  let currentSearch = 'profiles';
+
+  function handleSearchChange(event: Event) {
+    const target = event.target;
+
+    if (target instanceof HTMLSelectElement) {
+      const selectedSearch = target.value;
+      if (selectedSearch) {
+        goto(`/search/${selectedSearch}`);
+      }
+    }
+  }
 
   onMount(async () => {
     let M = await import('materialize-css');
@@ -45,7 +60,7 @@
           <div class="row">
             <div class="col l2 hide-on-med-and-down">
               <div id="search-toggle" class="input-field valign-wrapper">
-                <select class="browser-default grantmakers white-text">
+                <select class="browser-default grantmakers white-text" bind:value={currentSearch} on:change={handleSearchChange}>
                   <optgroup class="disabled" label="Research a foundation">
                     <option value="profiles">Foundations</option>
                   </optgroup>
@@ -59,7 +74,9 @@
               <div id="ais-widget-search-box"></div>
               <div id="search-box-dropdown-trigger" class="hide-on-small-only">
                 <div class="search-box-dropdown-trigger-wrapper valign-wrapper">
-                  <a class="dropdown-trigger" href={'#'} data-target="search-box-dropdown"><i class="material-icons">arrow_drop_down</i></a>
+                  <a class="dropdown-trigger flex justify-center" href={'#'} data-target="search-box-dropdown"
+                    ><i class="material-icons">arrow_drop_down</i></a
+                  >
                 </div>
               </div>
               <div class="search-box-dropdown-wrapper"></div>
