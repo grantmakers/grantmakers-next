@@ -20,6 +20,8 @@ if (!PUBLIC_ALGOLIA_APP_ID_GRANTS || !PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS || !
   throw new Error('Missing required Algolia public keys. Please ensure environment variables are set.');
 }
 
+let search;
+
 export let searchState = $state({
   initialEmptyQuery: false,
   noHits: false,
@@ -99,7 +101,7 @@ export async function initSearchJs(M) {
       label: 'Amount',
     },
   ];
-  const search = instantsearch({
+  search = instantsearch({
     indexName: algoliaIndex,
     searchClient,
     numberLocale: 'en-US',
@@ -671,5 +673,13 @@ export async function initSearchJs(M) {
     const d = c < 0 ? c : Math.abs(c); // enforce -0 is 0
     const e = d + ['', 'K', 'M', 'B', 'T'][k]; // append power
     return e;
+  }
+}
+
+export function destroySearchJs() {
+  if (search) {
+    search.dispose();
+    search = null;
+    console.log('Embedded grants search instance destroyed.');
   }
 }

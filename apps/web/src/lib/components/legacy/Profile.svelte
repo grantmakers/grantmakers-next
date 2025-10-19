@@ -6,7 +6,7 @@
   import irsLogoAlt from '$lib/assets/legacy/images/irs-w-text-alt.png';
   import proPublicaLogo from '$lib/assets/legacy/images/propublica.png';
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { formatNumber, formatToCurrency, humanizeCurrency, humanizeNumber } from '@repo/shared/functions/formatters/numbers';
   import { formatCompensation } from '$src/lib/utils/peopleComp';
   import { formatDateToMonthYear } from '@repo/shared/functions/formatters/dates';
@@ -103,6 +103,12 @@
     }
     const { initGaEvents } = await import('$src/lib/assets/legacy/js/ga-events');
     initGaEvents();
+  });
+  onDestroy(async () => {
+    const { destroySearchJs } = await import('$src/lib/assets/legacy/js/profile-embedded-search.svelte');
+    if (destroySearchJs) {
+      destroySearchJs();
+    }
   });
 </script>
 
