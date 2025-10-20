@@ -314,6 +314,7 @@ export function initSearchJs(M) {
         refine({
           restrictSearchableAttributes: addOrRemoveSearchableAttributes(arr, attribute),
         });
+        readyToSearchScrollPosition();
       });
     }
 
@@ -681,7 +682,7 @@ export function initSearchJs(M) {
     pagination({
       container: '#ais-widget-pagination',
       maxPages: 20,
-      //scrollTo: '.nav-search',
+      scrollTo: '.nav-search',
       cssClasses: {
         root: 'pagination',
         page: 'waves-effect',

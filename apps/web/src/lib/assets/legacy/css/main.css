@@ -10390,6 +10390,7 @@ Mimic Algolia them - only the good parts
   }
   .profile-content #grants {
     font-weight: 400;
+    scroll-margin-top: 64px;
     /* Searchbar */
   }
   .profile-content #grants a {

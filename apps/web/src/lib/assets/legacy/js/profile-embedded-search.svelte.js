@@ -531,7 +531,7 @@ export async function initSearchJs(M) {
 
     pagination({
       container: '#ais-widget-pagination',
-      scrollTo: false,
+      scrollTo: document.getElementById('grants'),
       cssClasses: {
         root: 'pagination',
         page: 'waves-effect',
