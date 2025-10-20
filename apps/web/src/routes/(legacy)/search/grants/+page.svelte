@@ -296,8 +296,11 @@
               <div class="flex-grow-1 flex">
                 <ul class="search-details-content card card-flex grey lighten-4 z-depth-0">
                   <li class="small">Search by</li>
-                  <li class="small">Name</li>
+                  <li class="small">Foundation Name</li>
+                  <li class="small">Location</li>
                   <li class="small">EIN</li>
+                  <li class="small">Trustees and board members</li>
+                  <li class="small">Key employees</li>
                 </ul>
               </div>
             </div>

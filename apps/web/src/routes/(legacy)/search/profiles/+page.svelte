@@ -243,7 +243,9 @@
             <div class="col m3 l2 hide-on-small-only">
               <div id="ais-widget-sort-by" class="small text-muted-max right">
                 <a href="#modal-tips" class="modal-trigger text-muted-max"
-                  >Search types <i class="tiny material-icons material-icons-rounded grey lighten-2 icon-idea left">wb_incandescent</i></a
+                  >Search types <i class="tiny material-icons material-icons-rounded grey lighten-2 icon-idea left flex justify-center"
+                    >wb_incandescent</i
+                  ></a
                 >
               </div>
             </div>
@@ -291,12 +293,11 @@
                       </div>
                     </li>
                   </ul>
-                  <p>If a private foundation files electronically, you'll find them on Grantmakers.io.</p>
                 </div>
               </div>
               <div class="center-align">
                 <div class="waves-effect waves-light btn-flat">
-                  <a data-sveltekit-reload href="{site.baseurl}/about/the-dataset/">Learn more</a>
+                  <a data-sveltekit-reload href="/about/the-dataset/">Learn more</a>
                 </div>
               </div>
             </div>
@@ -349,8 +350,11 @@
               <div class="flex-grow-1 flex">
                 <ul class="search-details-content card card-flex grey lighten-4 z-depth-0">
                   <li class="small">Search by</li>
-                  <li class="small">Name</li>
+                  <li class="small">Foundation Name</li>
+                  <li class="small">Location</li>
                   <li class="small">EIN</li>
+                  <li class="small">Trustees and board members</li>
+                  <li class="small">Key employees</li>
                 </ul>
               </div>
             </div>
