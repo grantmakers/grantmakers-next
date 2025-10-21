@@ -53,30 +53,42 @@ export const anecdote =
 
 export type SideNavIds = 'overview' | 'people' | 'grants' | 'guidelines' | 'financials';
 
-export interface ProfileNavItems {
+export interface SecondaryNavItems {
   title: string;
-  icon: typeof ChartBar;
+  id: string;
+  link: string;
+  icon?: typeof ChartBar;
 }
 
-export const profileNavItems: ProfileNavItems[] = [
-  {
-    title: 'Overview',
-    icon: RectangleGroup,
-  },
+export const profileNavItems: SecondaryNavItems[] = [
+  // {
+  //   title: 'Overview',
+  //   id: 'overview',
+  //   link: '#overview',
+  //   icon: RectangleGroup,
+  // },
   {
     title: 'People',
+    id: 'people',
+    link: '#people',
     icon: Users,
   },
   {
     title: 'Grants',
+    id: 'grants',
+    link: '#grants',
     icon: CurrencyDollar,
   },
   {
     title: 'Guidelines',
+    id: 'guidelines',
+    link: '#guidelines', // This is '#application-info' on legacy profiles
     icon: ClipboardDocumentList,
   },
   {
     title: 'Financials',
+    id: 'financials',
+    link: '#financials',
     icon: ChartBar,
   },
 ];
