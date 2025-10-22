@@ -11,7 +11,7 @@
           <a href={'#'} data-target="mobile-nav" class="sidenav-trigger right disable-primary-color"><i class="material-icons">menu</i></a>
           <div class="row">
             <div class="col s8 m4 l4">
-              <a data-sveltekit-reload href="/" data-ga="Homepage" class="brand-logo">
+              <a href="/" data-ga="Homepage" class="brand-logo">
                 <div class="logo-container">
                   <div class="logo">
                     <img src={logo} alt="Grantmakers Logo" />
@@ -23,13 +23,13 @@
             <div class="col m4 l8">
               <ul class="collection right hide-on-med-and-down">
                 <li class="collection-item avatar">
-                  <a data-sveltekit-reload href="/search/profiles/" title="Foundation Search">
+                  <a href="/search/profiles/" title="Foundation Search">
                     <i class="material-icons circle grantmakers">search</i> <span class="title">Find a Foundation Profile</span>
                     <p class="grantmakers-text">Foundation Search</p>
                   </a>
                 </li>
                 <li class="collection-item avatar">
-                  <a data-sveltekit-reload href="/search/grants/" title="Grants Search">
+                  <a href="/search/grants/" title="Grants Search">
                     <i class="material-icons circle blue-grey">search</i> <span class="title">Search all Grants</span>
                     <p class="blue-grey-text text-lighten-1">Grants Search</p>
                   </a>
@@ -55,11 +55,11 @@
 <!-- Navbar dropdown menu item -->
 <ul class="dropdown-content" id="navbar-more">
   <li class="disabled"><a href={'#'} class="title grey-text">The Project</a></li>
-  <li><a data-sveltekit-reload href="/about/" class="waves-effect waves-light" data-ga="About" title="About">About</a></li>
-  <li><a data-sveltekit-reload href="/about/faq/" class="waves-effect waves-light" data-ga="FAQ" title="FAQ">FAQ</a></li>
+  <li><a href="/about/" class="waves-effect waves-light" data-ga="About" title="About">About</a></li>
+  <li><a href="/about/faq/" class="waves-effect waves-light" data-ga="FAQ" title="FAQ">FAQ</a></li>
   <li class="divider"></li>
   <li class="disabled"><a href={'#'} class="title grey-text">Get Involved</a></li>
-  <li><a data-sveltekit-reload href="/about/donate/" class="waves-effect waves-light" data-ga="Donate" title="Donate">Donate</a></li>
+  <li><a href="/about/donate/" class="waves-effect waves-light" data-ga="Donate" title="Donate">Donate</a></li>
 </ul>
 <!-- End navbar dropdown -->
 
@@ -82,10 +82,10 @@
   </li>
   <li><hr class="divider" /></li>
   <li class="disabled"><a href={'#'} class="title grey-text">The Project</a></li>
-  <li><a data-sveltekit-reload href="/about/" class="waves-effect waves-light" data-ga="About">About</a></li>
-  <li><a data-sveltekit-reload href="/about/faq/" class="waves-effect waves-light" data-ga="FAQ">FAQ</a></li>
+  <li><a href="/about/" class="waves-effect waves-light" data-ga="About">About</a></li>
+  <li><a href="/about/faq/" class="waves-effect waves-light" data-ga="FAQ">FAQ</a></li>
   <li><hr class="divider" /></li>
   <li class="disabled"><a href={'#'} class="title grey-text">Get Involved</a></li>
-  <li><a data-sveltekit-reload href="/about/donate/" class="waves-effect waves-light" data-ga="Donate" title="Donate">Donate</a></li>
+  <li><a href="/about/donate/" class="waves-effect waves-light" data-ga="Donate" title="Donate">Donate</a></li>
 </ul>
 <!-- End Mobile Navbar -->

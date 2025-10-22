@@ -164,7 +164,7 @@
               <div class="card-content">
                 <span class="card-title"
                   ><strong>Check your url</strong> <br />Search results are only available at
-                  <a data-sveltekit-reload href="/">Grantmakers.io</a></span
+                  <a href="/">Grantmakers.io</a></span
                 >
                 <p>
                   We limit search results to Grantmakers.io to allow the maximum number of people access to this free service. The page you

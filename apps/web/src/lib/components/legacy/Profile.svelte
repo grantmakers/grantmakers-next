@@ -112,143 +112,33 @@
   });
 </script>
 
-<div id="main-nav" class="navbar-fixed">
-  <nav id="scrollspy-target" class="navbar-profile affix-top pushpin-nav" data-target="main-nav">
-    <div class="nav-wrapper">
-      <div class="container-custom">
-        <a href={'#'} data-target="mobile-nav" class="sidenav-trigger right disable-primary-color print-hidden"
-          ><i class="material-icons">menu</i></a
-        >
-        <div class="row">
-          <div class="col s8 m6 l2 xl2">
-            <a data-sveltekit-reload href="/" data-ga="Homepage" class="brand-logo">
-              <div class="logo-container">
-                <div class="logo">
-                  <img src={legacyLogo} alt="Grantmakers.io Logo" />
-                </div>
-                <div class="brand brand-name">Grantmakers.io</div>
-              </div>
-            </a>
-          </div>
-          <div class="col l4 xl4 hide-on-med-and-down valign-wrapper" style="height: 64px">
-            <div class="breadcrumb-wrapper left">
-              <a
-                data-sveltekit-reload
-                href="/search/profiles/"
-                class="breadcrumb hide-on-large-and-down"
-                data-ga="Breadcrumb Profile Search">Foundation Profiles</a
-              >
-              <span class="breadcrumb">{page.organization_name}</span>
-            </div>
-            {#if algolia}
-              <span class="algolia-partnership-logo print-hidden"
-                ><a href={site.algolia_referral_link}><img src={algoliaPartnership} alt="Algolia Partnership Logo" /></a></span
-              >
-            {/if}
-          </div>
-          <div class="col m6 l6 xl6 hide-on-med-and-down print-hidden">
-            {#if hasSurpriseMeAccess}
-              <div class="fixed-action-btn">
-                <a
-                  href={'/profiles/random/'}
-                  class="btn-floating btn-large blue-grey tooltipped"
-                  data-position="left"
-                  data-tooltip="Fetch a random profile"
-                >
-                  <i class="large material-icons">cached</i>
-                </a>
-              </div>
-            {/if}
-            <ul class="nav-primary right">
-              <li><a href="#people" data-ga="People">People</a></li>
-              <li><a href="#grants" data-ga="Grants">Grants</a></li>
-              <li><a href="#application-info" data-ga="Application Guidelines">Guidelines</a></li>
-              <li><a href="#financials" data-ga="Grants">Financials</a></li>
-              <li>
-                <a href={'#'} data-target="navbar-more" class="dropdown-trigger print-hidden" id="primary-navbar-dropdown-trigger"
-                  >More <i style="margin-left:3px" class="material-icons right">arrow_drop_down</i></a
-                >
-              </li>
-            </ul>
+<div class="wrapper min-h-full">
+  <section class="sm:dot-pattern relative isolate overflow-hidden py-24 sm:py-32">
+    <!-- <div class="relative mx-auto max-w-4xl px-6 lg:px-8">
+      <div class="rounded-3xl bg-white/90 p-10 text-center ring-1 ring-black/5 backdrop-blur-xl dark:bg-gray-900/90">
+        <h2 class="text-base/7 font-semibold text-indigo-600 dark:text-indigo-400">Grants Search</h2>
+        <p class="mt-2 text-4xl font-semibold tracking-tight text-gray-900 dark:text-white sm:text-5xl">Open Grants Data</p>
+        <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">
+          See who foundations have backed. Find funders who already share your vision.
+        </p>
+      </div>
+    </div> -->
+
+    <div class="mx-auto mt-16 max-w-7xl px-6 sm:mt-20 lg:px-8">
+      <div class="mx-auto max-w-2xl lg:max-w-none">
+        <div class="hidden sm:mb-8 sm:flex sm:justify-center">
+          <div
+            class="relative rounded-full bg-white/70 px-3 py-1 text-sm/6 text-gray-500 ring-1 ring-inset ring-gray-300 hover:ring-white/20"
+          >
+            This isn't a list of open grant opportunities.
+            <a href="/about/" class="ml-2 font-semibold text-slate-600"
+              ><span aria-hidden="true" class="absolute inset-0"></span>It's different around here <span aria-hidden="true">&rarr;</span></a
+            >
           </div>
         </div>
       </div>
     </div>
-  </nav>
-</div>
-
-<!-- Navbar dropdown -->
-<ul class="dropdown-content dropdown-content-profile" id="navbar-more">
-  <li class="dropdown-title small grey darken-3 valign-wrapper white-text">
-    <img src={legacyFavicon} alt="Grantmakers.io Logo" />Grantmakers.io
-  </li>
-  <li>
-    <a data-sveltekit-reload href="/search/profiles/" class="waves-effect waves-light" data-ga="Profiles Search" title="Foundation Search"
-      >Foundation Search</a
-    >
-  </li>
-  <li>
-    <a data-sveltekit-reload href="/search/grants/" class="waves-effect waves-light" data-ga="Grants Search" title="Grants Search"
-      >Grants Search</a
-    >
-  </li>
-  <li class="divider"></li>
-  <li><a data-sveltekit-reload href="/about/" class="waves-effect waves-light" data-ga="About" title="About">About</a></li>
-  <li><a data-sveltekit-reload href="/about/faq/" class="waves-effect waves-light" data-ga="FAQ" title="FAQ">FAQ</a></li>
-  <li class="divider"></li>
-  <li class="dropdown-bottom-cta grey darken-3 white-text">
-    <a data-sveltekit-reload href="/buy-chad-a-coffee/" class="waves-effect waves-light small" data-ga="Coffee" title="Buy Chad a Coffee"
-      ><i class="material-icons">emoji_food_beverage</i> Buy Chad a Coffee</a
-    >
-  </li>
-</ul>
-
-<!-- Mobile navbar -->
-<ul class="nav-primary sidenav sidenav-close" id="mobile-nav">
-  <li class="grey darken-3 sidenav-header">
-    <a data-sveltekit-reload href="/" class="waves-effect waves-light" data-ga="Home">
-      <div class="valign-wrapper">
-        <img src={legacyLogo} alt="Grantmakers Logo" />
-        <span class="strong white-text"> Grantmakers.io</span>
-      </div>
-    </a>
-  </li>
-  <li class="disabled"><a href={'#'} class="grey-text">Current Profile</a></li>
-  <li><a data-sveltekit-reload href="#people">People</a></li>
-  <li><a data-sveltekit-reload href="#grants">Grants</a></li>
-  <li><a data-sveltekit-reload href="#application-info">Application Guidelines</a></li>
-  <!-- <li><a href="#financial-overview">Financials</a></li> -->
-  <li><hr class="divider" /></li>
-  <li class="disabled"><a href={'#'} class="title grey-text">Search</a></li>
-  <li>
-    <a data-sveltekit-reload href="/search/profiles/" class="waves-effect waves-light"> Find a Foundation Profile </a>
-  </li>
-  <li>
-    <a data-sveltekit-reload href="/search/grants" class="waves-effect waves-light"> Search all Grants </a>
-  </li>
-  <li><hr class="divider" /></li>
-  <li class="disabled"><a href={'#'} class="title grey-text">The Project</a></li>
-  <li><a data-sveltekit-reload href="/about/" class="waves-effect waves-light" data-ga="About">About</a></li>
-  <li><a data-sveltekit-reload href="/about/faq/" class="waves-effect waves-light" data-ga="FAQ">FAQ</a></li>
-  <li><hr class="divider" /></li>
-  <li class="disabled"><a data-sveltekit-reload href={'#'} class="title grey-text">Get Involved</a></li>
-  <li>
-    <a data-sveltekit-reload href="/about/donate/" class="waves-effect waves-light" data-ga="Donate" title="Donate">Donate</a>
-  </li>
-</ul>
-
-<div class="wrapper min-h-full">
-  <div class="header header-bg">
-    <img
-      class="header-bg-img"
-      srcset="/legacy/bg.webp 1024w, /assets/img/bg.jpg 1024w"
-      sizes="100vw"
-      src="/legacy/bg.jpg"
-      alt=""
-      loading="eager"
-      fetchpriority="high"
-    />
-  </div>
+  </section>
   <div class="main main-raised">
     <div class="profile-content">
       <div class="row row-alert-fixed-to-top grey darken-4">
@@ -351,7 +241,6 @@
                   {:else if page.website && page.website_is_an_email == true && page.grants_to_preselected_only != true}
                     <li>
                       <a
-                        data-sveltekit-reload
                         href={page.website}
                         data-ga="Website Summary Icon"
                         class="js-ga-website-click tooltipped"
@@ -367,14 +256,14 @@
                   <li>
                     {#if page.grants_to_preselected_only}
                       <a
-                        href="#application-info"
+                        href="#guidelines"
                         data-ga="Application Summary Icon"
                         class="js-ga-summary-icon-click tooltipped"
                         data-tooltip="Grants to preselected organizations only"><i class="material-icons">lock</i></a
                       >
                     {:else}
                       <a
-                        href="#application-info"
+                        href="#guidelines"
                         data-ga="Application Summary Icon"
                         class="js-ga-summary-icon-click tooltipped"
                         data-tooltip="Possibly accepts unsolicited applications"
@@ -667,7 +556,7 @@
                               {:else}
                                 <span class="card-title"
                                   ><strong>Check your url</strong> <br />Search results are only available at
-                                  <a data-sveltekit-reload href="/">Grantmakers.io</a></span
+                                  <a href="/">Grantmakers.io</a></span
                                 >
                                 <p>
                                   We limit search results to Grantmakers.io to allow the maximum number of people access to this free
@@ -696,7 +585,7 @@
                                     href={'#'}
                                     data-target="refinements-slide-out"
                                     class="sidenav-trigger show-on-med-and-down waves-effect waves-light button-collapse btn white grey-text text-darken-3"
-                                    ><i class="material-icons right">filter_list</i> Filter</a
+                                    ><i class="material-icons right flex items-center">filter_list</i> Filter</a
                                   >
                                 </li>
                                 <li></li>
@@ -764,9 +653,13 @@
                           </div>
                         </div>
                         <div id="ais-widget-sort-by" class="col s12 m3 l3 right-align hidden">
-                          <a href={'#'} class="dropdown-trigger hide-on-med-and-down text-muted" data-target="tax-year-dropdown">
+                          <a
+                            href={'#'}
+                            class="dropdown-trigger hide-on-med-and-down flex items-center justify-end text-muted"
+                            data-target="tax-year-dropdown"
+                          >
                             {#if enable_tax_year_dropdown}
-                              Tax Years<i class="material-icons right">arrow_drop_down</i>
+                              Tax Years<i class="material-icons right flex items-center">arrow_drop_down</i>
                             {:else}
                               Tax Year: {taxYear}
                             {/if}
@@ -973,9 +866,9 @@
             </div>
           </div>
         </div>
-        <div class="row print-no-pagebreak flex">
+        <div class="row print-no-pagebreak flex flex-col sm:flex-row">
           <div class="col s12 l6 flex-direction-column print-50 flex">
-            <div id="application-info" class="flex-grow-1 scrollspy flex">
+            <div id="guidelines" class="flex-grow-1 scrollspy flex">
               <div class="card-panel card-panel-flex">
                 <div class="card-panel-header-wrapper">
                   <div class="card-panel-header">
@@ -998,9 +891,7 @@
                   {#if page.website && page.website_is_an_email != true}
                     <ul class="collection">
                       <li class="collection-item avatar">
-                        <a data-sveltekit-reload href={page.website} data-ga="Refer to Fdn Website"
-                          ><i class="material-icons circle blue">public</i></a
-                        >
+                        <a href={page.website} data-ga="Refer to Fdn Website"><i class="material-icons circle blue">public</i></a>
                         <p>
                           Note: This foundation appears to have a website. We recommend starting your exploration there.
                           <a class="btn-link" href={page.website} data-ga="Refer to Fdn Website">Visit Website</a>.
@@ -1011,9 +902,7 @@
                   {:else if page.website && page.website_is_an_email == true && page.grants_to_preselected_only != true}
                     <ul class="collection">
                       <li class="collection-item avatar">
-                        <a data-sveltekit-reload href={page.website} data-ga="Refer to Fdn Website"
-                          ><i class="material-icons circle blue">public</i></a
-                        >
+                        <a href={page.website} data-ga="Refer to Fdn Website"><i class="material-icons circle blue">public</i></a>
                         <p>
                           Note: In lieu of providing a website in its latest e-filed Form 990PF, this foundation likely provided a contact
                           email instead. <a class="btn-link" href={page.website} data-ga="Refer to Fdn Website">View Email</a>.
@@ -1155,7 +1044,7 @@
                     <li class="collection-item collection-item-empty-state avatar">
                       <p>
                         Grantmakers.io is a free community project aimed at giving nonprofits unfettered access to a public dataset of Form
-                        990 tax filings published by the IRS. Read more <a data-sveltekit-reload href="/about/">about the project</a>.
+                        990 tax filings published by the IRS. Read more <a href="/about/">about the project</a>.
                       </p>
                       <p>
                         The project republishes the IRS dataset, verbatim, focusing exclusively on Form 990 PF, the form most commonly filed
@@ -1163,7 +1052,7 @@
                       </p>
                       <p>
                         Note that the IRS dataset only contains information from <em>electronically-filed</em> tax returns. Read more
-                        <a data-sveltekit-reload href="/about/the-dataset/">about the dataset</a>.
+                        <a href="/about/the-dataset/">about the dataset</a>.
                       </p>
                       <div class="card info-card grey lighten-3">
                         <div class="card-content">
@@ -1334,7 +1223,6 @@
             <div id="coffee-bottom-cta" class="center-align">
               <h5>If this free profile helped you, why not</h5>
               <a
-                data-sveltekit-reload
                 href="/about/buy-chad-a-coffee/"
                 class="waves-effect waves-light btn white grey-text text-darken-1"
                 data-ga="Buy Me a Coffee CTA"><i class="material-icons left">emoji_food_beverage</i> Buy me a coffee</a
@@ -1501,6 +1389,7 @@
   :global(.valign-top) {
     vertical-align: top;
   }
+
   /* Grants alert */
   #grants .valign-wrapper {
     line-height: 24px;

@@ -24,19 +24,19 @@
     <div class="row row-footer-primary-nav">
       <div class="col s4 m3 l3">
         <h6 class="mb-2 text-base font-semibold text-slate-700">The Project</h6>
-        <p><a data-sveltekit-reload href="/about/the-dataset/">The 990 Dataset</a></p>
-        <p><a data-sveltekit-reload href="/about/">About</a></p>
-        <p><a data-sveltekit-reload href="/about/faq/">FAQ</a></p>
+        <p><a href="/about/the-dataset/">The 990 Dataset</a></p>
+        <p><a href="/about/">About</a></p>
+        <p><a href="/about/faq/">FAQ</a></p>
       </div>
       <div class="col s4 m3 l3">
         <h6 class="mb-2 text-base font-semibold text-slate-700">Get Involved</h6>
-        <p><a data-sveltekit-reload href="/about/donate/">Support open data</a></p>
-        <p><a data-sveltekit-reload href="/about/donate/">Donate</a></p>
+        <p><a href="/about/donate/">Support open data</a></p>
+        <p><a href="/about/donate/">Donate</a></p>
       </div>
       <div class="col s4 m3 l3">
         <h6 class="mb-2 text-base font-semibold text-slate-700">Search</h6>
-        <p><a data-sveltekit-reload href="/search/profiles/" title="Find a foundation profile">Foundation Search</a></p>
-        <p><a data-sveltekit-reload href="/search/grants/" title="See who foundations are funding">Grants Search</a></p>
+        <p><a href="/search/profiles/" title="Find a foundation profile">Foundation Search</a></p>
+        <p><a href="/search/grants/" title="See who foundations are funding">Grants Search</a></p>
       </div>
       <div class="col s4 m3 l3 hide-on-small-only">
         <h6 class="valign-wrapper mb-2 text-base font-semibold text-slate-700">
@@ -50,7 +50,7 @@
       <div class="col s12 m12 l4">
         <div class="left-align">
           <ul class="footer-nav list-inline">
-            <!-- <li><a data-sveltekit-reload href="/profiles/">Profiles Index</a></li> -->
+            <!-- <li><a href="/profiles/">Profiles Index</a></li> -->
             {#if page && page.ein}
               <li>
                 <a href="mailto:feedback@grantmakers.io?body=%0D%0A%0D%0A{page.organization_name}%0D%0A{site.baseurl}/{page.ein}/"
@@ -106,7 +106,7 @@
         <div class="col m3 print-hidden">
           <ul class="list-inline right-align">
             <li>
-              <a data-sveltekit-reload href="/about/terms/">Terms of Service</a>
+              <a href="/about/terms/">Terms of Service</a>
             </li>
             <li>
               <a

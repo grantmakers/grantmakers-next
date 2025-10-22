@@ -1,20 +1,9 @@
 .materialize-wrapper-main {
   line-height: 1.5;
-  font-family:
-    Roboto,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Oxygen-Sans,
-    Ubuntu,
-    Cantarell,
-    'Helvetica Neue',
-    sans-serif;
   font-weight: normal;
-  color: rgba(0, 0, 0, 0.87);
   /****************************
-Override Materialize variables
-*****************************/
+  Override Materialize variables
+  *****************************/
   .materialize-red {
     background-color: #e51c23 !important;
   }
@@ -3243,7 +3232,7 @@ Override Materialize variables
     padding: 15px 5px;
     display: table-cell;
     text-align: left;
-    vertical-align: middle;
+    vertical-align: top;
     border-radius: 2px;
   }
 
@@ -3309,7 +3298,6 @@ Override Materialize variables
   }
   .collection {
     margin: 0.5rem 0 1rem 0;
-    border: 1px solid #e0e0e0;
     border-radius: 2px;
     overflow: hidden;
     position: relative;
@@ -3319,7 +3307,6 @@ Override Materialize variables
     line-height: 1.5rem;
     padding: 10px 20px;
     margin: 0;
-    border-bottom: 1px solid #e0e0e0;
   }
   .collection .collection-item.avatar {
     min-height: 84px;
@@ -6663,7 +6650,6 @@ Override Materialize variables
     display: inline-block;
     height: 25px;
     line-height: 25px;
-    font-size: 1rem;
     user-select: none;
   }
   [type='checkbox'] + span:not(.lever):before,
@@ -9433,11 +9419,11 @@ Sitewide layout
     background: -webkit-linear-gradient(rgba(44, 45, 51, 0.9), rgba(44, 45, 51, 0.9));
   }
 
-  .profile-page,
+  /* .profile-page,
   .profile-index-page,
   .simple-page {
     background-color: #ccc;
-  }
+  } */
   .profile-page .navbar-transparent.affix a,
   .profile-page .navbar-transparent.affix .navbar-toggle,
   .profile-page .navbar-transparent.affix .brand-name,
@@ -9779,7 +9765,7 @@ Mimic Algolia them - only the good parts
   }
 
   [class^='ais-'] {
-    font-size: 1rem;
+    font-size: 15px;
     box-sizing: border-box;
   }
 
@@ -10606,9 +10592,13 @@ Mimic Algolia them - only the good parts
   .profile-content .section-refinements label {
     color: inherit;
   }
-  .profile-content .section-refinements .ais-RefinementList-labelText {
-    width: 85%;
+  .profile-content .section-refinements .ais-RefinementList {
+    font-size: 15px;
+  }
+  .profile-content .section-refinements .ais-RefinementList-labelText.small {
+    width: 80%;
     padding-left: 0px;
+    font-weight: 300;
   }
   .profile-content .section-refinements .ais-RefinementList-labelText::before,
   .profile-content .section-refinements .ais-RefinementList-labelText::after {
@@ -10617,6 +10607,7 @@ Mimic Algolia them - only the good parts
   .profile-content .section-refinements .ais-RefinementList-count {
     height: 25px;
     line-height: 25px;
+    font-weight: 300;
   }
   .profile-content .section-refinements .ais-RefinementList-count.small {
     font-size: 85%;

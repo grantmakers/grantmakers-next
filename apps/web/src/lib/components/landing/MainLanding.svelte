@@ -2,7 +2,6 @@
   import LogoMark from '../shared/LogoMark.svelte';
   import Autocomplete from '$lib/components/search/Autocomplete.svelte';
   import type { AutocompleteInstance } from '@repo/shared/typings/algolia/autocomplete';
-  import GlobalNav from '../nav/GlobalNav.svelte';
   import Bento from './sections/Bento.svelte';
   import Ethos from './sections/Ethos.svelte';
   import Features from './sections/Features.svelte';
@@ -27,8 +26,6 @@
 </script>
 
 <div class="relative bg-white">
-  <GlobalNav showSecondaryNav={false} transparentBg={true} absolute={true} />
-
   <main>
     <!-- Hero section -->
     <div class="relative isolate overflow-hidden bg-gray-900 pt-14 lg:-top-24">

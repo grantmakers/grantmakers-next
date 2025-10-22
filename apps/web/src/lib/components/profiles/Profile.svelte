@@ -367,7 +367,7 @@
                   onclick={openSearch}
                 >
                   <MagnifyingGlassCircle variation={'solid'} class={'h-4 w-4'} />
-                  Profiles search
+                  Foundation search
                 </button>
                 <button
                   type="button"

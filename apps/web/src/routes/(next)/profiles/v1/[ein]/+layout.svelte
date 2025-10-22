@@ -5,7 +5,6 @@
    * svelte:head is set in root layout
    * footer is also set in root layout
    */
-  import '@fontsource/open-sans';
   interface Props {
     children?: import('svelte').Snippet;
   }
