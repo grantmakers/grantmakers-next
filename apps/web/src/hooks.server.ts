@@ -71,6 +71,22 @@ export async function handle({ event, resolve }) {
     preload: ({ type }) => type === 'font' || type === 'js' || type === 'css',
   });
 
+  /**
+   * Set Cache Control headers
+   *
+   * Browsers recheck hourly: 3600 = 1hr
+   * CDNs recheck daily:  86400 = 24 hours
+   * Stale data good for for a week: 604800 = 7 days
+   *
+   * TODO No differentiation between API calls and static assets
+   */
+
+  if (event.request.method === 'GET') {
+    if (path.startsWith('/profiles/')) {
+      response.headers.set('Cache-Control', 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800');
+    }
+  }
+
   // Add security headers to all responses
   response.headers.set('X-Frame-Options', 'DENY');
   response.headers.set('X-Content-Type-Options', 'nosniff');
