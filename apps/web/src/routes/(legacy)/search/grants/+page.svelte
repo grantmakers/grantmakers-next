@@ -2,6 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
   import { goto } from '$app/navigation';
   import { sticky } from '$src/lib/utils/sticky';
+  import SearchTypesModal from '$src/lib/components/legacy/modals/SearchTypesModal.svelte';
 
   const site = {
     baseurl: '',
@@ -20,31 +21,41 @@
     if (target instanceof HTMLSelectElement) {
       const selectedSearch = target.value;
       if (selectedSearch) {
-        goto(`/search/${selectedSearch}`);
+        goto(`/search/${selectedSearch}`, { invalidateAll: true });
       }
     }
   }
 
-  onMount(async () => {
-    let M = await import('materialize-css');
-    const { initSearchJs } = await import('$lib/assets/legacy/js/search-grants');
-    try {
-      initSearchJs(M);
-    } catch (error) {
-      console.log(error);
-    }
+  let destroySearchJs: (() => void) | undefined;
+  let searchInitialized = false;
+
+  onMount(() => {
+    (async () => {
+      try {
+        let M = await import('materialize-css');
+        const searchModule = await import('$src/lib/assets/legacy/js/search-grants.svelte.js');
+        if (searchInitialized === false) {
+          searchModule.initSearchJs(M);
+          destroySearchJs = searchModule.destroySearchJs;
+          searchInitialized = true;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+
+    return () => {
+      searchInitialized = false;
+      if (destroySearchJs) {
+        destroySearchJs();
+      }
+    };
 
     // TODO This is unreliable and a HACK
-    if (searchAnchor) {
-      const originalTop = searchAnchor.offsetTop;
-      searchAnchor.dataset.originalTop = originalTop.toString();
-    }
-  });
-  onDestroy(async () => {
-    const { destroySearchJs } = await import('$lib/assets/legacy/js/search-grants');
-    if (destroySearchJs) {
-      destroySearchJs();
-    }
+    // if (searchAnchor) {
+    //   const originalTop = searchAnchor.offsetTop;
+    //   searchAnchor.dataset.originalTop = originalTop.toString();
+    // }
   });
 </script>
 
@@ -66,7 +77,13 @@
           <div class="row">
             <div class="col l2 hide-on-med-and-down">
               <div id="search-toggle" class="input-field valign-wrapper">
-                <select class="browser-default grants-search white-text" bind:value={currentSearch} on:change={handleSearchChange}>
+                <select
+                  id="toggle-search-type-grants"
+                  class="browser-default grants-search white-text"
+                  aria-label="Grants"
+                  bind:value={currentSearch}
+                  on:change={handleSearchChange}
+                >
                   <optgroup class="disabled" label="Research a foundation">
                     <option value="profiles">Foundations</option>
                   </optgroup>
@@ -231,11 +248,7 @@
             </div>
             <div class="col m3 l2 hide-on-med-and-down">
               <div id="ais-widget-sort-by" class="small text-muted-max right">
-                <a href="#modal-tips" class="modal-trigger text-muted-max"
-                  >Search types <i class="tiny material-icons material-icons-rounded grey lighten-2 icon-idea left flex justify-center"
-                    >wb_incandescent</i
-                  ></a
-                >
+                <SearchTypesModal />
               </div>
             </div>
           </div>

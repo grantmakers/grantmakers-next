@@ -1,7 +1,7 @@
 <script lang="ts">
   import LogoMark from '../shared/LogoMark.svelte';
   import { footerNavigation } from '@repo/shared/constants/trustedConstants';
-  import { Heart } from 'svelte-heros-v2';
+  import Heart from '../shared/icons/Heart.svelte';
   import PrivacyPolicy from './PrivacyPolicy.svelte';
   import Divider from '../shared/Divider.svelte';
 </script>
@@ -81,7 +81,7 @@
         >
       </div>
       <div class="text-sm">
-        Built with <Heart class="inline size-5 text-red-700" variation="solid" /> and
+        Built with <Heart /> and
         <span class="inline size-5 text-amber-800"
           ><svg xmlns="http://www.w3.org/2000/svg" class="inline size-5 text-amber-800" viewBox="0 0 640 512"
             ><path

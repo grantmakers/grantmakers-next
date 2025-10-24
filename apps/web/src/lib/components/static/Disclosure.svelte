@@ -1,7 +1,5 @@
 <script lang="ts">
   import { createDisclosure } from 'svelte-headlessui';
-  import { Plus, Minus } from 'svelte-heros-v2';
-
   interface Props {
     label: string;
     content: string;
@@ -28,9 +26,17 @@
       <span class="text-base/7 font-semibold">{label}</span>
       <span class="ml-6 flex h-7 items-center">
         {#if $disclosure.expanded}
-          <Minus />
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+            <path fill-rule="evenodd" d="M4.25 12a.75.75 0 0 1 .75-.75h14a.75.75 0 0 1 0 1.5H5a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
+          </svg>
         {:else}
-          <Plus />
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+            <path
+              fill-rule="evenodd"
+              d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
+              clip-rule="evenodd"
+            />
+          </svg>
         {/if}
       </span>
     </button>

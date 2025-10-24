@@ -21,6 +21,7 @@ const config = {
         'grantmakers-blue-dark-bg': '#7fa8c4',
         'grantmakers-green': '#009688',
         'grantmakers-orange-light': '#e65c00',
+        'grantmakers-orange-light-dark-bg': '#ff8547',
         border: 'hsl(var(--border) / <alpha-value>)',
         input: 'hsl(var(--input) / <alpha-value>)',
         ring: 'hsl(var(--ring) / <alpha-value>)',

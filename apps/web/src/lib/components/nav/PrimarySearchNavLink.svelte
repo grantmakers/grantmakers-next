@@ -12,7 +12,7 @@
     page.url.pathname === href ||
       (page.url.pathname.startsWith(href) && !(href === '/about/' && page.url.pathname.startsWith('/about/donate/'))),
   );
-  let linkColor = $derived(href.includes('grants') ? 'text-grantmakers-blue-dark-bg' : 'text-grantmakers-orange-light');
+  let linkColor = $derived(href.includes('grants') ? 'text-grantmakers-blue-dark-bg' : 'text-grantmakers-orange-light-dark-bg');
   let linkClasses = $derived(isActive ? 'bg-white/10 cursor-default pointer-events-none' : 'hover:bg-white/25');
 </script>
 

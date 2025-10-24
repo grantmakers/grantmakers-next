@@ -1,3 +1,4 @@
+import { goto } from '$app/navigation';
 import { algoliasearch } from 'algoliasearch';
 import instantsearch from 'instantsearch.js';
 import { history } from 'instantsearch.js/es/lib/routers';
@@ -15,6 +16,7 @@ import {
 import { connectHits, connectRefinementList, connectCurrentRefinements } from 'instantsearch.js/es/connectors';
 import { highlight } from 'instantsearch.js/es/helpers';
 import { PUBLIC_ALGOLIA_APP_ID_GRANTS, PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS, PUBLIC_ALGOLIA_INDEX_NAME_GRANTS } from '$env/static/public';
+import { page } from '$app/state';
 
 if (!PUBLIC_ALGOLIA_APP_ID_GRANTS || !PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS || !PUBLIC_ALGOLIA_INDEX_NAME_GRANTS) {
   throw new Error('Missing required Algolia public keys. Please ensure environment variables are set.');
@@ -26,7 +28,16 @@ export let searchState = $state({
   initialEmptyQuery: false,
   noHits: false,
 });
-// export async function initSearchJs(M, onEmptyInitialSearch) {
+
+// Materilize JS Plugins
+let instances = {
+  dropdowns: [],
+  sidenavs: [],
+  formSelects: [],
+  scrollSpies: [],
+  tooltips: [],
+};
+
 export async function initSearchJs(M) {
   // Capture InstantSearch warnings re Hogan templates
   const originalWarn = console.warn;
@@ -35,13 +46,13 @@ export async function initSearchJs(M) {
       originalWarn.apply(console, args);
     }
   };
-
   // Helper definitions
   // =======================================================
   const targetEIN = document.querySelector('h1.org-name').dataset.ein;
   const targetOrgName = document.querySelector('h1.org-name').dataset.name;
   const targetTaxYearOnlyOne = document.querySelector('h1.org-name').dataset.taxYearOnlyOne === 'true'; // resolves to boolean true or false
 
+  const scrollAnchor = document.querySelector('#grants');
   // Note - fixed grants header handled by profile.js
 
   // Initialize Materialize components
@@ -49,8 +60,11 @@ export async function initSearchJs(M) {
   // Note: if the element is created dynamically via Instantsearch widget,
   // the plugin needs to be initialized in the normal Instantsearch workflow
   // using the render method (e.g. search.once('render'...)
+
+  // This legacy sidebar handles filters on mobile
+  // It returns a NodeList array, though there will only ever be one
   const elemsSN = document.querySelectorAll('.sidenav');
-  M.Sidenav.init(elemsSN);
+  instances.sidenavs = M.Sidenav.init(elemsSN);
 
   // Algolia Instantsearch
   // =======================================================
@@ -111,6 +125,43 @@ export async function initSearchJs(M) {
     routing: {
       router: history({
         cleanUrlOnDispose: false,
+        writeDelay: 400,
+        push(url) {
+          /**
+           * The SvelteKit app is an SPA
+           * The goal of these router settings is to leverage the power of the InstantSearch routing,
+           * but do so in a way that works well with SvelteKit best practices.
+           */
+          // Get the current page.url
+          const currentPageUrl = page.url;
+          // Get the "next ur", passed in by Algolia as a parameter
+          // Reformat as needed
+          const href = typeof url === 'string'
+            ? url
+            : `${url.pathname}${url.search}${url.hash}`;   
+
+          // Check if the current URL contains has search params.
+          const hasSearch = currentPageUrl.search.includes('?');
+
+          // If the current URL has no search, it's the FIRST search.
+          // Thus, we want to PUSH this to history.
+          if (!hasSearch) {
+            goto(href, { 
+              keepFocus: true, 
+              noScroll: true,
+              // Explicitly set replaceState to false - which is the default
+              replaceState: false 
+            });
+          } else {
+            // The URL already has search params, so this is a REFINEMENT.
+            // We want to REPLACE the current history entry.
+            goto(href, {
+              keepFocus: true,
+              noScroll: true,
+              replaceState: true
+            });
+          }
+        },
       }),
       stateMapping: {
         stateToRoute(uiState) {
@@ -298,6 +349,7 @@ export async function initSearchJs(M) {
           event.preventDefault();
           event.stopPropagation();
           refine(event.currentTarget.dataset.value);
+          //scrollToGrants();
         });
       });
     }
@@ -437,6 +489,7 @@ export async function initSearchJs(M) {
         // 'searchable': true,
         cssClasses: {
           checkbox: 'filled-in',
+          //label: 'flex',
           labelText: 'small',
           count: ['right', 'small'],
           showMore: ['btn-flat', 'btn-small'],
@@ -545,11 +598,19 @@ export async function initSearchJs(M) {
   /* Render Widgets
   /* ---------------------------- */
   search.once('render', async function () {
-    const elemsFS = document.querySelectorAll('select');
-    M.FormSelect.init(elemsFS);
     hideSeoPlaceholders();
+
+    // Tax Year Dropdown
     showSortByDropdown();
   });
+
+  /** 
+   * Helper function to auto scroll back to the top of the search box
+   * Use sparingly, if at all - scrolljacking is an anti-pattern
+   */
+  // search.on('render', async function () {
+  //   scrollToGrants();
+  // })
 
   search.on('error', function (e) {
     if (e.status === 429) {
@@ -570,19 +631,60 @@ export async function initSearchJs(M) {
 
   // Materialize - initialize tax year dropdown
   // =======================================================
-  function reInitDropdown() {
-    const elems = document.querySelectorAll('.dropdown-trigger');
-    M.Dropdown.init(elems, { container: 'ais-widget-refinement-list--tax_year' });
+function reInitDropdown() {
+  // Destroy all prior instances
+  if (instances.dropdowns?.length > 0) {
+    instances.dropdowns.forEach((instance) => {
+      if (instance) {
+        instance.destroy();
+      }
+    });
+    instances.dropdowns = [];
   }
+
+  const elems = document.querySelectorAll('.dropdown-trigger');
+  const containerEl = document.querySelector('#ais-widget-refinement-list--tax_year');
+
+  // Only initialize if both trigger and container exist
+  if (elems.length === 0 || !containerEl) {
+    return;
+  }
+
+  try {
+    instances.dropdowns = M.Dropdown.init(elems, {
+      container: containerEl
+    });
+  } catch (e) {
+    console.warn('Materialize Dropdown init failed:', e);
+  }
+}
 
   // Helper functions
   // =======================================================
+  function scrollToGrants() {
+    console.log('Scroll To Grants called')
+    const grantsElement = document.getElementById('grants');
+
+    if (grantsElement) {
+      const elementPosition = grantsElement.getBoundingClientRect().top;
+      const offsetPosition = window.scrollY;
+      const offset = 64; 
+      const targetPosition = elementPosition + offsetPosition - offset;
+
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+    }
+  }
+
   function hideSeoPlaceholders() {
     const target = document.getElementById('ais-widget-refinement-list--seo-placeholder');
     target.classList.add('hidden');
   }
 
   function showSortByDropdown() {
+    // Tax Year dropdown
     const el = document.getElementById('ais-widget-sort-by');
     const trigger = el.querySelector('a.dropdown-trigger');
     el.classList.remove('hidden');
@@ -677,9 +779,50 @@ export async function initSearchJs(M) {
 }
 
 export function destroySearchJs() {
-  if (search) {
-    search.dispose();
-    search = null;
-    console.log('Embedded grants search instance destroyed.');
+  try {
+    if (search) {
+      search.dispose();
+      search = null;
+    }
+    if (instances.dropdowns) {
+      instances.dropdowns.forEach((instance) => {
+        if (instance) instance.destroy()
+      })
+    }
+    // Confirmed - this is an array
+    if (instances.sidenavs) {
+      instances.sidenavs.forEach((instance) => {
+      if (instance) instance.destroy();
+    });
+    }
+    
+    if (instances.scrollSpies) {
+      instances.scrollSpies.forEach((instance) => {
+        if (instance) instance.destroy();
+      });
+    }
+    // There should no longer be any of these
+    if (instances.formSelects) {
+      instances.formSelects.forEach((instance) => {
+        if (instance) instance.destroy();
+      })
+    }
+    
+    if (instances.tooltips) {
+      instances.tooltips.forEach((instance) => {
+        if (instance) instance.destroy();
+      });
+    }
+    
+
+    instances = {
+      dropdown: null,
+      sidenavs: [],
+      formSelects: [],
+      scrollSpies: [],
+      tooltips: [],
+    };
+  } catch (error) {
+    console.warn('Leaving embedded Grants Search - failed to destroy search items and/or Materialize plugins');
   }
 }

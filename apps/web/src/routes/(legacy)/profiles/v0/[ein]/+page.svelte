@@ -10,7 +10,7 @@
   const { profile, hasSurpriseMeAccess } = data;
 </script>
 
-<div class="profile-page" data-sveltekit-preload-data="off">
+<div class="profile-page">
   {#if profile}
     <Profile {profile} {hasSurpriseMeAccess} />
   {:else}

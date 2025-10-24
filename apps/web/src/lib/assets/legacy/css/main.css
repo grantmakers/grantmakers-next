@@ -9852,7 +9852,7 @@ Mimic Algolia them - only the good parts
   .profile-content #people,
   .profile-content #activities,
   .profile-content #grants,
-  .profile-content #application-info,
+  .profile-content #guidelines,
   .profile-content #about,
   .profile-content #financials-tagline,
   .profile-content #financial-overview,
@@ -9863,7 +9863,7 @@ Mimic Algolia them - only the good parts
   }
   .profile-content #people,
   .profile-content #grants,
-  .profile-content #application-info,
+  .profile-content #guidelines,
   .profile-content #financials,
   .profile-content #filings,
   .profile-content #data-source {
@@ -10812,11 +10812,11 @@ Mimic Algolia them - only the good parts
   .profile-content ul.pagination .disabled a:hover {
     color: #999999 !important;
   }
-  .profile-content #application-info .collection,
-  .profile-content #application-info .collection-item {
+  .profile-content #guidelines .collection,
+  .profile-content #guidelines .collection-item {
     border: none;
   }
-  .profile-content #application-info .card-panel-header .row:first-child {
+  .profile-content #guidelines .card-panel-header .row:first-child {
     margin-bottom: 0;
   }
   .profile-content #alerts .img-icon-16,
@@ -11185,7 +11185,7 @@ Print
     .print-no-pagebreak,
     #grants-scroll-anchor,
     #grants,
-    #application-info,
+    #guidelines,
     #financial-overview,
     #financial-trends,
     #financials,
@@ -11236,7 +11236,7 @@ Print
     #people,
     #activities,
     #grants,
-    #application-info,
+    #guidelines,
     #alerts,
     #about,
     #financial-overview,

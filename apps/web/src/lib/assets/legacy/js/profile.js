@@ -1,37 +1,14 @@
+// Move Materialize Plugin instantiation outisde init function, so it can be cleaned up via the destroy function
+let instances = {
+  dropdown: null,
+  sidenavs: [],
+  scrollSpies: [],
+  tooltips: []
+};
 export function initProfileJs(M, orgFinancialStats) {
   // BROWSER CHECKS
   // =======================================================
   const isMobile = window.matchMedia('only screen and (max-width: 992px)');
-
-  let isSupported = browserTest();
-
-  // Show message if not supported
-  if (!isSupported) {
-    const toastContent =
-      '<span>Your browser is currently not supported.<br>Many useful features may not work.</span><a href="https://outdatedbrowser.com/en" class="btn-flat yellow-text toast-action-browser-suggestion">Browser Suggestions</a>';
-    M.Toast.dismissAll();
-    M.toast({
-      html: toastContent,
-      displayLength: 10000,
-    });
-
-    // Hide Algolia elements
-    const algoliaElements = document.querySelectorAll('.js-ie-check');
-    algoliaElements.forEach(function (el) {
-      el.classList.add('hidden');
-    });
-  }
-
-  function browserTest() {
-    const parent = document.createElement('div');
-    const el = document.createElement('span');
-    try {
-      parent.prepend(el); // Using ParentNode.prepend() as proxy for supported browsers
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
 
   // NAVBAR
   // =======================================================
@@ -40,11 +17,11 @@ export function initProfileJs(M, orgFinancialStats) {
   const navbarHeight = 64;
 
   // Set header opacity on page load
-  setHeaderOpacity();
+  //setHeaderOpacity();
 
   // Adjust opacity after scrolling
   window.addEventListener('scroll', function () {
-    setHeaderOpacity();
+    //setHeaderOpacity();
   });
 
   function setHeaderOpacity() {
@@ -67,30 +44,17 @@ export function initProfileJs(M, orgFinancialStats) {
 
   // INIT MATERIALIZE COMPONENTS
   // =======================================================
-  const elemsNavMore = document.getElementById('primary-navbar-dropdown-trigger');
-  const optionsNavMore = {
-    container: 'main-nav',
-    constrainWidth: false,
-  };
-  M.Dropdown.init(elemsNavMore, optionsNavMore);
 
   const elemsSideNav = document.querySelectorAll('.sidenav');
-  M.Sidenav.init(elemsSideNav);
+  instances.sidenav = M.Sidenav.init(elemsSideNav);
 
-  const elemsNavScrollspy = document.querySelectorAll('.scrollspy');
-  const optionsNavScrollspy = { scrollOffset: navbarHeight };
-  M.ScrollSpy.init(elemsNavScrollspy, optionsNavScrollspy);
-
-  const elemCommunitySidebar = document.getElementById('community-sidebar');
-  const optionsCommunitySidebar = {
-    edge: 'right',
-  };
-  M.Sidenav.init(elemCommunitySidebar, optionsCommunitySidebar);
+  // const elemsNavScrollspy = document.querySelectorAll('.scrollspy');
+  // const optionsNavScrollspy = { scrollOffset: navbarHeight };
+  // instances.scrollspy = M.ScrollSpy.init(elemsNavScrollspy, optionsNavScrollspy);
 
   // :not ensures Vue handles relevant initiation for Vue-controlled elements
   const elemsTooltips = document.querySelectorAll('.tooltipped:not(.v-tooltipped)');
-  M.Tooltip.init(elemsTooltips);
-  window.onload = function () {};
+  instances.tooltips = M.Tooltip.init(elemsTooltips);
 
   // CHART.JS
   // =======================================================
@@ -346,98 +310,40 @@ export function initProfileJs(M, orgFinancialStats) {
       });
     }
   }
+}
 
-  // FILINGS
-  // =======================================================
-
-  document.querySelectorAll('.js-filings-pdf').forEach((el) => {
-    // TODO Call ProPublica API
-    // addFilingURL(el);
-    // el.addEventListener('click', checkURL);
-    el.addEventListener('click', fetchProPublicaData);
-  });
-
-  document.querySelectorAll('.js-filings-xml').forEach((el) => {
-    const ein = el.dataset.ein;
-    el.addEventListener(
-      'click',
-      () => {
-        xmlNotAvailable(ein);
-      },
-      false,
-    );
-  });
-
-  async function fetchProPublicaData(e) {
-    e.preventDefault();
-    const elem = e.target;
-    const ein = elem.getAttribute('data-ein');
-    const url = `https://projects.propublica.org/nonprofits/api/v2/organizations/${ein}.json`;
-    // const data = { 'target': target };
-    // const json = JSON.stringify(data);
-
-    try {
-      const response = await fetch(url, {
-        method: 'GET',
-        // headers: {
-        //   accept: 'application/json',
-        // },
-      });
-
-      if (!response.ok) {
-        return `Error! status: ${response.status}`;
-        // throw new Error(`Error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
-      return result;
-    } catch (err) {
-      console.log(err);
-      return false;
+export function destroyProfileJs() {
+  try {
+    if (instances.dropdown) {
+      instances.dropdown.destroy();
     }
-  }
+    if (instances.sidenavs) {
+      instances.sidenavs.forEach((instance) => {
+        if (instance) instance.destroy();
+      });
+    }
+    
+    if (instances.scrollSpies) {
+      instances.scrollSpies.forEach((instance) => {
+        if (instance) instance.destroy();
+      });
+    }
+    
+    if (instances.tooltips) {
+      instances.tooltips.forEach((instance) => {
+        if (instance) instance.destroy();
+      });
+    }
+    
 
-  function xmlNotAvailable(ein) {
-    console.log('Clicked');
-    const toastContent = `<span>XML files not currently available</span><a href="https://projects.propublica.org/nonprofits/organizations/${ein}" target="_blank" class="btn-flat blue-grey-text text-lighten-3 toast-action">Try Here</a>`;
-    M.Toast.dismissAll();
-    M.toast({
-      html: toastContent,
-      displayLength: 10000,
-    });
-  }
-
-  // Lazy Load Iubenda script
-  // =======================================================
-  function createIubendaObserver() {
-    let observer;
-    let anchor = document.querySelector('footer');
-    let config = {
-      rootMargin: '0px 0px',
-      threshold: 0.01,
+    // Reset instances
+    instances = {
+      dropdown: null,
+      sidenavs: [],
+      scrollSpies: [],
+      tooltips: []
     };
-    // Initiate observer using Footer as anchor
-    observer = new IntersectionObserver(enableIubenda, config);
-    observer.observe(anchor);
-  }
-
-  function enableIubenda(entries, observer) {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        iubenda();
-        observer.unobserve(entry.target);
-      }
-    });
-  }
-
-  function iubenda() {
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = 'https://cdn.iubenda.com/iubenda.js';
-    document.body.appendChild(script);
-  }
-
-  if ('IntersectionObserver' in window) {
-    createIubendaObserver();
+  } catch (error) {
+    console.warn('Leaving Profile - failed to destroy profiles.js items');
   }
 }

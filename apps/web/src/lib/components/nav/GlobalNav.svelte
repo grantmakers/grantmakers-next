@@ -8,8 +8,6 @@
   import PrimaryNavLinkMobile from '$lib/components/nav/PrimaryNavLinkMobile.svelte';
   import SecondaryNavLinkMobile from '$lib/components/nav/SecondaryNavLinkMobile.svelte';
   import PrimarySearchNavLink from './PrimarySearchNavLink.svelte';
-  import Logo from '../shared/icons/Logo.svelte';
-  // import PrimaryNavDropdown from './PrimaryNavDropdown.svelte';
 
   interface Props {
     organizationName?: string;
@@ -164,7 +162,13 @@
                 </svg>
               </div>
               -->
-                <SecondaryNavLink href={'#'} title={organizationName} />
+                <div
+                  class="rounded-md bg-white/10 px-3 py-2 text-sm font-medium text-indigo-100 focus:outline-none focus-visible:outline-none"
+                  aria-current="page"
+                >
+                  {organizationName}
+                </div>
+                <!-- <SecondaryNavLink href={'#'} title={organizationName} /> -->
                 <div class="flex items-center text-indigo-400">
                   <svg
                     viewBox="0 0 20 20"

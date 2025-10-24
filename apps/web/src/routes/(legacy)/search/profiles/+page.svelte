@@ -2,6 +2,8 @@
   import { onMount, onDestroy } from 'svelte';
   import { goto } from '$app/navigation';
   import { sticky } from '$src/lib/utils/sticky';
+  import SearchTypesModal from '$src/lib/components/legacy/modals/SearchTypesModal.svelte';
+  import IrsExcludeModal from '$src/lib/components/legacy/modals/IrsExcludeModal.svelte';
 
   const site = {
     baseurl: '',
@@ -20,14 +22,14 @@
     if (target instanceof HTMLSelectElement) {
       const selectedSearch = target.value;
       if (selectedSearch) {
-        goto(`/search/${selectedSearch}`);
+        goto(`/search/${selectedSearch}`, { invalidateAll: true });
       }
     }
   }
 
   onMount(async () => {
     let M = await import('materialize-css');
-    const { initSearchJs } = await import('$lib/assets/legacy/js/search-profiles');
+    const { initSearchJs } = await import('$src/lib/assets/legacy/js/search-profiles.svelte.js');
     try {
       initSearchJs(M);
     } catch (error) {
@@ -35,7 +37,7 @@
     }
   });
   onDestroy(async () => {
-    const { destroySearchJs } = await import('$lib/assets/legacy/js/search-profiles');
+    const { destroySearchJs } = await import('$src/lib/assets/legacy/js/search-profiles.svelte.js');
     if (destroySearchJs) {
       destroySearchJs();
     }
@@ -60,7 +62,13 @@
           <div class="row">
             <div class="col l2 hide-on-med-and-down">
               <div id="search-toggle" class="input-field valign-wrapper">
-                <select class="browser-default grantmakers white-text" bind:value={currentSearch} on:change={handleSearchChange}>
+                <select
+                  id="toggle-search-type-profiles"
+                  class="browser-default grantmakers white-text"
+                  aria-label="Foundations"
+                  bind:value={currentSearch}
+                  on:change={handleSearchChange}
+                >
                   <optgroup class="disabled" label="Research a foundation">
                     <option value="profiles">Foundations</option>
                   </optgroup>
@@ -207,25 +215,8 @@
                 <div id="ais-widget-refinement-list--grants_to_preselected_only"></div>
                 <div id="ais-widget-refinement-list--is_likely_staffed"></div>
               </div>
-              <!-- Exclusion Definition Modals-->
-              <div id="modal-grants-to-preselected" class="modal">
-                <div class="modal-content">
-                  <h5>Excludes funders who checked Part XV Line 2</h5>
-                  <p>IRS Form 990PF text:</p>
-                  <blockquote>
-                    Check here [ ] if the foundation only makes contributions to preselected charitable organizations and does not accept
-                    unsolicited requests for funds.
-                  </blockquote>
-                  <p>
-                    Reference: <a class="blue-grey-text" href="https://www.irs.gov/instructions/i990pf#idm140500461586480" target="_blank"
-                      >IRS Form 990PF Instructions</a
-                    >
-                  </p>
-                </div>
-                <div class="modal-footer">
-                  <a href={'#'} class="modal-close waves-effect waves-green btn-flat">Close</a>
-                </div>
-              </div>
+              <!-- Exclusion Definition Modal-->
+              <IrsExcludeModal />
 
               <div class="col s12">
                 <div class="section">
@@ -242,11 +233,7 @@
             </div>
             <div class="col m3 l2 hide-on-small-only">
               <div id="ais-widget-sort-by" class="small text-muted-max right">
-                <a href="#modal-tips" class="modal-trigger text-muted-max"
-                  >Search types <i class="tiny material-icons material-icons-rounded grey lighten-2 icon-idea left flex justify-center"
-                    >wb_incandescent</i
-                  ></a
-                >
+                <SearchTypesModal />
               </div>
             </div>
           </div>
@@ -297,7 +284,10 @@
               </div>
               <div class="center-align">
                 <div class="waves-effect waves-light btn-flat">
-                  <a href="/about/the-dataset/">Learn more</a>
+                  <a href="/about/the-dataset/">
+                    Learn more
+                    <span class="sr-only">about the dataset</span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -330,57 +320,4 @@
     </div>
   </div>
   <!-- End Filters sidenav -->
-  <div id="modal-tips" class="modal">
-    <div class="modal-content">
-      <div class="card card-search-tips">
-        <div class="card-header blue-grey white-text">
-          <i class="material-icons icon-idea left">wb_incandescent</i> How to search on Grantmakers.io like a pro
-        </div>
-        <div class="card-content">
-          <span>There are two ways to search for information, driven by the primary goal of your search.</span>
-          <div class="divider"></div>
-          <div class="row flex">
-            <div class="col s12 m6 flex-direction-column flex">
-              <ul class="search-details-header">
-                <li class="text-bold">
-                  <a class="grantmakers-text" href="/search/profiles/"><i class="material-icons left">find_in_page</i> Foundation Search</a>
-                </li>
-                <li class="small">Perfect for researching a specific foundation</li>
-              </ul>
-              <div class="flex-grow-1 flex">
-                <ul class="search-details-content card card-flex grey lighten-4 z-depth-0">
-                  <li class="small">Search by</li>
-                  <li class="small">Foundation Name</li>
-                  <li class="small">Location</li>
-                  <li class="small">EIN</li>
-                  <li class="small">Trustees and board members</li>
-                  <li class="small">Key employees</li>
-                </ul>
-              </div>
-            </div>
-            <div class="col s12 m6 flex-direction-column flex">
-              <ul class="search-details-header">
-                <li class="text-bold">
-                  <a class="blue-grey-text" href="/search/grants/"><i class="material-icons left">find_in_page</i> Grants Search</a>
-                </li>
-                <li class="small">Discover new prospects</li>
-              </ul>
-              <div class="flex-grow-1 flex">
-                <ul class="search-details-content card card-flex grey lighten-4 z-depth-0">
-                  <li class="small">Search by</li>
-                  <li class="small">Keyword</li>
-                  <li class="small">Location</li>
-                  <li class="small">Past Grantees</li>
-                  <li class="small">Grant Amount</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card-action">
-          <small>DATA SOURCE: Public electronic IRS 990 dataset</small>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>

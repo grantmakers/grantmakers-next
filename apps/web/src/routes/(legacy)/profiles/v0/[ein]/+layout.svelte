@@ -13,9 +13,8 @@
   import '@fontsource/roboto/500.css';
   import '@fontsource/roboto/700.css';
 
-  // Materialize is embedded in main.css
+  // Note: Materialize is embedded in main.css
   import '$lib/assets/legacy/css/main.css';
-  import '$lib/assets/legacy/css/legacy-materialize-plugin-styles.css';
 
   interface Props {
     children?: import('svelte').Snippet;

@@ -1,3 +1,5 @@
+import { page } from '$app/state';
+import { goto } from '$app/navigation';
 import { algoliasearch } from 'algoliasearch';
 import instantsearch from 'instantsearch.js';
 import { history } from 'instantsearch.js/es/lib/routers';
@@ -20,7 +22,15 @@ if (!PUBLIC_ALGOLIA_APP_ID || !PUBLIC_ALGOLIA_SEARCH_ONLY_KEY || !PUBLIC_ALGOLIA
   throw new Error('Missing required Algolia public keys. Please ensure environment variables are set.');
 }
 
+// InstantSearch
 let search;
+
+// Materialize JS Plugins
+let instances = {
+  dropdowns: [],
+  collapsibles: [],
+  formSelects: []
+}
 
 export function initSearchJs(M) {
   // Capture InstantSearch warnings re Hogan templates
@@ -33,7 +43,6 @@ export function initSearchJs(M) {
 
   // Helper definitions
   const scrollAnchor = document.querySelector('.nav-search');
-  const isMobile = window.matchMedia('only screen and (max-width: 992px)');
 
   // INITIALIZE MATERIALIZE COMPONENTS
   // =================================
@@ -41,34 +50,31 @@ export function initSearchJs(M) {
   // the plugin needs to be initialized in the normal Instantsearch workflow
   // using the render method (e.g. search.on('render'...)
 
-  const elemsNavMore = document.getElementById('primary-navbar-dropdown-trigger');
-  const containerNavMore = document.getElementById('primary-navbar');
-
-  if (elemsNavMore && containerNavMore) {
-    const optionsNavMore = {
-      container: containerNavMore,
-      constrainWidth: false,
-    };
-    M.Dropdown.init(elemsNavMore, optionsNavMore);
+  const elemsCollapsible = document.querySelectorAll('.collapsible');
+  if (elemsCollapsible.length > 0) {
+    const initialized = M.Collapsible.init(elemsCollapsible);
+    const validInstances = Array.isArray(initialized)
+      ? initialized.filter(instance => instance != null)
+      : [initialized].filter(instance => instance != null);
+    instances.collapsibles.push(...validInstances);
   }
 
-  const elemsCollapsible = document.querySelectorAll('.collapsible');
-  M.Collapsible.init(elemsCollapsible);
-
-  const elemsMO = document.querySelectorAll('.modal');
-  M.Modal.init(elemsMO);
-
   const elSearchBoxDropdown = document.querySelectorAll('.dropdown-trigger')[0]; // HACK Hard coding using bracket notation is precarious
-  const optionsSearchBoxDropdown = {
-    alignment: 'right',
-    constrainWidth: false,
-    coverTrigger: false,
-    closeOnClick: false,
-    onCloseEnd: function () {
-      forceInputFocus();
-    },
-  };
-  M.Dropdown.init(elSearchBoxDropdown, optionsSearchBoxDropdown);
+  if (elSearchBoxDropdown) {
+    const optionsSearchBoxDropdown = {
+      alignment: 'right',
+      constrainWidth: false,
+      coverTrigger: false,
+      closeOnClick: false,
+      onCloseEnd: function () {
+        forceInputFocus();
+      },
+    };
+    const instance = M.Dropdown.init(elSearchBoxDropdown, optionsSearchBoxDropdown);
+    if (instance) {
+      instances.dropdowns.push(instance);
+    }
+  }
 
   const searchClient = algoliasearch(PUBLIC_ALGOLIA_APP_ID, PUBLIC_ALGOLIA_SEARCH_ONLY_KEY);
   const algoliaIndex = PUBLIC_ALGOLIA_INDEX_NAME;
@@ -104,6 +110,43 @@ export function initSearchJs(M) {
     routing: {
       router: history({
         cleanUrlOnDispose: false,
+        writeDelay: 400,
+        push(url) {
+          /**
+           * The SvelteKit app is an SPA
+           * The goal of these router settings is to leverage the power of the InstantSearch routing,
+           * but do so in a way that works well with SvelteKit best practices.
+           */
+          // Get the current page.url
+          const currentPageUrl = page.url;
+          // Get the "next ur", passed in by Algolia as a parameter
+          // Reformat as needed
+          const href = typeof url === 'string'
+            ? url
+            : `${url.pathname}${url.search}${url.hash}`;   
+
+          // Check if the current URL contains has search params.
+          const hasSearch = currentPageUrl.search.includes('?');
+
+          // If the current URL has no search, it's the FIRST search.
+          // Thus, we want to PUSH this to history.
+          if (!hasSearch) {
+            goto(href, { 
+              keepFocus: true, 
+              noScroll: true,
+              // Explicitly set replaceState to false - which is the default
+              replaceState: false 
+            });
+          } else {
+            // The URL already has search params, so this is a REFINEMENT.
+            // We want to REPLACE the current history entry.
+            goto(href, {
+              keepFocus: true,
+              noScroll: true,
+              replaceState: true
+            });
+          }
+        },
       }),
       stateMapping: {
         stateToRoute(uiState) {
@@ -619,7 +662,7 @@ export function initSearchJs(M) {
   const toggleRefinementWithPanel = panel({
     templates: {
       header:
-        'Grant Guidelines <i class="material-icons right text-muted-max modal-trigger" href="#modal-grants-to-preselected" title="Click to learn more">info</i>',
+        'Grant Guidelines <button command="show-modal" commandfor="irs-exclude-info" type="button" class="focus:!bg-transparent right"><i class="material-icons right text-muted-max modal-trigger" title="Click to learn more">info</i></button>',
     },
     hidden(options) {
       return options.results.nbHits === 0;
@@ -799,7 +842,6 @@ export function initSearchJs(M) {
     loader?.classList.add('loaded');
     // Search toggle
     initSelect();
-    initModals();
   });
 
   search.on('render', async function () {
@@ -807,7 +849,6 @@ export function initSearchJs(M) {
     destroyTooltips();
     // Init Materialize items
     initTooltips();
-    await initModals();
   });
 
   search.on('error', function (e) {
@@ -851,17 +892,22 @@ export function initSearchJs(M) {
     }
   }
 
-  function initModals() {
-    const elems = document.querySelectorAll('.modal');
-    M.Modal.init(elems);
-  }
-
   function initSelect() {
-    const elem = document.querySelectorAll('select');
+    /**
+     * There is only one select element - the search toggle in the search box element
+     * TODO This is consistently NOT destroyed in the cleanup function at Svelte component dismount
+     */
+    const elem = document.getElementById('toggle-search-type-profiles');
+    if (elem.length === 0) return;
+
     const options = {
       classes: 'btn blue-grey white-text',
     };
-    M.FormSelect.init(elem, options);
+    const initialized = M.FormSelect.init(elem, options);
+    const validInstances = Array.isArray(initialized)
+      ? initialized.filter(instance => instance != null)
+      : [initialized].filter(instance => instance != null);
+    instances.formSelects.push(...validInstances);
   }
 
   // QUERY HOOKS
@@ -909,6 +955,11 @@ export function initSearchJs(M) {
 
   // MISC HELPER FUNCTIONS
   // ==============
+  // Accessibility fix
+  const submitButton = document.querySelector('.ais-SearchBox-submit');
+    if (submitButton) {
+      submitButton.setAttribute('aria-label', 'Search');
+    }
   function addOrRemoveAttributes(isOnly, type, array, attribute) {
     // TODO lots of opportunities to DRY this up
     // If attribute is 'city', need to also add/remove 'state'
@@ -1025,46 +1076,50 @@ export function initSearchJs(M) {
     const e = d + ['', 'K', 'M', 'B', 'T'][k]; // append power
     return e;
   }
-
-  // Lazy Load Iubenda script
-  // =======================================================
-  function createIubendaObserver() {
-    let observer;
-    let anchor = document.querySelector('footer');
-    let config = {
-      rootMargin: '0px 0px',
-      threshold: 0.01,
-    };
-    // Initiate observer using Footer as anchor
-    observer = new IntersectionObserver(enableIubenda, config);
-    observer.observe(anchor);
-  }
-
-  function enableIubenda(entries, observer) {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        iubenda();
-        observer.unobserve(entry.target);
-      }
-    });
-  }
-
-  function iubenda() {
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = 'https://cdn.iubenda.com/iubenda.js';
-    document.body.appendChild(script);
-  }
-
-  if ('IntersectionObserver' in window) {
-    createIubendaObserver();
-  }
 }
 
 export function destroySearchJs() {
-  if (search) {
-    search.dispose();
-    search = null;
-    console.log('Profile search instance destroyed.');
+  try {
+    if (search) {
+      search.dispose();
+      search = null;
+    }
+
+    if (instances.dropdowns && instances.dropdowns.length > 0) {
+      instances.dropdowns.forEach((instance) => {
+        if (instance && typeof instance.destroy === 'function') {
+          try {
+            instance.destroy();
+          } catch (e) {
+            console.warn('Failed to destroy dropdown instance:', e);
+          }
+        }
+      });
+    }
+
+    if (instances.collapsibles && instances.collapsibles.length > 0) {
+      instances.collapsibles.forEach((instance) => {
+        if (instance && typeof instance.destroy === 'function') {
+          try {
+            instance.destroy();
+          } catch (e) {
+            console.warn('Failed to destroy collapsible instance:', e);
+          }
+        }
+      });
+    }
+
+    const toggleCleanupElement = document.getElementById('toggle-search-type-profiles')
+    if (toggleCleanupElement) {
+      toggleCleanupElement.remove()
+    }
+
+    instances = {
+      dropdowns: [],
+      collapsibles: [],
+      formSelects: [],
+    };
+  } catch (error) {
+    console.warn('Leaving Profiles Search - failed to destroy search items and/or Materialize plugins');
   }
 }

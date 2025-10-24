@@ -3,7 +3,9 @@ Tooltips
 ****************/
 .material-tooltip {
   padding: 10px 8px;
-  font-size: 1rem;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.025em;
   z-index: 2000;
   background-color: transparent;
   border-radius: 2px;
@@ -63,3 +65,57 @@ Sidenav
   z-index: 997;
   display: none;
 }
+
+/* .materialize-wrapper {
+    line-height: 1.5;
+    font-family:
+      'Inter Variable',
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Oxygen-Sans,
+      Ubuntu,
+      Cantarell,
+      'Helvetica Neue',
+      sans-serif;
+    font-weight: normal;
+    color: rgba(0, 0, 0, 0.87);
+  } */
+
+/* @media only screen and (min-width: 0) {
+    .materialize-wrapper {
+      font-size: 16px;
+    }
+  }
+
+  @media only screen and (min-width: 992px) {
+    .materialize-wrapper {
+      font-size: 14.5px;
+    }
+  }
+
+  @media only screen and (min-width: 1200px) {
+    .materialize-wrapper {
+      font-size: 15px;
+    }
+  } */
+/* :global(header) {
+    position: relative;
+  }
+  :global(#algolia-hits-wrapper) {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+  :global(#algolia-hits-wrapper.loaded) {
+    opacity: 1;
+  }
+  :global(#ais-widget-sort-by i, #search-box-dropdown-trigger i) {
+    width: auto;
+  }
+  :global(#ais-widget-sort-by i) {
+    padding: 2px;
+  }
+  :global(.tabular-nums) {
+    font-variant-numeric: tabular-nums;
+  }
+    */

@@ -7,6 +7,7 @@
    */
 
   import '@fontsource/material-icons';
+  import '$lib/assets/legacy/css/legacy-materialize-plugin-styles.css';
 
   interface Props {
     children?: import('svelte').Snippet;

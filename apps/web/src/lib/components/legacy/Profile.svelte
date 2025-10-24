@@ -1,7 +1,5 @@
 <script lang="ts">
-  import legacyFavicon from '$lib/assets/legacy/images/favicon.png';
   import legacyLogo from '$lib/assets/legacy/images/logo.png';
-  import algoliaPartnership from '$lib/assets/legacy/images/algolia-partnership-logo.svg';
   import irsLogo from '$lib/assets/legacy/images/irs-w-text.png';
   import irsLogoAlt from '$lib/assets/legacy/images/irs-w-text-alt.png';
   import proPublicaLogo from '$lib/assets/legacy/images/propublica.png';
@@ -11,7 +9,6 @@
   import { formatCompensation } from '$src/lib/utils/peopleComp';
   import { formatDateToMonthYear } from '@repo/shared/functions/formatters/dates';
   import { upperFirstLetter } from '@repo/shared/functions/formatters/names';
-  //import { searchState } from '$src/lib/assets/legacy/js/profile-embedded-search.svelte.js';
   import { browser } from '$app/environment';
 
   interface Props {
@@ -84,30 +81,43 @@
     return false;
   });
 
+  let destroyProfile: () => void;
+  let destroySearch: () => void;
+
   onMount(async () => {
     let M = await import('materialize-css');
-    const { initProfileJs } = await import('$lib/assets/legacy/js/profile');
+    const { initProfileJs, destroyProfileJs } = await import('$lib/assets/legacy/js/profile');
+    destroyProfile = destroyProfileJs;
+
     try {
       initProfileJs(M, orgFinancialStats);
     } catch (error) {
       console.log(error);
     }
     if (algolia) {
-      const { initSearchJs } = await import('$src/lib/assets/legacy/js/profile-embedded-search.svelte');
+      const { initSearchJs, destroySearchJs } = await import('$src/lib/assets/legacy/js/profile-embedded-search.svelte');
+      destroySearch = destroySearchJs;
+
       try {
-        //initSearchJs(M, handleEmptySearch);
         initSearchJs(M);
       } catch (error) {
         console.log(error);
       }
     }
-    const { initGaEvents } = await import('$src/lib/assets/legacy/js/ga-events');
-    initGaEvents();
+    try {
+      const { initGaEvents } = await import('$src/lib/assets/legacy/js/ga-events');
+      initGaEvents();
+    } catch (error) {
+      // Silently fail if an ad blocker prevents GA events definitions from loading - respecting user preferences
+    }
   });
-  onDestroy(async () => {
-    const { destroySearchJs } = await import('$src/lib/assets/legacy/js/profile-embedded-search.svelte');
-    if (destroySearchJs) {
-      destroySearchJs();
+  onDestroy(() => {
+    if (destroyProfile) {
+      destroyProfile();
+    }
+
+    if (destroySearch) {
+      destroySearch();
     }
   });
 </script>
@@ -654,7 +664,7 @@
                         </div>
                         <div id="ais-widget-sort-by" class="col s12 m3 l3 right-align hidden">
                           <a
-                            href={'#'}
+                            href={'#!'}
                             class="dropdown-trigger hide-on-med-and-down flex items-center justify-end text-muted"
                             data-target="tax-year-dropdown"
                           >
@@ -867,8 +877,8 @@
           </div>
         </div>
         <div class="row print-no-pagebreak flex flex-col sm:flex-row">
-          <div class="col s12 l6 flex-direction-column print-50 flex">
-            <div id="guidelines" class="flex-grow-1 scrollspy flex">
+          <div class="col s12 l6 flex-direction-column print-50">
+            <div id="guidelines" class="flex-grow-1 scrollspy">
               <div class="card-panel card-panel-flex">
                 <div class="card-panel-header-wrapper">
                   <div class="card-panel-header">

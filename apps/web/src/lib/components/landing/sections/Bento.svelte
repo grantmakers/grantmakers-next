@@ -24,8 +24,8 @@
             </h3>
             <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 dark:text-white">Fast research. No barriers.</p>
             <p class="mt-2 max-w-lg text-sm/6 text-gray-600 dark:text-gray-400">
-              Access any foundation's complete public record in seconds. No barriers, no paywalls—just the data you have a right to. Forever
-              free.
+              Access any foundation's complete public record in seconds. No barriers, no paywalls. Just the data you have a right to.
+              Forever free.
             </p>
           </div>
           <img src={foundationSearchRadial} alt="" class="object-top-left h-80 object-contain" />

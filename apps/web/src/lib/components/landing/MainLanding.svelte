@@ -1,5 +1,4 @@
 <script lang="ts">
-  import LogoMark from '../shared/LogoMark.svelte';
   import Autocomplete from '$lib/components/search/Autocomplete.svelte';
   import type { AutocompleteInstance } from '@repo/shared/typings/algolia/autocomplete';
   import Bento from './sections/Bento.svelte';
@@ -16,7 +15,6 @@
   import BottomCTA from './sections/BottomCTA.svelte';
   import { articleLinks } from '@repo/shared/constants/trustedConstants';
   import ClosingStatement from '$lib/components/landing/sections/ClosingStatement.svelte';
-  import PrimaryNavLink from '../nav/PrimaryNavLink.svelte';
 
   interface Props {
     handleAutocompleteInit: (instance: AutocompleteInstance) => void;

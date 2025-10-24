@@ -31,7 +31,7 @@
         class="rounded-md bg-gray-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-500"
         >{hasHistory ? '← Go Back' : 'Return Home'}</button
       >
-      <a href={linkToAbout}>Learn more</a>
+      <a href={linkToAbout}>Learn more<span class="sr-only"> about the project</span></a>
     </div>
   </div>
 </main>
