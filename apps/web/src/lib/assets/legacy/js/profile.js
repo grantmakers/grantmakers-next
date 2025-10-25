@@ -5,7 +5,7 @@ let instances = {
   scrollSpies: [],
   tooltips: [],
 };
-export function initProfileJs(M, orgFinancialStats) {
+export async function initProfileJs(M, orgFinancialStats) {
   // BROWSER CHECKS
   // =======================================================
   const isMobile = window.matchMedia('only screen and (max-width: 992px)');
@@ -46,7 +46,11 @@ export function initProfileJs(M, orgFinancialStats) {
   // =======================================================
 
   const elemsSideNav = document.querySelectorAll('.sidenav');
-  instances.sidenav = M.Sidenav.init(elemsSideNav);
+  if (elemsSideNav.length > 0) {
+    instances.sidenavs = M.Sidenav.init(elemsSideNav);
+  } else {
+    instances.sidenavs = [];
+  }
 
   // const elemsNavScrollspy = document.querySelectorAll('.scrollspy');
   // const optionsNavScrollspy = { scrollOffset: navbarHeight };
@@ -98,15 +102,20 @@ export function initProfileJs(M, orgFinancialStats) {
     });
   }
 
-  function loadCharts() {
+  async function loadCharts() {
     gaChartsEvents('Loading ChartJS');
     const chartJS = document.createElement('script');
     chartJS.type = 'text/javascript';
     chartJS.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js';
+    chartJS.onerror = () => {
+      hideLoader(chartWrapperOverview);
+      hideLoader(chartWrapperTrends);
+      gaChartsEvents('ChartJS failed to load');
+    };
     // Make Chart.js script available on client
     document.body.appendChild(chartJS);
     // Now that Chart.js script is available, create the charts
-    createCharts(chartJS);
+    await createCharts(chartJS);
   }
 
   function createCharts(init) {
@@ -317,9 +326,15 @@ export function destroyProfileJs() {
     if (instances.dropdown) {
       instances.dropdown.destroy();
     }
-    if (instances.sidenavs) {
+    if (instances.sidenavs && instances.sidenavs.length > 0) {
       instances.sidenavs.forEach((instance) => {
-        if (instance) instance.destroy();
+        if (instance) {
+          try {
+            instance.destroy();
+          } catch (error) {
+            console.debug('Sidenav cleanup:', error.message);
+          }
+        }
       });
     }
 
