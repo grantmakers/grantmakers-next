@@ -31,8 +31,11 @@
   };
   const path = $derived(page.url.pathname);
   const config = $derived.by(() => {
-    if (path.startsWith('/profiles')) {
-      return { route: 'profiles', transparentBg: false, showSecondaryNav: true, absolute: true, secondaryNavLinks: profileNavItems };
+    if (path.startsWith('/profiles/v0')) {
+      return { route: 'profiles', transparentBg: false, showSecondaryNav: false, absolute: true, secondaryNavLinks: [] };
+    }
+    if (path.startsWith('/profiles/v1')) {
+      return { route: 'profiles', transparentBg: false, showSecondaryNav: false, absolute: true, secondaryNavLinks: profileNavItems };
     }
     if (path.startsWith('/about')) {
       return { route: 'about', transparentBg: false, showSecondaryNav: true, absolute: false, secondaryNavLinks: aboutLinks };
