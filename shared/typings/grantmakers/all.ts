@@ -97,26 +97,6 @@ export interface SummaryGrantsData extends GrantmakersExtractedDataObj {
   grants_smallest: SummaryGrant[];
 }
 
-export interface GivTuesGrant {
-  _id: string; // Assuming ObjectId is converted to string
-  TAXYEAR: number;
-  FILERNAME1: string;
-  FILEREIN: number;
-  TAXPEREND: Date; // Assuming ISODate is converted to Date
-  TAXPERBEGIN: Date; // Assuming ISODate is converted to Date
-  URL: string;
-  SIGOCPYRBNBN1: string;
-  SIGOCPYRFAAL1: string;
-  SIGOCPYRFAAL2: string;
-  SIGOCPYRFACI: string;
-  SIGOCPYRFAPO: string;
-  SIGOCPYRFAPC: string;
-  SIGOCPYAMOUN: number;
-  SIGOCPYPOGOC: string;
-  SIGOCPYRFSTA: string;
-  SIGOCPYRRELA: string;
-}
-
 export interface WebsiteObj {
   verbatim: string | undefined | null; // Note: MongoDB serializes undefined to null upon insert https://www.mongodb.com/docs/drivers/node/current/fundamentals/bson/undefined-values/
   website: string | null;
@@ -190,20 +170,20 @@ export interface FilingOrgNamesObj {
   formatted: string;
 }
 
-export interface Pub78Common {
-  ein: string;
-  name: string;
-  city: string;
-  state: string;
-  country: string;
-}
-
 export interface Filing {
   object_id_irs: string;
   filing_version: string;
   filing_is_amendment: boolean;
   tax_period: number; // yyyymm
   tax_year: number; // yyyy
+}
+
+export interface Pub78Common {
+  ein: string;
+  name: string;
+  city: string;
+  state: string;
+  country: string;
 }
 
 export interface Pub78Item extends Pub78Common {
@@ -217,6 +197,11 @@ export interface Pub78Doc extends Pub78Common {
   accessed_on: string;
 }
 
+export interface ReducedPub78 {
+  name: string;
+  city: string;
+}
+
 export type CharitableActivitiesArray = CharitableActivity[];
 
 export interface CharitableActivity {
@@ -226,11 +211,21 @@ export interface CharitableActivity {
 
 export type PeopleArray = Person[];
 
+export interface PersonLocation {
+  city: string | null;
+  country: string | null;
+  is_foreign: boolean;
+  // Use either state (for US) or province (for foreign)
+  state?: string | null; // Only present for US addresses
+  province?: string | null; // Only present for foreign addresses
+}
+
 export interface Person {
   name: string | PersonNameWithAttributes | LegacyPersonNameWithAttributes;
   title: string;
-  hours: number;
-  compensation: number;
+  hours: number | null; // 990N is null
+  compensation: number | null; // 990N is null
+  location?: PersonLocation; // 990N
 }
 
 interface PersonNameWithAttributes {
@@ -244,6 +239,7 @@ interface LegacyPersonNameWithAttributes {
   attributes: unknown;
 }
 
+/** Embedded Grants */
 export type GrantsArray = Grant[] | []; // This is normalized: Filings with only 1 grant will be normalized to be have one grant in an array
 
 // Embedded grants use the simplified key naming scheme
@@ -290,6 +286,35 @@ export interface GrantsFacets {
   };
 }
 
+/** Grant Application Data */
+export interface GrantsApplicationObj {
+  grants_application_info: string | null;
+  grants_application_deadlines: string | null;
+  grants_application_restrictions: string | null;
+  grants_application_contact: GrantsApplicationContact | null;
+}
+
+export interface GrantsApplicationContact {
+  name: string | null;
+  email: string | null;
+  phone: string | null;
+  address: GrantsApplicationContactAddress;
+  is_foreign?: boolean | null;
+}
+
+export interface GrantsApplicationContactAddress {
+  street: string;
+  street2: string | null;
+  city: string;
+  state: string;
+  country: 'US' | string;
+  zip: string;
+}
+
+/**
+ * Grants Collection
+ */
+
 export type GrantsCollection = GrantInCollection[];
 
 export interface GrantInCollection {
@@ -312,8 +337,99 @@ export interface GrantInCollection {
   grantee_is_foreign: boolean;
   grant_number: number;
   grants_to_preselected_only: true | null;
+  foundation_is_likely_inactive: boolean;
 }
 
+/**
+ * Grant Enhancements
+ */
+
+export enum EnhancementSource {
+  DIRECT_MATCH = 'direct_name_match',
+  NORMALIZED_NAME_MATCH = 'normalized_name_match',
+  LLM = 'llm', // Direct response from LLM
+  LLM_CONFIRMED = 'llm_confirmed', // Cross-check LLM response with Pub78, EOBMF, or legal_names collection
+}
+
+export enum LlmModel {
+  GEMINI_2_5_PRO = 'gemini-2.5-pro',
+  GEMINI_2_5_FLASH = 'gemini-2.5-flash',
+}
+
+export enum LlmPrompt {
+  GEMINI_EIN_V4 = 'v4_gemini_ein',
+  GEMINI_EIN_V5 = 'v5_gemini_ein',
+  GEMINI_EIN_V6 = 'v6_gemini_ein',
+}
+
+export interface Enhancement<T = undefined> {
+  value: string | string[];
+  source: EnhancementSource;
+  confidence: number | 'high' | 'medium' | 'low';
+  enhanced_at: string;
+  metadata?: T;
+}
+
+// Specific metadata types for each enhancement
+interface NameNormalizationMetadata {
+  normalized: string;
+  normalized_remove_parens: string;
+  dba_aka_in_end_parens: string;
+}
+
+interface UsageTokenOutputDetails {
+  candidates?: number;
+  thinking?: number;
+}
+
+export interface UsageTokenDetails {
+  input: number;
+  output: number;
+  output_detail: UsageTokenOutputDetails;
+}
+
+export interface LlmResponse {
+  thinking: string[];
+  json: LlmTextResponse | null;
+  usage: UsageTokenDetails | null;
+}
+
+export interface LlmResponseMetadata extends LlmResponse {
+  model: LlmModel;
+  prompt: LlmPrompt;
+}
+
+export interface LlmTextResponse {
+  grantee_name: string;
+  classification: 'individual' | 'nonprofit' | 'government' | 'educational' | 'foreign' | 'unknown';
+  ein: string | null;
+  confidence: 'high' | 'medium' | 'low';
+  legal_name: string | null;
+}
+
+export interface Enhancements {
+  grantee_name_normalizations?: Enhancement<NameNormalizationMetadata>;
+  grantee_name_displayed?: Enhancement<unknown>;
+  grantee_ein?: Enhancement<LlmResponse>;
+  grantee_classification?: Enhancement<unknown>;
+  grantee_mission?: Enhancement;
+  grantee_keywords?: Enhancement;
+  llm_response?: Enhancement<LlmResponseMetadata>;
+}
+
+export interface EnhancedGrant extends GrantInCollection {
+  enhancements?: Enhancements;
+}
+
+export interface LlmCollection {
+  _id?: string;
+  grantee_name: string;
+  grantee_city: string;
+  grant_object_ids: string[];
+  enhancements: Enhancements;
+}
+
+/** Algolia Grants Response */
 export interface AlgoliaMockResponse {
   query: string;
   hits: GrantInCollection[];
@@ -353,26 +469,26 @@ interface FacetStats {
   sum?: number;
 }
 
-export interface GrantsApplicationObj {
-  grants_application_info: string | null;
-  grants_application_deadlines: string | null;
-  grants_application_restrictions: string | null;
-  grants_application_contact: GrantsApplicationContact | null;
-}
+/** Giving Tuesday Data Marts */
 
-export interface GrantsApplicationContact {
-  name: string | null;
-  email: string | null;
-  phone: string | null;
-  address: GrantsApplicationContactAddress;
-  is_foreign?: boolean | null;
+// cspell:disable
+export interface GivTuesGrant {
+  _id: string; // Assuming ObjectId is converted to string
+  TAXYEAR: number;
+  FILERNAME1: string;
+  FILEREIN: number;
+  TAXPEREND: Date; // Assuming ISODate is converted to Date
+  TAXPERBEGIN: Date; // Assuming ISODate is converted to Date
+  URL: string;
+  SIGOCPYRBNBN1: string;
+  SIGOCPYRFAAL1: string;
+  SIGOCPYRFAAL2: string;
+  SIGOCPYRFACI: string;
+  SIGOCPYRFAPO: string;
+  SIGOCPYRFAPC: string;
+  SIGOCPYAMOUN: number;
+  SIGOCPYPOGOC: string;
+  SIGOCPYRFSTA: string;
+  SIGOCPYRRELA: string;
 }
-
-export interface GrantsApplicationContactAddress {
-  street: string;
-  street2: string | null;
-  city: string;
-  state: string;
-  country: 'US' | string;
-  zip: string;
-}
+// cspell:enable
