@@ -1,6 +1,5 @@
 <script lang="ts">
-  import Autocomplete from '$lib/components/search/Autocomplete.svelte';
-  import type { AutocompleteInstance } from '@repo/shared/typings/algolia/autocomplete';
+  import Search from '../search/Search.svelte';
   import Bento from './sections/Bento.svelte';
   import Ethos from './sections/Ethos.svelte';
   import Features from './sections/Features.svelte';
@@ -15,12 +14,6 @@
   import BottomCTA from './sections/BottomCTA.svelte';
   import { articleLinks } from '@repo/shared/constants/trustedConstants';
   import ClosingStatement from '$lib/components/landing/sections/ClosingStatement.svelte';
-
-  interface Props {
-    handleAutocompleteInit: (instance: AutocompleteInstance) => void;
-  }
-
-  let { handleAutocompleteInit }: Props = $props();
 </script>
 
 <div class="relative bg-white">
@@ -43,48 +36,33 @@
       </div>
 
       <!-- Primary message -->
-      <div class="mx-auto max-w-7xl px-6 pb-24 pt-32 sm:pb-32 lg:flex lg:flex-col lg:px-8 lg:py-52">
-        <div class="flex shrink-0 flex-col justify-between gap-8 md:flex-row lg:gap-0 lg:pt-8">
-          <div class="mx-auto max-w-2xl text-left lg:mx-0 lg:max-w-xl">
-            <h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-              Foundation research<br />
-              <span class="text-slate-500"><del>is expensive</del></span><br /> just got easier
+      <div class="mx-auto max-w-7xl px-6 pb-24 pt-32 sm:pb-32 lg:flex lg:flex-col lg:px-8 lg:py-60">
+        <section class="flex flex-col items-center justify-center px-4 text-center">
+          <div class="w-full max-w-2xl">
+            <h1 class="mb-4 text-4xl font-bold text-white sm:text-6xl">
+              <span class="text-grantmakers-orange">Foundation research</span><br />Fully public. Built for everyone.
             </h1>
-            <!-- Overriding h2 defaults is an anti-pattern. Consider removing all header tag defaults at the app.css level -->
-            <h2 class="mt-6 text-lg font-normal leading-8 tracking-normal text-gray-300">
-              Grantmakers.io's mission is to be the antidote to the continued industry practice of charging for basic <span
-                class="font-extrabold text-grantmakers-orange">foundation 990 data</span
-              >. It's a grassroots project created for grassroots changemakers.
-              <span class="lg:display hidden">World-class foundation research for everyone, not just those with large budgets.</span>
+            <h2 class="mt-6 text-lg font-normal text-gray-300">
+              Research any US foundation in seconds. See their complete giving history, who they fund, and how much they give. Built from
+              public 990s. Forever free.
+              <!-- <span class="font-extrabold text-grantmakers-orange-light">Foundation 990 data</span> should be available to every nonprofit, not
+              just those with big budgets. Grantmakers.io is a grassroots project created for grassroots changemakers. -->
             </h2>
-          </div>
-          <div class="my-auto flex h-fit justify-end gap-x-4 rounded-xl bg-white/5 p-6 ring-1 ring-inset ring-white/10">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              class="hidden h-7 w-5 flex-none text-indigo-400 sm:block"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
-                clip-path="evenodd"
-              ></path>
-            </svg>
-
-            <div class="flex flex-col gap-4 text-base leading-7">
-              <div class="text-xl font-semibold text-white">Foundation Quick Search</div>
-              <div class="mt-2 grow text-gray-300">
-                <Autocomplete
-                  size={'large'}
-                  profilesVersion={'v0'}
-                  placeholderVersion={'foundation'}
-                  onAutocompleteInit={handleAutocompleteInit}
-                />
+            <div class="flex flex-col gap-4 p-6 text-base leading-7">
+              <div class="mt-2 grow rounded-lg bg-white/5 p-4 text-gray-300 ring-1 ring-inset ring-white/10">
+                <Search placeholderVersion={'foundation'} profilesVersion={'v0'} />
+              </div>
+            </div>
+            <div class="hidden sm:mb-8 sm:flex sm:justify-center">
+              <div class="relative rounded-full px-3 py-1 text-sm/6 text-gray-400 ring-1 ring-white/10 hover:ring-white/20">
+                Find foundations by who they've funded
+                <a href="/search/grants/" class="ml-2 font-semibold text-indigo-400"
+                  ><span aria-hidden="true" class="absolute inset-0"></span>Grants Search <span aria-hidden="true">&rarr;</span></a
+                >
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
         <!-- Features -->
         <div class="mx-auto w-full shrink-0 lg:mx-0 lg:max-w-full lg:pt-8">

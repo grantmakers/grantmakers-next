@@ -12,6 +12,17 @@ export interface Filing {
   url: string;
 }
 
+/**
+ * Algolia highlight result structure for a single attribute
+ * https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js/
+ */
+export interface HighlightResult {
+  value: string;
+  matchLevel: 'none' | 'partial' | 'full';
+  matchedWords: string[];
+  fullyHighlighted?: boolean;
+}
+
 // Legacy response
 export interface AlgoliaProfilesResponseLegacy {
   objectID: string;
@@ -57,4 +68,12 @@ export interface AlgoliaProfilesResponseLegacy {
   organization_name_second_prior_year: string;
   enable_algolia_search: boolean;
   ein_dash: string;
+  _highlightResult?: {
+    organization_name?: HighlightResult;
+    city?: HighlightResult;
+    state?: HighlightResult;
+    [key: string]: HighlightResult | undefined;
+  };
+  __position: number;
+  __queryID?: string | undefined;
 }
