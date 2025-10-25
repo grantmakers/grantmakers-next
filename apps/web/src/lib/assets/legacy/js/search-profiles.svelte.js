@@ -30,8 +30,8 @@ let instances = {
   dropdowns: [],
   collapsibles: [],
   formSelects: [],
-  sidenavs: []
-}
+  sidenavs: [],
+};
 
 export function initSearchJs(M) {
   // Capture InstantSearch warnings re Hogan templates
@@ -54,18 +54,20 @@ export function initSearchJs(M) {
   const elemsCollapsible = document.querySelectorAll('.collapsible');
   if (elemsCollapsible.length > 0) {
     const initialized = M.Collapsible.init(elemsCollapsible);
-    const validInstances = Array.isArray(initialized)
-      ? initialized.filter(instance => instance != null)
-      : [initialized].filter(instance => instance != null);
+    const validInstances =
+      Array.isArray(initialized) ?
+        initialized.filter((instance) => instance != null)
+      : [initialized].filter((instance) => instance != null);
     instances.collapsibles.push(...validInstances);
   }
 
   const elemsSideNav = document.querySelectorAll('.sidenav');
   if (elemsSideNav.length > 0) {
     const initialized = M.Sidenav.init(elemsSideNav);
-    const validInstances = Array.isArray(initialized)
-      ? initialized.filter(instance => instance != null)
-      : [initialized].filter(instance => instance != null);
+    const validInstances =
+      Array.isArray(initialized) ?
+        initialized.filter((instance) => instance != null)
+      : [initialized].filter((instance) => instance != null);
     instances.sidenavs.push(...validInstances);
   }
 
@@ -131,9 +133,7 @@ export function initSearchJs(M) {
           const currentPageUrl = page.url;
           // Get the "next ur", passed in by Algolia as a parameter
           // Reformat as needed
-          const href = typeof url === 'string'
-            ? url
-            : `${url.pathname}${url.search}${url.hash}`;   
+          const href = typeof url === 'string' ? url : `${url.pathname}${url.search}${url.hash}`;
 
           // Check if the current URL contains has search params.
           const hasSearch = currentPageUrl.search.includes('?');
@@ -141,11 +141,11 @@ export function initSearchJs(M) {
           // If the current URL has no search, it's the FIRST search.
           // Thus, we want to PUSH this to history.
           if (!hasSearch) {
-            goto(href, { 
-              keepFocus: true, 
+            goto(href, {
+              keepFocus: true,
               noScroll: true,
               // Explicitly set replaceState to false - which is the default
-              replaceState: false 
+              replaceState: false,
             });
           } else {
             // The URL already has search params, so this is a REFINEMENT.
@@ -153,7 +153,7 @@ export function initSearchJs(M) {
             goto(href, {
               keepFocus: true,
               noScroll: true,
-              replaceState: true
+              replaceState: true,
             });
           }
         },
@@ -696,7 +696,8 @@ export function initSearchJs(M) {
       showReset: true,
       showLoadingIndicator: false,
       cssClasses: {
-        input: 'flex-grow h-12 pl-10 pr-4 w-full bg-white text-gray-900 text-base rounded-lg border-0 appearance-none shadow-none transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 !outline !outline-1 !-outline-offset-1 !outline-gray-200'
+        input:
+          'flex-grow h-12 pl-10 pr-4 w-full bg-white text-gray-900 text-base rounded-lg border-0 appearance-none shadow-none transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 !outline !outline-1 !-outline-offset-1 !outline-gray-200',
       },
       queryHook: function (query, searchInstance) {
         // Query hook is called just before search is triggered
@@ -914,9 +915,10 @@ export function initSearchJs(M) {
       classes: 'btn blue-grey white-text',
     };
     const initialized = M.FormSelect.init(elem, options);
-    const validInstances = Array.isArray(initialized)
-      ? initialized.filter(instance => instance != null)
-      : [initialized].filter(instance => instance != null);
+    const validInstances =
+      Array.isArray(initialized) ?
+        initialized.filter((instance) => instance != null)
+      : [initialized].filter((instance) => instance != null);
     instances.formSelects.push(...validInstances);
   }
 
@@ -967,9 +969,9 @@ export function initSearchJs(M) {
   // ==============
   // Accessibility fix
   const submitButton = document.querySelector('.ais-SearchBox-submit');
-    if (submitButton) {
-      submitButton.setAttribute('aria-label', 'Search');
-    }
+  if (submitButton) {
+    submitButton.setAttribute('aria-label', 'Search');
+  }
   function addOrRemoveAttributes(isOnly, type, array, attribute) {
     // TODO lots of opportunities to DRY this up
     // If attribute is 'city', need to also add/remove 'state'
@@ -1131,16 +1133,16 @@ export function destroySearchJs() {
       });
     }
 
-    const toggleCleanupElement = document.getElementById('toggle-search-type-profiles')
+    const toggleCleanupElement = document.getElementById('toggle-search-type-profiles');
     if (toggleCleanupElement) {
-      toggleCleanupElement.remove()
+      toggleCleanupElement.remove();
     }
 
     instances = {
       dropdowns: [],
       collapsibles: [],
       formSelects: [],
-      sidenavs: []
+      sidenavs: [],
     };
   } catch (error) {
     console.warn('Leaving Profiles Search - failed to destroy search items and/or Materialize plugins');

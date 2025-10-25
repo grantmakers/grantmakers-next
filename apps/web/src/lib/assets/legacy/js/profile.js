@@ -3,7 +3,7 @@ let instances = {
   dropdown: null,
   sidenavs: [],
   scrollSpies: [],
-  tooltips: []
+  tooltips: [],
 };
 export function initProfileJs(M, orgFinancialStats) {
   // BROWSER CHECKS
@@ -322,26 +322,25 @@ export function destroyProfileJs() {
         if (instance) instance.destroy();
       });
     }
-    
+
     if (instances.scrollSpies) {
       instances.scrollSpies.forEach((instance) => {
         if (instance) instance.destroy();
       });
     }
-    
+
     if (instances.tooltips) {
       instances.tooltips.forEach((instance) => {
         if (instance) instance.destroy();
       });
     }
-    
 
     // Reset instances
     instances = {
       dropdown: null,
       sidenavs: [],
       scrollSpies: [],
-      tooltips: []
+      tooltips: [],
     };
   } catch (error) {
     console.warn('Leaving Profile - failed to destroy profiles.js items');

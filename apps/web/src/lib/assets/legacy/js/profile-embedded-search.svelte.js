@@ -136,9 +136,7 @@ export async function initSearchJs(M) {
           const currentPageUrl = page.url;
           // Get the "next ur", passed in by Algolia as a parameter
           // Reformat as needed
-          const href = typeof url === 'string'
-            ? url
-            : `${url.pathname}${url.search}${url.hash}`;   
+          const href = typeof url === 'string' ? url : `${url.pathname}${url.search}${url.hash}`;
 
           // Check if the current URL contains has search params.
           const hasSearch = currentPageUrl.search.includes('?');
@@ -146,11 +144,11 @@ export async function initSearchJs(M) {
           // If the current URL has no search, it's the FIRST search.
           // Thus, we want to PUSH this to history.
           if (!hasSearch) {
-            goto(href, { 
-              keepFocus: true, 
+            goto(href, {
+              keepFocus: true,
               noScroll: true,
               // Explicitly set replaceState to false - which is the default
-              replaceState: false 
+              replaceState: false,
             });
           } else {
             // The URL already has search params, so this is a REFINEMENT.
@@ -158,7 +156,7 @@ export async function initSearchJs(M) {
             goto(href, {
               keepFocus: true,
               noScroll: true,
-              replaceState: true
+              replaceState: true,
             });
           }
         },
@@ -604,7 +602,7 @@ export async function initSearchJs(M) {
     showSortByDropdown();
   });
 
-  /** 
+  /**
    * Helper function to auto scroll back to the top of the search box
    * Use sparingly, if at all - scrolljacking is an anti-pattern
    */
@@ -631,49 +629,49 @@ export async function initSearchJs(M) {
 
   // Materialize - initialize tax year dropdown
   // =======================================================
-function reInitDropdown() {
-  // Destroy all prior instances
-  if (instances.dropdowns?.length > 0) {
-    instances.dropdowns.forEach((instance) => {
-      if (instance) {
-        instance.destroy();
-      }
-    });
-    instances.dropdowns = [];
-  }
+  function reInitDropdown() {
+    // Destroy all prior instances
+    if (instances.dropdowns?.length > 0) {
+      instances.dropdowns.forEach((instance) => {
+        if (instance) {
+          instance.destroy();
+        }
+      });
+      instances.dropdowns = [];
+    }
 
-  const elems = document.querySelectorAll('.dropdown-trigger');
-  const containerEl = document.querySelector('#ais-widget-refinement-list--tax_year');
+    const elems = document.querySelectorAll('.dropdown-trigger');
+    const containerEl = document.querySelector('#ais-widget-refinement-list--tax_year');
 
-  // Only initialize if both trigger and container exist
-  if (elems.length === 0 || !containerEl) {
-    return;
-  }
+    // Only initialize if both trigger and container exist
+    if (elems.length === 0 || !containerEl) {
+      return;
+    }
 
-  try {
-    instances.dropdowns = M.Dropdown.init(elems, {
-      container: containerEl
-    });
-  } catch (e) {
-    console.warn('Materialize Dropdown init failed:', e);
+    try {
+      instances.dropdowns = M.Dropdown.init(elems, {
+        container: containerEl,
+      });
+    } catch (e) {
+      console.warn('Materialize Dropdown init failed:', e);
+    }
   }
-}
 
   // Helper functions
   // =======================================================
   function scrollToGrants() {
-    console.log('Scroll To Grants called')
+    console.log('Scroll To Grants called');
     const grantsElement = document.getElementById('grants');
 
     if (grantsElement) {
       const elementPosition = grantsElement.getBoundingClientRect().top;
       const offsetPosition = window.scrollY;
-      const offset = 64; 
+      const offset = 64;
       const targetPosition = elementPosition + offsetPosition - offset;
 
       window.scrollTo({
         top: targetPosition,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     }
   }
@@ -786,16 +784,16 @@ export function destroySearchJs() {
     }
     if (instances.dropdowns) {
       instances.dropdowns.forEach((instance) => {
-        if (instance) instance.destroy()
-      })
+        if (instance) instance.destroy();
+      });
     }
     // Confirmed - this is an array
     if (instances.sidenavs) {
       instances.sidenavs.forEach((instance) => {
-      if (instance) instance.destroy();
-    });
+        if (instance) instance.destroy();
+      });
     }
-    
+
     if (instances.scrollSpies) {
       instances.scrollSpies.forEach((instance) => {
         if (instance) instance.destroy();
@@ -805,15 +803,14 @@ export function destroySearchJs() {
     if (instances.formSelects) {
       instances.formSelects.forEach((instance) => {
         if (instance) instance.destroy();
-      })
+      });
     }
-    
+
     if (instances.tooltips) {
       instances.tooltips.forEach((instance) => {
         if (instance) instance.destroy();
       });
     }
-    
 
     instances = {
       dropdown: null,
