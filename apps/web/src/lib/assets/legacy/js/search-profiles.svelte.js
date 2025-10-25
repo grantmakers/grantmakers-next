@@ -29,7 +29,8 @@ let search;
 let instances = {
   dropdowns: [],
   collapsibles: [],
-  formSelects: []
+  formSelects: [],
+  sidenavs: []
 }
 
 export function initSearchJs(M) {
@@ -57,6 +58,15 @@ export function initSearchJs(M) {
       ? initialized.filter(instance => instance != null)
       : [initialized].filter(instance => instance != null);
     instances.collapsibles.push(...validInstances);
+  }
+
+  const elemsSideNav = document.querySelectorAll('.sidenav');
+  if (elemsSideNav.length > 0) {
+    const initialized = M.Sidenav.init(elemsSideNav);
+    const validInstances = Array.isArray(initialized)
+      ? initialized.filter(instance => instance != null)
+      : [initialized].filter(instance => instance != null);
+    instances.sidenavs.push(...validInstances);
   }
 
   const elSearchBoxDropdown = document.querySelectorAll('.dropdown-trigger')[0]; // HACK Hard coding using bracket notation is precarious
@@ -1109,6 +1119,18 @@ export function destroySearchJs() {
       });
     }
 
+    if (instances.sidenavs && instances.sidenavs.length > 0) {
+      instances.sidenavs.forEach((instance) => {
+        if (instance && typeof instance.destroy === 'function') {
+          try {
+            instance.destroy();
+          } catch (e) {
+            console.warn('Failed to destroy sidenav instance:', e);
+          }
+        }
+      });
+    }
+
     const toggleCleanupElement = document.getElementById('toggle-search-type-profiles')
     if (toggleCleanupElement) {
       toggleCleanupElement.remove()
@@ -1118,6 +1140,7 @@ export function destroySearchJs() {
       dropdowns: [],
       collapsibles: [],
       formSelects: [],
+      sidenavs: []
     };
   } catch (error) {
     console.warn('Leaving Profiles Search - failed to destroy search items and/or Materialize plugins');
