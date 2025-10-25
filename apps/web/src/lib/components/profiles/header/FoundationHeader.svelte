@@ -60,7 +60,7 @@
           </strong>
           {#if profile.has_website}
             <Dot />
-            <a href={profile.website} target="_blank" rel="noopener noreferrer">
+            <a href={profile.website} target="_blank" rel="external noopener">
               {profile.website_verbatim?.toLowerCase()}
             </a>
           {/if}
