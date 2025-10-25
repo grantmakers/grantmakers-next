@@ -63,7 +63,7 @@
   <title>{site.title}</title>
 </svelte:head>
 
-<div class="unified-search" data-sveltekit-preload-data="false">
+<div class="unified-search pb-8" data-sveltekit-preload-data="false">
   <main>
     <div class="nav-search" bind:this={searchAnchor}>
       <nav

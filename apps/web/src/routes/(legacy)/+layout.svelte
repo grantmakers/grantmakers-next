@@ -17,7 +17,7 @@
 </script>
 
 <!-- Wrap the layout to add a layout-specific background color -->
-<div class="min-h-screen bg-slate-200">
+<div class="min-h-full bg-slate-200">
   {@render children?.()}
 </div>
 

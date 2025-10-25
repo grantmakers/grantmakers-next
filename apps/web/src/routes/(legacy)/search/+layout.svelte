@@ -29,6 +29,6 @@
   <GrantsHero />
 {/if}
 
-<div class="materialize-wrapper">
+<div class="materialize-wrapper min-h-full">
   {@render children?.()}
 </div>

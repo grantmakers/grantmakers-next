@@ -12,10 +12,6 @@
   let { children }: Props = $props();
 </script>
 
-{@render children?.()}
-
-<style>
-  :global(body) {
-    background-color: #f8f9fe;
-  }
-</style>
+<div class="min-h-full" style="background-color: #f8f9fe;">
+  {@render children?.()}
+</div>

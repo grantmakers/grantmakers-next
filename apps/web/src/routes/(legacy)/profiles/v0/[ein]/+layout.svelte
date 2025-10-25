@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://qa1231c5w9-dsn.algolia.net" crossorigin="anonymous" />
 </svelte:head>
 
-<div class="materialize-wrapper-main">
+<div class="materialize-wrapper-main min-h-full">
   {@render children?.()}
 </div>
 
