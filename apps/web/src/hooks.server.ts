@@ -57,6 +57,9 @@ export async function handle({ event, resolve }) {
       event.cookies.set('surprise-me-access', 'granted', {
         path: '/',
         maxAge: 60 * 60 * 24 * 30, // 30 days
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
       });
 
       // Clean the query param
