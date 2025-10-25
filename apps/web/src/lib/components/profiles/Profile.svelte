@@ -17,12 +17,10 @@
   import GrantsSummaryBox from './grants/GrantsSummaryBox.svelte';
   import LogoMark from '../shared/LogoMark.svelte';
   import CharitableActivities from './activities/CharitableActivities.svelte';
-  import SideNav from './sidenav/SideNav.svelte';
   import Rank from './ranking/Rank.svelte';
   import DataSource from './about/DataSourceSummaryBox.svelte';
   import Research from './research/Research.svelte';
   import About from './about/AboutSummaryBox.svelte';
-  import { MagnifyingGlassCircle } from 'svelte-heros-v2';
   import type { AutocompleteInstance } from '@repo/shared/typings/algolia/autocomplete';
   import { browser } from '$app/environment';
   import CiModal from './community/CiModal.svelte';
@@ -366,7 +364,15 @@
                   class="inline-flex items-center gap-x-1.5 rounded-md bg-grantmakers-orange px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   onclick={openSearch}
                 >
-                  <MagnifyingGlassCircle variation={'solid'} class={'h-4 w-4'} />
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4">
+                    <path d="M8.25 10.875a2.625 2.625 0 1 1 5.25 0 2.625 2.625 0 0 1-5.25 0Z" />
+                    <path
+                      fill-rule="evenodd"
+                      d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.125 4.5a4.125 4.125 0 1 0 2.338 7.524l2.007 2.006a.75.75 0 1 0 1.06-1.06l-2.006-2.007a4.125 4.125 0 0 0-3.399-6.463Z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+
                   Foundation search
                 </button>
                 <button
