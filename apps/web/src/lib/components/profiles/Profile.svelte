@@ -68,7 +68,7 @@
     id="sidenav-main"
   >
     <div class="flex h-full flex-row md:flex-col">
-      <div class="mx-auto ml-3 flex w-full flex-col items-start p-4 lg:mb-10">
+      <div class="mx-auto ml-3 flex w-full flex-col items-start p-6 lg:mb-10">
         <LogoMark isLandingOrFooter={false} />
         <div class="ml-10 text-sm"></div>
       </div>
@@ -77,10 +77,13 @@
   </aside>
 
   <!-- Main Wrapper -->
-  <div class="ease-soft-in-out relative h-full grow rounded-xl transition-all duration-200" id="panel">
+  <div
+    class="ease-soft-in-out relative mx-auto h-full max-w-3xl grow rounded-xl px-6 transition-all duration-200 sm:px-6 lg:max-w-7xl lg:px-8"
+    id="panel"
+  >
     <!-- Top Nav -->
     <nav
-      class="duration-250 ease-soft-in relative mx-6 flex flex-wrap items-center justify-between rounded-2xl px-0 py-2 shadow-none transition-all lg:flex-nowrap lg:justify-start"
+      class="duration-250 ease-soft-in relative mx-8 flex flex-wrap items-center justify-between rounded-2xl px-0 py-4 shadow-none transition-all lg:flex-nowrap lg:justify-start"
       id="navbarTop"
       data-navbar-scroll="true"
     >

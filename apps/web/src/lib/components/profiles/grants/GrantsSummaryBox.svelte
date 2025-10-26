@@ -141,7 +141,7 @@
       </a>
     {/if}
   {:else if grantsFacets && grantsFacets[0].grant_count > 0}
-    <h2 class="mb-2 mt-4 text-sm font-bold text-slate-700">Grant Clusters</h2>
+    <h2 class="mb-2 mt-4 text-sm font-bold tracking-tighter text-slate-700">Grant Clusters</h2>
     <div class="w-full">
       <BarGrantsSnapshot rawData={grantsFacets[0].facets.amount} {grantCount} />
     </div>

@@ -2259,24 +2259,24 @@
 
   .grey.lighten-4,
   .profile-content .section-refinements .ais-RangeSlider .lighten-4.rheostat-progress {
-    background-color: #f5f5f5 !important;
+    background-color: #f8fafc !important;
   }
 
   .grey-text.text-lighten-4,
   nav.navbar-profile-index.affix .collection-item.avatar span.text-lighten-4.title,
   nav.navbar-profile-index.affix .collection-item.avatar p.text-lighten-4.title-more {
-    color: #f5f5f5 !important;
+    color: #f8fafc !important;
   }
 
   .grey.lighten-3,
   .profile-content .section-refinements .ais-RangeSlider .rheostat-progress {
-    background-color: #eeeeee !important;
+    background-color: #e2e8f0 !important;
   }
 
   .grey-text.text-lighten-3,
   nav.navbar-profile-index.affix .collection-item.avatar span.text-lighten-3.title,
   nav.navbar-profile-index.affix .collection-item.avatar p.text-lighten-3.title-more {
-    color: #eeeeee !important;
+    color: #e2e8f0 !important;
   }
 
   .grey.lighten-2,
@@ -3207,7 +3207,7 @@
     border-bottom: none;
   }
   table.striped > tbody > tr:nth-child(odd) {
-    background-color: rgba(242, 242, 242, 0.5);
+    background-color: #f1f5f9;
   }
   table.striped > tbody > tr > td {
     border-radius: 0;
@@ -3216,7 +3216,7 @@
     transition: background-color 0.25s ease;
   }
   table.highlight > tbody > tr:hover {
-    background-color: rgba(242, 242, 242, 0.5);
+    background-color: #f1f5f9;
   }
   table.centered thead tr th,
   table.centered tbody tr td {
@@ -8693,10 +8693,6 @@ Helpers
     font-size: 85%;
   }
 
-  .hidden {
-    display: none !important;
-  }
-
   .no-wrap,
   .text-nowrap {
     white-space: nowrap;
@@ -8821,6 +8817,7 @@ Helpers
   }
 
   .card.info-card {
+    background-color: #f1f5f9 !important;
     transition: unset;
     box-shadow: none;
   }
@@ -9007,18 +9004,8 @@ Sitewide layout
   }
 
   .main {
-    background: #ffffff;
     position: relative;
     z-index: 3;
-  }
-
-  .main-raised {
-    margin: -60px 30px 0px;
-    border-radius: 6px;
-    box-shadow:
-      0 16px 24px 2px rgba(0, 0, 0, 0.14),
-      0 6px 30px 5px rgba(0, 0, 0, 0.12),
-      0 8px 10px -5px rgba(0, 0, 0, 0.2);
   }
 
   .main-raised-unset-header-offset {
@@ -9276,7 +9263,7 @@ Sitewide layout
     display: none;
   }
   .navbar-profile.affix {
-    background-color: #eeeeee;
+    background-color: #e2e8f0;
     box-shadow:
       0 10px 20px -12px rgba(0, 0, 0, 0.42),
       0 3px 20px 0px rgba(0, 0, 0, 0.12),
@@ -9496,12 +9483,6 @@ Sitewide layout
     font-size: 10px;
     text-align: right;
   }
-
-  .profile-page .row-alert-fixed-to-top {
-    color: white;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-  }
   .profile-page .row-alert-fixed-to-top .alert-content {
     line-height: 40px;
     height: 40px;
@@ -9580,12 +9561,6 @@ Sitewide layout
     max-width: 160px;
     max-height: 160px;
     margin: -80px auto 0;
-  }
-
-  .profile-page .main,
-  .profile-index-page .main,
-  .simple-page .main {
-    background-color: #f5f5f5;
   }
 
   .fixed-action-btn {
@@ -9924,7 +9899,7 @@ Mimic Algolia them - only the good parts
   .profile-content #profile-cta .algolia-logo-autocomplete {
     margin-bottom: 10px;
     padding-top: 10px;
-    border-top: 1px solid #eeeeee;
+    border-top: 1px solid #e2e8f0;
   }
   .profile-content #profile-cta .algolia-logo-autocomplete img {
     vertical-align: middle;
@@ -10041,7 +10016,7 @@ Mimic Algolia them - only the good parts
   }
   .profile-content .profile-summary-icons a,
   .profile-content .profile-summary-icons i.material-icons {
-    color: #fff;
+    color: #cbd5e1;
   }
   .profile-content .profile-summary-icons i.material-icons-active {
     color: #c54e00;
@@ -10331,13 +10306,13 @@ Mimic Algolia them - only the good parts
   .profile-content .ais-RangeSlider .rheostat-background {
     position: relative;
     background-color: #fff;
-    border: 1px solid #aaa;
+    border: 1px solid #cbd5e1;
   }
   .profile-content .ais-RangeSlider .rheostat-progress {
     position: absolute;
     top: 1px;
     height: 4px;
-    background-color: #333;
+    background-color: #f1f5f9 !important;
   }
   .profile-content .rheostat-handle {
     position: relative;
@@ -10791,7 +10766,7 @@ Mimic Algolia them - only the good parts
   }
   .profile-content #no-results-message small,
   .profile-content #no-results-message a i {
-    color: #f5f5f5;
+    color: #f8fafc;
   }
   .profile-content #tips ul li {
     margin-bottom: 20px;
@@ -10991,7 +10966,7 @@ Mimic Algolia them - only the good parts
   }
 
   .card-panel-header {
-    background-color: #eeeeee;
+    background-color: #e2e8f0;
     color: rgba(0, 0, 0, 0.87);
     padding: 10px 15px;
     border: 0;
@@ -11221,10 +11196,6 @@ Print
 
     .alert-fixed-to-top div {
       color: #333333;
-    }
-
-    .wrapper {
-      background-color: #f5f5f5;
     }
 
     .main {

@@ -52,7 +52,7 @@
     <!-- Name -->
     <div class="relative my-auto w-auto md:flex-none md:px-3 lg:max-w-full">
       <div class="h-full">
-        <h5 class="mb-1 w-full whitespace-normal text-wrap text-lg font-semibold md:max-w-md">{organization_name}</h5>
+        <h5 class="mb-1 w-full whitespace-normal text-wrap text-lg font-semibold text-slate-700 md:max-w-md">{organization_name}</h5>
         <div class="align-left mb-0 flex flex-col text-sm font-normal leading-normal sm:flex-row sm:items-center">
           <strong class="text-slate-700">
             {profile.city},
