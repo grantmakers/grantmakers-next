@@ -3,7 +3,7 @@ import forms from '@tailwindcss/forms';
 
 /** @type {import('tailwindcss').Config} */
 const config = {
-  darkMode: ['class'],
+  darkMode: 'selector',
   content: ['./src/**/*.{html,js,svelte,ts}'],
   safelist: ['dark', 'tabular-nums'],
   theme: {

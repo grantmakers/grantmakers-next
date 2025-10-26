@@ -44,7 +44,10 @@
   {/if}
 </svelte:head>
 
-<!-- Wrap the layout to add a global default background color -->
+<!-- 
+  Add global Tailwind classes to this root layout
+  Note: Dark mode is enabled in app.html
+-->
 <div class="min-h-screen bg-white">
   <GlobalNav {organizationName} />
 
