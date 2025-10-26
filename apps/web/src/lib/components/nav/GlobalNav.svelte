@@ -3,48 +3,21 @@
   import { page } from '$app/state';
   import LogoMark from '$lib/components/shared/LogoMark.svelte';
   import PrimaryNavLink from '$lib/components/nav/PrimaryNavLink.svelte';
-  import { aboutLinks, profileNavItems, type SecondaryNavItems } from '@repo/shared/constants/trustedConstants';
+  import { aboutLinks } from '@repo/shared/constants/trustedConstants';
   import SecondaryNavLink from '$lib/components/nav/SecondaryNavLink.svelte';
   import PrimaryNavLinkMobile from '$lib/components/nav/PrimaryNavLinkMobile.svelte';
   import SecondaryNavLinkMobile from '$lib/components/nav/SecondaryNavLinkMobile.svelte';
   import PrimarySearchNavLink from './PrimarySearchNavLink.svelte';
+  import { getNavConfig } from './config';
 
   interface Props {
     organizationName?: string;
   }
 
-  interface NavConfig {
-    route?: 'profiles' | 'about' | 'home';
-    showSecondaryNav?: boolean;
-    transparentBg?: boolean;
-    absolute?: boolean; // HACK: This is a temporary prop to support the legacy profile pages
-    secondaryNavLinks?: SecondaryNavItems[];
-  }
-
   let { organizationName }: Props = $props();
 
-  let defaultConfig: NavConfig = {
-    route: 'home',
-    transparentBg: false,
-    showSecondaryNav: false,
-    absolute: false,
-  };
   const path = $derived(page.url.pathname);
-  const config = $derived.by(() => {
-    if (path.startsWith('/profiles/v0')) {
-      return { route: 'profiles', transparentBg: false, showSecondaryNav: false, absolute: true, secondaryNavLinks: [] };
-    }
-    if (path.startsWith('/profiles/v1')) {
-      return { route: 'profiles', transparentBg: false, showSecondaryNav: false, absolute: true, secondaryNavLinks: profileNavItems };
-    }
-    if (path.startsWith('/about')) {
-      return { route: 'about', transparentBg: false, showSecondaryNav: true, absolute: false, secondaryNavLinks: aboutLinks };
-    }
-    if (path === '/') {
-      return { route: 'home', transparentBg: true, showSecondaryNav: false, absolute: true };
-    }
-    return defaultConfig;
-  });
+  const config = $derived(getNavConfig(path));
 </script>
 
 <header
@@ -73,14 +46,12 @@
           <div class="absolute left-0 shrink-0 lg:static lg:block">
             <LogoMark isLandingOrFooter />
           </div>
-          {#if config.route !== 'profile'}
-            <div class="hidden md:block">
-              <div class="ml-10 flex items-baseline space-x-4">
-                <PrimaryNavLink href={'/about/'} title={'About'} />
-                <PrimaryNavLink href={'/about/donate/'} title={'Support Open Data'} />
-              </div>
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-baseline space-x-4">
+              <PrimaryNavLink href={'/about/'} title={'About'} />
+              <PrimaryNavLink href={'/about/donate/'} title={'Support Open Data'} />
             </div>
-          {/if}
+          </div>
         </div>
 
         <!-- Right section on desktop -->

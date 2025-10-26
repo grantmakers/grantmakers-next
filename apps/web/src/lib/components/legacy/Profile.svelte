@@ -1,15 +1,24 @@
 <script lang="ts">
+  import { page } from '$app/state';
+  import { browser } from '$app/environment';
+  import { onMount, onDestroy } from 'svelte';
+
+  import ProfileSecondaryNav from '../nav/DetachedSecondaryNav.svelte';
+  import { getNavConfig } from '$src/lib/components/nav/config';
+
   import legacyLogo from '$lib/assets/legacy/images/logo.png';
   import irsLogo from '$lib/assets/legacy/images/irs-w-text.png';
   import irsLogoAlt from '$lib/assets/legacy/images/irs-w-text-alt.png';
   import proPublicaLogo from '$lib/assets/legacy/images/propublica.png';
+
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
-  import { onMount, onDestroy } from 'svelte';
   import { formatNumber, formatToCurrency, humanizeCurrency, humanizeNumber } from '@repo/shared/functions/formatters/numbers';
   import { formatCompensation } from '$src/lib/utils/peopleComp';
   import { formatDateToMonthYear } from '@repo/shared/functions/formatters/dates';
   import { upperFirstLetter } from '@repo/shared/functions/formatters/names';
-  import { browser } from '$app/environment';
+
+  const path = $derived(page.url.pathname);
+  const config = $derived(getNavConfig(path));
 
   interface Props {
     profile: GrantmakersExtractedDataObj;
@@ -17,6 +26,11 @@
   }
 
   let { profile, hasSurpriseMeAccess }: Props = $props();
+
+  let cssConfig = {
+    mainBody: 'relative top-36 mx-0 mb-40 bg-slate-50 rounded-2xl shadow lg:top-0 lg:mx-6 lg:mb-4',
+    topBar: 'bg-slate-200 text-zinc-700 rounded-t-2xl border-t border-gray-300/60 dark:border-white/15',
+  };
 
   let hasInsights = false;
   let insight = undefined;
@@ -30,45 +44,46 @@
     url: '', //'https://www.grantmakers.io',
     algolia_referral_link: 'https://www.algolia.com/?utm_source=grantmakersio&utm_medium=referral',
   };
-  const page = $derived(profile);
 
-  const firstLetter = $derived(upperFirstLetter(page.organization_name));
+  const organizationName = $derived(profile.organization_name);
+
+  const firstLetter = $derived(upperFirstLetter(profile.organization_name));
   const colors = ['red', 'blue', 'green', 'purple', 'yellow', 'pink', 'indigo', 'orange', 'grey', 'cyan', 'lime'];
 
   const colorIndex = $derived(firstLetter.charCodeAt(0) % colors.length);
   const bgColor = $derived(colors[colorIndex]);
 
-  const orgFinancialStats = $derived(page.financial_stats);
+  const orgFinancialStats = $derived(profile.financial_stats);
 
-  const displayedFilingIsAmendment = $derived(page.filings.some((f) => f.filing_is_amendment));
+  const displayedFilingIsAmendment = $derived(profile.filings.some((f) => f.filing_is_amendment));
 
-  let algolia = $derived(page.enable_algolia_search);
+  let algolia = $derived(profile.enable_algolia_search);
   const hostname = browser ? window.location.hostname : '';
   const allowedDomain = 'www.grantmakers.io';
   let isAllowedDomain = $derived(hostname === allowedDomain);
 
-  let filingCount = $derived(page.grants_facets.filter((filing) => filing.grant_count > 0).length);
+  let filingCount = $derived(profile.grants_facets.filter((filing) => filing.grant_count > 0).length);
 
-  let simplify = $derived(page.grant_count_last_three_years < 20 || (filingCount <= 1 && page.grant_count <= 20));
+  let simplify = $derived(profile.grant_count_last_three_years < 20 || (filingCount <= 1 && profile.grant_count <= 20));
 
-  let enable_tax_year_dropdown = $derived(page.filings[1] && page.grants_facets[1].grant_count > 0);
+  let enable_tax_year_dropdown = $derived(profile.filings[1] && profile.grants_facets[1].grant_count > 0);
 
-  const taxPeriod = $derived(String(page.filings[0].tax_period));
+  const taxPeriod = $derived(String(profile.filings[0].tax_period));
   const fiscalMonth = $derived(taxPeriod.slice(4, 6));
   const fiscalYear = $derived(taxPeriod.slice(0, 4));
-  const taxYear = $derived(page.filings[0].tax_year);
+  const taxYear = $derived(profile.filings[0].tax_year);
 
   const currentYear = $derived(new Date().getFullYear());
   const currentYearMinusOne = $derived(currentYear - 1);
 
   // Convert the IRS last updated date to a year number
-  const lastUpdatedYear = $derived(new Date(page.last_updated_irs).getFullYear());
+  const lastUpdatedYear = $derived(new Date(profile.last_updated_irs).getFullYear());
 
   // Determine if we need the warning class
   const cardPanelClasses = $derived(`card-panel-body${lastUpdatedYear < currentYearMinusOne ? ' yellow lighten-4' : ''}`);
 
   // Handle static grants
-  let staticGrants = $derived(page.grants_last_three_years_top_20);
+  let staticGrants = $derived(profile.grants_last_three_years_top_20);
   const hasForeignGrantRecipients = $derived(() => {
     if (staticGrants && staticGrants.length > 0) {
       for (const grant of staticGrants) {
@@ -90,7 +105,7 @@
     destroyProfile = destroyProfileJs;
 
     try {
-      initProfileJs(M, orgFinancialStats);
+      await initProfileJs(M, orgFinancialStats);
     } catch (error) {
       console.log(error);
     }
@@ -122,36 +137,14 @@
   });
 </script>
 
-<div class="wrapper min-h-full">
-  <section class="sm:dot-pattern relative isolate overflow-hidden py-24 sm:py-32">
-    <!-- <div class="relative mx-auto max-w-4xl px-6 lg:px-8">
-      <div class="rounded-3xl bg-white/90 p-10 text-center ring-1 ring-black/5 backdrop-blur-xl dark:bg-gray-900/90">
-        <h2 class="text-base/7 font-semibold text-indigo-600 dark:text-indigo-400">Grants Search</h2>
-        <p class="mt-2 text-4xl font-semibold tracking-tight text-gray-900 dark:text-white sm:text-5xl">Open Grants Data</p>
-        <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">
-          See who foundations have backed. Find funders who already share your vision.
-        </p>
-      </div>
-    </div> -->
-
-    <div class="mx-auto mt-16 max-w-7xl px-6 sm:mt-20 lg:px-8">
-      <div class="mx-auto max-w-2xl lg:max-w-none">
-        <div class="hidden sm:mb-8 sm:flex sm:justify-center">
-          <div
-            class="relative rounded-full bg-white/70 px-3 py-1 text-sm/6 text-gray-500 ring-1 ring-inset ring-gray-300 hover:ring-white/20"
-          >
-            This isn't a list of open grant opportunities.
-            <a href="/about/" class="ml-2 font-semibold text-slate-600"
-              ><span aria-hidden="true" class="absolute inset-0"></span>It's different around here <span aria-hidden="true">&rarr;</span></a
-            >
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="sm:dot-pattern min-h-full">
+  <section class="relative isolate overflow-hidden pb-12 lg:pb-48">
+    <!-- Secondary nav -->
+    <ProfileSecondaryNav {config} {organizationName} />
   </section>
-  <div class="main main-raised">
+  <div class="main main-raised {cssConfig.mainBody}">
     <div class="profile-content">
-      <div class="row row-alert-fixed-to-top grey darken-4">
+      <div class="row row-alert-fixed-to-top {cssConfig.topBar}">
         <div class="col s6">
           <div
             class="alert-content alert-content-left right-align"
@@ -200,58 +193,62 @@
                 <h1
                   id="org-data"
                   class="org-name"
-                  data-ein={page.ein}
-                  data-name={page.organization_name}
-                  data-url="{site.baseurl}/{page.ein}/"
+                  data-ein={profile.ein}
+                  data-name={profile.organization_name}
+                  data-url="{site.baseurl}/{profile.ein}/"
                   data-tax-year={taxYear}
-                  data-tax-year-only-one={!(page.filings[1] && page.grants_facets[1].grant_count > 0)}
+                  data-tax-year-only-one={!(profile.filings[1] && profile.grants_facets[1].grant_count > 0)}
                 >
-                  {#if page.website}
+                  {#if profile.website}
                     <a
-                      href={page.website}
+                      href={profile.website}
+                      target="_blank"
+                      rel="external noopener"
                       class="js-ga-website-click disable-primary-color"
                       title="Click to visit website"
-                      data-ga="Website H1 Click">{page.organization_name}</a
+                      data-ga="Website H1 Click">{profile.organization_name}</a
                     >
                   {:else}
-                    {page.organization_name}
+                    {profile.organization_name}
                   {/if}
                 </h1>
-                {#if page.is_foreign}
+                {#if profile.is_foreign}
                   <h6 class="org-location">
-                    {page.city}, {#if page.state == 'Foreign'}{page.country}*{:else}{page.state}{/if}
+                    {profile.city}, {#if profile.state == 'Foreign'}{profile.country}*{:else}{profile.state}{/if}
                   </h6>
                 {:else}
-                  <h6 class="org-location">{page.city}, {page.state}</h6>
+                  <h6 class="org-location">{profile.city}, {profile.state}</h6>
                 {/if}
                 <ul class="list-inline org-location profile-summary-icons text-center">
                   <li>
-                    {#if page.has_recent_grants}
+                    {#if profile.has_recent_grants}
                       <i class="material-icons material-icons-active tooltipped" data-tooltip="Recent grants">monetization_on</i>
                     {:else}
                       <i class="material-icons tooltipped" data-tooltip="No recent grants">monetization_on</i>
                     {/if}
                   </li>
                   <li>
-                    {#if page.is_likely_staffed}
+                    {#if profile.is_likely_staffed}
                       <i class="material-icons material-icons-active tooltipped" data-tooltip="Likely staffed">account_circle</i>
                     {:else}
                       <i class="material-icons tooltipped" data-tooltip="Limited staffing">account_circle</i>
                     {/if}
                   </li>
-                  {#if page.website && page.website_is_an_email != true}
+                  {#if profile.website && profile.website_is_an_email != true}
                     <li>
                       <a
-                        href={page.website}
+                        href={profile.website}
+                        target="_blank"
+                        rel="external noopener"
                         data-ga="Website Summary Icon"
                         class="js-ga-website-click tooltipped"
                         data-tooltip="Click to visit website"><i class="material-icons material-icons-active">public</i></a
                       >
                     </li>
-                  {:else if page.website && page.website_is_an_email == true && page.grants_to_preselected_only != true}
+                  {:else if profile.website && profile.website_is_an_email == true && profile.grants_to_preselected_only != true}
                     <li>
                       <a
-                        href={page.website}
+                        href={profile.website}
                         data-ga="Website Summary Icon"
                         class="js-ga-website-click tooltipped"
                         data-tooltip="The latest e-filed Form 990PF lists<br>an email in the website field"
@@ -264,7 +261,7 @@
                     </li>
                   {/if}
                   <li>
-                    {#if page.grants_to_preselected_only}
+                    {#if profile.grants_to_preselected_only}
                       <a
                         href="#guidelines"
                         data-ga="Application Summary Icon"
@@ -320,7 +317,7 @@
                   <div class="row row-tight">
                     <div class="col s12 center-align">
                       <p>Assets</p>
-                      <h4 title={humanizeCurrency(page.assets)}>{humanizeCurrency(page.assets)}</h4>
+                      <h4 title={humanizeCurrency(profile.assets)}>{humanizeCurrency(profile.assets)}</h4>
                     </div>
                   </div>
                   <hr />
@@ -329,18 +326,18 @@
                       <div class="justify-align">
                         <div class="center-align">
                           <p>Distributions</p>
-                          <h5 title={formatToCurrency(page.distributions)}>{humanizeCurrency(page.distributions)}</h5>
+                          <h5 title={formatToCurrency(profile.distributions)}>{humanizeCurrency(profile.distributions)}</h5>
                         </div>
                         <div class="center-align">
                           <p>Contributions</p>
-                          <h5 title={formatToCurrency(page.contributions)}>{humanizeCurrency(page.contributions)}</h5>
+                          <h5 title={formatToCurrency(profile.contributions)}>{humanizeCurrency(profile.contributions)}</h5>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              {#if page.grant_count > 0}
+              {#if profile.grant_count > 0}
                 <div class="card-panel">
                   <div class="card-panel-body">
                     <div class="row row-tight valign-wrapper">
@@ -348,7 +345,7 @@
                         <div class="justify-align">
                           <div class="center-align">
                             <p>Grant Median</p>
-                            <h5 title={formatToCurrency(page.grant_median)}>{humanizeCurrency(page.grant_median)}</h5>
+                            <h5 title={formatToCurrency(profile.grant_median)}>{humanizeCurrency(profile.grant_median)}</h5>
                           </div>
                           <div
                             class="center-align tooltipped"
@@ -357,11 +354,11 @@
                             data-position="top"
                           >
                             <p>Count</p>
-                            <h5 title={formatNumber(page.grant_count)}>{humanizeNumber(page.grant_count)}</h5>
+                            <h5 title={formatNumber(profile.grant_count)}>{humanizeNumber(profile.grant_count)}</h5>
                           </div>
                           <div class="center-align">
                             <p>Grant Max</p>
-                            <h5 title={humanizeCurrency(page.grant_max)}>{humanizeCurrency(page.grant_max)}</h5>
+                            <h5 title={humanizeCurrency(profile.grant_max)}>{humanizeCurrency(profile.grant_max)}</h5>
                           </div>
                         </div>
                       </div>
@@ -382,7 +379,7 @@
                     </div>
                     <div class="col s5">
                       <p>Published by IRS</p>
-                      <p class="summary">{formatDateToMonthYear(page.last_updated_irs) ?? 'N/A'}</p>
+                      <p class="summary">{formatDateToMonthYear(profile.last_updated_irs) ?? 'N/A'}</p>
                     </div>
                   </div>
                 </div>
@@ -415,7 +412,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        {#each page.people as each, i}
+                        {#each profile.people as each, i}
                           <tr>
                             <td class="text-center">{i + 1}</td>
                             <td>{each.name}</td>
@@ -461,8 +458,10 @@
                 <div class="card-content card-panel-body">
                   <div class="row row-tight">
                     <div class="col s12">
-                      {#if page.has_charitable_activities === true}
-                        {@const sorted_activities = [...page.charitable_activities].sort((a, b) => (b.expenses ?? 0) - (a.expenses ?? 0))}
+                      {#if profile.has_charitable_activities === true}
+                        {@const sorted_activities = [...profile.charitable_activities].sort(
+                          (a, b) => (b.expenses ?? 0) - (a.expenses ?? 0),
+                        )}
 
                         <ul class="collection">
                           {#each sorted_activities as activity}
@@ -615,7 +614,7 @@
                                     <div>
                                       <div class="ais-RefinementList">
                                         <ul class="ais-RefinementList-list">
-                                          {#each page.grants_facets.slice(0, 3) as each}
+                                          {#each profile.grants_facets.slice(0, 3) as each}
                                             {#if each.grant_count > 0}
                                               <li class="ais-RefinementList-item">
                                                 <div>
@@ -657,7 +656,8 @@
                         <div class="col s12 m9 l9">
                           <div id="ais-widget-stats">
                             <div class="ais-Stats">
-                              <span class="ais-Stats-text hide-on-med-and-down text-muted">{page.grant_count_last_three_years} results</span
+                              <span class="ais-Stats-text hide-on-med-and-down text-muted"
+                                >{profile.grant_count_last_three_years} results</span
                               >
                             </div>
                           </div>
@@ -717,7 +717,7 @@
                                                         >{#if each.city != null}{each.city}, {each.state}{/if}</td
                                                       >
                                                     {/if}
-                                                    <td class="valign-top left-align">{page.filings[0].tax_year}</td>
+                                                    <td class="valign-top left-align">{profile.filings[0].tax_year}</td>
                                                   </tr>
                                                 {/each}
                                               {:else}
@@ -743,7 +743,7 @@
                                       </div>
                                     </div>
                                   </div>
-                                  {#if page.grants_reference_attachment}
+                                  {#if profile.grants_reference_attachment}
                                     <div class="row">
                                       <div class="col l8 offset-l2">
                                         <div class="card info-card grey lighten-4">
@@ -779,7 +779,7 @@
                           <div class="responsive-table-wrapper">
                             <!-- <div class="row">
                               <div class="col s12 text-light right-align">
-                                Latest Filing: Tax Year {page.filings[0].tax_year}
+                                Latest Filing: Tax Year {profile.filings[0].tax_year}
                               </div>
                             </div> -->
                             <table id="grantsTable" class="striped bordered">
@@ -832,12 +832,13 @@
                               {/if}
                             </table>
                           </div>
-                          {#if page.grant_count > 50}
+                          {#if profile.grant_count > 50}
                             <div class="row">
                               <div class="col s12">
                                 <div class="card">
                                   <div class="card-content grey lighten-4 text-light">
-                                    Note: The IRS dataset contains additional grants for this funder's {page.filings[0].tax_year} tax year ({page.grant_count}
+                                    Note: The IRS dataset contains additional grants for this funder's {profile.filings[0].tax_year} tax year
+                                    ({profile.grant_count}
                                     total grants)
                                   </div>
                                 </div>
@@ -846,7 +847,7 @@
                           {/if}
                         </div>
 
-                        {#if page.grants_reference_attachment}
+                        {#if profile.grants_reference_attachment}
                           <div class="row">
                             <div class="col l8 offset-l2">
                               <div class="card info-card grey lighten-4">
@@ -877,8 +878,8 @@
           </div>
         </div>
         <div class="row print-no-pagebreak flex flex-col sm:flex-row">
-          <div class="col s12 l6 flex-direction-column print-50">
-            <div id="guidelines" class="flex-grow-1 scrollspy">
+          <div class="col s12 l6 flex-direction-column print-50 flex">
+            <div id="guidelines" class="flex-grow-1 scrollspy flex">
               <div class="card-panel card-panel-flex">
                 <div class="card-panel-header-wrapper">
                   <div class="card-panel-header">
@@ -898,35 +899,35 @@
                   </div>
                 </div>
                 <div class="card-panel-body">
-                  {#if page.website && page.website_is_an_email != true}
+                  {#if profile.website && profile.website_is_an_email != true}
                     <ul class="collection">
                       <li class="collection-item avatar">
-                        <a href={page.website} data-ga="Refer to Fdn Website"><i class="material-icons circle blue">public</i></a>
+                        <a href={profile.website} data-ga="Refer to Fdn Website"><i class="material-icons circle blue">public</i></a>
                         <p>
                           Note: This foundation appears to have a website. We recommend starting your exploration there.
-                          <a class="btn-link" href={page.website} data-ga="Refer to Fdn Website">Visit Website</a>.
+                          <a class="btn-link" href={profile.website} data-ga="Refer to Fdn Website">Visit Website</a>.
                         </p>
                       </li>
                     </ul>
                     <hr class="divider" />
-                  {:else if page.website && page.website_is_an_email == true && page.grants_to_preselected_only != true}
+                  {:else if profile.website && profile.website_is_an_email == true && profile.grants_to_preselected_only != true}
                     <ul class="collection">
                       <li class="collection-item avatar">
-                        <a href={page.website} data-ga="Refer to Fdn Website"><i class="material-icons circle blue">public</i></a>
+                        <a href={profile.website} data-ga="Refer to Fdn Website"><i class="material-icons circle blue">public</i></a>
                         <p>
                           Note: In lieu of providing a website in its latest e-filed Form 990PF, this foundation likely provided a contact
-                          email instead. <a class="btn-link" href={page.website} data-ga="Refer to Fdn Website">View Email</a>.
+                          email instead. <a class="btn-link" href={profile.website} data-ga="Refer to Fdn Website">View Email</a>.
                         </p>
                       </li>
                     </ul>
                     <hr class="divider" />
                   {/if}
 
-                  {#if !(page.grants_to_preselected_only || page.grants_application_info)}
+                  {#if !(profile.grants_to_preselected_only || profile.grants_application_info)}
                     The foundation does not provide any guidance in its latest Form 990 PF Part XV, Lines 2-2d
                   {/if}
 
-                  {#if page.grants_to_preselected_only}
+                  {#if profile.grants_to_preselected_only}
                     <ul class="collection">
                       <li class="collection-item avatar">
                         <i class="material-icons circle red darken-2">lock</i>
@@ -936,12 +937,12 @@
                         </p>
                       </li>
                     </ul>
-                    {#if page.grants_application_info}
+                    {#if profile.grants_application_info}
                       <hr class="divider" />
                     {/if}
                   {/if}
 
-                  {#if page.grants_application_info}
+                  {#if profile.grants_application_info}
                     <ul class="collection">
                       <li class="collection-item avatar">
                         <i
@@ -952,7 +953,7 @@
                           >assignment</i
                         >
                         <span class="title">Instructions</span>
-                        <p>{page.grants_application_info}</p>
+                        <p>{profile.grants_application_info}</p>
                       </li>
 
                       <li class="collection-item avatar">
@@ -963,7 +964,7 @@
                           data-tooltip="Any submission deadlines<br>Line 2c">history</i
                         >
                         <span class="title">Deadlines</span>
-                        <p>{page.grants_application_deadlines}</p>
+                        <p>{profile.grants_application_deadlines}</p>
                       </li>
 
                       <li class="collection-item avatar">
@@ -975,7 +976,7 @@
                           >assignment_late</i
                         >
                         <span class="title">Restrictions</span>
-                        <p>{page.grants_application_restrictions}</p>
+                        <p>{profile.grants_application_restrictions}</p>
                       </li>
 
                       <li>
@@ -991,30 +992,30 @@
                           >contact_phone</i
                         >
                         <span class="title">Contact</span>
-                        {#if page.grants_application_contact}
-                          <p>{page.grants_application_contact.name}</p>
-                          {#if page.grants_application_contact.email?.includes('@')}
+                        {#if profile.grants_application_contact}
+                          <p>{profile.grants_application_contact.name}</p>
+                          {#if profile.grants_application_contact.email?.includes('@')}
                             <p>
                               <a
-                                href="mailto:{page.grants_application_contact.email.toLowerCase()}"
+                                href="mailto:{profile.grants_application_contact.email.toLowerCase()}"
                                 class="blue-grey-text"
-                                data-ga="Refer to Fdn Email">{page.grants_application_contact.email.toLowerCase()}</a
+                                data-ga="Refer to Fdn Email">{profile.grants_application_contact.email.toLowerCase()}</a
                               >
                             </p>
                           {:else}
-                            <p class="blue-grey-text">{page.grants_application_contact.email}</p>
+                            <p class="blue-grey-text">{profile.grants_application_contact.email}</p>
                           {/if}
-                          <p>{page.grants_application_contact.address.street}</p>
-                          <p>{page.grants_application_contact.address.street2}</p>
+                          <p>{profile.grants_application_contact.address.street}</p>
+                          <p>{profile.grants_application_contact.address.street2}</p>
                           <p>
-                            {page.grants_application_contact.address.city}, {page.grants_application_contact.address.state}
-                            {page.grants_application_contact.address.country}
-                            {page.grants_application_contact.address.zip}
+                            {profile.grants_application_contact.address.city}, {profile.grants_application_contact.address.state}
+                            {profile.grants_application_contact.address.country}
+                            {profile.grants_application_contact.address.zip}
                           </p>
-                          {#if page.grants_application_contact.phone}
-                            {@const ph = page.grants_application_contact.phone}
+                          {#if profile.grants_application_contact.phone}
+                            {@const ph = profile.grants_application_contact.phone}
 
-                            {#if page.grants_application_contact.is_foreign == true}
+                            {#if profile.grants_application_contact.is_foreign == true}
                               <p>tel: {ph}</p>
                             {:else}
                               <p>({ph.slice(0, 3)}) {ph.slice(3, 6)}-{ph.slice(6, 10)}</p>
@@ -1100,15 +1101,15 @@
                           <div class="justify-align">
                             <div class="center-align">
                               <p>Assets <i class="material-icons material-icons-tight left blue-grey-text">label</i></p>
-                              <h5 title={humanizeCurrency(page.assets)}>{humanizeCurrency(page.assets)}</h5>
+                              <h5 title={humanizeCurrency(profile.assets)}>{humanizeCurrency(profile.assets)}</h5>
                             </div>
                             <div class="center-align">
                               <p>Distributions <i class="material-icons material-icons-tight left grantmakers-text">label</i></p>
-                              <h5 title={humanizeCurrency(page.distributions)}>{humanizeCurrency(page.distributions)}</h5>
+                              <h5 title={humanizeCurrency(profile.distributions)}>{humanizeCurrency(profile.distributions)}</h5>
                             </div>
                             <div class="center-align">
                               <p>Contributions <i class="material-icons material-icons-tight left teal-text">label</i></p>
-                              <h5 title={humanizeCurrency(page.contributions)}>{humanizeCurrency(page.contributions)}</h5>
+                              <h5 title={humanizeCurrency(profile.contributions)}>{humanizeCurrency(profile.contributions)}</h5>
                             </div>
                           </div>
                         </div>
@@ -1175,11 +1176,13 @@
                                   data-tooltip="Electronically filed tax returns only">error_outline</i
                                 >
                               </p>
-                              <h5 title="Electronically filed tax returns">{page.filings.length}</h5>
+                              <h5 title="Electronically filed tax returns">{profile.filings.length}</h5>
                             </div>
                             <div class="center-align">
                               <p>Last Updated by IRS</p>
-                              <h5 title={humanizeCurrency(page.distributions)}>{formatDateToMonthYear(page.last_updated_irs) ?? 'N/A'}</h5>
+                              <h5 title={humanizeCurrency(profile.distributions)}>
+                                {formatDateToMonthYear(profile.last_updated_irs) ?? 'N/A'}
+                              </h5>
                             </div>
                           </div>
                         </div>
@@ -1189,7 +1192,7 @@
                         <div class="chart-default">
                           <div class="card white z-depth-4">
                             <div class="card-content">
-                              {#if page.financial_stats.length > 1}
+                              {#if profile.financial_stats.length > 1}
                                 Charts will appear if your browser supports them
                               {:else}
                                 <div class="row row-tight valign-wrapper">
@@ -1250,7 +1253,7 @@
                     <a
                       class="right valign-wrapper"
                       style="height: 27px"
-                      href="https://projects.propublica.org/nonprofits/organizations/{page.ein}"
+                      href="https://projects.propublica.org/nonprofits/organizations/{profile.ein}"
                       target="_blank"
                       title="Tax filings courtesy of our friends at ProPublica"
                       data-position="left"
@@ -1261,20 +1264,20 @@
                 </div>
                 <div class="card-panel-body">
                   <ul class="list-inline">
-                    <li id="js-pdfs" data-ein={page.ein} class="hide-on-med-and-down">
+                    <li id="js-pdfs" data-ein={profile.ein} class="hide-on-med-and-down">
                       <i class="material-icons">picture_as_pdf</i> <span class="show-on-medium-and-down text-muted">PDF</span>
                     </li>
-                    {#each page.filings.slice(0, 7) as filing}
+                    {#each profile.filings.slice(0, 7) as filing}
                       {#if filing.object_id_irs}
                         <li>
                           <a
                             class="waves-effect waves-light btn grey lighten-3 grey-text text-darken-1"
                             style="text-transform:none"
-                            href="https://projects.propublica.org/nonprofits/organizations/{page.ein}/{filing.object_id_irs}/full"
+                            href="https://projects.propublica.org/nonprofits/organizations/{profile.ein}/{filing.object_id_irs}/full"
                             target="_blank"
                             rel="noopener"
                             data-ga="PDF View Latest"
-                            data-ein={page.ein}
+                            data-ein={profile.ein}
                             title="View latest filing">{filing.tax_year}{filing.filing_is_amendment ? '*' : ''}</a
                           >
                         </li>
@@ -1284,18 +1287,18 @@
                       <a
                         class="waves-effect waves-light btn-flat blue-grey-text"
                         style="text-transform:none"
-                        href="https://projects.propublica.org/nonprofits/organizations/{page.ein}"
+                        href="https://projects.propublica.org/nonprofits/organizations/{profile.ein}"
                         target="_blank"
                         rel="noopener"
                         data-ga="PDF View All"
-                        data-ein={page.ein}
+                        data-ein={profile.ein}
                         title="View all available tax filings">View more at ProPublica</a
                       >
                     </li>
                   </ul>
                   {#if displayedFilingIsAmendment}
                     <ul class="list-inline">
-                      <li id="js-pdfs" data-ein={page.ein} class="hide-on-med-and-down" style="visibility: hidden;">
+                      <li id="js-pdfs" data-ein={profile.ein} class="hide-on-med-and-down" style="visibility: hidden;">
                         <i class="material-icons">picture_as_pdf</i> <span class="show-on-medium-and-down text-muted">PDF</span>
                       </li>
                       <li class="grey-text text-darken-1">* Filing is an amendment</li>
@@ -1324,7 +1327,7 @@
 
 <div class="profile-content section-refinements">
   <!-- Filters / Refinements -->
-  <div class="row">
+  <div class="row !m-0">
     <div class="col s12">
       <ul id="refinements-slide-out" class="sidenav left-align grey lighten-5">
         <li><div class="card"><div id="ais-widget-mobile-refinement-list--grantee_state"></div></div></li>
