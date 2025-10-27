@@ -138,10 +138,10 @@
 </script>
 
 <div class="sm:dot-pattern min-h-full">
-  <section class="relative isolate overflow-hidden pb-12 lg:pb-48">
-    <!-- Secondary nav -->
-    <ProfileSecondaryNav {config} {organizationName} />
-  </section>
+  <div id="mini-hero" class="min-h-52">
+    <!-- Educational announcements and other welcome items go here -->
+  </div>
+
   <div class="main main-raised {cssConfig.mainBody}">
     <div class="profile-content">
       <div class="row row-alert-fixed-to-top {cssConfig.topBar}">
