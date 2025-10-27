@@ -1,30 +1,49 @@
 /**
- * A reusable Svelte action that replaces the legacy MaterializeCSS Pushpin plugin
+ * Svelte action that replaces the legacy MaterializeCSS Pushpin plugin.
+ * Makes an element sticky when scrolled past its original position.
+ *
+ * See sticky.examples.md for usage examples
  */
 
 interface StickyOptions {
-  enabled?: boolean;
-  minWidth?: number;
-  offset?: number;
-  placeholder?: boolean;
-  zIndex?: number;
+  enabled?: boolean; // default: true
+  minWidth?: number; // default: 0
+  offset?: number; // default: 0
+  placeholder?: boolean; // default: true
+  zIndex?: number; // default: 100
+  fullWidth?: boolean; // default: true
+  resizeDebounce?: number; // default: 100
   onStick?: () => void;
   onUnstick?: () => void;
 }
-
 export function sticky(node: HTMLElement, options: StickyOptions = {}) {
-  let { enabled = true, minWidth = 0, offset = 0, placeholder = true, zIndex = 100, onStick = () => {}, onUnstick = () => {} } = options;
+  let {
+    enabled = true,
+    minWidth = 0,
+    offset = 0,
+    placeholder = true,
+    zIndex = 100,
+    fullWidth = true,
+    resizeDebounce = 100,
+    onStick = () => {},
+    onUnstick = () => {},
+  } = options;
 
   let isSticky = false;
   let placeholderEl: HTMLDivElement | null = null;
   let triggerPoint = 0;
   let nodeHeight = 0;
+  let nodeWidth = 0;
+  let nodeLeft = 0;
+  let resizeTimeout: number | null = null;
 
   function calculateDimensions() {
     const rect = node.getBoundingClientRect();
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     triggerPoint = rect.top + scrollTop - offset;
     nodeHeight = node.offsetHeight;
+    nodeWidth = rect.width;
+    nodeLeft = rect.left;
   }
 
   function checkSticky() {
@@ -60,9 +79,20 @@ export function sticky(node: HTMLElement, options: StickyOptions = {}) {
     // Apply sticky styles
     node.style.position = 'fixed';
     node.style.top = `${offset}px`;
-    node.style.left = '0';
-    node.style.right = '0';
     node.style.zIndex = String(zIndex);
+
+    if (fullWidth) {
+      // Full viewport width mode (original behavior)
+      node.style.left = '0';
+      node.style.right = '0';
+      node.style.width = '';
+    } else {
+      // Preserve original width and position
+      node.style.left = `${nodeLeft}px`;
+      node.style.width = `${nodeWidth}px`;
+      node.style.right = '';
+    }
+
     node.setAttribute('data-sticky', 'true');
 
     onStick();
@@ -82,6 +112,7 @@ export function sticky(node: HTMLElement, options: StickyOptions = {}) {
     node.style.top = '';
     node.style.left = '';
     node.style.right = '';
+    node.style.width = '';
     node.style.zIndex = '';
     node.removeAttribute('data-sticky');
 
@@ -89,18 +120,77 @@ export function sticky(node: HTMLElement, options: StickyOptions = {}) {
   }
 
   function handleResize() {
-    // Temporarily unstick to get accurate measurements
+    // Clear any pending resize timeout
+    if (resizeTimeout !== null) {
+      window.clearTimeout(resizeTimeout);
+    }
+
+    // Debounce the resize handler if configured
+    if (resizeDebounce > 0) {
+      resizeTimeout = window.setTimeout(() => {
+        performResize();
+        resizeTimeout = null;
+      }, resizeDebounce);
+    } else {
+      performResize();
+    }
+  }
+
+  function performResize() {
     const wasSticky = isSticky;
-    if (isSticky) {
-      unstick();
-    }
 
-    calculateDimensions();
-
-    // Reapply sticky if it was sticky before
     if (wasSticky) {
-      checkSticky();
+      // Temporarily remove styles to get accurate measurements
+      // but keep the element in place to prevent flicker
+      const savedPosition = node.style.position;
+      const savedTop = node.style.top;
+      const savedLeft = node.style.left;
+      const savedRight = node.style.right;
+      const savedWidth = node.style.width;
+      const savedZIndex = node.style.zIndex;
+
+      node.style.position = '';
+      node.style.top = '';
+      node.style.left = '';
+      node.style.right = '';
+      node.style.width = '';
+      node.style.zIndex = '';
+
+      calculateDimensions();
+
+      // Restore saved styles
+      node.style.position = savedPosition;
+      node.style.top = savedTop;
+      node.style.left = savedLeft;
+      node.style.right = savedRight;
+      node.style.width = savedWidth;
+      node.style.zIndex = savedZIndex;
+
+      // Update the sticky styles with new dimensions
+      if (isSticky) {
+        node.style.top = `${offset}px`;
+        if (fullWidth) {
+          node.style.left = '0';
+          node.style.right = '0';
+          node.style.width = '';
+        } else {
+          node.style.left = `${nodeLeft}px`;
+          node.style.width = `${nodeWidth}px`;
+          node.style.right = '';
+        }
+      }
+
+      // Update placeholder if it exists
+      if (placeholderEl) {
+        placeholderEl.style.height = `${nodeHeight}px`;
+      }
+    } else {
+      // Not sticky, safe to recalculate normally
+      calculateDimensions();
     }
+
+    // Check if sticky state should change based on new dimensions
+    checkSticky();
   }
 
   // Initialize
@@ -120,6 +210,8 @@ export function sticky(node: HTMLElement, options: StickyOptions = {}) {
         offset = 0,
         placeholder = true,
         zIndex = 100,
+        fullWidth = true,
+        resizeDebounce = 100,
         onStick = () => {},
         onUnstick = () => {},
       } = newOptions);
@@ -132,6 +224,11 @@ export function sticky(node: HTMLElement, options: StickyOptions = {}) {
     },
 
     destroy() {
+      // Clean up resize timeout if pending
+      if (resizeTimeout !== null) {
+        window.clearTimeout(resizeTimeout);
+      }
+
       window.removeEventListener('scroll', checkSticky);
       window.removeEventListener('resize', handleResize);
       if (isSticky) {
@@ -141,7 +238,6 @@ export function sticky(node: HTMLElement, options: StickyOptions = {}) {
   };
 }
 
-// Export a helper to get the scroll position for a sticky element
 export function getScrollToPosition(element: HTMLElement): number {
   const rect = element.getBoundingClientRect();
   const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
