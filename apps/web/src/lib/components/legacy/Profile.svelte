@@ -1,10 +1,6 @@
 <script lang="ts">
-  import { page } from '$app/state';
   import { browser } from '$app/environment';
   import { onMount, onDestroy } from 'svelte';
-
-  import ProfileSecondaryNav from '../nav/DetachedSecondaryNav.svelte';
-  import { getNavConfig } from '$src/lib/components/nav/config';
 
   import legacyLogo from '$lib/assets/legacy/images/logo.png';
   import irsLogo from '$lib/assets/legacy/images/irs-w-text.png';
@@ -16,9 +12,6 @@
   import { formatCompensation } from '$src/lib/utils/peopleComp';
   import { formatDateToMonthYear } from '@repo/shared/functions/formatters/dates';
   import { upperFirstLetter } from '@repo/shared/functions/formatters/names';
-
-  const path = $derived(page.url.pathname);
-  const config = $derived(getNavConfig(path));
 
   interface Props {
     profile: GrantmakersExtractedDataObj;
@@ -44,8 +37,6 @@
     url: '', //'https://www.grantmakers.io',
     algolia_referral_link: 'https://www.algolia.com/?utm_source=grantmakersio&utm_medium=referral',
   };
-
-  const organizationName = $derived(profile.organization_name);
 
   const firstLetter = $derived(upperFirstLetter(profile.organization_name));
   const colors = ['red', 'blue', 'green', 'purple', 'yellow', 'pink', 'indigo', 'orange', 'grey', 'cyan', 'lime'];
