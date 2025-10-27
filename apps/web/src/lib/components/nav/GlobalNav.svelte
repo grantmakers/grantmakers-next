@@ -1,6 +1,7 @@
 <script lang="ts">
   import '@tailwindplus/elements';
   import { page } from '$app/state';
+  import Logo from '../shared/icons/Logo.svelte';
   import LogoMark from '$lib/components/shared/LogoMark.svelte';
   import PrimaryNavLink from '$lib/components/nav/PrimaryNavLink.svelte';
   import { aboutLinks } from '@repo/shared/constants/trustedConstants';
@@ -9,6 +10,8 @@
   import SecondaryNavLinkMobile from '$lib/components/nav/SecondaryNavLinkMobile.svelte';
   import PrimarySearchNavLink from './PrimarySearchNavLink.svelte';
   import { getNavConfig } from './config';
+  import { sticky } from '$src/lib/utils/sticky';
+  import { backToTop } from '$lib/utils/scroll';
 
   interface Props {
     organizationName?: string;
@@ -21,11 +24,21 @@
 </script>
 
 <header
-  class="{config?.absolute ? 'absolute inset-x-0 top-0 z-20' : 'relative'} {config?.transparentBg ? 'bg-transparent' : 'bg-slate-900'} {(
+  use:sticky={{
+    fullWidth: true,
+    placeholder: true,
+    minWidth: 768,
+    enabled: config?.sticky ?? false,
+  }}
+  class="group
+    {config?.absolute ? 'absolute inset-x-0 top-0 z-20' : 'relative'} {config?.transparentBg ? 'bg-transparent' : 'bg-slate-900'} {(
     config?.route === 'about'
   ) ?
     'pb-24'
-  : ''} lg:relative lg:isolate lg:overflow-hidden"
+  : ''} 
+    transition-all duration-500 ease-in-out
+    lg:relative lg:isolate lg:overflow-hidden
+  "
 >
   {#if !config?.transparentBg}
     <div class="hidden lg:block">
@@ -39,7 +52,7 @@
   {/if}
 
   <div class="mx-auto max-w-3xl px-6 sm:px-6 lg:max-w-7xl lg:px-8">
-    <div class="py-6">
+    <div class="py-6 group-data-[sticky=true]:hidden">
       <div class="relative flex items-center justify-center lg:h-fit lg:justify-between">
         <div class="flex items-center py-6 lg:py-0">
           <!-- Logo -->
@@ -57,8 +70,18 @@
         <!-- Right section on desktop -->
         <div class="hidden lg:ml-4 lg:flex lg:items-center lg:justify-end">
           <div class="flex items-center gap-6 text-white">
-            <PrimarySearchNavLink href={'/search/profiles/'} title={'Foundations'} />
             <PrimarySearchNavLink href={'/search/grants/'} title={'Grants'} />
+            <PrimarySearchNavLink href={'/search/profiles/'} title={'Foundations'} />
+            <div class="text-indigo-100">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8">
+                <path d="M8.25 10.875a2.625 2.625 0 1 1 5.25 0 2.625 2.625 0 0 1-5.25 0Z" />
+                <path
+                  fill-rule="evenodd"
+                  d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.125 4.5a4.125 4.125 0 1 0 2.338 7.524l2.007 2.006a.75.75 0 1 0 1.06-1.06l-2.006-2.007a4.125 4.125 0 0 0-3.399-6.463Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </div>
           </div>
           <!-- <PrimaryNavDropdown /> -->
         </div>
@@ -92,58 +115,62 @@
 
     <!-- Desktop Page links -->
     {#if config?.showSecondaryNav && config.secondaryNavLinks}
-      <div class="hidden border-t border-white/20 py-6 lg:block">
+      <div class="hidden border-t border-white/20 py-6 group-data-[sticky=true]:py-4 lg:block">
         <div class="grid grid-cols-1 items-center gap-8">
           <div class="col-span-2">
             <nav class="flex items-center space-x-4">
               {#if config.route === 'profiles' && organizationName}
                 <!-- TODO This should only appear on scroll, when the primary nav disappears -->
-                <!-- <div class="absolute left-0 shrink-0 lg:static lg:block">
-                <Logo />
-              </div>
-              <div class="flex items-center text-indigo-400">
-                <svg
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  data-slot="icon"
-                  aria-hidden="true"
-                  class="size-5 shrink-0 text-gray-400 dark:text-gray-500"
-                >
-                  <path
-                    d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
-                    clip-rule="evenodd"
-                    fill-rule="evenodd"
-                  />
-                </svg>
-              </div>
-              <div class="flex items-center gap-6 text-white">
-                <PrimarySearchNavLink href={'/search/profiles/'} title={'Foundations'} />
-              </div>
+                <!-- Show Breadcrumb nav if sticky -->
+                <div class="absolute left-0 hidden shrink-0 lg:static group-data-[sticky=true]:lg:block">
+                  <Logo variation={'sticky'} />
+                </div>
+                <div class="hidden items-center text-indigo-400 group-data-[sticky=true]:lg:flex">
+                  <svg
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    data-slot="icon"
+                    aria-hidden="true"
+                    class="size-5 shrink-0 text-gray-400 dark:text-gray-500"
+                  >
+                    <path
+                      d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
+                      clip-rule="evenodd"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <div class="hidden items-center gap-6 text-white group-data-[sticky=true]:lg:flex">
+                  <PrimarySearchNavLink href={'/search/profiles/'} title={'Foundations'} />
+                </div>
 
-              <div class="flex items-center text-indigo-400">
-                <svg
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  data-slot="icon"
-                  aria-hidden="true"
-                  class="size-5 shrink-0 text-gray-400 dark:text-gray-500"
-                >
-                  <path
-                    d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
-                    clip-rule="evenodd"
-                    fill-rule="evenodd"
-                  />
-                </svg>
-              </div>
-              -->
-                <div
-                  class="rounded-md bg-white/10 px-3 py-2 text-sm font-medium text-indigo-100 focus:outline-none focus-visible:outline-none"
+                <div class="hidden items-center text-indigo-400 group-data-[sticky=true]:lg:flex">
+                  <svg
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    data-slot="icon"
+                    aria-hidden="true"
+                    class="size-5 shrink-0 text-gray-400 dark:text-gray-500"
+                  >
+                    <path
+                      d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
+                      clip-rule="evenodd"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </div>
+
+                <!-- TODO Add Scroll to top -->
+                <button
+                  class="rounded-md bg-white/10 px-3 py-2 text-sm font-medium text-white focus:outline-none focus-visible:outline-none group-data-[sticky=true]:bg-transparent"
                   aria-current="page"
+                  title="Return to top"
+                  onclick={backToTop}
                 >
                   {organizationName}
-                </div>
+                </button>
                 <!-- <SecondaryNavLink href={'#'} title={organizationName} /> -->
-                <div class="flex items-center text-indigo-400">
+                <div class="hidden items-center text-indigo-400 group-data-[sticky=true]:lg:flex">
                   <svg
                     viewBox="0 0 20 20"
                     fill="currentColor"

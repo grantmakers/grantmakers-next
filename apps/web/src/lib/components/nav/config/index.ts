@@ -1,32 +1,36 @@
 import { aboutLinks, profileNavItems, type SecondaryNavItems } from '@repo/shared/constants/trustedConstants';
 
 export interface NavConfig {
-  route: 'profiles' | 'about' | 'home';
-  showSecondaryNav?: boolean;
+  route: 'profiles' | 'search' | 'about' | 'home';
   transparentBg?: boolean;
-  absolute?: boolean; // HACK: This is a temporary prop to support the legacy profile pages
+  absolute?: boolean;
+  showSecondaryNav?: boolean;
   secondaryNavLinks?: SecondaryNavItems[];
+  sticky?: boolean;
 }
 
 export const defaultConfig: NavConfig = {
   route: 'home',
   transparentBg: false,
-  showSecondaryNav: false,
   absolute: false,
+  showSecondaryNav: false,
 };
 
 export function getNavConfig(path: string): NavConfig {
   if (path.startsWith('/profiles/v0')) {
-    return { route: 'profiles', transparentBg: false, showSecondaryNav: false, absolute: true, secondaryNavLinks: profileNavItems };
+    return { route: 'profiles', transparentBg: false, absolute: true, showSecondaryNav: true, secondaryNavLinks: profileNavItems, sticky: true };
   }
   if (path.startsWith('/profiles/v1')) {
-    return { route: 'profiles', transparentBg: false, showSecondaryNav: false, absolute: true, secondaryNavLinks: profileNavItems };
+    return { route: 'profiles', transparentBg: false, absolute: true, showSecondaryNav: false, secondaryNavLinks: profileNavItems, sticky: false };
+  }
+  if (path.startsWith('/search/')) {
+    return { route: 'search', transparentBg: false, absolute: true, showSecondaryNav: false, sticky: false };
   }
   if (path.startsWith('/about')) {
-    return { route: 'about', transparentBg: false, showSecondaryNav: true, absolute: false, secondaryNavLinks: aboutLinks };
+    return { route: 'about', transparentBg: false, absolute: false, showSecondaryNav: true, secondaryNavLinks: aboutLinks, sticky: false };
   }
   if (path === '/') {
-    return { route: 'home', transparentBg: true, showSecondaryNav: false, absolute: true };
+    return { route: 'home', transparentBg: true, absolute: true, showSecondaryNav: false, sticky: false };
   }
   return defaultConfig;
 }

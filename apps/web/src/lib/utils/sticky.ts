@@ -73,6 +73,7 @@ export function sticky(node: HTMLElement, options: StickyOptions = {}) {
       placeholderEl.style.height = `${nodeHeight}px`;
       placeholderEl.style.width = '100%';
       placeholderEl.setAttribute('data-sticky-placeholder', '');
+      placeholderEl.classList.add('sm:dot-pattern', 'bg-slate-200'); // TODO This should be moved to a param
       node.parentNode?.insertBefore(placeholderEl, node);
     }
 
