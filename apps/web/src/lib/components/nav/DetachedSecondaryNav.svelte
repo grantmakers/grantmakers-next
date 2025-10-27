@@ -1,7 +1,9 @@
 <script lang="ts">
   /**
    * To be used in scenarios where separating the secondary nav from the GlobalNav handling is beneficial
-   * This component was created to power the secondary nav in the two Profiles routes, e.g. (legacy) as well as (next)
+   * Uses a modern pill style nav, inspired by https://paper.design/ and https://www.toools.design/
+   *
+   * Early prototype to test alt styling for Profiles secondary navs
    */
   import { type NavConfig } from './config';
   import { type GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
