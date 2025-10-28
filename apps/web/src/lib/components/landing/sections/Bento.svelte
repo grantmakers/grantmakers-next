@@ -6,15 +6,15 @@
   import best from '$lib/assets/images/bento/donor-list.webp';
 </script>
 
-<div class="bg-white py-12 dark:bg-gray-900 sm:py-24">
+<div class="bg-white py-12 sm:py-24 dark:bg-gray-900">
   <div class="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
     <h2 class="text-base/7 font-semibold tracking-normal text-indigo-600 dark:text-indigo-400">A Digital Public Good</h2>
-    <p class="mt-2 max-w-lg text-pretty text-4xl font-semibold tracking-tight text-gray-950 dark:text-white sm:text-5xl">
+    <p class="mt-2 max-w-lg text-pretty text-4xl font-semibold tracking-tight text-gray-950 sm:text-5xl dark:text-white">
       Use Open Data to Find Your Next Funder
     </p>
     <div class="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
       <div class="relative lg:col-span-3">
-        <div class="absolute inset-0 rounded-lg bg-white dark:bg-gray-800 max-lg:rounded-t-[2rem] lg:rounded-tl-[2rem]"></div>
+        <div class="absolute inset-0 rounded-lg bg-white max-lg:rounded-t-[2rem] lg:rounded-tl-[2rem] dark:bg-gray-800"></div>
         <div
           class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)] lg:rounded-tl-[calc(2rem+1px)]"
         >
@@ -36,11 +36,11 @@
           /> -->
         </div>
         <div
-          class="pointer-events-none absolute inset-0 rounded-lg shadow outline outline-1 outline-black/5 dark:outline-white/15 max-lg:rounded-t-[2rem] lg:rounded-tl-[2rem]"
+          class="pointer-events-none absolute inset-0 rounded-lg shadow outline outline-1 outline-black/5 max-lg:rounded-t-[2rem] lg:rounded-tl-[2rem] dark:outline-white/15"
         ></div>
       </div>
       <div class="relative lg:col-span-3">
-        <div class="absolute inset-0 rounded-lg bg-white dark:bg-gray-800 lg:rounded-tr-[2rem]"></div>
+        <div class="absolute inset-0 rounded-lg bg-white lg:rounded-tr-[2rem] dark:bg-gray-800"></div>
         <div
           class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-tr-[calc(2rem+1px)]"
         >
@@ -59,11 +59,11 @@
           /> -->
         </div>
         <div
-          class="pointer-events-none absolute inset-0 rounded-lg shadow outline outline-1 outline-black/5 dark:outline-white/15 lg:rounded-tr-[2rem]"
+          class="pointer-events-none absolute inset-0 rounded-lg shadow outline outline-1 outline-black/5 lg:rounded-tr-[2rem] dark:outline-white/15"
         ></div>
       </div>
       <div class="relative lg:col-span-2">
-        <div class="absolute inset-0 rounded-lg bg-white dark:bg-gray-800 lg:rounded-bl-[2rem]"></div>
+        <div class="absolute inset-0 rounded-lg bg-white lg:rounded-bl-[2rem] dark:bg-gray-800"></div>
         <div
           class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-bl-[calc(2rem+1px)]"
         >
@@ -82,7 +82,7 @@
           /> -->
         </div>
         <div
-          class="pointer-events-none absolute inset-0 rounded-lg shadow outline outline-1 outline-black/5 dark:outline-white/15 lg:rounded-bl-[2rem]"
+          class="pointer-events-none absolute inset-0 rounded-lg shadow outline outline-1 outline-black/5 lg:rounded-bl-[2rem] dark:outline-white/15"
         ></div>
       </div>
       <div class="relative lg:col-span-2">
@@ -105,7 +105,7 @@
         <div class="pointer-events-none absolute inset-0 rounded-lg shadow outline outline-1 outline-black/5 dark:outline-white/15"></div>
       </div>
       <div class="relative lg:col-span-2">
-        <div class="absolute inset-0 rounded-lg bg-white dark:bg-gray-800 max-lg:rounded-b-[2rem] lg:rounded-br-[2rem]"></div>
+        <div class="absolute inset-0 rounded-lg bg-white max-lg:rounded-b-[2rem] lg:rounded-br-[2rem] dark:bg-gray-800"></div>
         <div
           class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-br-[calc(2rem+1px)]"
         >
@@ -124,7 +124,7 @@
           /> -->
         </div>
         <div
-          class="pointer-events-none absolute inset-0 rounded-lg shadow outline outline-1 outline-black/5 dark:outline-white/15 max-lg:rounded-b-[2rem] lg:rounded-br-[2rem]"
+          class="pointer-events-none absolute inset-0 rounded-lg shadow outline outline-1 outline-black/5 max-lg:rounded-b-[2rem] lg:rounded-br-[2rem] dark:outline-white/15"
         ></div>
       </div>
     </div>

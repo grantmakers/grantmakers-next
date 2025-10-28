@@ -6,7 +6,7 @@
     <div class="rounded-3xl bg-white/90 p-10 text-center ring-1 ring-black/5 backdrop-blur-xl dark:bg-gray-900/90">
       <h2 class="text-base/7 font-semibold text-grantmakers-orange">Foundation Search</h2>
       <div class="relative inline-block">
-        <p class="relative z-10 mt-2 text-4xl font-semibold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
+        <p class="relative z-10 mt-2 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl dark:text-white">
           Open Foundation Data
         </p>
         <!-- <p class="relative z-10 mt-2 text-4xl font-semibold tracking-tight text-gray-900 dark:text-white sm:text-5xl">

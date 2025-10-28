@@ -211,7 +211,7 @@
             <div
               id="searchbox"
               bind:this={searchInputRef}
-              class="relative col-start-1 row-start-1 h-12 w-full pl-11 pr-4 text-base text-gray-900 outline-none placeholder:text-gray-400 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-500 sm:text-sm"
+              class="relative col-start-1 row-start-1 h-12 w-full pl-11 pr-4 text-base text-gray-900 outline-none placeholder:text-gray-400 sm:text-sm dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-500"
             >
               <svg
                 viewBox="0 0 20 20"

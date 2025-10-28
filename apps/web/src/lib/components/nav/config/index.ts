@@ -18,10 +18,24 @@ export const defaultConfig: NavConfig = {
 
 export function getNavConfig(path: string): NavConfig {
   if (path.startsWith('/profiles/v0')) {
-    return { route: 'profiles', transparentBg: false, absolute: true, showSecondaryNav: true, secondaryNavLinks: profileNavItems, sticky: true };
+    return {
+      route: 'profiles',
+      transparentBg: false,
+      absolute: true,
+      showSecondaryNav: true,
+      secondaryNavLinks: profileNavItems,
+      sticky: true,
+    };
   }
   if (path.startsWith('/profiles/v1')) {
-    return { route: 'profiles', transparentBg: false, absolute: true, showSecondaryNav: false, secondaryNavLinks: profileNavItems, sticky: false };
+    return {
+      route: 'profiles',
+      transparentBg: false,
+      absolute: true,
+      showSecondaryNav: false,
+      secondaryNavLinks: profileNavItems,
+      sticky: false,
+    };
   }
   if (path.startsWith('/search/')) {
     return { route: 'search', transparentBg: false, absolute: true, showSecondaryNav: false, sticky: false };

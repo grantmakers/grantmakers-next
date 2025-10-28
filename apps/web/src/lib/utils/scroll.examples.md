@@ -25,9 +25,7 @@ Scroll to an element using a CSS selector:
   import { scrollToElement } from '$lib/utils/scroll';
 </script>
 
-<button onclick={() => scrollToElement('#my-section')}>
-  Go to Section
-</button>
+<button onclick={() => scrollToElement('#my-section')}> Go to Section </button>
 
 <section id="my-section">
   <!-- Section content -->
@@ -45,9 +43,7 @@ Scroll to an element using a direct reference:
   let sectionRef;
 </script>
 
-<button onclick={() => scrollToElement(sectionRef)}>
-  Go to Section
-</button>
+<button onclick={() => scrollToElement(sectionRef)}> Go to Section </button>
 
 <div bind:this={sectionRef}>
   <!-- Section content -->
@@ -78,9 +74,7 @@ Show the button only when scrolled down:
 </script>
 
 {#if showButton}
-  <button class="back-to-top" onclick={() => backToTop()}>
-    ↑ Top
-  </button>
+  <button class="back-to-top" onclick={() => backToTop()}> ↑ Top </button>
 {/if}
 
 <style>
@@ -104,16 +98,19 @@ Create a navigation menu that scrolls to different sections:
   const sections = [
     { id: 'about', label: 'About' },
     { id: 'services', label: 'Services' },
-    { id: 'contact', label: 'Contact' }
+    { id: 'contact', label: 'Contact' },
   ];
 </script>
 
 <nav>
   {#each sections as section}
-    <a href="#{section.id}" onclick={(e) => {
-      e.preventDefault();
-      scrollToElement(`#${section.id}`);
-    }}>
+    <a
+      href="#{section.id}"
+      onclick={(e) => {
+        e.preventDefault();
+        scrollToElement(`#${section.id}`);
+      }}
+    >
       {section.label}
     </a>
   {/each}
@@ -139,9 +136,7 @@ The `scrollToElement` function will log a warning if the element is not found:
   }
 </script>
 
-<button onclick={() => handleNavigation('invalid-id')}>
-  Try Invalid Scroll
-</button>
+<button onclick={() => handleNavigation('invalid-id')}> Try Invalid Scroll </button>
 ```
 
 ### Dynamic Target Selection
@@ -163,9 +158,7 @@ Scroll to elements based on user interaction:
     {/each}
   </select>
 
-  <button onclick={() => scrollToElement(`#${selectedSection}`)}>
-    Go to Selected Section
-  </button>
+  <button onclick={() => scrollToElement(`#${selectedSection}`)}> Go to Selected Section </button>
 </div>
 
 {#each sections as section}
@@ -205,11 +198,7 @@ Use with the sticky action for a complete navigation experience:
   import { backToTop } from '$lib/utils/scroll';
 </script>
 
-<button
-  class="btn-floating btn-large waves-effect waves-light"
-  onclick={() => backToTop()}
-  aria-label="Back to top"
->
+<button class="btn-floating btn-large waves-effect waves-light" onclick={() => backToTop()} aria-label="Back to top">
   <i class="material-icons">keyboard_arrow_up</i>
 </button>
 ```
@@ -291,6 +280,7 @@ Smoothly scrolls the window to the top of the page.
 **Returns:** `void`
 
 **Scroll Behavior:**
+
 - Smooth animated scroll
 - Scrolls to `y = 0` position
 
@@ -299,11 +289,13 @@ Smoothly scrolls the window to the top of the page.
 Smoothly scrolls to an element on the page.
 
 **Parameters:**
+
 - `target: HTMLElement | string` - Either an HTMLElement or a CSS selector string
 
 **Returns:** `void`
 
 **Scroll Behavior:**
+
 - Smooth animated scroll
 - Aligns element to the start (top) of the viewport
 - Logs warning to console if element is not found

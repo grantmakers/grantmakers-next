@@ -8,7 +8,7 @@
 
       <!-- Title with hand-drawn underline -->
       <div class="relative inline-block">
-        <p class="relative z-10 mt-2 text-4xl font-semibold tracking-tight text-gray-900 dark:text-white sm:text-5xl">Open Grants Data</p>
+        <p class="relative z-10 mt-2 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl dark:text-white">Open Grants Data</p>
         <!-- <p class="relative z-10 mt-2 text-4xl font-semibold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
           Open <span class="text-indigo-800">Grants</span> Data
         </p> -->

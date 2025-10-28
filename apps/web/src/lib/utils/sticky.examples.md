@@ -30,9 +30,9 @@ Perfect for secondary navigation within a content area:
 <div class="container">
   <nav
     use:sticky={{
-      fullWidth: false,  // Preserves original width
+      fullWidth: false, // Preserves original width
       placeholder: true,
-      minWidth: 768
+      minWidth: 768,
     }}
   >
     <!-- Secondary nav content -->
@@ -59,9 +59,9 @@ When you have a fixed header and want the sticky element to appear below it:
 <!-- Sticky nav that sticks below the header -->
 <nav
   use:sticky={{
-    offset: 64,  // Sticks 64px from top
+    offset: 64, // Sticks 64px from top
     zIndex: 100,
-    placeholder: true
+    placeholder: true,
   }}
 >
   <!-- Navigation content -->
@@ -79,9 +79,9 @@ Delay sticky activation for headers that change layout when sticky:
 
 <header
   use:sticky={{
-    threshold: 50,  // Delay activation by 50px
+    threshold: 50, // Delay activation by 50px
     placeholder: true,
-    minWidth: 768
+    minWidth: 768,
   }}
   class="group"
 >
@@ -123,7 +123,7 @@ Track when elements become sticky/unsticky:
   use:sticky={{
     placeholder: true,
     onStick: handleStick,
-    onUnstick: handleUnstick
+    onUnstick: handleUnstick,
   }}
 >
   <!-- Navigation content -->
@@ -132,7 +132,7 @@ Track when elements become sticky/unsticky:
 <style>
   nav.sticky {
     /* Apply special styles when sticky */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 </style>
 ```
@@ -164,15 +164,13 @@ Update sticky options reactively:
   let headerHeight = 64;
 </script>
 
-<button on:click={() => stickyEnabled = !stickyEnabled}>
-  Toggle Sticky
-</button>
+<button on:click={() => (stickyEnabled = !stickyEnabled)}> Toggle Sticky </button>
 
 <nav
   use:sticky={{
     enabled: stickyEnabled,
     offset: headerHeight,
-    placeholder: true
+    placeholder: true,
   }}
 >
   <!-- Navigation content -->
@@ -191,7 +189,7 @@ Adjust debounce delay for resize events:
 <nav
   use:sticky={{
     placeholder: true,
-    resizeDebounce: 150  // Wait 150ms after resize stops
+    resizeDebounce: 150, // Wait 150ms after resize stops
   }}
 >
   <!-- Navigation content -->
@@ -200,18 +198,18 @@ Adjust debounce delay for resize events:
 
 ## Configuration Options Reference
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `enabled` | `boolean` | `true` | Enable/disable sticky behavior |
-| `minWidth` | `number` | `0` | Minimum viewport width (px) for sticky to activate |
-| `offset` | `number` | `0` | Distance from top of viewport (px) where element sticks |
-| `threshold` | `number` | `0` | Additional scroll distance (px) before sticky activates |
-| `placeholder` | `boolean` | `true` | Insert placeholder to prevent layout shift |
-| `zIndex` | `number` | `100` | CSS z-index for sticky element |
-| `fullWidth` | `boolean` | `true` | Expand to full viewport width when sticky |
-| `resizeDebounce` | `number` | `100` | Debounce delay (ms) for resize events |
-| `onStick` | `() => void` | `() => {}` | Callback when element becomes sticky |
-| `onUnstick` | `() => void` | `() => {}` | Callback when element is no longer sticky |
+| Option           | Type         | Default    | Description                                             |
+| ---------------- | ------------ | ---------- | ------------------------------------------------------- |
+| `enabled`        | `boolean`    | `true`     | Enable/disable sticky behavior                          |
+| `minWidth`       | `number`     | `0`        | Minimum viewport width (px) for sticky to activate      |
+| `offset`         | `number`     | `0`        | Distance from top of viewport (px) where element sticks |
+| `threshold`      | `number`     | `0`        | Additional scroll distance (px) before sticky activates |
+| `placeholder`    | `boolean`    | `true`     | Insert placeholder to prevent layout shift              |
+| `zIndex`         | `number`     | `100`      | CSS z-index for sticky element                          |
+| `fullWidth`      | `boolean`    | `true`     | Expand to full viewport width when sticky               |
+| `resizeDebounce` | `number`     | `100`      | Debounce delay (ms) for resize events                   |
+| `onStick`        | `() => void` | `() => {}` | Callback when element becomes sticky                    |
+| `onUnstick`      | `() => void` | `() => {}` | Callback when element is no longer sticky               |
 
 ## Common Patterns
 
@@ -236,11 +234,11 @@ Adjust debounce delay for resize events:
   <nav
     class="secondary-nav"
     use:sticky={{
-      fullWidth: false,      // Key difference!
+      fullWidth: false, // Key difference!
       placeholder: true,
       minWidth: 768,
-      offset: 64,            // Below primary nav
-      zIndex: 90             // Lower than primary nav
+      offset: 64, // Below primary nav
+      zIndex: 90, // Lower than primary nav
     }}
   >
     <!-- Section navigation -->
@@ -261,7 +259,7 @@ Adjust debounce delay for resize events:
       fullWidth: false,
       placeholder: true,
       offset: 16,
-      minWidth: 1024
+      minWidth: 1024,
     }}
   >
     <!-- Sticky sidebar content -->
@@ -278,15 +276,15 @@ Adjust debounce delay for resize events:
 If you're migrating from MaterializeCSS Pushpin:
 
 ```svelte
-<!-- Old Materialize way -->
-<div class="pushpin" data-target="...">
-  <!-- content -->
-</div>
-
 <!-- New Svelte way -->
 <script>
   import { sticky } from '$lib/utils/sticky';
 </script>
+
+<!-- Old Materialize way -->
+<div class="pushpin" data-target="...">
+  <!-- content -->
+</div>
 
 <div use:sticky={{ placeholder: true }}>
   <!-- content -->
