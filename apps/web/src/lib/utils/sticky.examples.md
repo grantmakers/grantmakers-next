@@ -68,6 +68,35 @@ When you have a fixed header and want the sticky element to appear below it:
 </nav>
 ```
 
+### Delayed Activation with Threshold
+
+Delay sticky activation for headers that change layout when sticky:
+
+```svelte
+<script>
+  import { sticky } from '$lib/utils/sticky';
+</script>
+
+<header
+  use:sticky={{
+    threshold: 50,  // Delay activation by 50px
+    placeholder: true,
+    minWidth: 768
+  }}
+  class="group"
+>
+  <!-- Row 1: Hidden when sticky -->
+  <div class="py-6 group-data-[sticky=true]:hidden">
+    <!-- Primary navigation -->
+  </div>
+
+  <!-- Row 2: Condensed when sticky -->
+  <div class="py-6 group-data-[sticky=true]:py-4">
+    <!-- Secondary navigation -->
+  </div>
+</header>
+```
+
 ### Sticky with Callbacks
 
 Track when elements become sticky/unsticky:
@@ -176,6 +205,7 @@ Adjust debounce delay for resize events:
 | `enabled` | `boolean` | `true` | Enable/disable sticky behavior |
 | `minWidth` | `number` | `0` | Minimum viewport width (px) for sticky to activate |
 | `offset` | `number` | `0` | Distance from top of viewport (px) where element sticks |
+| `threshold` | `number` | `0` | Additional scroll distance (px) before sticky activates |
 | `placeholder` | `boolean` | `true` | Insert placeholder to prevent layout shift |
 | `zIndex` | `number` | `100` | CSS z-index for sticky element |
 | `fullWidth` | `boolean` | `true` | Expand to full viewport width when sticky |

@@ -1,6 +1,7 @@
 <script lang="ts">
   import '@tailwindplus/elements';
   import { page } from '$app/state';
+  import { afterNavigate } from '$app/navigation';
   import Logo from '../shared/icons/Logo.svelte';
   import LogoMark from '$lib/components/shared/LogoMark.svelte';
   import PrimaryNavLink from '$lib/components/nav/PrimaryNavLink.svelte';
@@ -19,15 +20,46 @@
 
   let { organizationName }: Props = $props();
 
+  // Use { path } state to determine which header permutation to render
   const path = $derived(page.url.pathname);
   const config = $derived(getNavConfig(path));
+
+  // Sticky headers - capture the height of the primary nav for to send to sticky plugin as "threshold" param
+  // This should help smooth the initial "jump"
+  let primaryNavHeight = $state(0);
+
+  let headerElement: HTMLElement;
+
+  afterNavigate(() => {
+    if (config?.route === 'profiles' && headerElement) {
+      // Reset sticky state when navigating to profiles routes
+      // This prevents the sticky styling from persisting during navigation
+      headerElement.removeAttribute('data-sticky');
+
+      // Also remove any inline styles that might have been set by the sticky action
+      headerElement.style.position = '';
+      headerElement.style.top = '';
+      headerElement.style.left = '';
+      headerElement.style.right = '';
+      headerElement.style.width = '';
+      headerElement.style.zIndex = '';
+
+      // Remove any sticky placeholder that might exist
+      const placeholder = headerElement.parentNode?.querySelector('[data-sticky-placeholder]');
+      if (placeholder) {
+        placeholder.remove();
+      }
+    }
+  });
 </script>
 
 <header
+  bind:this={headerElement}
   use:sticky={{
     fullWidth: true,
     placeholder: true,
     minWidth: 768,
+    threshold: primaryNavHeight,
     enabled: config?.sticky ?? false,
   }}
   class="group
@@ -36,7 +68,7 @@
   ) ?
     'pb-24'
   : ''} 
-    transition-all duration-500 ease-in-out
+    group-data-[sticky=true]:shadow-lg
     lg:relative lg:isolate lg:overflow-hidden
   "
 >
@@ -52,7 +84,11 @@
   {/if}
 
   <div class="mx-auto max-w-3xl px-6 sm:px-6 lg:max-w-7xl lg:px-8">
-    <div class="py-6 group-data-[sticky=true]:hidden">
+    <!-- Row 1: Primary Nav -->
+    <div
+      bind:clientHeight={primaryNavHeight}
+      class="py-6 transition-all duration-300 group-data-[sticky=true]:hidden group-data-[sticky=true]:py-2"
+    >
       <div class="relative flex items-center justify-center lg:h-fit lg:justify-between">
         <div class="flex items-center py-6 lg:py-0">
           <!-- Logo -->
@@ -83,12 +119,10 @@
               </svg>
             </div>
           </div>
-          <!-- <PrimaryNavDropdown /> -->
         </div>
 
         <!-- Menu button -->
         <div class="absolute right-0 shrink-0 lg:hidden">
-          <!-- Mobile menu button -->
           <button
             type="button"
             command="show-modal"
@@ -113,18 +147,19 @@
       </div>
     </div>
 
-    <!-- Desktop Page links -->
+    <!-- Row 2: Desktop Page links -->
     {#if config?.showSecondaryNav && config.secondaryNavLinks}
-      <div class="hidden border-t border-white/20 py-6 group-data-[sticky=true]:py-4 lg:block">
+      <div class="hidden border-t border-white/20 py-6 transition-all duration-300 group-data-[sticky=true]:py-4 lg:block">
         <div class="grid grid-cols-1 items-center gap-8">
           <div class="col-span-2">
             <nav class="flex items-center space-x-4">
               {#if config.route === 'profiles' && organizationName}
-                <!-- TODO This should only appear on scroll, when the primary nav disappears -->
-                <!-- Show Breadcrumb nav if sticky -->
+                <!-- Logo icon - Only visible when sticky -->
                 <div class="absolute left-0 hidden shrink-0 lg:static group-data-[sticky=true]:lg:block">
                   <Logo variation={'sticky'} />
                 </div>
+
+                <!-- Caret separator -->
                 <div class="hidden items-center text-indigo-400 group-data-[sticky=true]:lg:flex">
                   <svg
                     viewBox="0 0 20 20"
@@ -140,10 +175,13 @@
                     />
                   </svg>
                 </div>
+
+                <!-- Foundations link - Only visible when sticky -->
                 <div class="hidden items-center gap-6 text-white group-data-[sticky=true]:lg:flex">
                   <PrimarySearchNavLink href={'/search/profiles/'} title={'Foundations'} />
                 </div>
 
+                <!-- Caret separator -->
                 <div class="hidden items-center text-indigo-400 group-data-[sticky=true]:lg:flex">
                   <svg
                     viewBox="0 0 20 20"
@@ -160,7 +198,7 @@
                   </svg>
                 </div>
 
-                <!-- TODO Add Scroll to top -->
+                <!-- Foundation name -->
                 <button
                   class="rounded-md bg-white/10 px-3 py-2 text-sm font-medium text-white focus:outline-none focus-visible:outline-none group-data-[sticky=true]:bg-transparent"
                   aria-current="page"
@@ -169,7 +207,8 @@
                 >
                   {organizationName}
                 </button>
-                <!-- <SecondaryNavLink href={'#'} title={organizationName} /> -->
+
+                <!-- Caret separator -->
                 <div class="hidden items-center text-indigo-400 group-data-[sticky=true]:lg:flex">
                   <svg
                     viewBox="0 0 20 20"
@@ -187,6 +226,7 @@
                 </div>
               {/if}
 
+              <!-- Anchor links -->
               {#each config?.secondaryNavLinks as item}
                 <SecondaryNavLink href={item.link} title={item.title} />
               {/each}

@@ -9,6 +9,7 @@ interface StickyOptions {
   enabled?: boolean; // default: true
   minWidth?: number; // default: 0
   offset?: number; // default: 0
+  threshold?: number; // default: 0
   placeholder?: boolean; // default: true
   zIndex?: number; // default: 100
   fullWidth?: boolean; // default: true
@@ -21,6 +22,7 @@ export function sticky(node: HTMLElement, options: StickyOptions = {}) {
     enabled = true,
     minWidth = 0,
     offset = 0,
+    threshold = 0,
     placeholder = true,
     zIndex = 100,
     fullWidth = true,
@@ -57,9 +59,9 @@ export function sticky(node: HTMLElement, options: StickyOptions = {}) {
 
     const scrollY = window.pageYOffset || document.documentElement.scrollTop;
 
-    if (scrollY > triggerPoint && !isSticky) {
+    if (scrollY > triggerPoint + threshold && !isSticky) {
       stick();
-    } else if (scrollY <= triggerPoint && isSticky) {
+    } else if (scrollY <= triggerPoint + threshold && isSticky) {
       unstick();
     }
   }
@@ -209,6 +211,7 @@ export function sticky(node: HTMLElement, options: StickyOptions = {}) {
         enabled = true,
         minWidth = 0,
         offset = 0,
+        threshold = 0,
         placeholder = true,
         zIndex = 100,
         fullWidth = true,
