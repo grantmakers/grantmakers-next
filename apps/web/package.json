@@ -29,6 +29,7 @@
     "postcss-load-config": "^5.0.2",
     "prettier-plugin-svelte": "^3.2.6",
     "prettier-plugin-tailwindcss": "^0.5.11",
+    "rollup-plugin-visualizer": "^6.0.5",
     "svelte": "^5.0.0",
     "svelte-check": "^4.0.0",
     "svelte-headlessui": "^0.0.44",
