@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount } from 'svelte';
+  import { beforeNavigate } from '$app/navigation';
   import 'instantsearch.css/themes/reset.css';
   import '@tailwindplus/elements';
   import { searchClient, INDEX_NAME as indexName, PLACEHOLDER_HITS_COUNT as placeholderHitsPerPage } from './config/algolia';
@@ -17,18 +18,21 @@
   } from '$src/lib/components/search/config/instantsearch-styles';
 
   interface Props {
-    placeholderVersion: string;
     profilesVersion: string;
   }
 
   type PlaceholderHit = (typeof placeholderHits)[number];
 
-  let { placeholderVersion, profilesVersion }: Props = $props();
+  let { profilesVersion }: Props = $props();
 
   let searchInstance: InstantSearch | null = null;
   let searchInputRef: HTMLElement | null = $state(null);
+  let dialogElement: HTMLDialogElement | null = null;
 
-  let placeholderText = $derived(placeholderVersion === 'foundation' ? 'Foundation Quick Search...' : 'Quick search...');
+  // Close the modal when navigation occurs (e.g., clicking a search result link)
+  beforeNavigate(() => {
+    dialogElement?.close();
+  });
 
   const getLabel = (pct: number | 'N/A') => {
     if (pct === 'N/A') return 'N/A';
@@ -73,14 +77,14 @@
       }),
 
       searchBox({
-        container: '#searchbox',
+        container: '#searchbox-profiles-compact',
         placeholder: 'Search by Foundation Name or EIN...',
         autofocus: false,
         cssClasses: searchBoxModalStyles,
       }),
 
       hits({
-        container: '#hits',
+        container: '#hits-profiles-compact',
         cssClasses: hitsStyles,
         templates: {
           item: (item: PlaceholderHit, { html, components }) => {
@@ -149,7 +153,7 @@
       }),
 
       poweredBy({
-        container: '#powered-by',
+        container: '#powered-by-profiles-compact',
         cssClasses: poweredByStyles,
       }),
     ]);
@@ -163,40 +167,15 @@
       }
     };
   });
-
-  onDestroy(() => {
-    if (searchInstance) {
-      searchInstance.dispose();
-    }
-  });
 </script>
-
-<button
-  command="show-modal"
-  commandfor="search-dialog"
-  type="button"
-  title="Search"
-  class="
-    mx-auto flex w-full max-w-2xl items-center rounded-md
-    border border-gray-300 bg-white p-2 text-left
-    focus:outline-none focus:ring-2 focus:ring-indigo-500
-  "
->
-  <div class="aa-DetachedSearchButtonIcon !cursor-pointer !text-slate-500">
-    <svg class="aa-SubmitIcon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-      <path
-        d="M16.041 15.856c-0.034 0.026-0.067 0.055-0.099 0.087s-0.060 0.064-0.087 0.099c-1.258 1.213-2.969 1.958-4.855 1.958-1.933 0-3.682-0.782-4.95-2.050s-2.050-3.017-2.050-4.95 0.782-3.682 2.050-4.95 3.017-2.050 4.95-2.050 3.682 0.782 4.95 2.050 2.050 3.017 2.050 4.95c0 1.886-0.745 3.597-1.959 4.856zM21.707 20.293l-3.675-3.675c1.231-1.54 1.968-3.493 1.968-5.618 0-2.485-1.008-4.736-2.636-6.364s-3.879-2.636-6.364-2.636-4.736 1.008-6.364 2.636-2.636 3.879-2.636 6.364 1.008 4.736 2.636 6.364 3.879 2.636 6.364 2.636c2.125 0 4.078-0.737 5.618-1.968l3.675 3.675c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414z"
-      ></path>
-    </svg>
-  </div>
-  <span class="pl-6 text-slate-500">
-    {placeholderText}
-  </span>
-</button>
 
 <!-- Modal Dialog -->
 <el-dialog>
-  <dialog id="search-dialog" class="m-0 p-0 backdrop:bg-gray-500/25 backdrop:backdrop-blur-sm dark:backdrop:bg-gray-900/50">
+  <dialog
+    bind:this={dialogElement}
+    id="search-dialog-profiles-compact"
+    class="m-0 p-0 backdrop:bg-gray-500/25 backdrop:backdrop-blur-sm dark:backdrop:bg-gray-900/50"
+  >
     <el-dialog-backdrop
       class="fixed inset-0 bg-gray-500/25 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
     ></el-dialog-backdrop>
@@ -209,7 +188,7 @@
         <div class="divide-y divide-gray-100 dark:divide-white/10">
           <div class="grid grid-cols-1">
             <div
-              id="searchbox"
+              id="searchbox-profiles-compact"
               bind:this={searchInputRef}
               class="relative col-start-1 row-start-1 h-12 w-full pl-11 pr-4 text-base text-gray-900 outline-none placeholder:text-gray-400 sm:text-sm dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-500"
             >
@@ -293,13 +272,13 @@
               <!-- <div class="flex items-center justify-start border-y border-b-gray-100 border-t-gray-100 bg-gray-50 px-4 py-2">
               <div class="text-xs font-semibold uppercase text-gray-500">Quick Search</div>
             </div> -->
-              <div id="hits" class="px-4"></div>
+              <div id="hits-profiles-compact" class="px-4"></div>
             </div>
           </div>
 
           <!-- Footer -->
           <div class="flex items-center justify-between px-4 py-4 text-sm text-gray-900 dark:text-gray-400">
-            <div id="powered-by"></div>
+            <div id="powered-by-profiles-compact"></div>
 
             <div class="flex items-center space-x-4">
               <span class="flex items-center">
@@ -324,13 +303,13 @@
 
 <style lang="postcss">
   /* Override InstantSearch's default transparent background for input */
-  :global(#search-dialog .ais-SearchBox-input) {
+  :global(#search-dialog-profiles-compact .ais-SearchBox-input) {
     background-color: transparent;
     @apply pl-1;
   }
 
   /* Remove default focus styles - Tailwind classes handle this */
-  :global(#search-dialog .ais-SearchBox-input:focus) {
+  :global(#search-dialog-profiles-compact .ais-SearchBox-input:focus) {
     --tw-ring-color: transparent;
     --tw-ring-offset-color: transparent;
     box-shadow:

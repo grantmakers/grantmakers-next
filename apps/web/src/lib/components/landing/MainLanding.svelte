@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Search from '../search/Search.svelte';
+  import SearchBoxTrigger from '../search/triggers/SearchBoxTrigger.svelte';
   import Bento from './sections/Bento.svelte';
   import Ethos from './sections/Ethos.svelte';
   import Features from './sections/Features.svelte';
@@ -50,7 +50,7 @@
             </h2>
             <div class="flex flex-col gap-4 p-6 text-base leading-7">
               <div class="mt-2 grow rounded-lg bg-white/5 p-4 text-gray-300 ring-1 ring-inset ring-white/10">
-                <Search placeholderVersion={'foundation'} profilesVersion={'v0'} />
+                <SearchBoxTrigger placeholderText="Foundation Quick Search..." />
               </div>
             </div>
             <div class="hidden sm:mb-8 sm:flex sm:justify-center">
