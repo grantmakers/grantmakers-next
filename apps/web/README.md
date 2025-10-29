@@ -7,9 +7,15 @@
 ✅ Typescript  
 ✅ Tailwind
 
-### HeadlessUI
+### ~~HeadlessUI~~ Tailwind Elements
 
-The project uses [`svelte-headlessui`](https://captaincodeman.github.io/svelte-headlessui/) which is heavily inspired by the amazing [`Tailwind HeadlessUI`](https://headlessui.com/) project. We're huge fans of HeadlessUI, but until there's a Svelte option, here we are.
+The project is transitioning from using a svelte-focused wrapper of HeadlessUI, to the new cross-platform version of HeadlessUI called Elements, also from the Tailwind Labs team.
+
+Docs https://tailwindcss.com/plus/ui-blocks/documentation/elements
+
+Note: A commercial license is required to use Tailwind Plus Elements
+
+The project may have legacy implementations of [`svelte-headlessui`](https://captaincodeman.github.io/svelte-headlessui/) which is heavily inspired by the [`Tailwind HeadlessUI`](https://headlessui.com/) project. These will be refactored out in favor of Tailwind Elements over time.
 
 Docs https://captaincodeman.github.io/svelte-headlessui/
 
