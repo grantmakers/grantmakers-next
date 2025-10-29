@@ -415,16 +415,18 @@ export function initSearchJs(M) {
     // Adjust UI based on selections
     // Add or remove visual cue implying a customization was made
     // Change input placeholder text => default is somewhat redundant as also declared in searchBox widget
-    const inputEl = document.querySelector('input[class="ais-SearchBox-input"]');
-    const triggerEl = document.getElementById('search-box-dropdown-trigger').querySelector('.search-box-dropdown-trigger-wrapper');
+    const inputEl = document.querySelector('input.ais-SearchBox-input');
+    const triggerEl = document.getElementById('search-box-dropdown-trigger')?.querySelector('.search-box-dropdown-trigger-wrapper');
 
-    // if (widgetParams.searchParameters.restrictSearchableAttributes.length === 5) {
-    //   triggerEl.classList.remove('adjusted');
-    //   inputEl.placeholder = 'Search by foundation name, location, trustees, or EIN';
-    // } else {
-    //   triggerEl.classList.add('adjusted');
-    //   inputEl.placeholder = 'Search by custom fields selected';
-    // }
+    if (inputEl && triggerEl) {
+      if (widgetParams.searchParameters.restrictSearchableAttributes.length === 5) {
+        triggerEl.classList.remove('adjusted');
+        inputEl.placeholder = 'Search by foundation name, location, trustees, or EIN';
+      } else {
+        triggerEl.classList.add('adjusted');
+        inputEl.placeholder = 'Search by custom fields selected';
+      }
+    }
   };
 
   // Create the custom widget
@@ -909,7 +911,7 @@ export function initSearchJs(M) {
      * TODO This is consistently NOT destroyed in the cleanup function at Svelte component dismount
      */
     const elem = document.getElementById('toggle-search-type-profiles');
-    if (elem.length === 0) return;
+    if (elem?.length === 0) return;
 
     const options = {
       classes: 'btn blue-grey white-text',
