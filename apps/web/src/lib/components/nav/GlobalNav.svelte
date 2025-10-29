@@ -26,7 +26,7 @@
   const config = $derived(getNavConfig(path));
 
   // Disable search icon on legacy search routes
-  const isLegacySearchRoute = $derived(path.startsWith('/search/'));
+  const isLegacySearchRoute = $derived(path.startsWith('/search/profiles'));
 
   /**
    * Capture the height of the primary nav to pass to the sticky Svelte Action
