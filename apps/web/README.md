@@ -31,6 +31,12 @@ Path `/apps/web/src/lib/utils/tooltip.ts`
 
 Docs https://svelte-french-toast.com/
 
+### Svelte Actions
+
+Svelte-InView - mimics Materialize Scrollspy functionality, also used to trigger landing page animation.
+
+Docs https://github.com/svelte-inview/svelte-inview
+
 ### Custom Svelte Actions
 
 Located in the `utils` directory at `./src/lib/utils`

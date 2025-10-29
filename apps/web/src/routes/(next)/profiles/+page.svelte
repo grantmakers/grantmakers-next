@@ -1,11 +1,7 @@
 <script lang="ts">
   import { browser } from '$app/environment';
-  import Logo from '$lib/components/shared/icons/Logo.svelte';
-  import LogoMark from '$lib/components/shared/LogoMark.svelte';
   import ListItem from '$lib/components/profiles/root/ListItem.svelte';
-  import PrimaryNavLink from '$lib/components/nav/PrimaryNavLink.svelte';
   import { createTabs } from 'svelte-headlessui';
-  import PrimaryNavLinkMobile from '$lib/components/nav/PrimaryNavLinkMobile.svelte';
   import { demoLinks, profileRootLinks } from '@repo/shared/constants/trustedConstants';
   import Autocomplete from '$lib/components/search/Autocomplete.svelte';
   import type { AutocompleteInstance } from '@repo/shared/typings/algolia/autocomplete';

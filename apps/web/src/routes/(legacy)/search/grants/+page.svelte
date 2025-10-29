@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import { sticky } from '$src/lib/utils/sticky';
   import SearchTypesModal from '$src/lib/components/legacy/modals/SearchTypesModal.svelte';
