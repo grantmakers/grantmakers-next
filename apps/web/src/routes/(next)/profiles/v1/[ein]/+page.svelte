@@ -7,7 +7,7 @@
   }
 
   let { data }: Props = $props();
-  const { profile } = data;
+  const profile = $derived(data.profile);
 </script>
 
 {#if profile}
