@@ -1,6 +1,7 @@
 <script lang="ts">
   import BackToTop from '$lib/components/shared/BackToTop.svelte';
   import About from '$lib/components/static/About.svelte';
+  import { sticky } from '$src/lib/utils/sticky';
 </script>
 
 <svelte:head>
@@ -27,7 +28,14 @@
       </div>
 
       <!-- Right column -->
-      <div class="grid grid-cols-1 gap-4 lg:col-span-1">
+      <div
+        use:sticky={{
+          fullWidth: false, // Preserves original width
+          placeholder: false,
+          minWidth: 280,
+        }}
+        class="grid grid-cols-1 gap-4 lg:col-span-1"
+      >
         <section aria-labelledby="about">
           <h2 class="sr-only" id="about-nav">On this page</h2>
           <div class="overflow-hidden rounded-lg bg-white shadow lg:min-h-60">

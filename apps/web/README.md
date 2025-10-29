@@ -24,3 +24,11 @@ Path `/apps/web/src/lib/utils/tooltip.ts`
 ### Toasts - Svelte French Toast
 
 Docs https://svelte-french-toast.com/
+
+### Custom Svelte Actions
+
+Located in the `utils` directory at `./src/lib/utils`
+
+Sticky
+
+Scroll
