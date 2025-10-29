@@ -33,7 +33,6 @@
 
 <style>
   .materialize-wrapper-main {
-    color: #333;
     font-weight: 300;
     font-size: 15px;
     font-family:
