@@ -36,6 +36,12 @@
     --radius: 0.5rem;
 
     --device-pixel-ratio: 1;
+
+    --header-height: 3.375rem;
+
+    [id]:not(html) {
+      scroll-margin-top: var(--header-height);
+    }
   }
 
   .dark {
