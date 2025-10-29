@@ -1,7 +1,6 @@
 <script lang="ts">
   import '@tailwindplus/elements';
   import { page } from '$app/state';
-  import { afterNavigate } from '$app/navigation';
   import Logo from '../shared/icons/Logo.svelte';
   import LogoMark from '$lib/components/shared/LogoMark.svelte';
   import PrimaryNavLink from '$lib/components/nav/PrimaryNavLink.svelte';
@@ -24,33 +23,14 @@
   const path = $derived(page.url.pathname);
   const config = $derived(getNavConfig(path));
 
-  // Sticky headers - capture the height of the primary nav for to send to sticky plugin as "threshold" param
-  // This should help smooth the initial "jump"
-  let primaryNavHeight = $state(0);
+  /**
+   * Capture the height of the primary nav to pass to the sticky Svelte Action
+   * Making it NOT reactive is a feature, not a bug
+   */
+  // svelte-ignore non_reactive_update
+  let primaryNavHeight = 0;
 
   let headerElement: HTMLElement;
-
-  afterNavigate(() => {
-    if (config?.route === 'profiles' && headerElement) {
-      // Reset sticky state when navigating to profiles routes
-      // This prevents the sticky styling from persisting during navigation
-      headerElement.removeAttribute('data-sticky');
-
-      // Also remove any inline styles that might have been set by the sticky action
-      headerElement.style.position = '';
-      headerElement.style.top = '';
-      headerElement.style.left = '';
-      headerElement.style.right = '';
-      headerElement.style.width = '';
-      headerElement.style.zIndex = '';
-
-      // Remove any sticky placeholder that might exist
-      const placeholder = headerElement.parentNode?.querySelector('[data-sticky-placeholder]');
-      if (placeholder) {
-        placeholder.remove();
-      }
-    }
-  });
 </script>
 
 <header
@@ -68,8 +48,7 @@
   ) ?
     'pb-24'
   : ''} 
-    group-data-[sticky=true]:shadow-lg
-    lg:relative lg:isolate lg:overflow-hidden
+    lg:isolate lg:overflow-hidden
   "
 >
   {#if !config?.transparentBg}
@@ -85,16 +64,18 @@
 
   <div class="mx-auto max-w-3xl px-6 sm:px-6 lg:max-w-7xl lg:px-8">
     <!-- Row 1: Primary Nav -->
+    <!-- Sitewide navigation -->
     <div
       bind:clientHeight={primaryNavHeight}
-      class="py-6 transition-all duration-300 group-data-[sticky=true]:hidden group-data-[sticky=true]:py-2"
+      class="overflow-hidden py-6 transition-[max-height,padding,opacity] duration-0 ease-out group-data-[sticky=true]:max-h-0 group-data-[sticky=true]:py-0 group-data-[sticky=true]:opacity-0 group-data-[sticky=true]:duration-500"
     >
       <div class="relative flex items-center justify-center lg:h-fit lg:justify-between">
         <div class="flex items-center py-6 lg:py-0">
           <!-- Logo -->
-          <div class="absolute left-0 shrink-0 lg:static lg:block">
+          <div class="absolute left-0 shrink-0 lg:static">
             <LogoMark isLandingOrFooter />
           </div>
+          <!-- About Links -->
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
               <PrimaryNavLink href={'/about/'} title={'About'} />
@@ -103,11 +84,13 @@
           </div>
         </div>
 
+        <!-- Primary Nav Links -->
         <!-- Right section on desktop -->
         <div class="hidden lg:ml-4 lg:flex lg:items-center lg:justify-end">
           <div class="flex items-center gap-6 text-white">
             <PrimarySearchNavLink href={'/search/grants/'} title={'Grants'} />
             <PrimarySearchNavLink href={'/search/profiles/'} title={'Foundations'} />
+            <!-- TODO Need to wire this up to InstantSearch or hide -->
             <div class="text-indigo-100">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8">
                 <path d="M8.25 10.875a2.625 2.625 0 1 1 5.25 0 2.625 2.625 0 0 1-5.25 0Z" />
@@ -121,7 +104,7 @@
           </div>
         </div>
 
-        <!-- Menu button -->
+        <!-- Mobile Menu button -->
         <div class="absolute right-0 shrink-0 lg:hidden">
           <button
             type="button"
@@ -147,91 +130,46 @@
       </div>
     </div>
 
-    <!-- Row 2: Desktop Page links -->
+    <!-- Row 2: Secondary Nav links -->
+    <!-- In-page navigation -->
     {#if config?.showSecondaryNav && config.secondaryNavLinks}
-      <div class="hidden border-t border-white/20 py-6 transition-all duration-300 group-data-[sticky=true]:py-4 lg:block">
-        <div class="grid grid-cols-1 items-center gap-8">
-          <div class="col-span-2">
-            <nav class="flex items-center space-x-4">
-              {#if config.route === 'profiles' && organizationName}
-                <!-- Logo icon - Only visible when sticky -->
-                <div class="absolute left-0 hidden shrink-0 lg:static group-data-[sticky=true]:lg:block">
-                  <Logo variation={'sticky'} />
-                </div>
+      <div
+        class="hidden border-t border-white/20 py-4 transition-[border,padding] duration-0 ease-out group-data-[sticky=true]:border-0 group-data-[sticky=true]:py-2 group-data-[sticky=true]:duration-700 lg:block"
+      >
+        <div class="flex items-center gap-4">
+          <!-- Inherit Primary nav items when sticky -->
+          <div
+            class="flex w-0 items-center gap-4 overflow-hidden opacity-0 transition-[width,opacity] duration-0 ease-out group-data-[sticky=true]:w-auto group-data-[sticky=true]:opacity-100 group-data-[sticky=true]:duration-700"
+          >
+            <div class="shrink-0">
+              <a href="/" class="flex items-center">
+                <Logo variation={'sticky'} />
+              </a>
+            </div>
 
-                <!-- Caret separator -->
-                <div class="hidden items-center text-indigo-400 group-data-[sticky=true]:lg:flex">
-                  <svg
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    data-slot="icon"
-                    aria-hidden="true"
-                    class="size-5 shrink-0 text-gray-400 dark:text-gray-500"
-                  >
-                    <path
-                      d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
-                      clip-rule="evenodd"
-                      fill-rule="evenodd"
-                    />
-                  </svg>
-                </div>
-
-                <!-- Foundations link - Only visible when sticky -->
-                <div class="hidden items-center gap-6 text-white group-data-[sticky=true]:lg:flex">
-                  <PrimarySearchNavLink href={'/search/profiles/'} title={'Foundations'} />
-                </div>
-
-                <!-- Caret separator -->
-                <div class="hidden items-center text-indigo-400 group-data-[sticky=true]:lg:flex">
-                  <svg
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    data-slot="icon"
-                    aria-hidden="true"
-                    class="size-5 shrink-0 text-gray-400 dark:text-gray-500"
-                  >
-                    <path
-                      d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
-                      clip-rule="evenodd"
-                      fill-rule="evenodd"
-                    />
-                  </svg>
-                </div>
-
-                <!-- Foundation name -->
-                <button
-                  class="rounded-md bg-white/10 px-3 py-2 text-sm font-medium text-white focus:outline-none focus-visible:outline-none group-data-[sticky=true]:bg-transparent"
-                  aria-current="page"
-                  title="Return to top"
-                  onclick={backToTop}
-                >
-                  {organizationName}
-                </button>
-
-                <!-- Caret separator -->
-                <div class="hidden items-center text-indigo-400 group-data-[sticky=true]:lg:flex">
-                  <svg
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    data-slot="icon"
-                    aria-hidden="true"
-                    class="size-5 shrink-0 text-gray-400 dark:text-gray-500"
-                  >
-                    <path
-                      d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
-                      clip-rule="evenodd"
-                      fill-rule="evenodd"
-                    />
-                  </svg>
-                </div>
-              {/if}
-
-              <!-- Anchor links -->
-              {#each config?.secondaryNavLinks as item}
-                <SecondaryNavLink href={item.link} title={item.title} />
-              {/each}
-            </nav>
+            <div class="shrink-0 whitespace-nowrap text-white">
+              <PrimarySearchNavLink href={'/search/profiles/'} title={'Foundations'} />
+            </div>
           </div>
+
+          <!-- Secondary nav -->
+          <nav class="flex items-center space-x-4 transition-all duration-700">
+            {#if config.route === 'profiles' && organizationName}
+              <button
+                class="whitespace-nowrap rounded-md bg-white/10 px-3 py-2 text-sm font-medium text-white focus:outline-none focus-visible:outline-none"
+                aria-current="page"
+                title="Return to top"
+                onclick={backToTop}
+              >
+                {organizationName}
+              </button>
+            {/if}
+
+            <!-- Anchor links -->
+            {#each config?.secondaryNavLinks as item}
+              <SecondaryNavLink href={item.link} title={item.title} />
+            {/each}
+          </nav>
         </div>
       </div>
     {/if}

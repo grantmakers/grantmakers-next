@@ -5,13 +5,6 @@
 
 // Scroll the window to the top of the page
 export function backToTop(): void {
-  // TODO This is a temporary quick fix to reduce an edge case UX
-  // TODO It should be implemented properly via the GlobalNav component
-  const header = document.querySelector('header[data-sticky]');
-  if (header && header instanceof HTMLElement) {
-    delete header.dataset.sticky;
-  }
-
   window.scrollTo({
     top: 0,
     behavior: 'instant',

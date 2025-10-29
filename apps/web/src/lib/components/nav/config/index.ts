@@ -21,7 +21,7 @@ export function getNavConfig(path: string): NavConfig {
     return {
       route: 'profiles',
       transparentBg: false,
-      absolute: true,
+      absolute: false,
       showSecondaryNav: true,
       secondaryNavLinks: profileNavItems,
       sticky: true,
