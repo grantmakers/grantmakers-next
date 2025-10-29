@@ -35,7 +35,7 @@
               clip-rule="evenodd"
             />
           </svg>
-          <span>8,000 weekly visitors</span>
+          <span>Zero barriers</span>
         </li>
         <li class="flex gap-x-3">
           <svg class="mt-1 size-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
