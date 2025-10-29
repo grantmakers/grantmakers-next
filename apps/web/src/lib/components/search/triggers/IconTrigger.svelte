@@ -12,7 +12,7 @@
   type="button"
   title="Search"
   aria-label="Open foundation search"
-  disabled={disabled}
+  {disabled}
   class="text-indigo-100 transition-colors hover:text-white focus:outline-none focus-visible:outline-2 focus-visible:outline-white disabled:cursor-not-allowed disabled:opacity-75"
 >
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8">
