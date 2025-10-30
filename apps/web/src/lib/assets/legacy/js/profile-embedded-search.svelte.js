@@ -1,4 +1,4 @@
-import { goto } from '$app/navigation';
+import { pushState, replaceState } from '$app/navigation';
 import { algoliasearch } from 'algoliasearch';
 import instantsearch from 'instantsearch.js';
 import { history } from 'instantsearch.js/es/lib/routers';
@@ -131,33 +131,27 @@ export async function initSearchJs(M) {
            * The SvelteKit app is an SPA
            * The goal of these router settings is to leverage the power of the InstantSearch routing,
            * but do so in a way that works well with SvelteKit best practices.
+           *
+           * We use SvelteKit's shallow routing (pushState/replaceState) to update the URL
+           * without triggering load functions, which would cause unnecessary __data.json refetches.
            */
           // Get the current page.url
           const currentPageUrl = page.url;
-          // Get the "next ur", passed in by Algolia as a parameter
+          // Get the "next url", passed in by Algolia as a parameter
           // Reformat as needed
           const href = typeof url === 'string' ? url : `${url.pathname}${url.search}${url.hash}`;
 
-          // Check if the current URL contains has search params.
+          // Check if the current URL contains search params.
           const hasSearch = currentPageUrl.search.includes('?');
 
           // If the current URL has no search, it's the FIRST search.
           // Thus, we want to PUSH this to history.
           if (!hasSearch) {
-            goto(href, {
-              keepFocus: true,
-              noScroll: true,
-              // Explicitly set replaceState to false - which is the default
-              replaceState: false,
-            });
+            pushState(href, {});
           } else {
             // The URL already has search params, so this is a REFINEMENT.
             // We want to REPLACE the current history entry.
-            goto(href, {
-              keepFocus: true,
-              noScroll: true,
-              replaceState: true,
-            });
+            replaceState(href, {});
           }
         },
       }),
