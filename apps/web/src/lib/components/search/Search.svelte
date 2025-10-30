@@ -272,7 +272,7 @@
               <!-- <div class="flex items-center justify-start border-y border-b-gray-100 border-t-gray-100 bg-gray-50 px-4 py-2">
               <div class="text-xs font-semibold uppercase text-gray-500">Quick Search</div>
             </div> -->
-              <div id="hits-profiles-compact" class="px-4"></div>
+              <div id="hits-profiles-compact" class="px-4" data-sveltekit-preload-data="tap"></div>
             </div>
           </div>
 
