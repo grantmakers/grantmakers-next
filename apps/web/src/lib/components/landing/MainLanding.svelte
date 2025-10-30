@@ -40,7 +40,7 @@
         <section class="flex flex-col items-center justify-center px-4 text-center">
           <div class="w-full max-w-2xl">
             <h1 class="mb-4 text-4xl font-bold text-white sm:text-6xl">
-              <span class="text-grantmakers-orange">Foundation research</span><br />Fully public. Built for everyone.
+              <span class="text-grantmakers-orange">Foundation research</span><br />Fully public. Finally unlocked.
             </h1>
             <h2 class="mt-6 text-lg font-normal text-gray-300">
               Research any US foundation in seconds. See their complete giving history, who they fund, and how much they give. Built from
