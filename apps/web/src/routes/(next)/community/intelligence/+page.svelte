@@ -1,6 +1,6 @@
 <script lang="ts">
   import { invalidate } from '$app/navigation';
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import toast from 'svelte-french-toast';
 
   let geminiOutput = '';
@@ -35,7 +35,7 @@
         const errorData = await response.json();
         statusMessage = `Error: ${errorData.message}`;
       }
-    } catch (error) {
+    } catch (error: any) {
       statusMessage = `Error: ${error.message}`;
     }
   }
@@ -88,7 +88,7 @@
       </div>
 
       <div class="mt-6 flex items-center justify-end gap-x-6">
-        <button type="button" class="text-sm/6 font-semibold text-gray-900" onclick={() => invalidate($page.url)}>Cancel</button>
+        <button type="button" class="text-sm/6 font-semibold text-gray-900" onclick={() => invalidate(page.url)}>Cancel</button>
         <button
           type="button"
           onclick={handleSubmit}
