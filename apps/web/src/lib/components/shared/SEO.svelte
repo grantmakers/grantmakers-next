@@ -2,6 +2,7 @@
   import { page } from '$app/state';
   import { originProd, profilesVersionProd } from '@repo/shared/constants/trustedConstants';
   import { upperFirstLetter } from '@repo/shared/functions/formatters/names';
+  import { sanitizeHtml } from '@repo/shared/utils/sanitize';
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
 
   type Title = GrantmakersExtractedDataObj['organization_name'];
@@ -16,7 +17,8 @@
 
   const title = createTitle(organization_name);
   const description = createDescription({ organization_name, city, state, ein, filings });
-  const canonicalUrl = createCanonical(page.url, originProd, profilesVersionProd);
+  const pathname = $derived(page.url.pathname);
+  const canonicalUrl = $derived(createCanonical(pathname, originProd, profilesVersionProd));
 
   function createTitle(organization_name: Title): string {
     return `Grantmakers.io Profile - ${organization_name}`;
@@ -29,15 +31,14 @@
     return description;
   }
 
-  function createCanonical(url: URL, targetOrigin: string, profilesVersion: string) {
-    const { pathname } = url;
+  function createCanonical(pathname: string, targetOrigin: string, profilesVersion: string) {
     const profileId = pathname.split('/').slice(-2)[0];
     const canonicalUrl = `${targetOrigin}/profiles/${profilesVersion}/${profileId}`;
 
     return canonicalUrl;
   }
 
-  let jsonld = {
+  const jsonld = $derived({
     '@context': 'https://schema.org/',
     '@type': 'NGO',
     legalName: profile.organization_name,
@@ -50,9 +51,9 @@
       postalCode: profile.zip,
       streetAddress: `${profile.street} ${profile.street2 ? profile.street2 : ''}`,
     },
-  };
+  });
 
-  let jsonldBreadcrumb = {
+  const jsonldBreadcrumb = $derived({
     '@context': 'https://schema.org/',
     '@type': 'BreadcrumbList',
     itemListElement: [
@@ -81,7 +82,7 @@
         },
       },
     ],
-  };
+  });
 </script>
 
 <link rel="canonical" href={canonicalUrl} />
@@ -108,7 +109,8 @@
 <meta name="twitter:image:src" content="{originProd}/assets/img/icons-letters/{upperFirstLetter(profile.organization_name)}.png" />
 
 <!-- Schema.org -->
+<!-- Sanitized with DOMPurify -->
 <!-- eslint-disable svelte/no-at-html-tags -->
-{@html '<script type="application/ld+json">' + JSON.stringify(jsonld) + '</script>'}
-{@html '<script type="application/ld+json">' + JSON.stringify(jsonldBreadcrumb) + '</script>'}
+{@html sanitizeHtml('<script type="application/ld+json">' + JSON.stringify(jsonld) + '</script>')}
+{@html sanitizeHtml('<script type="application/ld+json">' + JSON.stringify(jsonldBreadcrumb) + '</script>')}
 <!-- eslint-enable svelte/no-at-html-tags -->
