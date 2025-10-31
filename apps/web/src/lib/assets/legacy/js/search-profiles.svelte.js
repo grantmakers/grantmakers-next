@@ -1,4 +1,4 @@
-import { page } from '$app/state';
+import { browser } from '$app/environment';
 import { pushState, replaceState } from '$app/navigation';
 import { algoliasearch } from 'algoliasearch';
 import instantsearch from 'instantsearch.js';
@@ -1092,50 +1092,64 @@ export function initSearchJs(M) {
 
 export function destroySearchJs() {
   try {
-    if (search) {
-      search.dispose();
-      search = null;
-    }
-
-    if (instances.dropdowns && instances.dropdowns.length > 0) {
-      instances.dropdowns.forEach((instance) => {
-        if (instance && typeof instance.destroy === 'function') {
-          try {
-            instance.destroy();
-          } catch (e) {
-            console.warn('Failed to destroy dropdown instance:', e);
+    if (browser) {
+      if (search) {
+        search.dispose();
+        search = null;
+      }
+      // TODO Intermittent error: "document is not defined"
+      if (instances.dropdowns && instances.dropdowns.length > 0) {
+        instances.dropdowns.forEach((instance) => {
+          if (instance && typeof instance.destroy === 'function') {
+            try {
+              instance.destroy();
+            } catch (e) {
+              console.warn('Failed to destroy dropdown instance:', e);
+            }
           }
-        }
-      });
-    }
+        });
+      }
 
-    if (instances.collapsibles && instances.collapsibles.length > 0) {
-      instances.collapsibles.forEach((instance) => {
-        if (instance && typeof instance.destroy === 'function') {
-          try {
-            instance.destroy();
-          } catch (e) {
-            console.warn('Failed to destroy collapsible instance:', e);
+      if (instances.collapsibles && instances.collapsibles.length > 0) {
+        instances.collapsibles.forEach((instance) => {
+          if (instance && typeof instance.destroy === 'function') {
+            try {
+              instance.destroy();
+            } catch (e) {
+              console.warn('Failed to destroy collapsible instance:', e);
+            }
           }
-        }
-      });
-    }
+        });
+      }
 
-    if (instances.sidenavs && instances.sidenavs.length > 0) {
-      instances.sidenavs.forEach((instance) => {
-        if (instance && typeof instance.destroy === 'function') {
-          try {
-            instance.destroy();
-          } catch (e) {
-            console.warn('Failed to destroy sidenav instance:', e);
+      if (instances.formSelects && instances.formSelects.length > 0) {
+        instances.formSelects.forEach((instance) => {
+          if (instance && instance.el && typeof instance.destroy === 'function') {
+            try {
+              instance.destroy();
+            } catch (e) {
+              console.warn('Failed to destroy formSelect instance:', e);
+            }
           }
-        }
-      });
-    }
+        });
+      }
 
-    const toggleCleanupElement = document.getElementById('toggle-search-type-profiles');
-    if (toggleCleanupElement) {
-      toggleCleanupElement.remove();
+      if (instances.sidenavs && instances.sidenavs.length > 0) {
+        instances.sidenavs.forEach((instance) => {
+          if (instance && typeof instance.destroy === 'function') {
+            try {
+              instance.destroy();
+            } catch (e) {
+              console.warn('Failed to destroy sidenav instance:', e);
+            }
+          }
+        });
+      }
+
+      const toggleCleanupElement = document.getElementById('toggle-search-type-profiles');
+      if (toggleCleanupElement) {
+        toggleCleanupElement.remove();
+      }
     }
 
     instances = {

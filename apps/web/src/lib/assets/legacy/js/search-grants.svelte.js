@@ -1,4 +1,4 @@
-import { page } from '$app/state';
+import { browser } from '$app/environment';
 import { pushState, replaceState } from '$app/navigation';
 import { algoliasearch } from 'algoliasearch';
 import instantsearch from 'instantsearch.js';
@@ -927,36 +927,50 @@ let popstateHandler;
 
 export function destroySearchJs() {
   try {
-    if (search) {
-      search.dispose();
-      search = null;
-    }
+    if (browser) {
+      if (search) {
+        search.dispose();
+        search = null;
+      }
+      // Restore original history methods
+      if (originalPushState) {
+        window.history.pushState = originalPushState;
+      }
+      if (originalReplaceState) {
+        window.history.replaceState = originalReplaceState;
+      }
+      if (popstateHandler) {
+        window.removeEventListener('popstate', popstateHandler);
+      }
 
-    // Restore original history methods
-    if (originalPushState) {
-      window.history.pushState = originalPushState;
-    }
-    if (originalReplaceState) {
-      window.history.replaceState = originalReplaceState;
-    }
-    if (popstateHandler) {
-      window.removeEventListener('popstate', popstateHandler);
-    }
-
-    if (instances.dropdowns && instances.dropdowns.length > 0) {
-      instances.dropdowns.forEach((instance) => {
-        if (instance && typeof instance.destroy === 'function') {
-          try {
-            instance.destroy();
-          } catch (e) {
-            console.warn('Failed to destroy dropdown instance:', e);
+      if (instances.dropdowns && instances.dropdowns.length > 0) {
+        instances.dropdowns.forEach((instance) => {
+          if (instance && typeof instance.destroy === 'function') {
+            try {
+              instance.destroy();
+            } catch (e) {
+              console.warn('Failed to destroy dropdown instance:', e);
+            }
           }
-        }
-      });
-    }
-    const toggleCleanupElement = document.getElementById('toggle-search-type-grants');
-    if (toggleCleanupElement) {
-      toggleCleanupElement.remove();
+        });
+      }
+
+      if (instances.formSelects && instances.formSelects.length > 0) {
+        instances.formSelects.forEach((instance) => {
+          if (instance && typeof instance.destroy === 'function' && instance.el) {
+            try {
+              instance.destroy();
+            } catch (e) {
+              console.warn('Failed to destroy formSelect instance:', e);
+            }
+          }
+        });
+      }
+
+      const toggleCleanupElement = document.getElementById('toggle-search-type-grants');
+      if (toggleCleanupElement) {
+        toggleCleanupElement.remove();
+      }
     }
 
     instances = {

@@ -1,3 +1,4 @@
+import { browser } from '$app/environment';
 import { pushState, replaceState } from '$app/navigation';
 import { algoliasearch } from 'algoliasearch';
 import instantsearch from 'instantsearch.js';
@@ -16,7 +17,6 @@ import {
 import { connectHits, connectRefinementList, connectCurrentRefinements } from 'instantsearch.js/es/connectors';
 import { highlight } from 'instantsearch.js/es/helpers';
 import { PUBLIC_ALGOLIA_APP_ID_GRANTS, PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS, PUBLIC_ALGOLIA_INDEX_NAME_GRANTS } from '$env/static/public';
-import { page } from '$app/state';
 
 if (!PUBLIC_ALGOLIA_APP_ID_GRANTS || !PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS || !PUBLIC_ALGOLIA_INDEX_NAME_GRANTS) {
   throw new Error('Missing required Algolia public keys. Please ensure environment variables are set.');
@@ -777,38 +777,40 @@ export async function initSearchJs(M) {
 
 export function destroySearchJs() {
   try {
-    if (search) {
-      search.dispose();
-      search = null;
-    }
-    if (instances.dropdowns) {
-      instances.dropdowns.forEach((instance) => {
-        if (instance) instance.destroy();
-      });
-    }
-    // Confirmed - this is an array
-    if (instances.sidenavs) {
-      instances.sidenavs.forEach((instance) => {
-        if (instance) instance.destroy();
-      });
-    }
+    if (browser) {
+      if (search) {
+        search.dispose();
+        search = null;
+      }
+      if (instances.dropdowns) {
+        instances.dropdowns.forEach((instance) => {
+          if (instance) instance.destroy();
+        });
+      }
+      // Confirmed - this is an array
+      if (instances.sidenavs) {
+        instances.sidenavs.forEach((instance) => {
+          if (instance) instance.destroy();
+        });
+      }
 
-    if (instances.scrollSpies) {
-      instances.scrollSpies.forEach((instance) => {
-        if (instance) instance.destroy();
-      });
-    }
-    // There should no longer be any of these
-    if (instances.formSelects) {
-      instances.formSelects.forEach((instance) => {
-        if (instance) instance.destroy();
-      });
-    }
+      if (instances.scrollSpies) {
+        instances.scrollSpies.forEach((instance) => {
+          if (instance) instance.destroy();
+        });
+      }
+      // There should no longer be any of these
+      if (instances.formSelects) {
+        instances.formSelects.forEach((instance) => {
+          if (instance) instance.destroy();
+        });
+      }
 
-    if (instances.tooltips) {
-      instances.tooltips.forEach((instance) => {
-        if (instance) instance.destroy();
-      });
+      if (instances.tooltips) {
+        instances.tooltips.forEach((instance) => {
+          if (instance) instance.destroy();
+        });
+      }
     }
 
     instances = {
