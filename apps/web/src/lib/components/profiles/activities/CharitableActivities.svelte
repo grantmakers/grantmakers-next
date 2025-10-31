@@ -2,7 +2,7 @@
   import Eyes from '$lib/components/shared/icons/Eyes.svelte';
   import { formatToCurrency } from '@repo/shared/functions/formatters/numbers';
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
-  import { ExclamationCircle } from 'svelte-heros-v2';
+  import ExclamationCircle from 'svelte-heros-v2/ExclamationCircle.svelte';
 
   interface Props {
     activities: GrantmakersExtractedDataObj['charitable_activities'] | [];

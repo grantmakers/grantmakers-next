@@ -2,7 +2,12 @@
   import { createDialog } from 'svelte-headlessui';
   import Transition from 'svelte-transition';
   import { tooltip } from '$utils/tooltip';
-  import { LockOpen, LockClosed, UserGroup, GlobeAlt, CurrencyDollar, InformationCircle } from 'svelte-heros-v2';
+  import LockOpen from 'svelte-heros-v2/LockOpen.svelte';
+  import LockClosed from 'svelte-heros-v2/LockClosed.svelte';
+  import UserGroup from 'svelte-heros-v2/UserGroup.svelte';
+  import GlobeAlt from 'svelte-heros-v2/GlobeAlt.svelte';
+  import CurrencyDollar from 'svelte-heros-v2/CurrencyDollar.svelte';
+  import InformationCircle from 'svelte-heros-v2/InformationCircle.svelte';
 
   interface Props {
     noUnsolicited: true | null;

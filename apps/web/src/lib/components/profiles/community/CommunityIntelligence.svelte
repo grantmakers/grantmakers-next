@@ -1,7 +1,8 @@
 <script lang="ts">
   import Blink from '$lib/components/shared/icons/Blink.svelte';
   import ContentBoxHeader from '../ContentBoxHeader.svelte';
-  import { BellAlert, Sparkles } from 'svelte-heros-v2';
+  import BellAlert from 'svelte-heros-v2/BellAlert.svelte';
+  import Sparkles from 'svelte-heros-v2/Sparkles.svelte';
   import logo from '$lib/assets/images/logo.svg';
   import Divider from '$lib/components/shared/Divider.svelte';
 

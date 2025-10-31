@@ -5,7 +5,9 @@
   // import grantadvisorLogo from '$lib/assets/images/grantadvisor.svg';
   import { copy } from 'svelte-copy';
   import toast from 'svelte-french-toast';
-  import { ClipboardDocument, DocumentText, MagnifyingGlassCircle } from 'svelte-heros-v2';
+  import ClipboardDocument from 'svelte-heros-v2/ClipboardDocument.svelte';
+  import DocumentText from 'svelte-heros-v2/DocumentText.svelte';
+  import MagnifyingGlassCircle from 'svelte-heros-v2/MagnifyingGlassCircle.svelte';
 
   interface Props {
     ein: string;

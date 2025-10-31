@@ -8,7 +8,7 @@
   import type { PeopleArray } from '@repo/shared/typings/grantmakers/all';
   import type TransitionProps from 'svelte-transition';
   import PeopleTable from './PeopleTable.svelte';
-  import { ArrowsPointingOut } from 'svelte-heros-v2';
+  import ArrowsPointingOut from 'svelte-heros-v2/ArrowsPointingOut.svelte';
 
   // Svelte 5 props - can't use until svelte-headlessui and svelte-transition are Svelte 5 compatible (has to do with slots vs children)
   // interface Props {

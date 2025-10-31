@@ -1,6 +1,6 @@
 <script lang="ts">
   import GrantRow from './GrantRow.svelte';
-  import { ExclamationCircle } from 'svelte-heros-v2';
+  import ExclamationCircle from 'svelte-heros-v2/ExclamationCircle.svelte';
   import type { GrantsArray, GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
   import { humanizeNumber } from '@repo/shared/functions/formatters/numbers';
   import Tip from '../alerts/Tip.svelte';

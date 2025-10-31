@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ChartBar } from 'svelte-heros-v2';
+  import type ChartBar from 'svelte-heros-v2/ChartBar.svelte';
   import { getActiveSection, setActiveSection } from './ActiveLink.svelte';
   import { slugify } from '@repo/shared/functions/formatters/names';
 

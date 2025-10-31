@@ -1,6 +1,6 @@
 <script lang="ts">
   import { slugify } from '@repo/shared/functions/formatters/names';
-  import { Sparkles } from 'svelte-heros-v2';
+  import Sparkles from 'svelte-heros-v2/Sparkles.svelte';
 
   let { title } = $props();
 

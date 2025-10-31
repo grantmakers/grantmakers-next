@@ -1,6 +1,6 @@
 <script lang="ts">
   import logo from '$lib/assets/images/logo.svg';
-  import { ExclamationTriangle } from 'svelte-heros-v2';
+  import ExclamationTriangle from 'svelte-heros-v2/ExclamationTriangle.svelte';
 
   const message = {
     intro: 'Welcome to Grantmakers.io NEXT',
