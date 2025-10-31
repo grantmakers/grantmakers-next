@@ -113,23 +113,27 @@ export function initSearchJs(M) {
            * We use SvelteKit's shallow routing (pushState/replaceState) to update the URL
            * without triggering load functions, which would cause unnecessary __data.json refetches.
            */
-          // Get the current page.url
-          const currentPageUrl = page.url;
-          // Get the "next url", passed in by Algolia as a parameter
-          // Reformat as needed
-          const href = typeof url === 'string' ? url : `${url.pathname}${url.search}${url.hash}`;
+          // Get the next url from Algolia 'url' parameter passed into this push function
+          // Confirm it's a properly formatted url
+          const nextUrl = new URL(url);
 
-          // Check if the current URL contains search params.
-          const hasSearch = currentPageUrl.search.includes('?');
+          // Get the current url search params from the window object
+          // Note: Any attempt at pulling from SvelteKit { page } state object results in a signifcant performance hit
+          // The symptom - entering queries becomes very jittery
+          const currentBrowserUrl = new URL(window.location.href);
+          const currentUrlSearchParams = currentBrowserUrl.searchParams;
+
+          // Check if the current URL contains search params
+          const hasSearch = currentUrlSearchParams.size > 0;
 
           // If the current URL has no search, it's the FIRST search.
           // Thus, we want to PUSH this to history.
           if (!hasSearch) {
-            pushState(href, {});
+            pushState(nextUrl, {});
           } else {
             // The URL already has search params, so this is a REFINEMENT.
             // We want to REPLACE the current history entry.
-            replaceState(href, {});
+            replaceState(nextUrl, {});
           }
         },
       }),
