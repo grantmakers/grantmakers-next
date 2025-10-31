@@ -419,9 +419,11 @@ export function initSearchJs(M) {
     if (inputEl && triggerEl) {
       if (widgetParams.searchParameters.restrictSearchableAttributes.length === 5) {
         triggerEl.classList.remove('adjusted');
+        // TODO This is reached but doesn't do anything
         inputEl.placeholder = 'Search by foundation name, location, trustees, or EIN';
       } else {
         triggerEl.classList.add('adjusted');
+        // TODO This is reachd but doesn't do anything
         inputEl.placeholder = 'Search by custom fields selected';
       }
     }
@@ -906,10 +908,12 @@ export function initSearchJs(M) {
   function initSelect() {
     /**
      * There is only one select element - the search toggle in the search box element
-     * TODO This is consistently NOT destroyed in the cleanup function at Svelte component dismount
      */
     const elem = document.getElementById('toggle-search-type-profiles');
-    if (elem?.length === 0) return;
+    if (!elem) return;
+
+    // Skip Materialize initialization if element has browser-default class
+    //if (elem.classList.contains('browser-default')) return;
 
     const options = {
       classes: 'btn blue-grey white-text',
