@@ -10,6 +10,8 @@
   }
 
   let { children }: Props = $props();
+
+  const pathname = $derived(page.url.pathname);
 </script>
 
 <svelte:head>
@@ -23,9 +25,9 @@
   Note: This is a legacy approach, and should eventually be refactored when the need for wrapping the legacy CSS goes away
 -->
 
-{#if page.url.pathname.includes('/profiles')}
+{#if pathname.includes('/profiles')}
   <ProfilesHero />
-{:else if page.url.pathname.includes('/grants')}
+{:else if pathname.includes('/grants')}
   <GrantsHero />
 {/if}
 
