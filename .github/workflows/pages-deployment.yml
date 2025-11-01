@@ -1,4 +1,16 @@
-on: [push]
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        type: choice
+        options:
+          - staging
+          - production
+        default: staging
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -70,6 +82,7 @@ jobs:
           projectName: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           wranglerVersion: '3'
+          branch: ${{ (github.event_name == 'push' || github.event.inputs.environment == 'staging') && 'staging' || 'production' }}
 
       - name: Publish Legacy Web App
         uses: cloudflare/pages-action@1
