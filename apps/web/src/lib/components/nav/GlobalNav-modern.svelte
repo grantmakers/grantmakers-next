@@ -3,7 +3,8 @@
   import { page } from '$app/state';
   import LogoMark from '$lib/components/shared/LogoMark.svelte';
   import PrimaryNavLink from '$lib/components/nav/PrimaryNavLink.svelte';
-  import { aboutLinks, profileNavItems, type SecondaryNavItems } from '@repo/shared/constants/trustedConstants';
+  import { aboutLinks, type SecondaryNavItems } from '@repo/shared/constants/trustedConstants';
+  import { profileNavItems } from '@repo/shared/constants/trustedConstants/withIcons';
   import SecondaryNavLink from '$lib/components/nav/SecondaryNavLink.svelte';
   import PrimaryNavLinkMobile from '$lib/components/nav/PrimaryNavLinkMobile.svelte';
   import SecondaryNavLinkMobile from '$lib/components/nav/SecondaryNavLinkMobile.svelte';

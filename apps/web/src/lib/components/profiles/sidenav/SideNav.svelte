@@ -1,6 +1,6 @@
 <script lang="ts">
   import NavItem from './SideNavItem.svelte';
-  import { profileNavItems } from '@repo/shared/constants/trustedConstants';
+  import { profileNavItems } from '@repo/shared/constants/trustedConstants/withIcons';
 </script>
 
 <nav>

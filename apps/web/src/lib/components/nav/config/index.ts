@@ -1,4 +1,5 @@
-import { aboutLinks, profileNavItems, type SecondaryNavItems } from '@repo/shared/constants/trustedConstants';
+import { aboutLinks, type SecondaryNavItems } from '@repo/shared/constants/trustedConstants';
+import { profileNavItems } from '@repo/shared/constants/trustedConstants/withIcons';
 
 export interface NavConfig {
   route: 'profiles' | 'search' | 'about' | 'home';

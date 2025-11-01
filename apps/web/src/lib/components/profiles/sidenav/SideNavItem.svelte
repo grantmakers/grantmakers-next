@@ -1,13 +1,11 @@
 <script lang="ts">
-  import type ChartBar from 'svelte-heros-v2/ChartBar.svelte';
+  import type { ComponentType, SvelteComponent } from 'svelte';
   import { getActiveSection, setActiveSection } from './ActiveLink.svelte';
   import { slugify } from '@repo/shared/functions/formatters/names';
 
-  // HACK Uses types from a specific icon
-  // A generic type does not appear to exist
   interface NavItem {
     title: string;
-    icon: typeof ChartBar;
+    icon: ComponentType<SvelteComponent>;
   }
 
   interface Props {

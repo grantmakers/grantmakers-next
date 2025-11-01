@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { features } from '@repo/shared/constants/trustedConstants';
+  import { features } from '@repo/shared/constants/trustedConstants/withIcons';
 </script>
 
 <div class="mx-auto max-w-7xl px-6 lg:px-8">
