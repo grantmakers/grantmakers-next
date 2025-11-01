@@ -31,13 +31,20 @@
     defaults: { title, description },
   } = meta;
 
-  // TODO Move this to trustedConstants
-  const organizationName = $derived(page.data.profile?.organization_name ?? 'Unnamed Organization');
+  let profile = $derived(page.data.profile);
+
+  // TODO Move 'Unnamed' default to trustedConstants?
+  let organizationName = $derived.by(() => {
+    if (profile) {
+      return profile.organization_name ?? 'Unnamed Organization';
+    }
+    return null;
+  });
 </script>
 
 <svelte:head>
-  {#if page.data.profile}
-    <SEO profile={page.data.profile} />
+  {#if profile}
+    <SEO {profile} />
   {:else}
     <title>{title}</title>
     <meta name="description" content={description} />
