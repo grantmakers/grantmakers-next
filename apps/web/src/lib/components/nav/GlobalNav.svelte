@@ -16,7 +16,7 @@
   import IconTrigger from '$lib/components/search/triggers/IconTrigger.svelte';
 
   interface Props {
-    organizationName?: string;
+    organizationName?: string | null;
   }
 
   let { organizationName }: Props = $props();
