@@ -1,3 +1,6 @@
+name: 🚀 Deploy Applications
+run-name: Deploy to ${{ github.event_name == 'push' && 'Staging' || inputs.environment }} - ${{ github.event.head_commit.message || github.sha }}
+
 on:
   push:
     branches: [main]

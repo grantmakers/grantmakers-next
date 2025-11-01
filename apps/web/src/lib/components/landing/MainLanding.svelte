@@ -39,7 +39,7 @@
       <div class="mx-auto max-w-7xl px-6 pb-24 pt-32 sm:pb-32 lg:flex lg:flex-col lg:px-8 lg:py-60">
         <section class="flex flex-col items-center justify-center px-4 text-center">
           <h1 class="mb-4 w-full max-w-4xl font-bold text-white">
-            <span class="block text-3xl text-grantmakers-orange sm:text-5xl">Foundation research</span>
+            <span class="block text-4xl text-grantmakers-orange sm:text-6xl">Foundation research</span>
             <span class="block text-4xl sm:text-6xl">Fully public. Finally unlocked.</span>
           </h1>
           <div class="w-full max-w-2xl">
