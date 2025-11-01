@@ -1,5 +1,5 @@
 name: 🚀 Deploy Applications
-run-name: Deploy to ${{ github.event_name == 'push' && 'Staging' || inputs.environment }} - ${{ github.event.head_commit.message || github.sha }}
+run-name: Deploy to ${{ github.event_name == 'push' && 'Staging' || 'Production' }} - ${{ github.event.head_commit.message || github.event.inputs.description }}
 
 on:
   push:
@@ -14,6 +14,10 @@ on:
           - staging
           - production
         default: staging
+      description:
+        description: 'Last Commit Message'
+        required: true
+        default: 'Manual Production Deploy'
 jobs:
   deploy:
     runs-on: ubuntu-latest
