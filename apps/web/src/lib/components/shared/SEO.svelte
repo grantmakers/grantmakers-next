@@ -2,7 +2,6 @@
   import { page } from '$app/state';
   import { originProd, profilesVersionProd } from '@repo/shared/constants/trustedConstants';
   import { upperFirstLetter } from '@repo/shared/functions/formatters/names';
-  import { sanitizeHtml } from '@repo/shared/utils/sanitize';
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
 
   type Title = GrantmakersExtractedDataObj['organization_name'];
@@ -109,8 +108,7 @@
 <meta name="twitter:image:src" content="{originProd}/assets/img/icons-letters/{upperFirstLetter(profile.organization_name)}.png" />
 
 <!-- Schema.org -->
-<!-- Sanitized with DOMPurify -->
 <!-- eslint-disable svelte/no-at-html-tags -->
-{@html sanitizeHtml('<script type="application/ld+json">' + JSON.stringify(jsonld) + '</script>')}
-{@html sanitizeHtml('<script type="application/ld+json">' + JSON.stringify(jsonldBreadcrumb) + '</script>')}
+{@html '<script type="application/ld+json">' + JSON.stringify(jsonld) + '</script>'}
+{@html '<script type="application/ld+json">' + JSON.stringify(jsonldBreadcrumb) + '</script>'}
 <!-- eslint-enable svelte/no-at-html-tags -->
