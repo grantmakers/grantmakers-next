@@ -62,20 +62,6 @@
 
 <Toaster />
 <div class="relative flex min-h-screen">
-  <!-- Left Navigation -->
-  <aside
-    class="ease-nav-brand z-990 sticky top-0 ml-4 hidden h-screen {sidebarWidthClass} shrink-0 overflow-y-auto rounded-2xl border-0 bg-white p-0 py-2 pt-2 text-slate-500 antialiased shadow-none transition-transform duration-200 md:block xl:left-0 xl:translate-x-0 xl:bg-transparent"
-    id="sidenav-main"
-  >
-    <div class="flex h-full flex-row md:flex-col">
-      <div class="mx-auto ml-3 flex w-full flex-col items-start p-6 lg:mb-10">
-        <LogoMark isLandingOrFooter={false} />
-        <div class="ml-10 text-sm"></div>
-      </div>
-      <SideNav />
-    </div>
-  </aside>
-
   <!-- Main Wrapper -->
   <div
     class="ease-soft-in-out relative mx-auto h-full max-w-3xl grow rounded-xl px-6 transition-all duration-200 sm:px-6 lg:max-w-7xl lg:px-8"

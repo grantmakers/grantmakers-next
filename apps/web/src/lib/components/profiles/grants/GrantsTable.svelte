@@ -30,8 +30,8 @@
   let viewMode = $state<ViewMode>(determineInitialViewMode(grantCount, grantCountLastThreeYears));
   let grants = $derived(viewMode === 'last-three-years' ? grantsLastThreeYears : grantsCurrent);
 
-  $inspect('View Mode', viewMode);
-  $inspect('Grants', grants);
+  // $inspect('View Mode', viewMode);
+  // $inspect('Grants', grants);
 </script>
 
 <div>
