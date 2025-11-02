@@ -913,7 +913,7 @@ export function initSearchJs(M) {
     if (!elem) return;
 
     // Skip Materialize initialization if element has browser-default class
-    //if (elem.classList.contains('browser-default')) return;
+    if (elem.classList.contains('browser-default')) return;
 
     const options = {
       classes: 'btn blue-grey white-text',
