@@ -16,7 +16,8 @@
    */
   import '@fontsource-variable/inter';
   import '$src/app.pcss';
-  import { page } from '$app/state';
+  import { page, updated } from '$app/state';
+  import { beforeNavigate } from '$app/navigation';
   import SEO from '$lib/components/shared/SEO.svelte';
   import { meta } from '@repo/shared/constants/trustedConstants';
   import GlobalNav from '$lib/components/nav/GlobalNav.svelte';
@@ -39,6 +40,16 @@
       return profile.organization_name ?? 'Unnamed Organization';
     }
     return null;
+  });
+
+  // Version checking
+  // Force full-page reload when new app version is detected
+  // PollInterval set in svelte.config.js
+  // Docs: https://svelte.dev/docs/kit/configuration#version
+  beforeNavigate(({ willUnload, to }) => {
+    if (updated.current && !willUnload && to?.url) {
+      location.href = to.url.href;
+    }
   });
 </script>
 

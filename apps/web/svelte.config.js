@@ -1,6 +1,7 @@
 // import adapter from '@sveltejs/adapter-auto';
 import adapter from '@sveltejs/adapter-cloudflare';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import * as child_process from 'node:child_process';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -53,6 +54,10 @@ const config = {
         'base-uri': ['self'], // Move bak to 'none' when Materialize is fully removed
         'form-action': ['self'],
       },
+    },
+    version: {
+      name: child_process.execSync('git rev-parse HEAD').toString().trim(),
+      pollInterval: 60_000, //  Check for updates every 60 seconds
     },
   },
 };
