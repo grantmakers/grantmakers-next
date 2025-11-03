@@ -1,6 +1,4 @@
 <script lang="ts">
-  import '@fontsource-variable/inter';
-  import '$src/app.pcss';
   interface Props {
     children?: import('svelte').Snippet;
   }
