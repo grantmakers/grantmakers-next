@@ -90,7 +90,7 @@
 
           <ol class="hidden flex-wrap items-center bg-transparent md:flex">
             <li class="text-sm leading-normal">
-              <a class="text-slate-700" href="/profiles">Foundation Profiles</a>
+              <a class="text-slate-700" href="/profiles">Foundations</a>
             </li>
             <li
               class="pl-2 text-sm capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/']"

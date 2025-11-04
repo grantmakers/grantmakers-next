@@ -202,8 +202,8 @@
                 </div>
                 <!-- Primary Mobile Nav Links -->
                 <div class="space-y-1 pb-1 pt-2">
-                  <PrimaryNavLinkMobile href={'/search/profiles/'} title={'Foundation Profiles'} />
-                  <PrimaryNavLinkMobile href={'/search/grants/'} title={'Historical Grants'} />
+                  <PrimaryNavLinkMobile href={'/search/profiles/'} title={'Foundations'} />
+                  <PrimaryNavLinkMobile href={'/search/grants/'} title={'Grants'} />
                   <PrimaryNavLinkMobile href={'/about/'} title={'About'} />
                 </div>
                 <div class="mt-3 space-y-1 px-4 pb-3">

@@ -131,40 +131,48 @@
       <div
         class="hidden border-t border-white/20 py-4 transition-[border,padding] duration-0 ease-out group-data-[sticky=true]:border-0 group-data-[sticky=true]:py-2 group-data-[sticky=true]:duration-700 lg:block"
       >
-        <div class="flex items-center gap-4">
-          <!-- Inherit Primary nav items when sticky -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <!-- Add Breadcrumb-style elements when sticky -->
+            <div
+              class="flex w-0 items-center gap-4 overflow-hidden opacity-0 transition-[width,opacity] duration-0 ease-out group-data-[sticky=true]:w-auto group-data-[sticky=true]:opacity-100 group-data-[sticky=true]:duration-700"
+            >
+              <div class="shrink-0">
+                <a href="/" class="flex items-center">
+                  <Logo variation={'sticky'} />
+                </a>
+              </div>
+
+              <div class="shrink-0 whitespace-nowrap text-white">
+                <PrimarySearchNavLink href={'/search/profiles/'} title={'Foundations'} />
+              </div>
+            </div>
+            <!-- Secondary Nav Links -->
+            <nav class="flex items-center space-x-4 transition-all duration-700">
+              {#if config.route === 'profiles' && organizationName}
+                <button
+                  class="whitespace-nowrap rounded-md bg-white/10 px-3 py-2 text-sm font-medium text-white focus:outline-none focus-visible:outline-none"
+                  aria-current="page"
+                  title="Return to top"
+                  onclick={backToTop}
+                >
+                  {organizationName}
+                </button>
+              {/if}
+
+              {#each config?.secondaryNavLinks as item}
+                <SecondaryNavLink href={item.link} title={item.title} />
+              {/each}
+            </nav>
+          </div>
+          <!-- Add Quick Search CTA when sticky -->
           <div
             class="flex w-0 items-center gap-4 overflow-hidden opacity-0 transition-[width,opacity] duration-0 ease-out group-data-[sticky=true]:w-auto group-data-[sticky=true]:opacity-100 group-data-[sticky=true]:duration-700"
           >
-            <div class="shrink-0">
-              <a href="/" class="flex items-center">
-                <Logo variation={'sticky'} />
-              </a>
-            </div>
-
-            <div class="shrink-0 whitespace-nowrap text-white">
-              <PrimarySearchNavLink href={'/search/profiles/'} title={'Foundations'} />
+            <div class="flex items-center gap-6 text-white">
+              <IconTrigger disabled={isLegacySearchRoute} />
             </div>
           </div>
-
-          <!-- Secondary nav -->
-          <nav class="flex items-center space-x-4 transition-all duration-700">
-            {#if config.route === 'profiles' && organizationName}
-              <button
-                class="whitespace-nowrap rounded-md bg-white/10 px-3 py-2 text-sm font-medium text-white focus:outline-none focus-visible:outline-none"
-                aria-current="page"
-                title="Return to top"
-                onclick={backToTop}
-              >
-                {organizationName}
-              </button>
-            {/if}
-
-            <!-- Anchor links -->
-            {#each config?.secondaryNavLinks as item}
-              <SecondaryNavLink href={item.link} title={item.title} />
-            {/each}
-          </nav>
         </div>
       </div>
     {/if}
@@ -214,8 +222,8 @@
                 </div>
                 <!-- Primary Mobile Nav Links -->
                 <div class="space-y-1 pb-1 pt-2">
-                  <PrimaryNavLinkMobile href={'/search/profiles/'} title={'Foundation Profiles'} />
-                  <PrimaryNavLinkMobile href={'/search/grants/'} title={'Historical Grants'} />
+                  <PrimaryNavLinkMobile href={'/search/profiles/'} title={'Foundations'} />
+                  <PrimaryNavLinkMobile href={'/search/grants/'} title={'Grants'} />
                   <PrimaryNavLinkMobile href={'/about/'} title={'About'} />
                 </div>
                 <div class="mt-3 space-y-1 px-4 pb-3">
