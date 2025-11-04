@@ -84,33 +84,31 @@
   });
 </script>
 
-<svelte:head>
-  <link rel="canonical" href={canonicalUrl} />
-  <title>{title}</title>
-  <meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+<title>{title}</title>
+<meta name="description" content={description} />
 
-  <meta name="format-detection" content="telephone=no" />
+<meta name="format-detection" content="telephone=no" />
 
-  <meta property="og:image" content="https://www.grantmakers.io/assets/img/og-image.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:title" content={profile.organization_name} />
-  <meta property="og:site_name" content="Grantmakers.io" />
-  <meta property="og:url" content={canonicalUrl} />
-  <meta property="og:description" content={description} />
-  <meta property="og:type" content="profile" />
+<meta property="og:image" content="https://www.grantmakers.io/assets/img/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:title" content={profile.organization_name} />
+<meta property="og:site_name" content="Grantmakers.io" />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content="profile" />
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content={profile.organization_name} />
-  <meta name="twitter:description" content={description} />
-  <meta name="twitter:site" content="@grantmakersio" />
-  <meta name="twitter:creator" content="@chadkruser" />
-  <meta name="twitter:image:src" content="{originProd}/assets/img/icons-letters/{upperFirstLetter(profile.organization_name)}.png" />
+<!-- Twitter -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={profile.organization_name} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:site" content="@grantmakersio" />
+<meta name="twitter:creator" content="@chadkruser" />
+<meta name="twitter:image:src" content="{originProd}/assets/img/icons-letters/{upperFirstLetter(profile.organization_name)}.png" />
 
-  <!-- Schema.org -->
-  <!-- eslint-disable svelte/no-at-html-tags -->
-  {@html '<script type="application/ld+json">' + JSON.stringify(jsonld) + '</script>'}
-  {@html '<script type="application/ld+json">' + JSON.stringify(jsonldBreadcrumb) + '</script>'}
-  <!-- eslint-enable svelte/no-at-html-tags -->
-</svelte:head>
+<!-- Schema.org -->
+<!-- eslint-disable svelte/no-at-html-tags -->
+{@html '<script type="application/ld+json">' + JSON.stringify(jsonld) + '</script>'}
+{@html '<script type="application/ld+json">' + JSON.stringify(jsonldBreadcrumb) + '</script>'}
+<!-- eslint-enable svelte/no-at-html-tags -->
