@@ -14,7 +14,6 @@ preview_bucket_name = "grantmakers-static-api-v1-poc0"
 enabled = true
 head_sampling_rate = 1
 invocation_logs = true
-persist = true
 
 # Necessary secrets:
 # - AUTH_PRIVATE_KEY
