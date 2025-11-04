@@ -9,5 +9,12 @@ binding = "API_V1_POC0"
 bucket_name = "grantmakers-static-api-v1-poc0"
 preview_bucket_name = "grantmakers-static-api-v1-poc0"
 
+[observability]
+[observability.logs]
+enabled = true
+head_sampling_rate = 1
+invocation_logs = true
+persist = true
+
 # Necessary secrets:
 # - AUTH_PRIVATE_KEY
