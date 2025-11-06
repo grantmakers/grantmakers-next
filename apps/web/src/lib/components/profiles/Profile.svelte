@@ -67,48 +67,6 @@
     class="ease-soft-in-out relative mx-auto h-full max-w-3xl grow rounded-xl px-6 transition-all duration-200 sm:px-6 lg:max-w-7xl lg:px-8"
     id="panel"
   >
-    <!-- Top Nav -->
-    <nav
-      class="duration-250 ease-soft-in relative mx-8 flex flex-wrap items-center justify-between rounded-2xl px-0 py-4 shadow-none transition-all lg:flex-nowrap lg:justify-start"
-      id="navbarTop"
-      data-navbar-scroll="true"
-    >
-      <div class="flex-wrap-inherit mx-auto flex w-full items-center justify-between px-4 py-1">
-        <!-- Breadcrumbs -->
-        <nav class="flex w-full flex-wrap items-center justify-between md:w-fit">
-          <div class="block md:hidden">
-            <LogoMark isLandingOrFooter={false} />
-          </div>
-          <div>
-            <a
-              type="button"
-              href="/profiles"
-              class="rounded bg-white px-2 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 md:hidden"
-              >All profiles</a
-            >
-          </div>
-
-          <ol class="hidden flex-wrap items-center bg-transparent md:flex">
-            <li class="text-sm leading-normal">
-              <a class="text-slate-700" href="/profiles">Foundations</a>
-            </li>
-            <li
-              class="pl-2 text-sm capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/']"
-              aria-current="page"
-            >
-              {organization_name}
-            </li>
-          </ol>
-        </nav>
-
-        <!-- Top Nav -->
-        <div class="mt-2 hidden grow items-center justify-end gap-4 sm:mr-6 sm:mt-0 md:mr-0 md:flex lg:flex lg:basis-auto">
-          <SurpriseMe />
-          <NavSearch {handleAutocompleteInit} />
-        </div>
-      </div>
-    </nav>
-
     <!-- Main Content -->
     <div class="mx-auto w-full px-6 py-6 text-slate-500">
       <!-- Profile header -->
