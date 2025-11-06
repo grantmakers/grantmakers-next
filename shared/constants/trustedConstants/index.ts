@@ -6,12 +6,12 @@ export interface EachFAQ {
 }
 
 export const datasetStats = {
-  profiles: 156049,
-  grants: 13704808,
-  grants_searchable: 5372457,
+  profiles: 156380,
+  grants: 13768435,
+  grants_searchable: 5_436_084,
 };
 
-export const allTimeSearchCount = 11_015_668;
+export const allTimeSearchCount = 11_351_241;
 
 export const meta = {
   defaults: {
