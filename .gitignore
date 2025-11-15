@@ -31,6 +31,8 @@ dist
 shared/mocks
 shared/tmp
 
+# Docs
+shared/docs
 
 # Debug
 npm-debug.log*
