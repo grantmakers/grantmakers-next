@@ -1,6 +1,20 @@
 import { fontFamily } from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
 
+/**
+ * Tailwind CSS Configuration for /apps/legacy
+ *
+ * NOTE: This Tailwind v3 configuration is NOT currently active in the legacy app.
+ *
+ * The legacy app intentionally does NOT use Tailwind CSS:
+ * - No app.pcss entry file exists
+ * - Root layout does not import Tailwind styles
+ * - Uses Materialize CSS as the primary framework
+ * - Serves solely as a UX reference for the battle-tested UX
+ *
+ * All active development uses /apps/web which has full Tailwind integration.
+ */
+
 /** @type {import('tailwindcss').Config} */
 const config = {
   darkMode: ['class'],
