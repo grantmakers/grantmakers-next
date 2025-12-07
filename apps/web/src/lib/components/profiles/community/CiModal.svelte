@@ -33,7 +33,7 @@
             leaveTo="opacity-0 scale-95"
           >
             <div
-              class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+              class="shadow-soft-xl w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle transition-all"
               use:dialog.modal
             >
               <CommunityIntelligence {ein} />

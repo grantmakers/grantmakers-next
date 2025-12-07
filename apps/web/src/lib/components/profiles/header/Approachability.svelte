@@ -110,7 +110,7 @@
           leaveTo="opacity-0 scale-95"
         >
           <div
-            class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle text-slate-700 shadow-xl transition-all lg:max-w-xl"
+            class="shadow-soft-xl w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle text-slate-700 transition-all lg:max-w-xl"
             use:dialog.modal
           >
             <h3 class="mb-2 text-lg font-medium leading-6 tracking-tighter text-slate-900">Approachability Helpers</h3>

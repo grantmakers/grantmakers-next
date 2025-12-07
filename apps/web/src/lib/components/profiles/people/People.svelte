@@ -82,7 +82,7 @@
                         {...props as MimicSvelte5}
                       >
                         <div
-                          class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white px-12 py-6 text-left align-middle shadow-xl transition-all lg:max-w-fit"
+                          class="shadow-soft-xl w-full max-w-md transform overflow-hidden rounded-2xl bg-white px-12 py-6 text-left align-middle transition-all lg:max-w-fit"
                           use:dialog.modal
                         >
                           <!-- HACK - svelte-headlessui lacks an initialFocus ref for Dialogs https://github.com/CaptainCodeman/svelte-headlessui/issues/5 -->
