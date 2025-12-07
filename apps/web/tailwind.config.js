@@ -64,6 +64,20 @@ const config = {
       fontFamily: {
         sans: ['Inter Variable', ...fontFamily.sans],
       },
+      boxShadow: {
+        /**
+         * Custom "Soft" Shadow Scale
+         * Lighter opacity than Tailwind defaults for subtle, refined appearance
+         */
+        'soft-xs': '0 1px 5px 1px #ddd',
+        'soft-sm': '0 0.25rem 0.375rem -0.0625rem hsla(0, 0%, 8%, 0.12), 0 0.125rem 0.25rem -0.0625rem hsla(0, 0%, 8%, 0.07)',
+        'soft-md': '0 4px 7px -1px rgba(0, 0, 0, 0.11), 0 2px 4px -1px rgba(0, 0, 0, 0.07)',
+        'soft-lg': '0 2px 12px 0 rgba(0, 0, 0, 0.16)',
+        'soft-xl': '0 20px 27px 0 rgba(0, 0, 0, 0.05)',
+        'soft-2xl': '0 0.3125rem 0.625rem 0 rgba(0, 0, 0, 0.12)',
+        'soft-3xl': '0 8px 26px -4px hsla(0, 0%, 8%, 0.15), 0 8px 9px -5px hsla(0, 0%, 8%, 0.06)',
+        blur: 'inset 0 0 1px 1px hsla(0, 0%, 100%, 0.9), 0 20px 27px 0 rgba(0, 0, 0, 0.05)',
+      },
     },
     plugins: [forms],
   },

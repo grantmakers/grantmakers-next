@@ -20,7 +20,7 @@
         <div class="grid grid-cols-1 gap-4 lg:col-span-3">
           <section aria-labelledby="faq">
             <h2 class="sr-only" id="faq">FAQ</h2>
-            <div class="overflow-hidden rounded-lg bg-white shadow">
+            <div class="overflow-hidden rounded-lg bg-white shadow-sm">
               <div>
                 <FAQ />
               </div>
@@ -32,7 +32,7 @@
         <div class="hidden grid-cols-1 gap-4 lg:col-span-1 lg:grid">
           <section aria-labelledby="faq">
             <h2 class="sr-only" id="faq-nav">On this page</h2>
-            <div class="overflow-hidden rounded-lg bg-white shadow lg:min-h-60">
+            <div class="overflow-hidden rounded-lg bg-white shadow-sm lg:min-h-60">
               <div class="relative isolate bg-white p-2">
                 <img src={placeholder} alt="FAQ Placeholder" width={400} height={400} class="rounded-lg opacity-70" />
               </div>

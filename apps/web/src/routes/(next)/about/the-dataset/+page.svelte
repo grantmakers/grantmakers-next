@@ -20,7 +20,7 @@
         <div class="grid grid-cols-1 gap-4 lg:col-span-3">
           <section aria-labelledby="the-dataset">
             <h2 class="sr-only" id="the-dataset">The Dataset</h2>
-            <div class="overflow-hidden rounded-lg bg-white shadow">
+            <div class="overflow-hidden rounded-lg bg-white shadow-sm">
               <div>
                 <Dataset />
               </div>
@@ -39,7 +39,7 @@
         >
           <section aria-labelledby="the-dataset">
             <h2 class="sr-only" id="the-dataset-nav">On this page</h2>
-            <div class="overflow-hidden rounded-lg bg-white shadow lg:min-h-60">
+            <div class="overflow-hidden rounded-lg bg-white shadow-sm lg:min-h-60">
               <div class="relative isolate bg-white p-8">
                 <div class="mx-auto max-w-2xl lg:max-w-4xl">
                   <p class="text-gray-slate text-md font-bold tracking-tight sm:text-xl">On this page</p>

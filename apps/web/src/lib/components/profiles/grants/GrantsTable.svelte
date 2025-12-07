@@ -39,7 +39,7 @@
     <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div class="flex flex-wrap justify-center gap-8 lg:flex-nowrap">
         <div class="grow">
-          <div class="flex h-full items-center rounded-lg bg-white p-4 shadow">
+          <div class="flex h-full items-center rounded-lg bg-white p-4 shadow-sm">
             <div class="text-sm text-slate-700">
               {#if viewMode === 'last-three-years'}
                 {#if grantCountLastThreeYears < numberOfGrantsToDisplay}
@@ -65,7 +65,7 @@
           </div>
         </div>
         <aside class="flex w-64">
-          <div class="flex grow items-center justify-center rounded-lg bg-white p-2 shadow">
+          <div class="flex grow items-center justify-center rounded-lg bg-white p-2 shadow-sm">
             <div class="inline-flex p-1 hover:cursor-default">
               {#if grantsCurrent}
                 <button

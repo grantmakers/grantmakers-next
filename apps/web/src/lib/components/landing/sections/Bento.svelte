@@ -36,7 +36,7 @@
           /> -->
         </div>
         <div
-          class="pointer-events-none absolute inset-0 rounded-lg shadow outline outline-1 outline-black/5 max-lg:rounded-t-[2rem] lg:rounded-tl-[2rem] dark:outline-white/15"
+          class="pointer-events-none absolute inset-0 rounded-lg shadow-sm outline outline-1 outline-black/5 max-lg:rounded-t-[2rem] lg:rounded-tl-[2rem] dark:outline-white/15"
         ></div>
       </div>
       <div class="relative lg:col-span-3">
@@ -59,7 +59,7 @@
           /> -->
         </div>
         <div
-          class="pointer-events-none absolute inset-0 rounded-lg shadow outline outline-1 outline-black/5 lg:rounded-tr-[2rem] dark:outline-white/15"
+          class="pointer-events-none absolute inset-0 rounded-lg shadow-sm outline outline-1 outline-black/5 lg:rounded-tr-[2rem] dark:outline-white/15"
         ></div>
       </div>
       <div class="relative lg:col-span-2">
@@ -82,7 +82,7 @@
           /> -->
         </div>
         <div
-          class="pointer-events-none absolute inset-0 rounded-lg shadow outline outline-1 outline-black/5 lg:rounded-bl-[2rem] dark:outline-white/15"
+          class="pointer-events-none absolute inset-0 rounded-lg shadow-sm outline outline-1 outline-black/5 lg:rounded-bl-[2rem] dark:outline-white/15"
         ></div>
       </div>
       <div class="relative lg:col-span-2">
@@ -102,7 +102,9 @@
             class="hidden h-80 object-cover dark:block"
           /> -->
         </div>
-        <div class="pointer-events-none absolute inset-0 rounded-lg shadow outline outline-1 outline-black/5 dark:outline-white/15"></div>
+        <div
+          class="pointer-events-none absolute inset-0 rounded-lg shadow-sm outline outline-1 outline-black/5 dark:outline-white/15"
+        ></div>
       </div>
       <div class="relative lg:col-span-2">
         <div class="absolute inset-0 rounded-lg bg-white max-lg:rounded-b-[2rem] lg:rounded-br-[2rem] dark:bg-gray-800"></div>
@@ -124,7 +126,7 @@
           /> -->
         </div>
         <div
-          class="pointer-events-none absolute inset-0 rounded-lg shadow outline outline-1 outline-black/5 max-lg:rounded-b-[2rem] lg:rounded-br-[2rem] dark:outline-white/15"
+          class="pointer-events-none absolute inset-0 rounded-lg shadow-sm outline outline-1 outline-black/5 max-lg:rounded-b-[2rem] lg:rounded-br-[2rem] dark:outline-white/15"
         ></div>
       </div>
     </div>

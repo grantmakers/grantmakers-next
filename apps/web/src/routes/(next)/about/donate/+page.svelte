@@ -66,7 +66,7 @@
   <main class="relative -mt-24 pb-8">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
       <h1 class="sr-only">Support Open Data</h1>
-      <div class="overflow-hidden rounded-lg bg-white shadow">
+      <div class="overflow-hidden rounded-lg bg-white shadow-sm">
         <div class="p-6">
           <!-- Main 3 column grid -->
           <div class="grid grid-cols-1 items-start gap-6 lg:grid-cols-5">

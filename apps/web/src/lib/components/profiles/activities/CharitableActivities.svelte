@@ -15,7 +15,7 @@
 <div class="mx-auto max-w-7xl px-4 pb-2 pt-8 text-sm text-slate-700 sm:px-6 lg:px-8">
   <div class="flex gap-8">
     <div class="grow">
-      <div class="flex h-full items-center rounded-lg bg-white p-4 shadow">Summary of Direct Charitable Activities</div>
+      <div class="flex h-full items-center rounded-lg bg-white p-4 shadow-sm">Summary of Direct Charitable Activities</div>
     </div>
     <!-- <aside class="hidden w-64 md:flex md:items-stretch">
       <div class="flex grow items-center justify-center rounded-lg bg-white p-2 shadow">
