@@ -78,10 +78,11 @@
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: hsl(var(--border) / var(--tw-border-opacity, 1));
   }
   body {
-    @apply bg-background text-foreground;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
   }
 }
 
