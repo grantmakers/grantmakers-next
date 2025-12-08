@@ -9,7 +9,7 @@
 <div class="bg-white py-12 sm:py-24 dark:bg-gray-900">
   <div class="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
     <h2 class="text-base/7 font-semibold tracking-normal text-indigo-600 dark:text-indigo-400">A Digital Public Good</h2>
-    <p class="mt-2 max-w-lg text-pretty text-4xl font-semibold tracking-tight text-gray-950 sm:text-5xl dark:text-white">
+    <p class="mt-2 max-w-lg text-4xl font-semibold tracking-tight text-pretty text-gray-950 sm:text-5xl dark:text-white">
       Use Open Data to Find Your Next Funder
     </p>
     <div class="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
@@ -19,7 +19,7 @@
           class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)] lg:rounded-tl-[calc(2rem+1px)]"
         >
           <div class="p-10 pt-4">
-            <h3 class="tracking normal text-sm/4 font-semibold tracking-normal text-grantmakers-orange dark:text-indigo-400">
+            <h3 class="tracking normal text-grantmakers-orange text-sm/4 font-semibold tracking-normal dark:text-indigo-400">
               Foundation Search
             </h3>
             <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 dark:text-white">Fast research. No barriers.</p>
@@ -28,7 +28,7 @@
               Forever free.
             </p>
           </div>
-          <img src={foundationSearchRadial} alt="" class="object-top-left h-80 object-contain" />
+          <img src={foundationSearchRadial} alt="" class="h-80 object-contain object-top-left" />
           <!-- <img
             src="https://tailwindcss.com/plus-assets/img/component-images/dark-bento-01-performance.png"
             alt=""
@@ -41,9 +41,7 @@
       </div>
       <div class="relative lg:col-span-3">
         <div class="absolute inset-0 rounded-lg bg-white lg:rounded-tr-4xl dark:bg-gray-800"></div>
-        <div
-          class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:rounded-tr-[calc(2rem+1px)]"
-        >
+        <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:rounded-tr-[calc(2rem+1px)]">
           <div class="p-10 pt-4">
             <h3 class="tracking normal text-sm/4 font-semibold tracking-normal text-indigo-600 dark:text-indigo-400">Grants Search</h3>
             <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 dark:text-white">Explore millions of past grants</p>
@@ -64,9 +62,7 @@
       </div>
       <div class="relative lg:col-span-2">
         <div class="absolute inset-0 rounded-lg bg-white lg:rounded-bl-4xl dark:bg-gray-800"></div>
-        <div
-          class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:rounded-bl-[calc(2rem+1px)]"
-        >
+        <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:rounded-bl-[calc(2rem+1px)]">
           <div class="p-10 pt-4">
             <h3 class="tracking normal text-sm/4 font-semibold tracking-normal text-indigo-600 dark:text-indigo-400">Good</h3>
             <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 dark:text-white">Get instant clarity</p>

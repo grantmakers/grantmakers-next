@@ -18,7 +18,7 @@
 
 <a
   {href}
-  class="block border-l-4 py-2 pl-3 pr-4 text-base font-medium sm:pl-5 sm:pr-6 {linkClasses}"
+  class="block border-l-4 py-2 pr-4 pl-3 text-base font-medium sm:pr-6 sm:pl-5 {linkClasses}"
   aria-current={isActive ? 'page' : undefined}>{title}</a
 >
 

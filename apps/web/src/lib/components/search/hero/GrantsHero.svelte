@@ -17,7 +17,7 @@
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1213 73"
-          class="absolute left-1/2 top-[85%] w-[45%] max-w-[500px] -translate-x-1/2 translate-y-2 rotate-180"
+          class="absolute top-[85%] left-1/2 w-[45%] max-w-[500px] -translate-x-1/2 translate-y-2 rotate-180"
           aria-hidden="true"
         >
           <path
@@ -37,7 +37,7 @@
     <div class="mx-auto max-w-2xl lg:max-w-none">
       <div class="hidden sm:mb-8 sm:flex sm:justify-center">
         <div
-          class="relative rounded-full bg-white/70 px-3 py-1 text-sm/6 text-gray-500 ring-1 ring-inset ring-gray-300 hover:ring-white/20"
+          class="relative rounded-full bg-white/70 px-3 py-1 text-sm/6 text-gray-500 ring-1 ring-gray-300 ring-inset hover:ring-white/20"
         >
           This isn't a list of open grant opportunities.
           <a href="/about/" class="ml-2 font-semibold text-slate-600"

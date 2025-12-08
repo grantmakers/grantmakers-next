@@ -6,7 +6,7 @@
 </script>
 
 <tr>
-  <td class="w-full py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-0">
+  <td class="w-full py-4 pr-3 pl-4 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-0">
     {person.name}
     <dl class="font-normal sm:hidden">
       <dt class="sr-only">Title</dt>

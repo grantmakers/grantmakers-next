@@ -15,7 +15,7 @@
       <div class="mt-16 grid grid-cols-1 gap-8 xl:col-span-2 xl:mt-0">
         <div class="md:grid md:grid-cols-3 md:gap-8">
           <div>
-            <div class="font-semibold leading-6 text-white">The Project</div>
+            <div class="leading-6 font-semibold text-white">The Project</div>
             <!-- a11y Explanation: This is helpful in the context of a mobile menu as part of a slide-out -->
             <!-- eslint-disable-next-line jsx-a11y/no-redundant-roles -->
             <ul role="list" class="mt-6 space-y-4">
@@ -31,7 +31,7 @@
 
           <div class="mt-10 md:mt-0">
             <div>
-              <div class="font-semibold leading-6 text-white">Get Involved</div>
+              <div class="leading-6 font-semibold text-white">Get Involved</div>
               <ul class="mt-6 space-y-4">
                 {#each footerNavigation.getInvolved as item}
                   <li>
@@ -46,7 +46,7 @@
 
           <div class="mt-10 md:mt-0">
             <div>
-              <div class="font-semibold leading-6 text-white">Search</div>
+              <div class="leading-6 font-semibold text-white">Search</div>
               <ul class="mt-6 space-y-4">
                 {#each footerNavigation.search as item}
                   <li>

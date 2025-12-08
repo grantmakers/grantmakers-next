@@ -33,7 +33,7 @@
 <div class="flex flex-col gap-12 bg-white px-6 py-8 lg:px-8">
   <div class="mx-auto max-w-3xl text-base/7 text-gray-700">
     <p class="text-base/7 font-semibold text-indigo-600">Leading the industry forward</p>
-    <h1 class="mt-2 text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Truly open data</h1>
+    <h1 class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">Truly open data</h1>
     <p class="mt-6 text-xl/8">
       Grantmakers.io makes the public IRS 990-PF dataset useful to any nonprofit with an Internet connection. Fully open source and forever
       free, the project ensures truly equitable access to a critical information source for nonprofits of all sizes.
@@ -86,7 +86,7 @@
       </ul>
       <p class="mt-8"></p>
 
-      <h2 id="toc-intro" class="mt-16 text-pretty text-3xl font-semibold tracking-tight text-gray-900">
+      <h2 id="toc-intro" class="mt-16 text-3xl font-semibold tracking-tight text-pretty text-gray-900">
         An open window into a critically important dataset
       </h2>
       <p class="mt-6">
@@ -115,7 +115,7 @@
         >.
       </p>
 
-      <h2 id="toc-freedom" class="mt-16 text-pretty text-3xl font-semibold tracking-tight text-gray-900">
+      <h2 id="toc-freedom" class="mt-16 text-3xl font-semibold tracking-tight text-pretty text-gray-900">
         Free as in freedom and free as in food
       </h2>
       <p class="mt-6">
@@ -142,7 +142,7 @@
       </p>
     </div>
     <div class="mt-16 max-w-2xl">
-      <h2 id="toc-transparency" class="text-pretty text-3xl font-semibold tracking-tight text-gray-900">Transparency 💯</h2>
+      <h2 id="toc-transparency" class="text-3xl font-semibold tracking-tight text-pretty text-gray-900">Transparency 💯</h2>
       <p class="mt-6">
         Grantmakers.io leads by example: fully transparent and self-sustaining. Every line of code and every dollar spent is open for
         everyone to see, learn from, and build upon.
@@ -160,7 +160,7 @@
       </div>
     </div>
     <div class="mt-16 max-w-2xl">
-      <h2 id="toc-chad" class="text-pretty text-3xl font-semibold tracking-tight text-gray-900">Meet Chad</h2>
+      <h2 id="toc-chad" class="text-3xl font-semibold tracking-tight text-pretty text-gray-900">Meet Chad</h2>
       <p class="mt-6">
         Before launching my own ventures and teaching myself to code, I was often brought on as the first "business hire" at startups of all
         shapes and sizes, online and offline. I've run development teams, owned product strategy, raised venture, seed, debt, and

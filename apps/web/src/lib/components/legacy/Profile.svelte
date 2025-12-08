@@ -656,7 +656,7 @@
                         <div id="ais-widget-sort-by" class="col s12 m3 l3 right-align hidden">
                           <a
                             href={'#!'}
-                            class="dropdown-trigger hide-on-med-and-down flex items-center justify-end text-muted"
+                            class="dropdown-trigger hide-on-med-and-down text-muted flex items-center justify-end"
                             data-target="tax-year-dropdown"
                           >
                             {#if enable_tax_year_dropdown}
@@ -870,7 +870,7 @@
         </div>
         <div class="row print-no-pagebreak flex flex-col sm:flex-row">
           <div class="col s12 l6 flex-direction-column print-50 flex">
-            <div id="guidelines" class="grow scrollspy flex">
+            <div id="guidelines" class="scrollspy flex grow">
               <div class="card-panel card-panel-flex">
                 <div class="card-panel-header-wrapper">
                   <div class="card-panel-header">
@@ -1031,7 +1031,7 @@
             </div>
           </div>
           <div class="col s12 l6 flex-direction-column print-50 flex">
-            <div id="about" class="grow scrollspy flex">
+            <div id="about" class="scrollspy flex grow">
               <div class="card-panel card-panel-flex">
                 <div class="card-panel-header">
                   <h4>
@@ -1071,7 +1071,7 @@
         </div>
         <div id="financials" class="row hide-on-med-and-down scrollspy flex">
           <div class="col s12 l6 flex-direction-column print-50 flex">
-            <div id="financial-overview" class="grow flex">
+            <div id="financial-overview" class="flex grow">
               <div class="card card-panel card-panel-flex">
                 <div class="card-panel-header">
                   <h4>
@@ -1141,7 +1141,7 @@
             </div>
           </div>
           <div class="col s12 l6 flex-direction-column print-50 flex">
-            <div id="financial-trends" class="grow flex">
+            <div id="financial-trends" class="flex grow">
               <div class="card card-panel card-panel-flex">
                 <div class="card-panel-header">
                   <h4>

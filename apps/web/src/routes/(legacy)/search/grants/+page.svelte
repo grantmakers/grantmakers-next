@@ -306,7 +306,7 @@
                 </li>
                 <li class="small">Perfect for researching a specific foundation</li>
               </ul>
-              <div class="grow flex">
+              <div class="flex grow">
                 <ul class="search-details-content card card-flex grey lighten-4 z-depth-0">
                   <li class="small">Search by</li>
                   <li class="small">Foundation Name</li>
@@ -324,7 +324,7 @@
                 </li>
                 <li class="small">Discover new prospects</li>
               </ul>
-              <div class="grow flex">
+              <div class="flex grow">
                 <ul class="search-details-content card card-flex grey lighten-4 z-depth-0">
                   <li class="small">Search by</li>
                   <li class="small">Keyword</li>

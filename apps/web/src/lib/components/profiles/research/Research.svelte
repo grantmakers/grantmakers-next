@@ -25,7 +25,7 @@
     <div class="flex items-end justify-between rounded">
       <div class="flex flex-col gap-3">
         <div
-          class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
+          class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset"
         >
           Non-Commercial
         </div>
@@ -62,7 +62,7 @@
     <div class="flex w-full items-end justify-between rounded">
       <div class="flex flex-col gap-2">
         <span
-          class="inline-flex items-center whitespace-nowrap rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10"
+          class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium whitespace-nowrap text-blue-700 ring-1 ring-blue-700/10 ring-inset"
         >
           Government Source
         </span>
@@ -93,7 +93,7 @@
             },
           }}
           type="button"
-          class="flex cursor-copy flex-row items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-50"
+          class="flex cursor-copy flex-row items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-slate-300 ring-inset hover:bg-slate-50"
           ><ClipboardDocument variation={'solid'} class={'mr-2 h-4 w-4 text-slate-500'} /> Copy EIN</button
         >
         <div class="text-xs">← Psst, click this first</div>

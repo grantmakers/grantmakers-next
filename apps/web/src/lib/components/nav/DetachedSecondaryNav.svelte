@@ -17,7 +17,7 @@
 </script>
 
 <div class="mx-auto max-w-3xl px-6 font-sans sm:px-6 lg:max-w-7xl lg:px-8">
-  <div class="hidden pb-8 pt-4 lg:block">
+  <div class="hidden pt-4 pb-8 lg:block">
     <!-- White pill container -->
     <div class="inline-flex items-center gap-2 rounded-2xl bg-white px-6 py-3 shadow-lg shadow-black/5">
       {#if config.route === 'profiles' && organizationName}

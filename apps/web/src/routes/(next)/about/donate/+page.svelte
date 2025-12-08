@@ -19,7 +19,7 @@
     role="status"
     class="max-w-md animate-pulse space-y-4 divide-y divide-gray-200 rounded-sm border border-gray-200 p-4 shadow-sm md:p-6 dark:divide-gray-700 dark:border-gray-700"
   >
-    <div class="rounded-xs h-20 w-full bg-gray-300 dark:bg-gray-700"></div>
+    <div class="h-20 w-full rounded-xs bg-gray-300 dark:bg-gray-700"></div>
     <div class="flex items-center justify-between">
       <div>
         <div class="mb-2.5 h-2.5 w-24 rounded-full bg-gray-300 dark:bg-gray-600"></div>

@@ -27,7 +27,7 @@
   <div class="min-w-0">
     <div class="flex items-start gap-x-3">
       <a href={url} class="text-normal/6 font-semibold text-gray-900">{name}</a>
-      <p class="mt-0.5 whitespace-nowrap rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset {badgeClasses}">
+      <p class="mt-0.5 rounded-md px-1.5 py-0.5 text-xs font-medium whitespace-nowrap ring-1 ring-inset {badgeClasses}">
         {category}
       </p>
     </div>
@@ -42,7 +42,7 @@
   <div class="flex flex-none items-center gap-x-4">
     <a
       href={url}
-      class="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block"
+      class="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:block"
       >View profile<span class="sr-only">, {name}</span></a
     >
   </div>

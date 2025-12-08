@@ -46,7 +46,7 @@
         <div class="flex flex-row items-center justify-evenly gap-8 text-sm text-slate-700">
           <div class="flex flex-col items-center">
             <Sparkles variation="solid" class="text-grantmakers-blue" />
-            <h2 class="mb-2 mt-2 text-base font-semibold leading-6 tracking-tighter text-slate-700">AI Summaries</h2>
+            <h2 class="mt-2 mb-2 text-base leading-6 font-semibold tracking-tighter text-slate-700">AI Summaries</h2>
           </div>
           <div class="mt-1 flex flex-col items-start gap-4 lg:min-w-[300px]">
             🌐 Public data, is combined with
@@ -71,7 +71,7 @@
         <div class="flex flex-row items-center justify-evenly gap-8 text-sm text-slate-700">
           <div class="flex flex-col items-center">
             <BellAlert variation="solid" class="text-grantmakers-blue" />
-            <h2 class="mb-2 mt-2 flex flex-col items-center text-base font-semibold leading-6 tracking-tighter text-slate-700">
+            <h2 class="mt-2 mb-2 flex flex-col items-center text-base leading-6 font-semibold tracking-tighter text-slate-700">
               <span>Crowdsourced</span><span>Updates</span>
             </h2>
           </div>

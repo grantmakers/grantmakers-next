@@ -119,7 +119,7 @@
 
     <!-- Desktop Secondary Nav - White Pill Style -->
     {#if config?.showSecondaryNav && config.secondaryNavLinks}
-      <div class="hidden pb-8 pt-4 lg:block">
+      <div class="hidden pt-4 pb-8 lg:block">
         <!-- White pill container -->
         <div class="inline-flex items-center gap-2 rounded-2xl bg-white px-6 py-3 shadow-lg shadow-black/5">
           {#if config.route === 'profiles' && organizationName}
@@ -160,8 +160,7 @@
     <!-- Mobile menu -->
     <el-dialog>
       <dialog id="mobile-menu" class="m-0 p-0 backdrop:bg-transparent lg:hidden">
-        <el-dialog-backdrop
-          class="fixed inset-0 bg-black/25 duration-150 data-closed:opacity-0 data-enter:ease-out data-leave:ease-in"
+        <el-dialog-backdrop class="fixed inset-0 bg-black/25 duration-150 data-closed:opacity-0 data-enter:ease-out data-leave:ease-in"
         ></el-dialog-backdrop>
 
         <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
@@ -172,7 +171,7 @@
             <div
               class="divide-y divide-gray-200 rounded-lg bg-white shadow-lg outline outline-1 outline-black/5 dark:divide-white/10 dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10"
             >
-              <div class="pb-2 pt-3">
+              <div class="pt-3 pb-2">
                 <div class="flex items-center justify-between px-4">
                   <div>
                     <LogoMark isLandingOrFooter={false} />
@@ -201,7 +200,7 @@
                   </div>
                 </div>
                 <!-- Primary Mobile Nav Links -->
-                <div class="space-y-1 pb-1 pt-2">
+                <div class="space-y-1 pt-2 pb-1">
                   <PrimaryNavLinkMobile href={'/search/profiles/'} title={'Foundations'} />
                   <PrimaryNavLinkMobile href={'/search/grants/'} title={'Grants'} />
                   <PrimaryNavLinkMobile href={'/about/'} title={'About'} />

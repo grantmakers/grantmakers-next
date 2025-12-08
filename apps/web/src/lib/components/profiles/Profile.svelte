@@ -71,7 +71,7 @@
     <div class="mx-auto w-full px-6 py-6 text-slate-500">
       <!-- Profile header -->
       <ContentBoxWrapper id="overview">
-        <div class="lg:w-12/12 relative top-2 z-20 mx-auto w-full">
+        <div class="relative top-2 z-20 mx-auto w-full lg:w-12/12">
           <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
             <ContentBoxHeader title={'IRS Form 990-PF'}>
               <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} />
@@ -97,7 +97,7 @@
       <CiModal ein={profile.ein} />
 
       <!-- Placeholder wrapper -->
-      <div class="shadow-soft-xl relative mt-4 flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+      <div class="shadow-soft-xl relative mt-4 flex h-full min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words">
         <!-- Content goes here -->
       </div>
 
@@ -107,7 +107,7 @@
         <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
           <!-- Grants Box (First on desktop, third on mobile) -->
           <div class="order-3 xl:order-1">
-            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                 <ContentBoxHeader title={'Grants Snapshot'} />
               </div>
@@ -129,12 +129,12 @@
           <div class="order-1 xl:order-2">
             <div class="flex h-full flex-col gap-4">
               <!-- Ranking (First on mobile) -->
-              <div class="shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+              <div class="shadow-soft-xl relative flex min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words">
                 <Rank rank={profile.rank} rankTotal={profile.rank_total} assets={profile.assets} />
               </div>
 
               <!-- Data Source (Second on mobile) -->
-              <div class="shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border md:h-full">
+              <div class="shadow-soft-xl relative flex min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words md:h-full">
                 <DataSource taxYear={filings[0].tax_year} {formattedTaxPeriodEnd} lastUpdatedIrs={profile.last_updated_irs} />
               </div>
             </div>
@@ -144,7 +144,7 @@
           <div class="order-4 xl:order-3">
             <ContentBoxWrapper id="people" classes="flex h-full">
               <div
-                class="shadow-soft-xl relative flex h-full w-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border"
+                class="shadow-soft-xl relative flex h-full w-full min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words"
               >
                 <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                   <ContentBoxHeader title={'People'} />
@@ -157,7 +157,7 @@
         </div>
 
         <!-- Interstitial Message -->
-        <div class="mb-4 mt-2 flex flex-row items-start justify-center gap-2 p-8">
+        <div class="mt-2 mb-4 flex flex-row items-start justify-center gap-2 p-8">
           <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
           <div>Ensuring equitable access to a critical information source since 2016</div>
         </div>
@@ -166,7 +166,7 @@
         <div class="-mx-3 grid grid-cols-1">
           <ContentBoxWrapper id="grants">
             <div class="mb-4 w-full max-w-full px-3">
-              <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden break-words rounded-2xl bg-white">
+              <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white break-words">
                 <div class="mb-0 bg-slate-200 p-4">
                   <ContentBoxHeader title={'Grants'}
                     ><img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} /></ContentBoxHeader
@@ -196,7 +196,7 @@
         <!-- Charitable Activities -->
         <div id="charitable-activites" class="-mx-3 grid grid-cols-1">
           <div class="mb-4 w-full max-w-full px-3">
-            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden break-words rounded-2xl bg-white">
+            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white break-words">
               <div class="mb-0 border-b-0 bg-slate-200 p-4">
                 <ContentBoxHeader title={'Charitable Activities'}
                   ><img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} /></ContentBoxHeader
@@ -217,7 +217,7 @@
         </div>
 
         <!-- Interstitial Message -->
-        <div class="mb-4 mt-2 flex flex-row items-start justify-center gap-2 p-8">
+        <div class="mt-2 mb-4 flex flex-row items-start justify-center gap-2 p-8">
           <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
           <div class="flex flex-col items-center justify-center gap-2">
             <div class="font-normal">88% of nonprofits have budgets less than $500k. Grantmakers.io is built for them.</div>
@@ -229,7 +229,7 @@
           <!-- Guidelines -->
           <ContentBoxWrapper id="guidelines" classes="flex flex-col">
             <div class="mb-4 h-full w-full max-w-full px-3">
-              <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+              <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words">
                 <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                   <ContentBoxHeader title={'Application Guidelines'}>
                     <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} />
@@ -250,7 +250,7 @@
 
           <!-- About -->
           <div class="mb-4 w-full max-w-full px-3 text-slate-700">
-            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words">
               <About />
             </div>
           </div>
@@ -261,7 +261,7 @@
           <!-- Financial Overview -->
           <ContentBoxWrapper id="financials">
             <div class="mb-4 w-full max-w-full px-3">
-              <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+              <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words">
                 <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                   <ContentBoxHeader title={'Financial Overview'} />
                 </div>
@@ -274,7 +274,7 @@
 
           <!-- Financial Trends -->
           <div class="mb-4 w-full max-w-full px-3">
-            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                 <ContentBoxHeader title={'Financial Trends'} />
               </div>
@@ -292,7 +292,7 @@
         <div class="-mx-3 grid grid-cols-1 md:grid-cols-1">
           <!-- Research -->
           <div class="mb-4 w-full max-w-full px-3 text-slate-700">
-            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
+            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words">
               <Research ein={profile.ein} irsObjectId={profile.filings[0].object_id_irs} />
             </div>
           </div>
@@ -300,7 +300,7 @@
 
         <div class="-mx-3 mt-12 grid grid-cols-1 items-center md:grid-cols-1">
           <!-- Bottom CTA -->
-          <div class="mb-4 mt-2 flex flex-row items-start justify-center gap-2 p-8">
+          <div class="mt-2 mb-4 flex flex-row items-start justify-center gap-2 p-8">
             <!-- <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} /> -->
             <div class="flex flex-col items-center justify-center gap-2">
               <div class="text-lg font-semibold">Looking for another grantmaker?</div>
@@ -308,7 +308,7 @@
               <div class="mt-4 flex flex-col flex-wrap items-center gap-4 md:flex-row">
                 <button
                   type="button"
-                  class="inline-flex items-center gap-x-1.5 rounded-md bg-grantmakers-orange px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  class="bg-grantmakers-orange inline-flex items-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   onclick={openSearch}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4">

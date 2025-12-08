@@ -46,7 +46,7 @@
       {#if dialog}
         <div class="flex h-full items-end justify-center">
           <button
-            class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-100"
+            class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-slate-300 ring-inset hover:bg-slate-100"
             onclick={dialog.open}
           >
             <div class="flex flex-row items-center justify-center gap-1">
@@ -82,7 +82,7 @@
                         {...props as MimicSvelte5}
                       >
                         <div
-                          class="shadow-soft-xl w-full max-w-md transform overflow-hidden lg:mt-16 rounded-2xl bg-white px-12 py-6 text-left align-middle transition-all lg:max-w-fit"
+                          class="shadow-soft-xl w-full max-w-md transform overflow-hidden rounded-2xl bg-white px-12 py-6 text-left align-middle transition-all lg:mt-16 lg:max-w-fit"
                           use:dialog.modal
                         >
                           <!-- HACK - svelte-headlessui lacks an initialFocus ref for Dialogs https://github.com/CaptainCodeman/svelte-headlessui/issues/5 -->

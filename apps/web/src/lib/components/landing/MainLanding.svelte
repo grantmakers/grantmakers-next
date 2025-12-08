@@ -36,10 +36,10 @@
       </div>
 
       <!-- Primary message -->
-      <div class="mx-auto max-w-7xl px-6 pb-24 pt-32 sm:pb-32 lg:flex lg:flex-col lg:px-8 lg:py-60">
+      <div class="mx-auto max-w-7xl px-6 pt-32 pb-24 sm:pb-32 lg:flex lg:flex-col lg:px-8 lg:py-60">
         <section class="flex flex-col items-center justify-center px-4 text-center">
           <h1 class="mb-4 w-full max-w-4xl font-bold text-white">
-            <span class="block text-4xl text-grantmakers-orange sm:text-6xl">Foundation research</span>
+            <span class="text-grantmakers-orange block text-4xl sm:text-6xl">Foundation research</span>
             <span class="block text-4xl sm:text-6xl">Fully public. Finally unlocked.</span>
           </h1>
           <div class="w-full max-w-2xl">
@@ -50,7 +50,7 @@
               just those with big budgets. Grantmakers.io is a grassroots project created for grassroots changemakers. -->
             </h2>
             <div class="flex flex-col gap-4 p-6 text-base leading-7">
-              <div class="mt-2 grow rounded-lg bg-white/5 p-4 text-gray-300 ring-1 ring-inset ring-white/10">
+              <div class="mt-2 grow rounded-lg bg-white/5 p-4 text-gray-300 ring-1 ring-white/10 ring-inset">
                 <SearchBoxTrigger placeholderText="Foundation Quick Search..." />
               </div>
             </div>
@@ -124,7 +124,7 @@
     <div id="our-friends" class="relative isolate mt-32 bg-white px-6 sm:mt-56 lg:px-8">
       <div class="absolute inset-x-0 -top-3 -z-10 transform-gpu overflow-hidden px-36 blur-3xl" aria-hidden="true"></div>
       <div class="mx-auto max-w-2xl text-center lg:max-w-4xl">
-        <h2 class="text-base font-semibold leading-7 text-indigo-600">Thank 🙏 You</h2>
+        <h2 class="text-base leading-7 font-semibold text-indigo-600">Thank 🙏 You</h2>
         <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Grateful for our friends</p>
       </div>
       <p class="mx-auto mt-6 max-w-3xl text-center text-lg leading-8 text-gray-600">

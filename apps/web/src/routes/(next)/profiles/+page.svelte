@@ -89,7 +89,7 @@
         <div class="grid grid-cols-1 gap-4 lg:col-span-2">
           <section use:tabs.panel aria-labelledby="demo-links" class={$tabs.selected === 'demo-links' ? 'block' : 'hidden'}>
             <h2 class="sr-only" id="demo-links">Demo Links</h2>
-            <div class="shadow-xs overflow-hidden rounded-lg bg-white">
+            <div class="overflow-hidden rounded-lg bg-white shadow-xs">
               <div class="p-6">
                 <div class="border-b border-gray-200 pb-8">
                   <div class="max-w-xl">
@@ -114,7 +114,7 @@
         <div class="grid grid-cols-1 gap-4">
           <section aria-labelledby="section-2-title">
             <h2 class="sr-only" id="section-2-title">Search History</h2>
-            <div class="shadow-xs overflow-hidden rounded-lg bg-white lg:min-h-60">
+            <div class="overflow-hidden rounded-lg bg-white shadow-xs lg:min-h-60">
               <div id="our-friends" class="relative isolate bg-white p-6">
                 <div class="mx-auto max-w-2xl lg:max-w-4xl">
                   <p class="text-gray-slate text-xl font-bold tracking-tight sm:text-3xl">Grateful for our friends</p>
@@ -135,7 +135,7 @@
                   </p>
                   <p class="text-normal mx-auto mt-6 max-w-2xl text-left leading-6 text-slate-600">On behalf of all changemakers,</p>
                 </div>
-                <h2 class="mt-2 text-base font-semibold leading-7 text-indigo-600">🙏 Thank You</h2>
+                <h2 class="mt-2 text-base leading-7 font-semibold text-indigo-600">🙏 Thank You</h2>
               </div>
             </div>
             <div class="px-8">

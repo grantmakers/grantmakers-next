@@ -3,7 +3,7 @@
 <div class="bg-white px-6 py-8 lg:px-8">
   <div class="mx-auto max-w-3xl text-base/7 text-gray-700">
     <p class="text-base/7 font-semibold text-indigo-600">Open data</p>
-    <h1 id="toc-public-data" class="mt-2 text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
+    <h1 id="toc-public-data" class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">
       The IRS 990 dataset
     </h1>
     <p class="mt-6 text-xl/8">
@@ -14,14 +14,14 @@
       exclusively from this dataset. It's open...it's free...it's awesome.
     </p>
     <div class="mt-10 max-w-2xl">
-      <h2 id="toc-foundations" class="mt-16 text-pretty text-3xl font-semibold tracking-tight text-gray-900">Private foundations</h2>
+      <h2 id="toc-foundations" class="mt-16 text-3xl font-semibold tracking-tight text-pretty text-gray-900">Private foundations</h2>
       <p class="mt-6">
         Grantmakers.io focuses exclusively on Form 990-PF, the tax filing used by private foundations. If a foundation files a different tax
         form, they will not be included in search results and will not have a profile on Grantmakers.io. For example, community foundations
         and operating foundations file Form 990 (not Form 990-PF), so they will not appear on Grantmakers.io.
       </p>
 
-      <h2 id="toc-research" class="mt-16 text-pretty text-3xl font-semibold tracking-tight text-gray-900">
+      <h2 id="toc-research" class="mt-16 text-3xl font-semibold tracking-tight text-pretty text-gray-900">
         Great for quick research and initial prospecting
       </h2>
       <p class="mt-6">
@@ -33,7 +33,7 @@
         similar grantees in the past.
       </p>
 
-      <h2 id="toc-updates" class="mt-16 text-pretty text-3xl font-semibold tracking-tight text-gray-900">
+      <h2 id="toc-updates" class="mt-16 text-3xl font-semibold tracking-tight text-pretty text-gray-900">
         IRS controls the frequency of updates
       </h2>
       <p class="mt-6">
@@ -46,7 +46,7 @@
         actually funded 9-18+ months before first appearing in results.
       </p>
 
-      <h2 id="toc-quirks" class="mt-16 text-pretty text-3xl font-semibold tracking-tight text-gray-900">Foundations control the content</h2>
+      <h2 id="toc-quirks" class="mt-16 text-3xl font-semibold tracking-tight text-pretty text-gray-900">Foundations control the content</h2>
       <p class="mt-6">
         The information a foundation enters when filing their return appears exactly as entered on the return. Most of the time foundations
         catch misspellings and mistakes before filing their returns, but don't be surprised if you come across the occasional piece of data
@@ -64,7 +64,7 @@
         indeed exist.
       </p>
 
-      <h2 id="toc-feedback" class="mt-16 text-pretty text-3xl font-semibold tracking-tight text-gray-900">
+      <h2 id="toc-feedback" class="mt-16 text-3xl font-semibold tracking-tight text-pretty text-gray-900">
         Your insight drives improvements
       </h2>
       <p class="mt-6">

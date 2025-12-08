@@ -105,7 +105,7 @@
       <dl class="flex w-full flex-row items-center justify-around text-2xl">
         <div class="flex flex-col items-center gap-2 p-2">
           <dt class="flex flex-row items-center gap-1 text-sm leading-normal text-inherit">
-            <span class="h-2 w-3 rounded-md bg-grantmakers-blue"></span>
+            <span class="bg-grantmakers-blue h-2 w-3 rounded-md"></span>
             Assets
           </dt>
           <dd class=" text-slate-700">{humanizeCurrency(year1.assets)}</dd>
@@ -113,7 +113,7 @@
 
         <div class="flex flex-col items-center gap-2 p-2">
           <dt class="flex flex-row items-center gap-1 text-sm leading-normal text-inherit">
-            <span class="h-2 w-3 rounded-md bg-grantmakers-orange"></span>
+            <span class="bg-grantmakers-orange h-2 w-3 rounded-md"></span>
             Distributions
           </dt>
           <dd class=" text-slate-700">{humanizeCurrency(year1.distributions)}</dd>
@@ -121,7 +121,7 @@
 
         <div class="flex flex-col items-center gap-2 p-2">
           <dt class="flex flex-row items-center gap-1 text-sm leading-normal text-inherit">
-            <span class="h-2 w-3 rounded-md bg-grantmakers-green"></span>
+            <span class="bg-grantmakers-green h-2 w-3 rounded-md"></span>
             Contributions
           </dt>
           <dd class=" text-slate-700">{humanizeCurrency(year1.contributions)}</dd>

@@ -39,7 +39,7 @@
     />
     <span
       class={[
-        'self-center whitespace-nowrap font-semibold md:text-base',
+        'self-center font-semibold whitespace-nowrap md:text-base',
         isLandingOrFooter ? landingOrFooterClasses.span
         : isSticky ? stickyClasses.span
         : classes.span,

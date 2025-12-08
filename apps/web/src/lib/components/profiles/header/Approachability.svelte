@@ -113,7 +113,7 @@
             class="shadow-soft-xl w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle text-slate-700 transition-all lg:max-w-xl"
             use:dialog.modal
           >
-            <h3 class="mb-2 text-lg font-medium leading-6 tracking-tighter text-slate-900">Approachability Helpers</h3>
+            <h3 class="mb-2 text-lg leading-6 font-medium tracking-tighter text-slate-900">Approachability Helpers</h3>
             <div class="mt-4">
               <div class="mt-4 space-y-4 rounded-lg bg-gray-50 p-4 text-sm">
                 <div class="flex items-start gap-2 p-2 text-slate-700">

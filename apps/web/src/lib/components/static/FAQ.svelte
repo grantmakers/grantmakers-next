@@ -9,7 +9,7 @@
       <div>
         <p class="text-base/7 font-semibold text-indigo-600 md:hidden">FAQ</p>
         <p class="hidden text-base/7 font-semibold text-indigo-600 md:block">Simple answers to common questions</p>
-        <h1 class="mt-2 text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Frequently Asked Questions</h1>
+        <h1 class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">Frequently Asked Questions</h1>
         <!-- <p class="mt-6 text-xl/8"></p> -->
       </div>
     </div>

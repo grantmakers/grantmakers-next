@@ -151,7 +151,7 @@
             <nav class="flex items-center space-x-4 transition-all duration-700">
               {#if config.route === 'profiles' && organizationName}
                 <button
-                  class="whitespace-nowrap rounded-md bg-white/10 px-3 py-2 text-sm font-medium text-white focus:outline-hidden focus-visible:outline-hidden"
+                  class="rounded-md bg-white/10 px-3 py-2 text-sm font-medium whitespace-nowrap text-white focus:outline-hidden focus-visible:outline-hidden"
                   aria-current="page"
                   title="Return to top"
                   onclick={backToTop}
@@ -180,8 +180,7 @@
     <!-- Mobile menu -->
     <el-dialog>
       <dialog id="mobile-menu" class="m-0 p-0 backdrop:bg-transparent lg:hidden">
-        <el-dialog-backdrop
-          class="fixed inset-0 bg-black/25 duration-150 data-closed:opacity-0 data-enter:ease-out data-leave:ease-in"
+        <el-dialog-backdrop class="fixed inset-0 bg-black/25 duration-150 data-closed:opacity-0 data-enter:ease-out data-leave:ease-in"
         ></el-dialog-backdrop>
 
         <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
@@ -192,7 +191,7 @@
             <div
               class="divide-y divide-gray-200 rounded-lg bg-white shadow-lg outline outline-1 outline-black/5 dark:divide-white/10 dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10"
             >
-              <div class="pb-2 pt-3">
+              <div class="pt-3 pb-2">
                 <div class="flex items-center justify-between px-4">
                   <div>
                     <LogoMark isLandingOrFooter={false} />
@@ -221,7 +220,7 @@
                   </div>
                 </div>
                 <!-- Primary Mobile Nav Links -->
-                <div class="space-y-1 pb-1 pt-2">
+                <div class="space-y-1 pt-2 pb-1">
                   <PrimaryNavLinkMobile href={'/search/profiles/'} title={'Foundations'} />
                   <PrimaryNavLinkMobile href={'/search/grants/'} title={'Grants'} />
                   <PrimaryNavLinkMobile href={'/about/'} title={'About'} />

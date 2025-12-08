@@ -5,7 +5,7 @@
 <div class="bg-white px-6 py-8 lg:px-8">
   <div class="mx-auto max-w-3xl text-base/7 text-gray-700">
     <p class="text-base/7 font-semibold text-indigo-600">Donate</p>
-    <h1 id="toc-public-data" class="mt-2 text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Support Open Data</h1>
+    <h1 id="toc-public-data" class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">Support Open Data</h1>
     <p class="mt-6 text-xl/8">Hi, I'm Chad 👋</p>
     <p class="mt-6">I'm the creator of Grantmakers.io.</p>
     <p class="mt-6">
@@ -50,13 +50,13 @@
       </ul>
     </div>
     <div class="mt-10 max-w-2xl">
-      <h2 id="toc-impact" class="mt-16 text-pretty text-3xl font-semibold tracking-tight text-gray-900">The impact of your contribution</h2>
+      <h2 id="toc-impact" class="mt-16 text-3xl font-semibold tracking-tight text-pretty text-gray-900">The impact of your contribution</h2>
       <p class="mt-6">
         A contribution to Grantmakers.io means you believe in open data. It means you support new models for ensuring grants data remains
         free and open for everyone, regardless of one's ability to afford expensive subscription-based databases.
       </p>
 
-      <h2 id="toc-transparency" class="mt-16 text-pretty text-3xl font-semibold tracking-tight text-gray-900">Transparency</h2>
+      <h2 id="toc-transparency" class="mt-16 text-3xl font-semibold tracking-tight text-pretty text-gray-900">Transparency</h2>
       <p class="mt-6">
         If you haven't done so already, <a href="/about" class="text-indigo-700 underline">read more</a> about the costs behind this site (hint:
         it's mostly coffee). If you have any questions, I'd love to hear from you, or if you're in Chicago, let's grab a coffee!

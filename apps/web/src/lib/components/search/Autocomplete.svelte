@@ -86,8 +86,8 @@
   const algoliaTemplates = {
     header: ({ html }: { html: HTMLTemplate }) => html`
       <div class="flex items-center justify-between">
-        <div class="px-3 py-2 text-xs font-semibold uppercase text-gray-500">Foundation Profiles</div>
-        <div class="px-3 py-2 text-xs font-semibold uppercase text-gray-500">Assets</div>
+        <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase">Foundation Profiles</div>
+        <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase">Assets</div>
       </div>
     `,
     item: ({ item, html }: AlgoliaItemTemplateProps) => {
@@ -96,13 +96,13 @@
       return html`<a href="${url}" data-sveltekit-reload>
         <div class="px-2 py-3 transition-colors duration-100 hover:bg-slate-100">
           <div class="flex items-center justify-between gap-3">
-            <div class="w-full min-w-0 ">
+            <div class="w-full min-w-0">
               <div class="flex items-start justify-between gap-x-3">
                 <div class="text-normal/6 font-semibold text-gray-900">${item.organization_name}</div>
                 <p
                   class="${getColorClasses(
                     percentile,
-                  )} mt-0.5 whitespace-nowrap rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset"
+                  )} mt-0.5 rounded-md px-1.5 py-0.5 text-xs font-medium whitespace-nowrap ring-1 ring-inset"
                 >
                   ${getLabel(percentile)}
                 </p>
@@ -127,7 +127,7 @@
         <div class="flex items-center justify-between">
           <a
             data-sveltekit-reload
-            class="flex items-center gap-2 text-grantmakers-blue hover:text-grantmakers-orange"
+            class="text-grantmakers-blue hover:text-grantmakers-orange flex items-center gap-2"
             href="/search/profiles/"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
@@ -165,11 +165,11 @@
       const { query } = state;
       return html`<div class="px-2 py-3 transition-colors duration-100">
         <div class="flex items-center justify-between gap-3">
-          <div class="w-full min-w-0 ">
+          <div class="w-full min-w-0">
             <div class="flex items-start justify-between gap-x-3">
               <div class="text-normal/6 font-semibold text-gray-900">No matches found</div>
             </div>
-            <div class="mt-2 flex  w-full items-center justify-between gap-x-2 text-sm text-gray-500">
+            <div class="mt-2 flex w-full items-center justify-between gap-x-2 text-sm text-gray-500">
               <div class="flex flex-col gap-y-4">
                 <p class="w-3/4">
                   We searched the IRS dataset of ${profilesCount} private foundations, but didn't find any matches for:
@@ -189,7 +189,7 @@
                     </div>
                   </div>
                 </div>
-                <a class="flex flex-row items-center gap-1 text-grantmakers-blue" href="/about/the-dataset/"
+                <a class="text-grantmakers-blue flex flex-row items-center gap-1" href="/about/the-dataset/"
                   >Learn more about the dataset
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
                     <path
@@ -310,7 +310,7 @@
     type="button"
     class="aa-DetachedSearchButton placeholder:text-red-900! {size === 'large' ?
       'min-w-72! ring-4 ring-indigo-400 focus:ring-indigo-600! sm:text-base!'
-    : 'min-w-48! ring-1 ring-inset ring-gray-300! focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm!'} rounded-md! border-0! sm:leading-6!"
+    : 'min-w-48! ring-1 ring-gray-300! ring-inset focus:ring-2 focus:ring-indigo-600 focus:ring-inset sm:text-sm!'} rounded-md! border-0! sm:leading-6!"
     title="Search"
     onclick={openSearch}
     ><div class="aa-DetachedSearchButtonIcon cursor-pointer! text-slate-500!">

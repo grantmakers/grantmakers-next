@@ -26,7 +26,7 @@
   <div class="flex justify-center">
     <a
       href="/about"
-      class="shrink rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-100"
+      class="shrink rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-slate-300 ring-inset hover:bg-slate-100"
     >
       <div class="flex flex-row items-center justify-center gap-1">Learn More <span class="sr-only">about Grantmakers.io</span></div>
     </a>

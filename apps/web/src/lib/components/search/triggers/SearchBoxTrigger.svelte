@@ -14,7 +14,7 @@
   class="
     mx-auto flex w-full max-w-2xl items-center rounded-md
     border border-gray-300 bg-white p-2 text-left
-    focus:outline-hidden focus:ring-2 focus:ring-indigo-500
+    focus:ring-2 focus:ring-indigo-500 focus:outline-hidden
   "
 >
   <div class="aa-DetachedSearchButtonIcon cursor-pointer! text-slate-500!">

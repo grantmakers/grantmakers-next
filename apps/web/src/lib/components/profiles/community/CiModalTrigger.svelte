@@ -11,7 +11,7 @@
 
 <button
   type="button"
-  class="ease-nav-brand mx-4 my-0 flex items-center whitespace-nowrap px-4 py-2.5 text-sm transition-colors"
+  class="ease-nav-brand mx-4 my-0 flex items-center px-4 py-2.5 text-sm whitespace-nowrap transition-colors"
   onclick={handleClick}
   aria-label={'Community Intelligence'}
 >

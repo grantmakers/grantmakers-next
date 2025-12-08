@@ -15,6 +15,6 @@
   );
 </script>
 
-<a {href} class="block py-2 pl-3 pr-4 text-base font-medium sm:pl-5 sm:pr-6 {linkClasses}" aria-current={isActive ? 'page' : undefined}
+<a {href} class="block py-2 pr-4 pl-3 text-base font-medium sm:pr-6 sm:pl-5 {linkClasses}" aria-current={isActive ? 'page' : undefined}
   >{href === '/about' ? 'The Project' : title}</a
 >

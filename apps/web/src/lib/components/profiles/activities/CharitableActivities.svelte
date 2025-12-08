@@ -12,7 +12,7 @@
   let { activities, areRestatement }: Props = $props();
 </script>
 
-<div class="mx-auto max-w-7xl px-4 pb-2 pt-8 text-sm text-slate-700 sm:px-6 lg:px-8">
+<div class="mx-auto max-w-7xl px-4 pt-8 pb-2 text-sm text-slate-700 sm:px-6 lg:px-8">
   <div class="flex gap-8">
     <div class="grow">
       <div class="flex h-full items-center rounded-lg bg-white p-4 shadow-sm">Summary of Direct Charitable Activities</div>

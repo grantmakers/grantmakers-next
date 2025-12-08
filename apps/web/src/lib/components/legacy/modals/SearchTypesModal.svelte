@@ -15,12 +15,12 @@
 <el-dialog>
   <dialog id="modal-tips" class="m-0 p-0 backdrop:bg-transparent dark:backdrop:bg-gray-900/50">
     <el-dialog-backdrop
-      class="fixed inset-0 bg-gray-500/25 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-leave:duration-200 data-enter:ease-out data-leave:ease-in"
+      class="fixed inset-0 bg-gray-500/25 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
     ></el-dialog-backdrop>
     <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
     <div tabindex="0" class="fixed inset-0 w-screen overflow-y-auto p-4 focus:outline focus:outline-0 sm:p-6 md:p-20">
       <el-dialog-panel
-        class="mx-auto block max-w-4xl transform overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black/5 transition-all data-closed:scale-95 data-closed:opacity-0 data-enter:duration-300 data-leave:duration-200 data-enter:ease-out data-leave:ease-in dark:bg-gray-900 dark:ring-white/10"
+        class="mx-auto block max-w-4xl transform overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black/5 transition-all data-closed:scale-95 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in dark:bg-gray-900 dark:ring-white/10"
       >
         <!-- Header -->
         <div class="bg-slate-600 px-6 py-4 text-white">
@@ -59,7 +59,7 @@
               <div class="mb-4">
                 <a
                   href="/search/profiles/"
-                  class="inline-flex items-center text-lg font-semibold text-grantmakers-orange hover:text-grantmakers-orange-light"
+                  class="text-grantmakers-orange hover:text-grantmakers-orange-light inline-flex items-center text-lg font-semibold"
                 >
                   <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                     <path
@@ -88,7 +88,7 @@
               <div class="mb-4">
                 <a
                   href="/search/grants/"
-                  class="hover:text-grantmakers-blue-dark-bg! inline-flex items-center text-lg font-semibold text-grantmakers-blue!"
+                  class="hover:text-grantmakers-blue-dark-bg! text-grantmakers-blue! inline-flex items-center text-lg font-semibold"
                 >
                   <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                     <path

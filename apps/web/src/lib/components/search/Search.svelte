@@ -93,10 +93,10 @@
 
             return html`<a href="${url}">
               <div
-                class="block cursor-pointer rounded-lg rounded-lg border-b! border-slate-100 px-4 py-3 transition-colors duration-150 last:border-0 hover:bg-slate-50 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+                class="block cursor-pointer rounded-lg border-b! border-slate-100 px-4 py-3 transition-colors duration-150 last:border-0 hover:bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:outline-hidden"
               >
                 <div class="flex items-center justify-between gap-3">
-                  <div class="w-full min-w-0 ">
+                  <div class="w-full min-w-0">
                     <div class="flex items-start justify-between gap-x-3">
                       <div class="text-base font-semibold text-gray-900">
                         ${
@@ -107,7 +107,7 @@
                       <p
                         class="${getColorClasses(
                           percentile,
-                        )} mt-0.5 whitespace-nowrap rounded-full px-2 py-0.5 text-[11px] font-medium ring-1 ring-inset"
+                        )} mt-0.5 rounded-full px-2 py-0.5 text-[11px] font-medium whitespace-nowrap ring-1 ring-inset"
                       >
                         ${getLabel(percentile)}
                       </p>
@@ -177,12 +177,12 @@
     class="m-0 p-0 backdrop:bg-gray-500/25 backdrop:backdrop-blur-sm dark:backdrop:bg-gray-900/50"
   >
     <el-dialog-backdrop
-      class="fixed inset-0 bg-gray-500/25 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-leave:duration-200 data-enter:ease-out data-leave:ease-in"
+      class="fixed inset-0 bg-gray-500/25 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
     ></el-dialog-backdrop>
 
     <div class="fixed inset-0 w-screen overflow-y-auto p-4 focus:outline focus:outline-0 sm:p-6 md:p-20">
       <el-dialog-panel
-        class="mx-auto block max-w-3xl transform overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black/5 transition-all data-closed:scale-95 data-closed:opacity-0 data-enter:duration-300 data-leave:duration-200 data-enter:ease-out data-leave:ease-in dark:bg-gray-900 dark:ring-white/10"
+        class="mx-auto block max-w-3xl transform overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black/5 transition-all data-closed:scale-95 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in dark:bg-gray-900 dark:ring-white/10"
       >
         <!-- Search Box Header -->
         <div class="divide-y divide-gray-100 dark:divide-white/10">
@@ -190,13 +190,13 @@
             <div
               id="searchbox-profiles-compact"
               bind:this={searchInputRef}
-              class="relative col-start-1 row-start-1 h-12 w-full pl-11 pr-4 text-base text-gray-900 outline-hidden focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-400 sm:text-sm dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-500"
+              class="relative col-start-1 row-start-1 h-12 w-full pr-4 pl-11 text-base text-gray-900 outline-hidden placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-500 sm:text-sm dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-500"
             >
               <svg
                 viewBox="0 0 20 20"
                 fill="currentColor"
                 aria-hidden="true"
-                class="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-gray-400 dark:text-gray-500"
+                class="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-gray-400 dark:text-gray-500"
               >
                 <path
                   d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"

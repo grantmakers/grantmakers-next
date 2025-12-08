@@ -122,13 +122,13 @@
             let percentile: number | 'N/A' = item.rank !== undefined ? ((item.rank_total - item.rank) / item.rank_total) * 100 : 'N/A';
             return html`<a href="${url}"
               ><div class="flex items-center justify-between gap-x-6 py-5">
-                <div class="w-full min-w-0 ">
+                <div class="w-full min-w-0">
                   <div class="flex items-start justify-between gap-x-3">
                     <div class="text-normal/6 font-semibold text-gray-900">${item.organization_name}</div>
                     <p
                       class="${getColorClasses(
                         percentile,
-                      )} mt-0.5 whitespace-nowrap rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset"
+                      )} mt-0.5 rounded-md px-1.5 py-0.5 text-xs font-medium whitespace-nowrap ring-1 ring-inset"
                     >
                       ${getLabel(percentile)}
                     </p>

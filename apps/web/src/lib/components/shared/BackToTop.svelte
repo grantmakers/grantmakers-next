@@ -7,7 +7,7 @@
     <button
       type="button"
       onclick={backToTop}
-      class="inline-flex items-center gap-2 rounded-md p-1 transition-colors duration-200 hover:text-gray-700 focus:outline-hidden focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+      class="inline-flex items-center gap-2 rounded-md p-1 transition-colors duration-200 hover:text-gray-700 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-hidden"
     >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4">
         <path
