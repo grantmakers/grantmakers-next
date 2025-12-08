@@ -67,7 +67,7 @@
                     leaveTo="opacity-0"
                     {...props as MimicSvelte5}
                   >
-                    <button class="fixed inset-0 bg-black bg-opacity-25" onclick={dialog.close} aria-label="Close dialog"></button>
+                    <button class="fixed inset-0 bg-black/25" onclick={dialog.close} aria-label="Close dialog"></button>
                   </Transition>
 
                   <div class="fixed inset-0 overflow-y-auto">
@@ -82,7 +82,7 @@
                         {...props as MimicSvelte5}
                       >
                         <div
-                          class="shadow-soft-xl w-full max-w-md transform overflow-hidden rounded-2xl bg-white px-12 py-6 text-left align-middle transition-all lg:max-w-fit"
+                          class="shadow-soft-xl w-full max-w-md transform overflow-hidden lg:mt-16 rounded-2xl bg-white px-12 py-6 text-left align-middle transition-all lg:max-w-fit"
                           use:dialog.modal
                         >
                           <!-- HACK - svelte-headlessui lacks an initialFocus ref for Dialogs https://github.com/CaptainCodeman/svelte-headlessui/issues/5 -->

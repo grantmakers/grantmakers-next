@@ -93,7 +93,7 @@
 
             return html`<a href="${url}">
               <div
-                class="block cursor-pointer rounded-lg rounded-lg border-b! border-slate-100 px-4 py-3 transition-colors duration-150 last:border-0 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                class="block cursor-pointer rounded-lg rounded-lg border-b! border-slate-100 px-4 py-3 transition-colors duration-150 last:border-0 hover:bg-slate-50 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
               >
                 <div class="flex items-center justify-between gap-3">
                   <div class="w-full min-w-0 ">
@@ -190,7 +190,7 @@
             <div
               id="searchbox-profiles-compact"
               bind:this={searchInputRef}
-              class="relative col-start-1 row-start-1 h-12 w-full pl-11 pr-4 text-base text-gray-900 outline-none placeholder:text-gray-400 sm:text-sm dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-500"
+              class="relative col-start-1 row-start-1 h-12 w-full pl-11 pr-4 text-base text-gray-900 outline-hidden focus:ring-2 focus:ring-indigo-500 placeholder:text-gray-400 sm:text-sm dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-500"
             >
               <svg
                 viewBox="0 0 20 20"

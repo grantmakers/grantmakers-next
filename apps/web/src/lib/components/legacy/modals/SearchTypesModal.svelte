@@ -88,7 +88,7 @@
               <div class="mb-4">
                 <a
                   href="/search/grants/"
-                  class="!hover:text-grantmakers-blue-dark-bg inline-flex items-center text-lg font-semibold !text-grantmakers-blue"
+                  class="hover:text-grantmakers-blue-dark-bg! inline-flex items-center text-lg font-semibold text-grantmakers-blue!"
                 >
                   <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                     <path

@@ -34,7 +34,7 @@ export const searchBoxModalStyles = {
   root: 'col-start-1 row-start-1 w-full',
   form: 'relative',
   input:
-    'col-start-1 row-start-1 h-12 w-full pl-1 pr-4 text-base text-gray-900 outline-hidden !placeholder:text-gray-400 sm:text-sm dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-500',
+    'col-start-1 row-start-1 h-12 w-full border-0 pl-1 pr-4 text-base text-gray-900 outline-hidden placeholder:text-gray-400! sm:text-sm dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-500',
   submit: 'hidden',
   reset: 'absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600',
   loadingIndicator: 'hidden',

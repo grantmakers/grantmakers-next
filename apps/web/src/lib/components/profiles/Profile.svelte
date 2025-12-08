@@ -97,7 +97,7 @@
       <CiModal ein={profile.ein} />
 
       <!-- Placeholder wrapper -->
-      <div class="shadow-soft-xl relative mt-4 flex h-full min-w-0 flex-col wrap-break-word rounded-2xl border-0 bg-white bg-clip-border">
+      <div class="shadow-soft-xl relative mt-4 flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
         <!-- Content goes here -->
       </div>
 
@@ -107,7 +107,7 @@
         <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
           <!-- Grants Box (First on desktop, third on mobile) -->
           <div class="order-3 xl:order-1">
-            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col wrap-break-word rounded-2xl border-0 bg-white bg-clip-border">
+            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                 <ContentBoxHeader title={'Grants Snapshot'} />
               </div>
@@ -129,12 +129,12 @@
           <div class="order-1 xl:order-2">
             <div class="flex h-full flex-col gap-4">
               <!-- Ranking (First on mobile) -->
-              <div class="shadow-soft-xl relative flex min-w-0 flex-col wrap-break-word rounded-2xl border-0 bg-white bg-clip-border">
+              <div class="shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
                 <Rank rank={profile.rank} rankTotal={profile.rank_total} assets={profile.assets} />
               </div>
 
               <!-- Data Source (Second on mobile) -->
-              <div class="shadow-soft-xl relative flex min-w-0 flex-col wrap-break-word rounded-2xl border-0 bg-white bg-clip-border md:h-full">
+              <div class="shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border md:h-full">
                 <DataSource taxYear={filings[0].tax_year} {formattedTaxPeriodEnd} lastUpdatedIrs={profile.last_updated_irs} />
               </div>
             </div>
@@ -144,7 +144,7 @@
           <div class="order-4 xl:order-3">
             <ContentBoxWrapper id="people" classes="flex h-full">
               <div
-                class="shadow-soft-xl relative flex h-full w-full min-w-0 flex-col wrap-break-word rounded-2xl border-0 bg-white bg-clip-border"
+                class="shadow-soft-xl relative flex h-full w-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border"
               >
                 <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                   <ContentBoxHeader title={'People'} />
@@ -166,7 +166,7 @@
         <div class="-mx-3 grid grid-cols-1">
           <ContentBoxWrapper id="grants">
             <div class="mb-4 w-full max-w-full px-3">
-              <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden wrap-break-word rounded-2xl bg-white">
+              <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden break-words rounded-2xl bg-white">
                 <div class="mb-0 bg-slate-200 p-4">
                   <ContentBoxHeader title={'Grants'}
                     ><img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} /></ContentBoxHeader
@@ -196,7 +196,7 @@
         <!-- Charitable Activities -->
         <div id="charitable-activites" class="-mx-3 grid grid-cols-1">
           <div class="mb-4 w-full max-w-full px-3">
-            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden wrap-break-word rounded-2xl bg-white">
+            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden break-words rounded-2xl bg-white">
               <div class="mb-0 border-b-0 bg-slate-200 p-4">
                 <ContentBoxHeader title={'Charitable Activities'}
                   ><img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} /></ContentBoxHeader
@@ -229,7 +229,7 @@
           <!-- Guidelines -->
           <ContentBoxWrapper id="guidelines" classes="flex flex-col">
             <div class="mb-4 h-full w-full max-w-full px-3">
-              <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col wrap-break-word rounded-2xl border-0 bg-white bg-clip-border">
+              <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
                 <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                   <ContentBoxHeader title={'Application Guidelines'}>
                     <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} />
@@ -250,7 +250,7 @@
 
           <!-- About -->
           <div class="mb-4 w-full max-w-full px-3 text-slate-700">
-            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col wrap-break-word rounded-2xl border-0 bg-white bg-clip-border">
+            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <About />
             </div>
           </div>
@@ -261,7 +261,7 @@
           <!-- Financial Overview -->
           <ContentBoxWrapper id="financials">
             <div class="mb-4 w-full max-w-full px-3">
-              <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col wrap-break-word rounded-2xl border-0 bg-white bg-clip-border">
+              <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
                 <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                   <ContentBoxHeader title={'Financial Overview'} />
                 </div>
@@ -274,7 +274,7 @@
 
           <!-- Financial Trends -->
           <div class="mb-4 w-full max-w-full px-3">
-            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col wrap-break-word rounded-2xl border-0 bg-white bg-clip-border">
+            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                 <ContentBoxHeader title={'Financial Trends'} />
               </div>
@@ -292,7 +292,7 @@
         <div class="-mx-3 grid grid-cols-1 md:grid-cols-1">
           <!-- Research -->
           <div class="mb-4 w-full max-w-full px-3 text-slate-700">
-            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col wrap-break-word rounded-2xl border-0 bg-white bg-clip-border">
+            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border">
               <Research ein={profile.ein} irsObjectId={profile.filings[0].object_id_irs} />
             </div>
           </div>

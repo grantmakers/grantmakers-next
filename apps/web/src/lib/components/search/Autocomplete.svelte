@@ -308,7 +308,7 @@
 <div class="relative mt-0 rounded-md shadow-sm transition-opacity duration-200 {size === 'large' ? 'w-fit' : ''}">
   <button
     type="button"
-    class="aa-DetachedSearchButton !placeholder:text-red-900 {size === 'large' ?
+    class="aa-DetachedSearchButton placeholder:text-red-900! {size === 'large' ?
       'min-w-72! ring-4 ring-indigo-400 focus:ring-indigo-600! sm:text-base!'
     : 'min-w-48! ring-1 ring-inset ring-gray-300! focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm!'} rounded-md! border-0! sm:leading-6!"
     title="Search"
