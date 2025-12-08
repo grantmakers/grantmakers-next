@@ -5,7 +5,6 @@ module.exports = {
   plugins: ['prettier-plugin-svelte', 'prettier-plugin-tailwindcss'],
   singleQuote: true,
   svelteIndentScriptAndStyle: true,
-  tailwindConfig: './tailwind.config.js',
   printWidth: 140, // Ensure override of Svelte Prettier plugin
   overrides: [
     {

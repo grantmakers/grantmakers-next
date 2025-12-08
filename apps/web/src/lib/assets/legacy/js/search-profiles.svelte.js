@@ -536,7 +536,7 @@ export function initSearchJs(M) {
       <div id="range-input-min" class="label-wrapper">
         <label class="ais-RangeInput-label valign-wrapper">
           <input
-            class="ais-RangeInput-input ais-RangeInput-input--min !outline !outline-1 !-outline-offset-1 !outline-gray-200"
+            class="ais-RangeInput-input ais-RangeInput-input--min outline! outline-1! -outline-offset-1! outline-gray-200!"
             type="number"
             name="min"
             placeholder="$0"
@@ -548,7 +548,7 @@ export function initSearchJs(M) {
       <div id="range-input-max" class="label-wrapper">
         <label class="ais-RangeInput-label valign-wrapper">
           <input
-            class="ais-RangeInput-input ais-RangeInput-input--max !outline !outline-1 !-outline-offset-1 !outline-gray-200"
+            class="ais-RangeInput-input ais-RangeInput-input--max outline! outline-1! -outline-offset-1! outline-gray-200!"
             type="number"
             name="max"
             placeholder="$0"
@@ -674,7 +674,7 @@ export function initSearchJs(M) {
   const toggleRefinementWithPanel = panel({
     templates: {
       header:
-        'Grant Guidelines <button command="show-modal" commandfor="irs-exclude-info" type="button" class="focus:!bg-transparent right"><i class="material-icons right text-muted-max modal-trigger" title="Click to learn more">info</i></button>',
+        'Grant Guidelines <button command="show-modal" commandfor="irs-exclude-info" type="button" class="focus:bg-transparent! right"><i class="material-icons right text-muted-max modal-trigger" title="Click to learn more">info</i></button>',
     },
     hidden(options) {
       return options.results.nbHits === 0;
@@ -699,7 +699,7 @@ export function initSearchJs(M) {
       showLoadingIndicator: false,
       cssClasses: {
         input:
-          'flex-grow h-12 pl-10 pr-4 w-full bg-white text-gray-900 text-base rounded-lg border-0 appearance-none shadow-none transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 !outline !outline-1 !-outline-offset-1 !outline-gray-200',
+          'grow h-12 pl-10 pr-4 w-full bg-white text-gray-900 text-base rounded-lg border-0 appearance-none shadow-none transition duration-300 focus:outline-hidden focus:ring-2 focus:ring-blue-500 outline! outline-1! -outline-offset-1! outline-gray-200!',
       },
       queryHook: function (query, searchInstance) {
         // Query hook is called just before search is triggered

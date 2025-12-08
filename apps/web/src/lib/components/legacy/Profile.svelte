@@ -870,7 +870,7 @@
         </div>
         <div class="row print-no-pagebreak flex flex-col sm:flex-row">
           <div class="col s12 l6 flex-direction-column print-50 flex">
-            <div id="guidelines" class="flex-grow-1 scrollspy flex">
+            <div id="guidelines" class="grow scrollspy flex">
               <div class="card-panel card-panel-flex">
                 <div class="card-panel-header-wrapper">
                   <div class="card-panel-header">
@@ -1031,7 +1031,7 @@
             </div>
           </div>
           <div class="col s12 l6 flex-direction-column print-50 flex">
-            <div id="about" class="flex-grow-1 scrollspy flex">
+            <div id="about" class="grow scrollspy flex">
               <div class="card-panel card-panel-flex">
                 <div class="card-panel-header">
                   <h4>
@@ -1071,7 +1071,7 @@
         </div>
         <div id="financials" class="row hide-on-med-and-down scrollspy flex">
           <div class="col s12 l6 flex-direction-column print-50 flex">
-            <div id="financial-overview" class="flex-grow-1 flex">
+            <div id="financial-overview" class="grow flex">
               <div class="card card-panel card-panel-flex">
                 <div class="card-panel-header">
                   <h4>
@@ -1141,7 +1141,7 @@
             </div>
           </div>
           <div class="col s12 l6 flex-direction-column print-50 flex">
-            <div id="financial-trends" class="flex-grow-1 flex">
+            <div id="financial-trends" class="grow flex">
               <div class="card card-panel card-panel-flex">
                 <div class="card-panel-header">
                   <h4>
@@ -1318,7 +1318,7 @@
 
 <div class="profile-content section-refinements">
   <!-- Filters / Refinements -->
-  <div class="row !m-0">
+  <div class="row m-0!">
     <div class="col s12">
       <ul id="refinements-slide-out" class="sidenav left-align grey lighten-5">
         <li><div class="card"><div id="ais-widget-mobile-refinement-list--grantee_state"></div></div></li>

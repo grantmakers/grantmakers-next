@@ -21,7 +21,7 @@
     <!-- White pill container -->
     <div class="inline-flex items-center gap-2 rounded-2xl bg-white px-6 py-3 shadow-lg shadow-black/5">
       {#if config.route === 'profiles' && organizationName}
-        <div class="text-[15px] font-semibold !text-slate-900 transition-colors hover:!text-slate-700">
+        <div class="text-[15px] font-semibold text-slate-900! transition-colors hover:text-slate-700!">
           {organizationName}
         </div>
 
@@ -38,7 +38,7 @@
       {#each config?.secondaryNavLinks as item, index}
         <a
           href={item.link}
-          class="rounded-lg px-3 py-1.5 text-[14px] font-medium !text-slate-600 transition-all duration-200 hover:!bg-slate-50 hover:!text-slate-900"
+          class="rounded-lg px-3 py-1.5 text-[14px] font-medium text-slate-600! transition-all duration-200 hover:bg-slate-50! hover:text-slate-900!"
         >
           {item.title}
         </a>

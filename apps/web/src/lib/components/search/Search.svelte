@@ -93,7 +93,7 @@
 
             return html`<a href="${url}">
               <div
-                class="block cursor-pointer rounded-lg rounded-lg !border-b border-slate-100 px-4 py-3 transition-colors duration-150 last:border-0 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                class="block cursor-pointer rounded-lg rounded-lg border-b! border-slate-100 px-4 py-3 transition-colors duration-150 last:border-0 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <div class="flex items-center justify-between gap-3">
                   <div class="w-full min-w-0 ">
@@ -177,12 +177,12 @@
     class="m-0 p-0 backdrop:bg-gray-500/25 backdrop:backdrop-blur-sm dark:backdrop:bg-gray-900/50"
   >
     <el-dialog-backdrop
-      class="fixed inset-0 bg-gray-500/25 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
+      class="fixed inset-0 bg-gray-500/25 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-leave:duration-200 data-enter:ease-out data-leave:ease-in"
     ></el-dialog-backdrop>
 
     <div class="fixed inset-0 w-screen overflow-y-auto p-4 focus:outline focus:outline-0 sm:p-6 md:p-20">
       <el-dialog-panel
-        class="mx-auto block max-w-3xl transform overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black/5 transition-all data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in dark:bg-gray-900 dark:ring-white/10"
+        class="mx-auto block max-w-3xl transform overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black/5 transition-all data-closed:scale-95 data-closed:opacity-0 data-enter:duration-300 data-leave:duration-200 data-enter:ease-out data-leave:ease-in dark:bg-gray-900 dark:ring-white/10"
       >
         <!-- Search Box Header -->
         <div class="divide-y divide-gray-100 dark:divide-white/10">
@@ -302,6 +302,7 @@
 </el-dialog>
 
 <style lang="postcss">
+  @reference "../../../app.pcss";
   /* Override InstantSearch's default transparent background for input */
   :global(#search-dialog-profiles-compact .ais-SearchBox-input) {
     background-color: transparent;

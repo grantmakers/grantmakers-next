@@ -14,9 +14,9 @@
     </p>
     <div class="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
       <div class="relative lg:col-span-3">
-        <div class="absolute inset-0 rounded-lg bg-white max-lg:rounded-t-[2rem] lg:rounded-tl-[2rem] dark:bg-gray-800"></div>
+        <div class="absolute inset-0 rounded-lg bg-white max-lg:rounded-t-4xl lg:rounded-tl-4xl dark:bg-gray-800"></div>
         <div
-          class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)] lg:rounded-tl-[calc(2rem+1px)]"
+          class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)] lg:rounded-tl-[calc(2rem+1px)]"
         >
           <div class="p-10 pt-4">
             <h3 class="tracking normal text-sm/4 font-semibold tracking-normal text-grantmakers-orange dark:text-indigo-400">
@@ -36,13 +36,13 @@
           /> -->
         </div>
         <div
-          class="pointer-events-none absolute inset-0 rounded-lg shadow-sm outline outline-1 outline-black/5 max-lg:rounded-t-[2rem] lg:rounded-tl-[2rem] dark:outline-white/15"
+          class="pointer-events-none absolute inset-0 rounded-lg shadow-sm outline outline-1 outline-black/5 max-lg:rounded-t-4xl lg:rounded-tl-4xl dark:outline-white/15"
         ></div>
       </div>
       <div class="relative lg:col-span-3">
-        <div class="absolute inset-0 rounded-lg bg-white lg:rounded-tr-[2rem] dark:bg-gray-800"></div>
+        <div class="absolute inset-0 rounded-lg bg-white lg:rounded-tr-4xl dark:bg-gray-800"></div>
         <div
-          class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-tr-[calc(2rem+1px)]"
+          class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:rounded-tr-[calc(2rem+1px)]"
         >
           <div class="p-10 pt-4">
             <h3 class="tracking normal text-sm/4 font-semibold tracking-normal text-indigo-600 dark:text-indigo-400">Grants Search</h3>
@@ -59,13 +59,13 @@
           /> -->
         </div>
         <div
-          class="pointer-events-none absolute inset-0 rounded-lg shadow-sm outline outline-1 outline-black/5 lg:rounded-tr-[2rem] dark:outline-white/15"
+          class="pointer-events-none absolute inset-0 rounded-lg shadow-sm outline outline-1 outline-black/5 lg:rounded-tr-4xl dark:outline-white/15"
         ></div>
       </div>
       <div class="relative lg:col-span-2">
-        <div class="absolute inset-0 rounded-lg bg-white lg:rounded-bl-[2rem] dark:bg-gray-800"></div>
+        <div class="absolute inset-0 rounded-lg bg-white lg:rounded-bl-4xl dark:bg-gray-800"></div>
         <div
-          class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-bl-[calc(2rem+1px)]"
+          class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:rounded-bl-[calc(2rem+1px)]"
         >
           <div class="p-10 pt-4">
             <h3 class="tracking normal text-sm/4 font-semibold tracking-normal text-indigo-600 dark:text-indigo-400">Good</h3>
@@ -82,12 +82,12 @@
           /> -->
         </div>
         <div
-          class="pointer-events-none absolute inset-0 rounded-lg shadow-sm outline outline-1 outline-black/5 lg:rounded-bl-[2rem] dark:outline-white/15"
+          class="pointer-events-none absolute inset-0 rounded-lg shadow-sm outline outline-1 outline-black/5 lg:rounded-bl-4xl dark:outline-white/15"
         ></div>
       </div>
       <div class="relative lg:col-span-2">
         <div class="absolute inset-0 rounded-lg bg-white dark:bg-gray-800"></div>
-        <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)]">
+        <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)]">
           <div class="p-10 pt-4">
             <h3 class="tracking normal text-sm/4 font-semibold tracking-normal text-indigo-600 dark:text-indigo-400">Better</h3>
             <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 dark:text-white">Uncover local support</p>
@@ -107,9 +107,9 @@
         ></div>
       </div>
       <div class="relative lg:col-span-2">
-        <div class="absolute inset-0 rounded-lg bg-white max-lg:rounded-b-[2rem] lg:rounded-br-[2rem] dark:bg-gray-800"></div>
+        <div class="absolute inset-0 rounded-lg bg-white max-lg:rounded-b-4xl lg:rounded-br-4xl dark:bg-gray-800"></div>
         <div
-          class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-br-[calc(2rem+1px)]"
+          class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-br-[calc(2rem+1px)]"
         >
           <div class="p-10 pt-4">
             <h3 class="tracking normal text-sm/4 font-semibold tracking-normal text-indigo-600 dark:text-indigo-400">Best</h3>
@@ -118,7 +118,7 @@
               This is where the data shines. Find foundations that share your vision by seeing who funds your peers.
             </p>
           </div>
-          <img src={best} alt="" class="h-80 object-cover object-left-top" />
+          <img src={best} alt="" class="h-80 object-cover object-top-left" />
           <!-- <img
             src="https://tailwindcss.com/plus-assets/img/component-images/dark-bento-01-network.png"
             alt=""
@@ -126,7 +126,7 @@
           /> -->
         </div>
         <div
-          class="pointer-events-none absolute inset-0 rounded-lg shadow-sm outline outline-1 outline-black/5 max-lg:rounded-b-[2rem] lg:rounded-br-[2rem] dark:outline-white/15"
+          class="pointer-events-none absolute inset-0 rounded-lg shadow-sm outline outline-1 outline-black/5 max-lg:rounded-b-4xl lg:rounded-br-4xl dark:outline-white/15"
         ></div>
       </div>
     </div>

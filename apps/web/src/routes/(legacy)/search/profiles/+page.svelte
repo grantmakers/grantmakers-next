@@ -303,7 +303,7 @@
   </main>
 
   <!-- Filters Sidenav-->
-  <div class="row !m-0">
+  <div class="row m-0!">
     <div class="col s12">
       <ul id="refinements-slide-out" class="sidenav section-refinements left-align grey lighten-5">
         <li><div id="ais-widget-mobile-refinement-list--city"></div></li>

@@ -6,7 +6,7 @@
 <button
   command="show-modal"
   commandfor="modal-tips"
-  class="modal-trigger text-muted-max flex items-center !bg-transparent focus:!bg-transparent"
+  class="modal-trigger text-muted-max flex items-center bg-transparent! focus:bg-transparent!"
   ><i class="tiny material-icons material-icons-rounded grey lighten-2 icon-idea left flex items-center justify-center">wb_incandescent</i
   >Search types
 </button>
@@ -15,26 +15,26 @@
 <el-dialog>
   <dialog id="modal-tips" class="m-0 p-0 backdrop:bg-transparent dark:backdrop:bg-gray-900/50">
     <el-dialog-backdrop
-      class="fixed inset-0 bg-gray-500/25 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
+      class="fixed inset-0 bg-gray-500/25 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-leave:duration-200 data-enter:ease-out data-leave:ease-in"
     ></el-dialog-backdrop>
     <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
     <div tabindex="0" class="fixed inset-0 w-screen overflow-y-auto p-4 focus:outline focus:outline-0 sm:p-6 md:p-20">
       <el-dialog-panel
-        class="mx-auto block max-w-4xl transform overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black/5 transition-all data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in dark:bg-gray-900 dark:ring-white/10"
+        class="mx-auto block max-w-4xl transform overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black/5 transition-all data-closed:scale-95 data-closed:opacity-0 data-enter:duration-300 data-leave:duration-200 data-enter:ease-out data-leave:ease-in dark:bg-gray-900 dark:ring-white/10"
       >
         <!-- Header -->
         <div class="bg-slate-600 px-6 py-4 text-white">
           <div class="flex items-center">
-            <svg class="mr-3 h-6 w-6 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+            <svg class="mr-3 h-6 w-6 shrink-0" fill="currentColor" viewBox="0 0 24 24">
               <path
                 d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"
               />
             </svg>
-            <div class="flex-grow text-base font-semibold">How to search on Grantmakers.io like a pro</div>
+            <div class="grow text-base font-semibold">How to search on Grantmakers.io like a pro</div>
             <button
               command="close"
               commandfor="modal-tips"
-              class="ml-4 flex-shrink-0 text-white/80 hover:text-white focus:!bg-transparent"
+              class="ml-4 shrink-0 text-white/80 hover:text-white focus:bg-transparent!"
               aria-label="Close modal"
             >
               <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -23,6 +23,6 @@
 
 <a
   {href}
-  class="rounded-md border-b-2 px-3 py-2 text-sm font-medium focus:outline-none focus-visible:outline-none {linkClasses}"
+  class="rounded-md border-b-2 px-3 py-2 text-sm font-medium focus:outline-hidden focus-visible:outline-hidden {linkClasses}"
   aria-current={isActive ? 'page' : undefined}>{title}</a
 >

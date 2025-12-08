@@ -198,6 +198,7 @@
 </div>
 
 <style lang="postcss">
+  @reference "../../../app.pcss";
   iframe {
     @apply min-h-64 w-full;
   }

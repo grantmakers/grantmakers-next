@@ -33,7 +33,7 @@
     </p>
   </div>
 
-  <hr class="border-1" />
+  <hr class="border" />
 
   <div class="p-2 text-sm text-slate-700">
     <div class="flex flex-row items-center justify-between">

@@ -60,7 +60,7 @@
     <div class="hidden lg:block">
       <div class="absolute inset-x-0 top-0 -z-10 transform-gpu overflow-hidden blur-3xl" aria-hidden="true">
         <div
-          class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+          class="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 rotate-30 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-288.75"
           style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',"
         ></div>
       </div>
@@ -151,7 +151,7 @@
             <nav class="flex items-center space-x-4 transition-all duration-700">
               {#if config.route === 'profiles' && organizationName}
                 <button
-                  class="whitespace-nowrap rounded-md bg-white/10 px-3 py-2 text-sm font-medium text-white focus:outline-none focus-visible:outline-none"
+                  class="whitespace-nowrap rounded-md bg-white/10 px-3 py-2 text-sm font-medium text-white focus:outline-hidden focus-visible:outline-hidden"
                   aria-current="page"
                   title="Return to top"
                   onclick={backToTop}
@@ -181,13 +181,13 @@
     <el-dialog>
       <dialog id="mobile-menu" class="m-0 p-0 backdrop:bg-transparent lg:hidden">
         <el-dialog-backdrop
-          class="fixed inset-0 bg-black/25 duration-150 data-[closed]:opacity-0 data-[enter]:ease-out data-[leave]:ease-in"
+          class="fixed inset-0 bg-black/25 duration-150 data-closed:opacity-0 data-enter:ease-out data-leave:ease-in"
         ></el-dialog-backdrop>
 
         <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
         <div tabindex="0" class="fixed inset-0 focus:outline focus:outline-0">
           <el-dialog-panel
-            class="absolute inset-x-0 top-0 mx-auto w-full max-w-3xl origin-top transform p-2 transition duration-150 data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:ease-out data-[leave]:ease-in"
+            class="absolute inset-x-0 top-0 mx-auto w-full max-w-3xl origin-top transform p-2 transition duration-150 data-closed:scale-95 data-closed:opacity-0 data-enter:ease-out data-leave:ease-in"
           >
             <div
               class="divide-y divide-gray-200 rounded-lg bg-white shadow-lg outline outline-1 outline-black/5 dark:divide-white/10 dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10"
@@ -250,7 +250,7 @@
       aria-hidden="true"
     >
       <div
-        class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
+        class="relative left-[calc(50%+3rem)] aspect-1155/678 w-144.5 -translate-x-1/2 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%+36rem)] sm:w-288.75"
         style="clipPath: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"
       ></div>
     </div>

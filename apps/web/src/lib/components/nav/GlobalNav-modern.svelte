@@ -47,7 +47,7 @@
 
 <header
   class="{config?.absolute ? 'absolute inset-x-0 top-0 z-20' : 'relative'} {config?.transparentBg ? 'bg-transparent' : (
-    'bg-gradient-to-br from-[#e8ecfc] via-[#ede7f9] to-[#f3e7f9]'
+    'bg-linear-to-br from-[#e8ecfc] via-[#ede7f9] to-[#f3e7f9]'
   )} {config?.route === 'about' ? 'pb-24' : ''} lg:relative lg:isolate lg:overflow-hidden"
 >
   {#if !config?.transparentBg}
@@ -161,13 +161,13 @@
     <el-dialog>
       <dialog id="mobile-menu" class="m-0 p-0 backdrop:bg-transparent lg:hidden">
         <el-dialog-backdrop
-          class="fixed inset-0 bg-black/25 duration-150 data-[closed]:opacity-0 data-[enter]:ease-out data-[leave]:ease-in"
+          class="fixed inset-0 bg-black/25 duration-150 data-closed:opacity-0 data-enter:ease-out data-leave:ease-in"
         ></el-dialog-backdrop>
 
         <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
         <div tabindex="0" class="fixed inset-0 focus:outline focus:outline-0">
           <el-dialog-panel
-            class="absolute inset-x-0 top-0 mx-auto w-full max-w-3xl origin-top transform p-2 transition duration-150 data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:ease-out data-[leave]:ease-in"
+            class="absolute inset-x-0 top-0 mx-auto w-full max-w-3xl origin-top transform p-2 transition duration-150 data-closed:scale-95 data-closed:opacity-0 data-enter:ease-out data-leave:ease-in"
           >
             <div
               class="divide-y divide-gray-200 rounded-lg bg-white shadow-lg outline outline-1 outline-black/5 dark:divide-white/10 dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10"
