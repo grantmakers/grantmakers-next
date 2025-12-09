@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://next.grantmakers.io">
+  <a href="https://www.grantmakers.io">
     <img src="./apps/web/static/logo.svg" alt="Logo" width="80" height="80">
   </a>
 
@@ -10,7 +10,7 @@
     <br />
     utilize the incredible IRS electronic 990-PF dataset.
     <br />
-    <a href="https://next.grantmakers.io"><strong>next.grantmakers.io »</strong></a>
+    <a href="https://www.grantmakers.io"><strong>www.grantmakers.io »</strong></a>
     <br />
     <br />
     <a href="https://github.com/grantmakers/grantmakers-next/tree/main/apps/web">SvelteKit App</a>
@@ -62,7 +62,7 @@ The most used feature on Grantmakers.io is the ability to search through the mil
 <a href="https://www.grantmakers.io/search/grants/"><strong>Try it out »</strong></a>
 <br />
 
-In addition to the full dataset grants search, Algolia Instantsearch is embedded on all ~110k foundation profiles. Over the years, some foundations have even referred grantseekers to this embedded search in lieu of building their own grants database search experiences.
+In addition to the full dataset grants search, Algolia Instantsearch is embedded on ~100k foundation profiles. Over the years, some foundations have even referred grantseekers to this embedded search in lieu of building their own grants database search experiences.
 
 > Algolia provides the live search experience nonprofits have long deserved.
 
@@ -97,11 +97,7 @@ The Grantmakers.io project was an early adopter of JAMstack. The 1-2 hour Jekyll
 
 > In 2021, the IRS ceased publishing the data to its public AWS S3 bucket, publishing instead directly on IRS.gov.
 
-## Useful Links
+## Production Links
 
-Legacy links are open to everyone. The NEXT links may be temporarily behind a Cloudflare Access portal. These links will be opened up as ethical and legal tasks are completed.
-
-- [Grantmakers.io Legacy](https://www.grantmakers.io/)
-- [Grantmakers.io Legacy Profile](https://www.grantmakers.io/profiles/v0/562618866-bill-and-melinda-gates-foundation/)
-- [Grantmakers.io NEXT](https://next.grantmakers.io)
-- [Grantmakers.io NEXT Profile](https://next.grantmakers.io/profiles/v1/562618866-bill-and-melinda-gates-foundation/)
+- [Grantmakers.io NEXT](https://www.grantmakers.io/)
+- [Grantmakers.io NEXT Profile](https://www.grantmakers.io/profiles/v0/562618866-bill-and-melinda-gates-foundation/)
