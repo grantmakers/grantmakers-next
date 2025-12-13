@@ -1,4 +1,4 @@
-import { AUTH_PRIVATE_KEY, WAF_AUTH_VERIFY_KEY, MONGODB_URI, MONGODB_DB } from '$env/static/private';
+import { AUTH_PRIVATE_KEY, WAF_AUTH_VERIFY_KEY } from '$env/static/private';
 import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
 import type { R2Bucket } from '@cloudflare/workers-types';
 
@@ -35,6 +35,7 @@ export const fetchRemoteProfile = async (ein: string, url: string): Promise<Gran
 
 export const fetchLocalProfile = async (ein: string): Promise<GrantmakersExtractedDataObj> => {
   const { connectToDatabase, getCollection } = await import('@repo/shared/utils/db/mongo');
+  const { MONGODB_URI, MONGODB_DB } = await import('$env/static/private');
   const uri = MONGODB_URI;
   const dbName = MONGODB_DB;
   const collectionName = 'r2';
