@@ -4,8 +4,21 @@ import { WORKER_URL, PROFILES_API_ENDPOINT, AUTH_PRIVATE_KEY, WAF_AUTH_VERIFY_KE
 import { isValidEin } from '@repo/shared/utils/validators';
 import type { PageServerLoad } from './$types';
 import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
+import type { R2Bucket } from '@cloudflare/workers-types';
 
 const remoteUrl = WORKER_URL + PROFILES_API_ENDPOINT + '/';
+
+const fetchProfileFromR2Binding = async (bucket: R2Bucket, ein: string): Promise<GrantmakersExtractedDataObj | null> => {
+  const key = `profiles/${ein}.json`;
+  const object = await bucket.get(key);
+
+  if (!object) {
+    return null;
+  }
+
+  const profile = object.json<GrantmakersExtractedDataObj>();
+  return profile;
+};
 
 const fetchRemoteProfile = async (ein: string, url: string): Promise<GrantmakersExtractedDataObj> => {
   console.log(`Fetching profile for ${ein} from ${url + ein}`);
@@ -65,8 +78,8 @@ const fetchLocalProfile = async (ein: string): Promise<GrantmakersExtractedDataO
   }
 };
 
-/** Best of both worlds - fetch direct from the DB locally, fetch from scalable/low-cost R2 in production */
-const getProfile = async (ein: string): Promise<GrantmakersExtractedDataObj> => {
+const getProfile = async (ein: string, platform?: App.Platform): Promise<GrantmakersExtractedDataObj | null> => {
+  // In development, fetch profiles from local MongoDB instance
   if (dev) {
     try {
       const profile = await fetchLocalProfile(ein);
@@ -76,10 +89,16 @@ const getProfile = async (ein: string): Promise<GrantmakersExtractedDataObj> => 
       return await fetchRemoteProfile(ein, remoteUrl);
     }
   }
-  return await fetchRemoteProfile(ein, remoteUrl);
+
+  // In production, use Cloudflare R2 Binding to fetch profile
+  const bucket = platform?.env?.R2_V1_POC0;
+  if (!bucket) {
+    throw error(500, 'R2 binding not available');
+  }
+  return await fetchProfileFromR2Binding(bucket, ein);
 };
 
-export const load: PageServerLoad = async ({ params, url }) => {
+export const load: PageServerLoad = async ({ params, url, platform }) => {
   // This main dynamic route handles two scenarios:
   // 1. The full canonical url: [ein]-[slugified-org-name]
   // 2. The ein-only helper router: [ein]
@@ -95,12 +114,18 @@ export const load: PageServerLoad = async ({ params, url }) => {
 
   let profile;
   try {
-    profile = await getProfile(ein);
+    profile = await getProfile(ein, platform);
   } catch (err) {
     console.error('Error in load function:', err);
 
     throw error(500, {
       message: 'An unexpected error occurred while fetching the foundation profile.',
+    });
+  }
+
+  if (!profile) {
+    throw error(404, {
+      message: 'No profile found.',
     });
   }
 
