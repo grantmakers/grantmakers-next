@@ -1,7 +1,7 @@
 import { dev } from '$app/environment';
 import { error, redirect } from '@sveltejs/kit';
 import { WORKER_URL, PROFILES_API_ENDPOINT } from '$env/static/private';
-import { fetchRemoteProfile, fetchLocalProfile } from '$lib/server/profiles';
+import { fetchRemoteProfile, fetchLocalProfile, fetchProfileFromR2Binding } from '$lib/server/profiles';
 import { isValidEin } from '@repo/shared/utils/validators';
 import type { PageServerLoad } from './$types';
 import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
@@ -10,7 +10,7 @@ export const prerender = false;
 
 const remoteUrl = WORKER_URL + PROFILES_API_ENDPOINT + '/';
 
-const getProfile = async (ein: string): Promise<GrantmakersExtractedDataObj> => {
+const getProfile = async (ein: string, platform?: App.Platform): Promise<GrantmakersExtractedDataObj | null> => {
   // In development, fetch profiles from local MongoDB instance
   if (dev) {
     try {
@@ -21,8 +21,13 @@ const getProfile = async (ein: string): Promise<GrantmakersExtractedDataObj> => 
       return await fetchRemoteProfile(ein, remoteUrl);
     }
   }
-  // In production, fetch profiles using API
-  return await fetchRemoteProfile(ein, remoteUrl);
+
+  // In production, use Cloudflare R2 Binding to fetch profile
+  const bucket = platform?.env?.R2_V1_POC0;
+  if (!bucket) {
+    throw error(500, 'R2 binding not available');
+  }
+  return await fetchProfileFromR2Binding(bucket, ein);
 };
 
 export const load: PageServerLoad = async ({ params, url }) => {
@@ -47,6 +52,12 @@ export const load: PageServerLoad = async ({ params, url }) => {
 
     throw error(500, {
       message: 'An unexpected error occurred while fetching the foundation profile.',
+    });
+  }
+
+  if (!profile) {
+    throw error(404, {
+      message: 'No profile found.',
     });
   }
 
