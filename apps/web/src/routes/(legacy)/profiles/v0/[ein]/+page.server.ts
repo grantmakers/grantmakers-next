@@ -30,7 +30,7 @@ const getProfile = async (ein: string, platform?: App.Platform): Promise<Grantma
   return await fetchProfileFromR2Binding(bucket, ein);
 };
 
-export const load: PageServerLoad = async ({ params, url }) => {
+export const load: PageServerLoad = async ({ params, url, platform }) => {
   // This main dynamic route handles two scenarios:
   // 1. The full canonical url: [ein]-[slugified-org-name]
   // 2. The ein-only helper router: [ein]
@@ -46,7 +46,7 @@ export const load: PageServerLoad = async ({ params, url }) => {
 
   let profile;
   try {
-    profile = await getProfile(ein);
+    profile = await getProfile(ein, platform);
   } catch (err) {
     console.error('Error in load function:', err);
 
