@@ -3244,6 +3244,15 @@
     border-radius: 2px;
   }
 
+  #activities td,
+  #activities tr {
+    padding: 20px 5px;
+  }
+
+  #activities td:first-child {
+    text-align: right;
+  }
+
   @media only screen and (max-width: 992px) {
     table.responsive-table {
       width: 100%;

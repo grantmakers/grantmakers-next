@@ -15,10 +15,9 @@
 
   interface Props {
     profile: GrantmakersExtractedDataObj;
-    hasSurpriseMeAccess: boolean;
   }
 
-  let { profile, hasSurpriseMeAccess }: Props = $props();
+  let { profile }: Props = $props();
 
   let cssConfig = {
     mainBody: 'relative top-36 mx-0 mb-40 bg-slate-50 rounded-2xl shadow lg:top-0 lg:mx-6 lg:mb-4',
@@ -449,26 +448,57 @@
                 <div class="card-content card-panel-body">
                   <div class="row row-tight">
                     <div class="col s12">
-                      {#if profile.has_charitable_activities === true}
-                        {@const sorted_activities = [...profile.charitable_activities].sort(
-                          (a, b) => (b.expenses ?? 0) - (a.expenses ?? 0),
-                        )}
-
-                        <ul class="collection">
-                          {#each sorted_activities as activity}
-                            <li class="collection-item">
-                              <span class="new badge blue-grey" data-badge-caption="">
-                                ${activity.expenses?.toLocaleString(undefined, { maximumFractionDigits: 0 }) ?? 'N/A'}
-                              </span>
-                              <div class="collection-item-content">
-                                {activity.description}
-                              </div>
-                            </li>
-                          {/each}
-                        </ul>
-                      {:else}
-                        No Charitable Activities listed on Form 990 PF Part IX-A
-                      {/if}
+                      <div class="flow-root">
+                        <div class="-my-2 overflow-x-auto sm:-mx-6">
+                          <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:mb-4 lg:px-8">
+                            <div class="rounded-lg bg-white p-6">
+                              <table class="min-w-full table-fixed">
+                                <colgroup>
+                                  <col style="width: 120px" />
+                                  <col style="width: calc(100% - 120px)" />
+                                </colgroup>
+                                <thead class="border-b border-b-gray-300">
+                                  <tr>
+                                    <th scope="col" class="px-4! py-3.5 text-right! text-sm font-semibold text-gray-900">Expenses</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Description</th>
+                                  </tr>
+                                </thead>
+                                {#if profile.has_charitable_activities === true}
+                                  {@const sorted_activities = [...profile.charitable_activities].sort(
+                                    (a, b) => (b.expenses ?? 0) - (a.expenses ?? 0),
+                                  )}
+                                  <tbody class="divide-y divide-gray-200 bg-white">
+                                    {#each sorted_activities as activity}
+                                      <tr class="relative even:bg-gray-50">
+                                        <td class="px-4! py-4 text-right! lg:py-6" style="text-align: right !important;">
+                                          {typeof activity?.expenses === 'number' ? formatToCurrency(activity.expenses) : 'N/A'}
+                                        </td>
+                                        <td class="px-3 py-4 lg:py-6">{activity?.description ? activity.description : 'N/A'}</td>
+                                      </tr>
+                                    {/each}
+                                  </tbody>
+                                  <tfoot class="border-t border-t-gray-300">
+                                    <tr>
+                                      <td class="px-4! py-4 text-right! font-semibold lg:py-6" style="text-align: right !important;">
+                                        {formatToCurrency(sorted_activities.reduce((sum, activity) => sum + (activity.expenses ?? 0), 0))}
+                                      </td>
+                                      <td class="px-3 py-4 font-semibold lg:py-6"> Total Direct Charitable Activities </td>
+                                    </tr>
+                                  </tfoot>
+                                {:else}
+                                  <tbody class="divide-y divide-gray-200 bg-white">
+                                    <tr>
+                                      <td colspan="2" class="flex items-center gap-2 px-3 py-4 text-sm">
+                                        No activities available for this foundation
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                {/if}
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1262,7 +1292,7 @@
                       {#if filing.object_id_irs}
                         <li>
                           <a
-                            class="waves-effect waves-light btn grey lighten-3 grey-text text-darken-1"
+                            class="waves-effect waves-light btn white grey-text text-darken-1"
                             style="text-transform:none"
                             href="https://projects.propublica.org/nonprofits/organizations/{profile.ein}/{filing.object_id_irs}/full"
                             target="_blank"
@@ -1276,7 +1306,7 @@
                     {/each}
                     <li style="margin-top:12px">
                       <a
-                        class="waves-effect waves-light btn-flat blue-grey-text"
+                        class="waves-effect waves-light btn-flat blue-grey-text text-darken-1 font-normal"
                         style="text-transform:none"
                         href="https://projects.propublica.org/nonprofits/organizations/{profile.ein}"
                         target="_blank"
@@ -1288,7 +1318,7 @@
                     </li>
                   </ul>
                   {#if displayedFilingIsAmendment}
-                    <ul class="list-inline">
+                    <ul class="list-inline mt-3">
                       <li id="js-pdfs" data-ein={profile.ein} class="hide-on-med-and-down" style="visibility: hidden;">
                         <i class="material-icons">picture_as_pdf</i> <span class="show-on-medium-and-down text-muted">PDF</span>
                       </li>
