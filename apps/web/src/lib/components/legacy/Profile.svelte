@@ -853,7 +853,7 @@
                               {/if}
                             </table>
                           </div>
-                          {#if profile.grant_count > 50}
+                          {#if profile.grant_count > 20}
                             <div class="row">
                               <div class="col s12">
                                 <div class="card">
