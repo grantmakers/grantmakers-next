@@ -1,6 +1,14 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 
+/* Dark mode
+ * Tailwind uses a media query to enable dark mode by default
+ * This can be overridden manually via a custom variant
+ * To enable dark mode, add the "dark" class to the html element in app.html
+ * To disable, remove the "dark" class or use the explicit class "dark-mode-not-yet-enabled"
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* Safelist */
 @source inline('dark tabular-nums');
 
