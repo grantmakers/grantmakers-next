@@ -460,22 +460,22 @@
                       <div class="flow-root">
                         <div class="-my-2 overflow-x-auto sm:-mx-6">
                           <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:mb-4 lg:px-8">
-                            <div class="rounded-lg bg-white p-6">
-                              <table class="min-w-full table-fixed">
-                                <colgroup>
-                                  <col style="width: 120px" />
-                                  <col style="width: calc(100% - 120px)" />
-                                </colgroup>
-                                <thead class="border-b border-b-gray-300">
-                                  <tr>
-                                    <th scope="col" class="px-4! py-3.5 text-right! text-sm font-semibold text-gray-900">Expenses</th>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Description</th>
-                                  </tr>
-                                </thead>
-                                {#if profile.has_charitable_activities === true}
-                                  {@const sorted_activities = [...profile.charitable_activities].sort(
-                                    (a, b) => (b.expenses ?? 0) - (a.expenses ?? 0),
-                                  )}
+                            {#if profile.has_charitable_activities === true}
+                              {@const sorted_activities = [...profile.charitable_activities].sort(
+                                (a, b) => (b.expenses ?? 0) - (a.expenses ?? 0),
+                              )}
+                              <div class="rounded-lg bg-white p-6">
+                                <table class="min-w-full table-fixed">
+                                  <colgroup>
+                                    <col style="width: 120px" />
+                                    <col style="width: calc(100% - 120px)" />
+                                  </colgroup>
+                                  <thead class="border-b border-b-gray-300">
+                                    <tr>
+                                      <th scope="col" class="px-4! py-3.5 text-right! text-sm font-semibold text-gray-900">Expenses</th>
+                                      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Description</th>
+                                    </tr>
+                                  </thead>
                                   <tbody class="divide-y divide-gray-200 bg-white">
                                     {#each sorted_activities as activity}
                                       <tr class="relative even:bg-gray-50">
@@ -494,17 +494,11 @@
                                       <td class="px-3 py-4 font-semibold lg:py-6"> Total Direct Charitable Activities </td>
                                     </tr>
                                   </tfoot>
-                                {:else}
-                                  <tbody class="divide-y divide-gray-200 bg-white">
-                                    <tr>
-                                      <td colspan="2" class="flex items-center gap-2 px-3 py-4 text-sm">
-                                        No activities available for this foundation
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                {/if}
-                              </table>
-                            </div>
+                                </table>
+                              </div>
+                            {:else}
+                              <p class="!mt-6">No charitable activities listed</p>
+                            {/if}
                           </div>
                         </div>
                       </div>
@@ -753,7 +747,7 @@
                                               {:else}
                                                 <tr>
                                                   <td></td>
-                                                  <td>No Grants Listed</td>
+                                                  <td>No grants listed</td>
                                                   <td></td>
                                                   <td></td>
                                                   <td></td>
@@ -812,18 +806,18 @@
                                 Latest Filing: Tax Year {profile.filings[0].tax_year}
                               </div>
                             </div> -->
-                            <table id="grantsTable" class="striped bordered">
-                              <thead>
-                                <tr>
-                                  <th data-sort="int" class="right-align text-nowrap"><span>Amount</span></th>
-                                  <th data-sort="string"><span>Name</span></th>
-                                  <th data-sort="string"><span>Purpose</span></th>
-                                  <th data-sort="string"><span>Location</span></th>
-                                  <th class="text-center" data-sort="int"><span>Year</span></th>
-                                </tr>
-                              </thead>
-                              <tbody id="grantsTableBody">
-                                {#if staticGrants && staticGrants.length > 0}
+                            {#if staticGrants && staticGrants.length > 0}
+                              <table id="grantsTable" class="striped bordered">
+                                <thead>
+                                  <tr>
+                                    <th data-sort="int" class="right-align text-nowrap"><span>Amount</span></th>
+                                    <th data-sort="string"><span>Name</span></th>
+                                    <th data-sort="string"><span>Purpose</span></th>
+                                    <th data-sort="string"><span>Location</span></th>
+                                    <th class="text-center" data-sort="int"><span>Year</span></th>
+                                  </tr>
+                                </thead>
+                                <tbody id="grantsTableBody">
                                   {#each staticGrants as each}
                                     <tr>
                                       <td class="valign-top right-align" data-sort-value={each.amount}>{formatToCurrency(each.amount)}</td>
@@ -842,25 +836,19 @@
                                       <td class="valign-top left-align">{each.tax_year}</td>
                                     </tr>
                                   {/each}
-                                {:else}
-                                  <tr>
-                                    <td></td>
-                                    <td>No Grants Listed</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                  </tr>
+                                </tbody>
+                                {#if hasForeignGrantRecipients()}
+                                  <tfoot>
+                                    <tr>
+                                      <td colspan="5" class="small text-muted">(*) Denotes foreign country</td>
+                                      <!--TODO Add country list modal-->
+                                    </tr>
+                                  </tfoot>
                                 {/if}
-                              </tbody>
-                              {#if hasForeignGrantRecipients()}
-                                <tfoot>
-                                  <tr>
-                                    <td colspan="5" class="small text-muted">(*) Denotes foreign country</td>
-                                    <!--TODO Add country list modal-->
-                                  </tr>
-                                </tfoot>
-                              {/if}
-                            </table>
+                              </table>
+                            {:else}
+                              <p class="!mt-8 !font-light">No grants listed</p>
+                            {/if}
                           </div>
                           {#if profile.grant_count > 20}
                             <div class="row">
