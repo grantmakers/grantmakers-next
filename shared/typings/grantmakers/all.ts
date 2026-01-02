@@ -8,6 +8,7 @@ export interface GrantmakersExtractedDataObj {
   last_updated_grantmakers: string;
   filing_version?: string; // TASK Limit this in the function to just the major version
   filing_is_amendment: boolean;
+  filing_is_final_return: boolean;
   ein: string; // Note: See note above re: improving
   organization_name: string;
   organization_name_slug: string;
@@ -174,6 +175,7 @@ export interface Filing {
   object_id_irs: string;
   filing_version: string;
   filing_is_amendment: boolean;
+  filing_is_final_return: boolean;
   tax_period: number; // yyyymm
   tax_year: number; // yyyy
 }
