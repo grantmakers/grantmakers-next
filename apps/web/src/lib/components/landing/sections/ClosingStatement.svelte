@@ -4,7 +4,7 @@
   let isInView = $state(false);
 
   const textAnimationInitClasses = 'opacity-0 translate-y-4';
-  const textAnimationClasses = 'opacity-1 translate-y-0';
+  const textAnimationClasses = 'opacity-100 translate-y-0';
 </script>
 
 <div
