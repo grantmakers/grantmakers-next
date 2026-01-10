@@ -32,7 +32,7 @@
   };
 
   // Track which donor is currently hovered
-  let hoveredId: string | null = null;
+  let hoveredId = $state<string | null>(null);
 </script>
 
 <div class="overflow-hidden bg-white py-24 sm:py-32">
@@ -47,25 +47,27 @@
         >
           {#each sortedDonors as donor, i}
             {@const id = i.toString()}
+            {@const hasBorder = shouldShowBorder(donor)}
+            {@const isHovered = hoveredId === id}
             <div
               class="group relative flex items-center justify-center transition-all duration-300"
               style="width: {getScale(donor.total)}px; height: {getScale(donor.total)}px;"
-              on:mouseenter={() => (hoveredId = id)}
-              on:mouseleave={() => (hoveredId = null)}
+              onmouseenter={() => (hoveredId = id)}
+              onmouseleave={() => (hoveredId = null)}
               role="button"
               tabindex="0"
             >
               <!-- Donor Bubble -->
               <div
                 class="flex h-full w-full cursor-help items-center justify-center rounded-full shadow-sm transition-all"
-                class:border-2={shouldShowBorder(donor)}
-                class:border-white={shouldShowBorder(donor)}
-                class:z-20={hoveredId === id}
-                class:scale-110={hoveredId === id}
-                class:shadow-xl={hoveredId === id}
-                class:ring-4={hoveredId === id}
-                class:ring-slate-100={hoveredId === id}
-                class:z-10={hoveredId !== id}
+                class:border-2={hasBorder}
+                class:border-white={hasBorder}
+                class:z-20={isHovered}
+                class:scale-110={isHovered}
+                class:shadow-xl={isHovered}
+                class:ring-4={isHovered}
+                class:ring-slate-100={isHovered}
+                class:z-10={!isHovered}
                 style="background-color: {donor.recurring ? '#FFD700' : '#4682B4'};"
               >
                 <span class="text-[10px] font-bold tracking-tighter text-slate-900">
@@ -74,7 +76,7 @@
               </div>
 
               <!-- Tooltip -->
-              {#if hoveredId === id}
+              {#if isHovered}
                 <div
                   class="animate-in fade-in slide-in-from-bottom-2 pointer-events-none absolute bottom-full z-50 mb-3 w-48 rounded-lg bg-slate-900 p-3 text-xs text-white shadow-2xl"
                 >
