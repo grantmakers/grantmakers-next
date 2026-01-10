@@ -13,8 +13,8 @@
   const sortedDonors = donors.slice().sort((a, b) => b.joined.localeCompare(a.joined));
 
   const title = '100% Community Supported';
-  const description =
-    'Every dot represents someone who decided this project matters. Since 2020, individual supporters have funded 100% of operating costs. No grants. No sponsors. No platforms. Just people like you.';
+  const bubbleChartDescription = 'Every dot represents someone who decided this project matters.';
+  const description = 'Individual supporters fund 100% of operating costs. No sponsors. No grants. No platforms. Just people like you.';
   const bullets = ['Nearly a decade of open access', 'Annual budget $200', 'Fully independent', 'Average gift $12'];
 
   // Helper to calculate bubble size based on total donation
@@ -110,7 +110,9 @@
         <!-- Right side: Text Content -->
         <div class="w-full flex-auto">
           <h2 class="text-4xl font-semibold tracking-tight text-pretty text-gray-950 sm:text-5xl">{title}</h2>
-          <p class="mt-6 text-lg/8 text-pretty text-gray-600">{description}</p>
+          <p class="mt-6 text-lg/8 text-pretty text-gray-600">
+            <span class="hidden lg:inline">{bubbleChartDescription}&nbsp;</span>{description}
+          </p>
           <ul role="list" class="mt-10 grid grid-cols-1 gap-x-8 gap-y-3 text-base/7 text-gray-950 sm:grid-cols-2">
             {#each bullets as bullet}
               <li class="flex gap-x-3">
