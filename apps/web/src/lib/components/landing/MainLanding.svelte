@@ -14,6 +14,7 @@
   import BottomCTA from './sections/BottomCTA.svelte';
   import { articleLinks } from '@repo/shared/constants/trustedConstants';
   import ClosingStatement from '$lib/components/landing/sections/ClosingStatement.svelte';
+  import Supporters from '$lib/components/landing/sections/Supporters.svelte';
 </script>
 
 <div class="relative bg-white">
@@ -145,8 +146,10 @@
       </PillLink>
     </div>
 
+    <Supporters />
+
     <!-- CTA -->
-    <div class="relative my-32 px-6 lg:mt-56 lg:px-12">
+    <div class="relative my-24 px-6 lg:px-12">
       <BottomCTA />
     </div>
   </main>
