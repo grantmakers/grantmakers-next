@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { ComponentType, SvelteComponent } from 'svelte';
+  import type { Component } from 'svelte';
   import { getActiveSection, setActiveSection } from './ActiveLink.svelte';
   import { slugify } from '@repo/shared/functions/formatters/names';
 
   interface NavItem {
     title: string;
-    icon: ComponentType<SvelteComponent>;
+    icon: Component;
   }
 
   interface Props {

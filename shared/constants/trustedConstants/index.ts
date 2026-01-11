@@ -1,4 +1,4 @@
-import type { ComponentType, SvelteComponent } from 'svelte';
+import type { Component } from 'svelte';
 
 export interface EachFAQ {
   question: string;
@@ -46,7 +46,7 @@ export interface SecondaryNavItems {
   title: string;
   id: string;
   link: string;
-  icon?: ComponentType<SvelteComponent>;
+  icon?: Component;
 }
 
 /**

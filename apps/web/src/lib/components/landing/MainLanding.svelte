@@ -50,7 +50,7 @@
               <!-- <span class="font-extrabold text-grantmakers-orange-light">Foundation 990 data</span> should be available to every nonprofit, not
               just those with big budgets. Grantmakers.io is a grassroots project created for grassroots changemakers. -->
             </h2>
-            <div class="flex flex-col gap-4 p-6 text-base leading-7">
+            <div class="flex flex-col gap-4 text-base leading-7 md:p-6">
               <div class="mt-2 grow rounded-lg bg-white/5 p-4 text-gray-300 ring-1 ring-white/10 ring-inset">
                 <SearchBoxTrigger placeholderText="Foundation Quick Search..." />
               </div>
