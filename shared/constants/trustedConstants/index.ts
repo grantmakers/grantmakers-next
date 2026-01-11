@@ -11,7 +11,7 @@ export const datasetStats = {
   grants_searchable: 5_875_112,
 };
 
-export const allTimeSearchCount = 11_643_841;
+export const allTimeSearchCount = 11_763_641;
 
 export const meta = {
   defaults: {
