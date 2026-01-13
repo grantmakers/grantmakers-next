@@ -19,7 +19,7 @@ const legacySitemapRedirects: Redirects = {
   '/sitemap-main.xml': '/sitemaps/sitemap-main.xml',
 };
 
-const surpriseMeRoutes = ['/profiles/v0'];
+const surpriseMeRoutes = ['/profiles/v0', '/profiles/v1', '/profiles/random'];
 
 const donationRoutes = ['/donate', '/buy-chad-a-coffee'];
 
@@ -85,7 +85,7 @@ export async function handle({ event, resolve }) {
    */
 
   if (event.request.method === 'GET') {
-    if (path.startsWith('/profiles/')) {
+    if (path.startsWith('/profiles/') && !path.startsWith('/profiles/random')) {
       response.headers.set('Cache-Control', 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800');
     }
   }

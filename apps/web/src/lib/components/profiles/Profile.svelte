@@ -27,9 +27,10 @@
 
   interface Props {
     profile: GrantmakersExtractedDataObj;
+    hasSurpriseMeAccess?: boolean;
   }
 
-  let { profile }: Props = $props();
+  let { profile, hasSurpriseMeAccess = false }: Props = $props();
 
   let {
     organization_name,
@@ -322,12 +323,14 @@
 
                   Foundation search
                 </button>
-                <button
-                  type="button"
-                  class="inline-flex items-center gap-x-1.5 rounded-md bg-white px-4 py-3 text-sm font-semibold text-white shadow-sm hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  <SurpriseMe />
-                </button>
+                {#if hasSurpriseMeAccess}
+                  <button
+                    type="button"
+                    class="inline-flex items-center gap-x-1.5 rounded-md bg-white px-4 py-3 text-sm font-semibold text-white shadow-sm hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    <SurpriseMe />
+                  </button>
+                {/if}
                 <div class="flex flex-row items-center gap-2"></div>
               </div>
             </div>
