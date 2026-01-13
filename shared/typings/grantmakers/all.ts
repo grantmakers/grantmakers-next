@@ -1,3 +1,39 @@
+/**
+ * Local type definition to avoid external dependency on @google/genai
+ * Matches the structure of GenerateContentResponseUsageMetadata from Google GenAI SDK
+ */
+interface GenerateContentResponseUsageMetadata {
+  cacheTokensDetails?: Array<{ modality?: string; tokenCount?: number }>;
+  cachedContentTokenCount?: number;
+  candidatesTokenCount?: number;
+  candidatesTokensDetails?: Array<{ modality?: string; tokenCount?: number }>;
+  promptTokenCount?: number;
+  totalTokenCount?: number;
+  thinkingTokenCount?: number;
+}
+
+/** Common */
+/**
+ * Normalized Address
+ *
+ * Standardized address structure extracted from IRS filings across all schema versions.
+ * Handles both US and foreign addresses with a boolean discriminator.
+ *
+ * The `isForeign` flag distinguishes between domestic and foreign addresses:
+ * - US addresses: country = 'US', isForeign = false
+ * - Foreign addresses: country = ISO country code, isForeign = true
+ */
+export interface NormalizedAddress {
+  street: string | null;
+  street2: string | null;
+  city: string;
+  state: string;
+  zip: string | null;
+  country: string;
+  isForeign: boolean;
+}
+
+/** 990PF */
 export interface GrantmakersExtractedDataObj {
   _id?: string;
   aiSummary?: string;
@@ -80,17 +116,63 @@ export interface GrantmakersExtractedDataObj {
   _tags: 'exclude_from_legacy_search'[];
 }
 
-export interface SummaryGrant {
+export type GrantmakersExtractedDataObjR2 = Omit<
+  GrantmakersExtractedDataObj,
+  'phone' | 'organization_name_legacy_slug' | 'organization_names_all_years' | 'grants_last_three_years'
+>;
+
+export interface Organization990pf {
+  _id?: GrantmakersExtractedDataObj['_id'];
+  ein: GrantmakersExtractedDataObj['ein'];
+  organization_name: GrantmakersExtractedDataObj['organization_name'];
+  street: GrantmakersExtractedDataObj['street'];
+  city: GrantmakersExtractedDataObj['city'];
+  state: GrantmakersExtractedDataObj['state'];
+  zip: GrantmakersExtractedDataObj['zip'];
+  country: GrantmakersExtractedDataObj['country'];
+  is_foreign: GrantmakersExtractedDataObj['is_foreign'];
+  total_assets: GrantmakersExtractedDataObj['assets'];
+  total_giving: GrantmakersExtractedDataObj['total_giving'];
+  tax_year: GrantmakersExtractedDataObj['tax_year'];
+  filing_form_type: '990pf';
+  website: GrantmakersExtractedDataObj['website'];
+  grant_count: GrantmakersExtractedDataObj['grant_count'];
+  grant_count_all_years: GrantmakersExtractedDataObj['grant_count_all_years'];
+  grant_count_last_three_years: GrantmakersExtractedDataObj['grant_count_last_three_years'];
+  grants_to_preselected_only: GrantmakersExtractedDataObj['grants_to_preselected_only'];
+  charitable_activities: GrantmakersExtractedDataObj['charitable_activities'];
+  people: GrantmakersExtractedDataObj['people'];
+  rank: GrantmakersExtractedDataObj['rank'];
+  rank_total: GrantmakersExtractedDataObj['rank_total'];
+  rank_giving: GrantmakersExtractedDataObj['rank_giving'];
+}
+
+// These are the core fields extracted directly from the IRS PF filings
+interface GrantBase {
   name: string;
   city: string;
   state: string;
-  country?: string;
-  is_foreign?: boolean;
+  country: string;
   amount: number;
   purpose: string;
-  tax_year: number;
-  is_malformed_grant?: boolean;
 }
+
+// These include various helpers and enhancements
+export interface Grant extends GrantBase {
+  labeled_as_person: boolean;
+  is_foreign: boolean;
+  grants_reference_attachment?: boolean;
+  is_likely_inactive?: boolean;
+  tax_year: number;
+}
+
+// SummaryGrants are used in the Profiles json files
+// They only contain parts of the full Grant objects
+export type SummaryGrant = Omit<Grant, 'grants_reference_attachment' | 'is_likely_inactive' | 'country' | 'is_foreign'> & {
+  country?: string;
+  is_foreign?: boolean;
+  is_malformed_grant?: boolean;
+};
 
 export interface SummaryGrantsData extends GrantmakersExtractedDataObj {
   grants_median: SummaryGrant;
@@ -176,7 +258,7 @@ export interface Filing {
   filing_version: string;
   filing_is_amendment: boolean;
   filing_is_final_return: boolean;
-  tax_period: number; // yyyymm
+  tax_period: number; // yyyymm // Update to use tax_period_end
   tax_year: number; // yyyy
 }
 
@@ -197,6 +279,7 @@ export interface Pub78Doc extends Pub78Common {
   deductibility_code: string[]; // Overrides the type from Pub78Item
   irs_file_last_modified: string;
   accessed_on: string;
+  name_normalized: string;
 }
 
 export interface ReducedPub78 {
@@ -242,22 +325,7 @@ interface LegacyPersonNameWithAttributes {
 }
 
 /** Embedded Grants */
-export type GrantsArray = Grant[] | []; // This is normalized: Filings with only 1 grant will be normalized to be have one grant in an array
-
-// Embedded grants use the simplified key naming scheme
-// The grants-specific collections use the more descriptive naming scheme
-export interface Grant {
-  name: string;
-  city: string;
-  state: string;
-  country: string;
-  is_foreign: boolean;
-  amount: number;
-  purpose: string;
-  tax_year: number; // yyyy
-  labeled_as_person?: boolean;
-  grants_reference_attachment?: boolean;
-}
+export type GrantsArray = Grant[];
 
 export interface Facets {
   tax_year: string;
@@ -278,8 +346,9 @@ export interface GrantsFacets {
   country: {
     [key: string]: number;
   };
-  // TODO Upstream, convert null to boolean
-  is_foreign: Record<string, never>;
+  is_foreign: {
+    [key: string]: number;
+  };
   purpose: {
     [key: string]: number;
   };
@@ -337,31 +406,64 @@ export interface GrantInCollection {
   grantee_state_displayed: string;
   grantee_country: string;
   grantee_is_foreign: boolean;
+  grantee_labeled_as_person: boolean;
   grant_number: number;
   grants_to_preselected_only: true | null;
   foundation_is_likely_inactive: boolean;
 }
+
+export type ReducedGrantForLlm = Omit<
+  GrantInCollection,
+  | '_id'
+  | 'objectID'
+  | 'ein'
+  | 'organization_name'
+  | 'city'
+  | 'state'
+  | 'tax_year'
+  | 'last_updated_grantmakers'
+  | 'last_updated_irs'
+  | 'grantee_state_displayed'
+  | 'grantee_country'
+  | 'grantee_is_foreign'
+  | 'grantee_labeled_as_person'
+  | 'grant_number'
+  | 'grants_to_preselected_only'
+  | 'foundation_is_likely_inactive'
+> & {
+  foundation_name: GrantInCollection['organization_name'];
+};
 
 /**
  * Grant Enhancements
  */
 
 export enum EnhancementSource {
+  FORMATTED_VIA_NODEJS = 'nodejs_formatter',
+  FORMATTED_VIA_LLM = 'llm_formatter',
+  AS_IS = 'verbatim_no_change',
+  PRIVACY_SHIELD_INDIV = 'llm_is_individual',
   DIRECT_MATCH = 'direct_name_match',
   NORMALIZED_NAME_MATCH = 'normalized_name_match',
   LLM = 'llm', // Direct response from LLM
-  LLM_CONFIRMED = 'llm_confirmed', // Cross-check LLM response with Pub78, EOBMF, or legal_names collection
+  LLM_CONFIRMED = 'llm_confirmed', // Cross-check LLM response with grounding, Pub78, EOBMF, or legal_names collections
 }
 
 export enum LlmModel {
   GEMINI_2_5_PRO = 'gemini-2.5-pro',
   GEMINI_2_5_FLASH = 'gemini-2.5-flash',
+  GEMINI_2_5_FLASH_LITE = 'gemini-2.5-flash-lite',
+  GEMINI_2_0_FLASH_LITE = 'gemini-2.0-flash-lite-001',
 }
 
 export enum LlmPrompt {
   GEMINI_EIN_V4 = 'v4_gemini_ein',
   GEMINI_EIN_V5 = 'v5_gemini_ein',
   GEMINI_EIN_V6 = 'v6_gemini_ein',
+  GEMINI_MISSION_V9 = 'v9_gemini_mission',
+  GEMINI_MISSION_V10 = 'v10_gemini_mission',
+  GEMINI_MISSION_V11 = 'v11_gemini_mission',
+  GEMINI_MISSION_V12 = 'v12_gemini_mission',
 }
 
 export interface Enhancement<T = undefined> {
@@ -391,9 +493,20 @@ export interface UsageTokenDetails {
 }
 
 export interface LlmResponse {
-  thinking: string[];
+  thinking?: string[];
   json: LlmTextResponse | null;
   usage: UsageTokenDetails | null;
+}
+
+export type StructuredApiResponse<T> = {
+  data: T;
+  usage: UsageTokenDetails;
+};
+
+export interface LlmResponseBooleanOnly {
+  thinking: null;
+  json: LlmTextResponseBooleanOnly;
+  usage: null;
 }
 
 export interface LlmResponseMetadata extends LlmResponse {
@@ -401,12 +514,27 @@ export interface LlmResponseMetadata extends LlmResponse {
   prompt: LlmPrompt;
 }
 
+export interface PrivacyShieldIndividual {
+  is_individual: boolean;
+  is_public_achievement: boolean;
+}
+
+export interface GrantPurposeFormatter {
+  grant_purpose_formatted: string;
+}
+
 export interface LlmTextResponse {
   grantee_name: string;
   classification: 'individual' | 'nonprofit' | 'government' | 'educational' | 'foreign' | 'unknown';
   ein: string | null;
   confidence: 'high' | 'medium' | 'low';
-  legal_name: string | null;
+  //legal_name: string | null; // Prompt v8 and lower - the EIN-centered approach
+  grantee_name_suggested: string | null; // Prompt v9 and higher - the mission-centered approach
+  name_mismatch_explanation: string | null;
+}
+
+export interface LlmTextResponseBooleanOnly {
+  text: boolean;
 }
 
 export interface Enhancements {
@@ -415,12 +543,17 @@ export interface Enhancements {
   grantee_ein?: Enhancement<LlmResponse>;
   grantee_classification?: Enhancement<unknown>;
   grantee_mission?: Enhancement;
+  grantee_parent_mission?: Enhancement;
   grantee_keywords?: Enhancement;
   llm_response?: Enhancement<LlmResponseMetadata>;
+  privacy_shield?: Enhancement<PrivacyShieldIndividual>;
+  formatted_grant_purpose?: Enhancement<GrantPurposeFormatter>;
 }
 
 export interface EnhancedGrant extends GrantInCollection {
   enhancements?: Enhancements;
+  _grouped_doc_ids?: string[];
+  _group_count?: number;
 }
 
 export interface LlmCollection {
