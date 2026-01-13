@@ -3,7 +3,6 @@
   import People from './people/People.svelte';
   import ContentBoxWrapper from './ContentBoxWrapper.svelte';
   import ContentBoxHeader from './ContentBoxHeader.svelte';
-  import NavSearch from './topnav/Nav.svelte';
   import SurpriseMe from './topnav/SurpriseMe.svelte';
   import FoundationHeader from './header/FoundationHeader.svelte';
   import GrantsTable from './grants/GrantsTable.svelte';
@@ -15,14 +14,11 @@
   import BarFinancialTrends from './charts/BarFinancialTrends.svelte';
   import BarFinancialOverview from './charts/BarFinancialOverview.svelte';
   import GrantsSummaryBox from './grants/GrantsSummaryBox.svelte';
-  import LogoMark from '../shared/LogoMark.svelte';
   import CharitableActivities from './activities/CharitableActivities.svelte';
   import Rank from './ranking/Rank.svelte';
   import DataSource from './about/DataSourceSummaryBox.svelte';
   import Research from './research/Research.svelte';
   import About from './about/AboutSummaryBox.svelte';
-  import type { AutocompleteInstance } from '@repo/shared/typings/algolia/autocomplete';
-  import { browser } from '$app/environment';
   import CiModal from './community/CiModal.svelte';
 
   interface Props {
@@ -45,20 +41,6 @@
   } = profile;
 
   let formattedTaxPeriodEnd: string = $derived(formatTaxPeriodDate(filings[0].tax_period) || 'N/A');
-
-  let autocompleteInstance: AutocompleteInstance | null = $state(null);
-
-  function handleAutocompleteInit(instance: AutocompleteInstance) {
-    autocompleteInstance = instance;
-  }
-
-  let openSearch = () => {
-    if (browser) {
-      autocompleteInstance?.setIsOpen(true);
-    }
-  };
-
-  let sidebarWidthClass = 'w-64';
 </script>
 
 <Toaster />
@@ -308,9 +290,10 @@
               <div class="text-sm">Free profiles for over 150,000 US private foundations</div>
               <div class="mt-4 flex flex-col flex-wrap items-center gap-4 md:flex-row">
                 <button
+                  command="show-modal"
+                  commandfor="search-dialog-profiles-compact"
                   type="button"
                   class="bg-grantmakers-orange inline-flex items-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  onclick={openSearch}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4">
                     <path d="M8.25 10.875a2.625 2.625 0 1 1 5.25 0 2.625 2.625 0 0 1-5.25 0Z" />
