@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
-  import instantsearch, { type InstantSearch } from 'instantsearch.js';
+  import instantsearch, { type InstantSearch, type SearchClient, type TemplateParams } from 'instantsearch.js';
   import {
     searchBox,
     poweredBy,
@@ -9,6 +9,7 @@
     currentRefinements,
     stats,
     panel as panelWidget,
+    pagination,
   } from 'instantsearch.js/es/widgets';
   import { connectHits } from 'instantsearch.js/es/connectors';
   import type { HitsRenderState } from 'instantsearch.js/es/connectors/hits/connectHits';
@@ -22,6 +23,7 @@
     panelStyles,
     statsStyles,
     poweredByGrantsStyles,
+    paginationStyles,
   } from './config/searchStyles';
   import {
     PUBLIC_ALGOLIA_APP_ID_GRANTS,
@@ -39,6 +41,75 @@
 
   let algoliaInstance: AlgoliaInstance;
   const indexName = PUBLIC_ALGOLIA_INDEX_NAME_GRANTS;
+
+  // Facet configuration - defines the refinement lists to render
+  const FACETS = [
+    { attribute: 'grantee_state', label: 'State', container: '#state' },
+    { attribute: 'grantee_city', label: 'City', container: '#location' },
+    { attribute: 'grantee_name', label: 'Recipient', container: '#recipient' },
+    { attribute: 'grant_purpose', label: 'Purpose', container: '#purpose' },
+  ] as const;
+
+  /**
+   * Factory function to create a Panel-wrapped RefinementList widget
+   * Uses shared template and styling for all facets (DRY principle)
+   */
+  const createFacetWidget = (facet: (typeof FACETS)[number]) => {
+    const panelWrappedRefinementList = panelWidget({
+      templates: {
+        header(data, { html }) {
+          return html`<span class="font-medium text-gray-900">${facet.label}</span>`;
+        },
+      },
+      hidden(options) {
+        return options.results?.nbHits === 0;
+      },
+      cssClasses: panelStyles,
+    })(refinementList);
+
+    return panelWrappedRefinementList({
+      container: facet.container,
+      attribute: facet.attribute,
+      limit: 5,
+      showMore: true,
+      cssClasses: refinementListStyles,
+      templates: {
+        item(item: RefinementListItemData, { html }: TemplateParams) {
+          const { label, count, value, isRefined } = item;
+          const checkmarkClass = isRefined ? 'opacity-100' : 'opacity-0';
+          return html`
+            <div class="${refinementListStyles.item}">
+              <div class="flex h-5 shrink-0 items-center">
+                <div class="grid size-4 grid-cols-1">
+                  <input
+                    type="checkbox"
+                    value="${value}"
+                    class="${isRefined ? 'border-indigo-600 bg-indigo-600' : (
+                      ''
+                    )} col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white"
+                  />
+                  <svg
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white"
+                  >
+                    <path d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${checkmarkClass}" />
+                  </svg>
+                </div>
+              </div>
+              <label class="${refinementListStyles.label}">
+                <span>${label}</span>
+                <span class="${refinementListStyles.count}">${count}</span>
+              </label>
+            </div>
+          `;
+        },
+        showMoreText(data, { html }) {
+          return html`<span class="text-sm text-gray-700">${data.isShowingMore ? '[ - ] Show less' : '[ + ] Show more'}</span>`;
+        },
+      },
+    });
+  };
 
   const renderHits = (renderOptions: HitsRenderState) => {
     const { items } = renderOptions;
@@ -92,7 +163,7 @@
 
     algoliaInstance = instantsearch({
       indexName: indexName,
-      searchClient,
+      searchClient: searchClient as SearchClient,
       future: {
         preserveSharedStateOnUnmount: true,
       },
@@ -105,20 +176,12 @@
 
     const customHits = connectHits(renderHits);
 
-    const cityRefinementListWithPanel = panelWidget({
-      templates: {
-        header(data, { html }) {
-          return html`<span class="font-medium text-gray-900">City</span>`;
-        },
-      },
-      hidden(options) {
-        return options.results?.nbHits === 0;
-      },
-      cssClasses: panelStyles,
-    })(refinementList);
+    // Create all facet widgets using the factory
+    const facetWidgets = FACETS.map((facet) => createFacetWidget(facet));
 
     algoliaInstance.addWidgets([
       configure({
+        /* @ts-expect-error Assumes PlainSearchParameters only, which is a narrow subset of all available search parameters */
         hitsPerPage: 10,
         filters: 'ein:' + ein,
       }),
@@ -162,64 +225,8 @@
         },
       }),
 
-      cityRefinementListWithPanel({
-        container: '#location',
-        attribute: 'grantee_city',
-        cssClasses: refinementListStyles,
-        templates: {
-          item(item: RefinementListItemData, { html }: { html: any }) {
-            const { label, count, value, isRefined } = item;
-            return html`
-              <div class="${refinementListStyles.item}">
-                <div class="flex h-5 shrink-0 items-center">
-                  <div class="group grid size-4 grid-cols-1">
-                    <input
-                      type="checkbox"
-                      value="${value}"
-                      ${isRefined ? 'checked' : ''}
-                      class="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
-                    />
-                    <svg
-                      viewBox="0 0 14 14"
-                      fill="none"
-                      class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-[:disabled]:stroke-gray-950/25"
-                    >
-                      <path
-                        d="M3 8L6 11L11 3.5"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="opacity-0 group-has-[:checked]:opacity-100"
-                      />
-                      <path
-                        d="M3 7H11"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="opacity-0 group-has-[:indeterminate]:opacity-100"
-                      />
-                    </svg>
-                  </div>
-                </div>
-                <label class="${refinementListStyles.label}">
-                  <span>${label}</span>
-                  <span class="${refinementListStyles.count}">${count}</span>
-                </label>
-              </div>
-            `;
-          },
-        },
-        transformItems(items: RefinementListItemData[]) {
-          return items.map((item: RefinementListItemData) => {
-            if (item.isRefined) {
-              //console.log(item);
-            }
-            return {
-              ...item,
-            };
-          });
-        },
-      }),
+      // Add all facet widgets
+      ...facetWidgets,
 
       // refinementList({
       //   container: '#amount',
@@ -256,6 +263,12 @@
         theme: 'light',
         cssClasses: poweredByGrantsStyles,
       }),
+
+      pagination({
+        container: '#pagination',
+        cssClasses: paginationStyles,
+        scrollTo: '#grants-search-top',
+      }),
     ]);
 
     algoliaInstance.start();
@@ -268,7 +281,7 @@
 </script>
 
 <div class="">
-  <main class="max-w-8xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+  <main id="grants-search-top" class="max-w-8xl mx-auto scroll-mt-24 px-4 py-8 sm:px-6 lg:px-8">
     <!-- Search Box Section -->
     <div class="mb-8 flex gap-8">
       <div class="grow">
@@ -325,58 +338,65 @@
     </div>
 
     <div class="flex gap-8">
-      <!-- Results Section -->
       <div class="flex-1">
-        <div class=""></div>
         <div class="rounded-lg bg-white p-6 shadow">
+          <!-- InstantSearch Hits -->
           <div id="hits">
-            <div class="animate-pulse">
-              <table class="min-w-full table-auto divide-y divide-gray-300">
-                <thead>
-                  <tr>
-                    <th scope="col" class="px-3 py-3.5 text-center text-left text-sm font-semibold text-gray-900">Amount</th>
-                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Grantee</th>
-                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Purpose</th>
-                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Location</th>
-                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Year</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200 bg-white">
-                  {#each Array(10) as _, i}
-                    <tr class="relative align-top even:bg-gray-50">
-                      <td class="px-3 py-4 text-right text-sm">
-                        <div class="ml-auto h-4 w-20 rounded bg-gray-200"></div>
-                      </td>
-                      <td class="px-3 py-4 text-sm">
-                        <div class="mb-1 h-4 w-32 rounded bg-gray-200"></div>
-                      </td>
-                      <td class="px-3 py-4 text-sm">
-                        <div class="h-4 w-48 rounded bg-gray-200"></div>
-                      </td>
-                      <td class="px-3 py-4 text-sm">
-                        <div class="mb-1 h-4 w-24 rounded bg-gray-200"></div>
-                        <div class="h-3 w-12 rounded bg-gray-200"></div>
-                      </td>
-                      <td class="px-3 py-4 text-sm">
-                        <div class="h-4 w-12 rounded bg-gray-200"></div>
-                      </td>
-                    </tr>
-                  {/each}
-                </tbody>
-              </table>
-            </div>
+            {@render hitsSkeleton()}
           </div>
+          <!-- InstantSearch Pagination -->
+          <div id="pagination"></div>
         </div>
       </div>
 
       <aside class="w-64 flex-shrink-0">
         <div class="sticky top-8 rounded-lg bg-white p-6 shadow">
           <!-- InstantSearch RefinementLists -->
+          <div id="state"></div>
           <div id="location"></div>
-          <!-- <div id="amount">TODO</div> -->
-          <!-- Static Refinements -->
+          <div id="recipient"></div>
+          <div id="purpose"></div>
         </div>
       </aside>
     </div>
   </main>
 </div>
+
+{#snippet hitsSkeleton()}
+  <div class="animate-pulse">
+    <table class="min-w-full table-auto divide-y divide-gray-300">
+      <thead>
+        <tr>
+          <th scope="col" class="px-3 py-3.5 text-center text-left text-sm font-semibold text-gray-900">Amount</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Grantee</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Purpose</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Location</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Year</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200 bg-white">
+        <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
+        {#each { length: 10 } as _}
+          <tr class="relative align-top even:bg-gray-50">
+            <td class="px-3 py-4 text-right text-sm">
+              <div class="ml-auto h-4 w-20 rounded bg-gray-200"></div>
+            </td>
+            <td class="px-3 py-4 text-sm">
+              <div class="mb-1 h-4 w-32 rounded bg-gray-200"></div>
+            </td>
+            <td class="px-3 py-4 text-sm">
+              <div class="h-4 w-48 rounded bg-gray-200"></div>
+            </td>
+            <td class="px-3 py-4 text-sm">
+              <div class="mb-1 h-4 w-24 rounded bg-gray-200"></div>
+              <div class="h-3 w-12 rounded bg-gray-200"></div>
+            </td>
+            <td class="px-3 py-4 text-sm">
+              <div class="h-4 w-12 rounded bg-gray-200"></div>
+            </td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+  </div>
+{/snippet}

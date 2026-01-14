@@ -146,11 +146,13 @@ export const panelStyles = {
 export const refinementListStyles = {
   root: 'root',
   list: 'space-y-2',
-  item: 'flex gap-3 items-center',
-  label: 'flex w-full flex-row items-center justify-between text-sm text-gray-600 cursor-pointer',
-  checkbox: 'size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600',
+  item: 'flex w-full gap-3 items-center',
+  innerItem: 'w-full',
+  label: 'flex w-full grow flex-row items-center justify-between text-sm text-gray-600 cursor-pointer',
+  checkbox: 'size-4 rounded border-gray-300 text-indigo-600',
   count: 'ml-2 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600',
   selectedItem: 'font-semibold',
+  showMore: 'mt-4',
 } as const;
 
 /**
@@ -179,11 +181,12 @@ export const statsStyles = {
  * Pagination widget styles
  */
 export const paginationStyles = {
-  root: '',
-  list: '',
-  item: '',
-  link: '',
-  selectedItem: '',
+  root: 'flex justify-center mt-8',
+  list: 'flex gap-2',
+  item: 'hidden sm:block',
+  link: 'px-3 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50',
+  selectedItem: 'bg-indigo-600 text-white hover:bg-indigo-700 border-indigo-600',
+  disabledItem: 'opacity-50 cursor-not-allowed',
 } as const;
 
 /**
