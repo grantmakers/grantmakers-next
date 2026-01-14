@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
-  import instantsearch, { type InstantSearch, type SearchClient } from 'instantsearch.js';
+  import instantsearch, { type InstantSearch } from 'instantsearch.js';
   import {
     searchBox,
     poweredBy,
@@ -12,11 +12,8 @@
   } from 'instantsearch.js/es/widgets';
   import { connectHits } from 'instantsearch.js/es/connectors';
   import type { HitsRenderState } from 'instantsearch.js/es/connectors/hits/connectHits';
-  import type { FacetHits, SearchResponses } from '@algolia/client-search';
   import type { RefinementListItemData } from 'instantsearch.js/es/widgets/refinement-list/refinement-list';
-  import type { Facets, GrantsArray, GrantsFacets } from '@repo/shared/typings/grantmakers/all';
-  import { formatToCurrency } from '@repo/shared/functions/formatters/numbers';
-  import { remapGrants } from '@repo/shared/functions/formatters/grants';
+  import { formatToCurrency, formatNumber } from '@repo/shared/functions/formatters/numbers';
   import { sanitizeHtml } from '@repo/shared/utils/sanitize';
   import {
     searchBoxGrantsStyles,
@@ -34,78 +31,12 @@
 
   type AlgoliaInstance = InstantSearch;
 
-  interface CustomSearchRequest {
-    indexName: string;
-    params: {
-      highlightPostTag: string;
-      highlightPreTag: string;
-      hitsPerPage: number;
-      query: string;
-    };
-  }
-
-  type T = Record<string, unknown> | FacetHits;
-
   interface Props {
-    staticGrants: GrantsArray;
-    grantsFacets: Facets[];
     ein: string;
   }
 
-  let { staticGrants, grantsFacets, ein }: Props = $props();
+  let { ein }: Props = $props();
 
-  let remappedGrants = $derived(remapGrants(staticGrants));
-
-  let currentYearFacets = $derived(grantsFacets[0]);
-
-  const facets = [
-    {
-      facet: 'tax_year',
-      label: 'Tax Year',
-      show: false,
-    },
-    {
-      facet: 'grantee_city',
-      alt: 'city',
-      label: 'City',
-      show: true,
-    },
-    {
-      facet: 'grantee_state',
-      alt: 'state',
-      label: 'State',
-      show: true,
-    },
-    {
-      facet: 'grantee_name',
-      alt: 'name',
-      label: 'Recipient',
-      show: false,
-    },
-    {
-      facet: 'grant_purpose',
-      alt: 'purpose',
-      label: 'Purpose',
-      show: false,
-    },
-    {
-      facet: 'grant_amount',
-      alt: 'amount',
-      label: 'Amount',
-      show: true,
-    },
-  ];
-
-  function showFacet(facetName: string) {
-    return facets.some((facet) => facet.alt === facetName && facet.show);
-  }
-
-  function getFacetLabel(facetName: string) {
-    const target = facets.find((facet) => facetName === facet.alt);
-    return target?.label;
-  }
-
-  let searchClient: SearchClient;
   let algoliaInstance: AlgoliaInstance;
   const indexName = PUBLIC_ALGOLIA_INDEX_NAME_GRANTS;
 
@@ -154,36 +85,10 @@
 
   onMount(async () => {
     const { liteClient: algoliasearch } = await import('algoliasearch/lite');
-    // Define a base search client
-    // This will be extended to allow for static results on page load
-    const baseSearchClient = algoliasearch(PUBLIC_ALGOLIA_APP_ID_GRANTS, PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS);
 
-    if (!baseSearchClient) throw new Error('Failed to init Algolia search client');
+    const searchClient = algoliasearch(PUBLIC_ALGOLIA_APP_ID_GRANTS, PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS);
 
-    // Extend the base search client
-    // Prevents an initial round trip to Algolia
-    searchClient = {
-      ...baseSearchClient,
-      search(requests: CustomSearchRequest[]) {
-        if (requests.every(({ params }) => !params.query)) {
-          return Promise.resolve<SearchResponses<T>>({
-            // @ts-expect-error SearchResponse could be a facetHits response. There's no need to go into the underpinnings of the Algolia client to resolve
-            results: requests.map(() => ({
-              hits: remappedGrants?.slice(0, 10),
-              query: '',
-              params: '',
-              nbHits: staticGrants?.length,
-              processingTimeMS: 0,
-              facets: {
-                grantee_city: currentYearFacets.facets.city,
-              },
-            })),
-          });
-        }
-
-        return baseSearchClient.search(requests);
-      },
-    } as SearchClient;
+    if (!searchClient) throw new Error('Failed to init Algolia search client');
 
     algoliaInstance = instantsearch({
       indexName: indexName,
@@ -214,7 +119,6 @@
 
     algoliaInstance.addWidgets([
       configure({
-        /* @ts-expect-error Assumes PlainSearchParameters only, which is a narrow subset of all available search parameters*/
         hitsPerPage: 10,
         filters: 'ein:' + ein,
       }),
@@ -236,7 +140,7 @@
             let count = '';
 
             if (data.hasManyResults) {
-              count += `${data.nbHits} results`;
+              count += `${formatNumber(data.nbHits)} results`;
             } else if (data.hasOneResult) {
               count += `1 result`;
             } else {
@@ -355,7 +259,6 @@
     ]);
 
     algoliaInstance.start();
-    // onAlgoliaInit(algoliaInstance);
   });
   onDestroy(() => {
     if (algoliaInstance) {
@@ -426,8 +329,43 @@
       <div class="flex-1">
         <div class=""></div>
         <div class="rounded-lg bg-white p-6 shadow">
-          <!-- InstantSearch Hits -->
-          <div id="hits"></div>
+          <div id="hits">
+            <div class="animate-pulse">
+              <table class="min-w-full table-auto divide-y divide-gray-300">
+                <thead>
+                  <tr>
+                    <th scope="col" class="px-3 py-3.5 text-center text-left text-sm font-semibold text-gray-900">Amount</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Grantee</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Purpose</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Location</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Year</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                  {#each Array(10) as _, i}
+                    <tr class="relative align-top even:bg-gray-50">
+                      <td class="px-3 py-4 text-right text-sm">
+                        <div class="ml-auto h-4 w-20 rounded bg-gray-200"></div>
+                      </td>
+                      <td class="px-3 py-4 text-sm">
+                        <div class="mb-1 h-4 w-32 rounded bg-gray-200"></div>
+                      </td>
+                      <td class="px-3 py-4 text-sm">
+                        <div class="h-4 w-48 rounded bg-gray-200"></div>
+                      </td>
+                      <td class="px-3 py-4 text-sm">
+                        <div class="mb-1 h-4 w-24 rounded bg-gray-200"></div>
+                        <div class="h-3 w-12 rounded bg-gray-200"></div>
+                      </td>
+                      <td class="px-3 py-4 text-sm">
+                        <div class="h-4 w-12 rounded bg-gray-200"></div>
+                      </td>
+                    </tr>
+                  {/each}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -437,85 +375,8 @@
           <div id="location"></div>
           <!-- <div id="amount">TODO</div> -->
           <!-- Static Refinements -->
-          <!-- {#each Object.entries(currentYearFacets.facets) as [facetName, values]}
-            {#if showFacet(facetName)}
-              {@render panel(facetName, values)}
-            {/if}
-          {/each} -->
         </div>
       </aside>
     </div>
   </main>
 </div>
-
-{#snippet panel(facetName: string, facetValues: GrantsFacets)}
-  <div class="py-6">
-    <div class="flow-root">
-      <!-- Expand/collapse section button -->
-      <button
-        type="button"
-        class="mb-3 flex w-full items-center justify-between border-b border-gray-200 bg-white pb-1 text-sm text-gray-400 hover:text-gray-500"
-        aria-controls="filter-section-0"
-        aria-expanded="false"
-      >
-        <span class="font-medium text-gray-900">{getFacetLabel(facetName)}</span>
-        <span class="ml-6 flex items-center">
-          <!-- Expand icon, show/hide based on section open state. -->
-          <!-- <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-            <path
-              d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z"
-            />
-          </svg> -->
-          <!-- Collapse icon, show/hide based on section open state. -->
-          <!-- <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-            <path fill-rule="evenodd" d="M4 10a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H4.75A.75.75 0 0 1 4 10Z" clip-rule="evenodd" />
-          </svg> -->
-        </span>
-      </button>
-    </div>
-    <!-- Filter section, show/hide based on section state. -->
-    <div class="" id="filter-section-0">
-      <div class="space-y-2">
-        {#each Object.entries(facetValues).slice(0, 3) as [key, value]}
-          <div class="flex gap-3">
-            <div class="flex h-5 shrink-0 items-center">
-              <div class="group grid size-4 grid-cols-1">
-                <input
-                  id="filter-color-0"
-                  name="color[]"
-                  value="white"
-                  type="checkbox"
-                  class="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
-                />
-                <svg
-                  class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-[:disabled]:stroke-gray-950/25"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                >
-                  <path
-                    class="opacity-0 group-has-[:checked]:opacity-100"
-                    d="M3 8L6 11L11 3.5"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    class="opacity-0 group-has-[:indeterminate]:opacity-100"
-                    d="M3 7H11"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </div>
-            </div>
-            <label for="filter-color-0" class="flex w-full flex-row items-center justify-between text-sm text-gray-600">
-              <div>{key}</div>
-              <div>{value}</div>
-            </label>
-          </div>
-        {/each}
-      </div>
-    </div>
-  </div>
-{/snippet}

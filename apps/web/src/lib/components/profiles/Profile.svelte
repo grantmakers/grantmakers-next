@@ -160,7 +160,7 @@
                   <!-- Static Table - this will be replaced by an Algolia table eventually -->
                   <!-- Static Table - this will be replaced by an Algolia table eventually -->
                   {#if profile.grant_count > 20}
-                    <GrantsSearch staticGrants={grantsCurrentTop20} {grantsFacets} ein={profile.ein} />
+                    <GrantsSearch ein={profile.ein} />
                   {:else}
                     <GrantsTable
                       grantCount={profile.grant_count}
