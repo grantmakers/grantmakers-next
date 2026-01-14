@@ -10,12 +10,7 @@
   import { normalizeCurrencyToMillions } from '@repo/shared/functions/formatters/numbers';
   import { formatEin } from '@repo/shared/functions/formatters/ein';
   import { badgeStyles } from '$src/lib/utils/badgeStyles';
-  import {
-    searchBoxModalStyles,
-    hitsStyles,
-    poweredByStyles,
-    highlightStyles,
-  } from '$src/lib/components/search/config/instantsearch-styles';
+  import { searchBoxModalStyles, hitsStyles, poweredByStyles, highlightStyles } from '$src/lib/components/search/config/searchStyles';
 
   interface Props {
     profilesVersion: string;

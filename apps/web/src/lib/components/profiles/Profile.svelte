@@ -6,6 +6,7 @@
   import SurpriseMe from './topnav/SurpriseMe.svelte';
   import FoundationHeader from './header/FoundationHeader.svelte';
   import GrantsTable from './grants/GrantsTable.svelte';
+  import GrantsSearch from '$lib/components/search/GrantsSearch.svelte';
   import { formatTaxPeriodDate } from '@repo/shared/functions/formatters/dates';
   import logo from '$lib/assets/images/logo.svg';
   import irsLogo from '$lib/assets/images/irs-logo.webp';
@@ -157,13 +158,18 @@
                 </div>
                 <div>
                   <!-- Static Table - this will be replaced by an Algolia table eventually -->
-                  <GrantsTable
-                    grantCount={profile.grant_count}
-                    grantCountLastThreeYears={profile.grant_count_last_three_years}
-                    grantsCurrent={grantsCurrentTop20}
-                    grantsLastThreeYears={grantsLastThreeYearsTop20}
-                    grantsReferenceAttachment={profile.grants_reference_attachment}
-                  />
+                  <!-- Static Table - this will be replaced by an Algolia table eventually -->
+                  {#if profile.grant_count > 20}
+                    <GrantsSearch staticGrants={grantsCurrentTop20} {grantsFacets} ein={profile.ein} />
+                  {:else}
+                    <GrantsTable
+                      grantCount={profile.grant_count}
+                      grantCountLastThreeYears={profile.grant_count_last_three_years}
+                      grantsCurrent={grantsCurrentTop20}
+                      grantsLastThreeYears={grantsLastThreeYearsTop20}
+                      grantsReferenceAttachment={profile.grants_reference_attachment}
+                    />
+                  {/if}
                   {#if !grantsCurrentTop20}
                     <div class="p-6">Unable to find an available free source of grants data</div>
                   {/if}

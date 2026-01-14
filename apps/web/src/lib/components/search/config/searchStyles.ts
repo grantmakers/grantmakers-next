@@ -58,11 +58,12 @@ export const searchBoxFoundationStyles = {
  */
 export const searchBoxGrantsStyles = {
   root: '',
-  form: 'flex flex-row-reverse rounded-md bg-white outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600',
-  input: 'block min-w-0 grow px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6',
-  submit: 'bg-slate-100 p-4 pointer-events-none',
-  submitIcon: 'fill-gray-700',
-  reset: 'hidden',
+  form: 'relative flex flex-row-reverse rounded-md bg-white outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 dark:bg-gray-900 dark:outline-gray-700',
+  input: 'block min-w-0 grow h-12 pl-11 pr-4 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm dark:text-white dark:placeholder:text-gray-500',
+  submit: 'hidden',
+  submitIcon: 'hidden',
+  reset: 'absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400',
+  resetIcon: '',
   loadingIndicator: 'hidden',
 } as const;
 
@@ -126,17 +127,29 @@ export const poweredByGrantsStyles = {
 } as const;
 
 /**
+ * Panel widget styles
+ * Used to wrap widgets with headers/footers
+ */
+export const panelStyles = {
+  root: 'py-6',
+  noRefinementRoot: 'hidden',
+  header: 'flex w-full items-center justify-between bg-white pb-1 mb-3 text-sm border-b border-gray-200',
+  body: '',
+  footer: '',
+} as const;
+
+/**
  * RefinementList widget styles
  * Used for faceted search filters
  */
 export const refinementListStyles = {
-  root: '',
-  list: '',
-  item: 'flex items-center justify-between text-sm/6',
-  label: 'font-medium text-gray-900 hover:text-indigo-500',
-  checkbox: '',
-  labelText: '',
-  count: 'text-gray-500',
+  root: 'root',
+  list: 'pt-6 space-y-2 list',
+  item: 'flex gap-3 [&.ais-RefinementList-item>div]:w-full item', // Need to access a nested div element that does not have a cssClasses API option. Connector would be a better approach.
+  label: 'flex w-full flex-row items-center justify-between text-sm text-gray-600 label',
+  checkbox: 'checkbox',
+  labelText: 'block labelText',
+  count: 'text-gray-500 block count',
   showMore: 'bg-transparent border-0 p-0 cursor-pointer',
 } as const;
 
