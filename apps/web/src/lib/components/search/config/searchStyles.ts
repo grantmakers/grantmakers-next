@@ -58,8 +58,9 @@ export const searchBoxFoundationStyles = {
  */
 export const searchBoxGrantsStyles = {
   root: '',
-  form: 'relative flex flex-row-reverse rounded-md bg-white outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 dark:bg-gray-900 dark:outline-gray-700',
-  input: 'block min-w-0 grow h-12 pl-11 pr-4 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm dark:text-white dark:placeholder:text-gray-500',
+  form: 'relative flex flex-row-reverse rounded-md bg-white dark:bg-gray-900 border-none',
+  input:
+    'block min-w-0 grow h-12 pl-11 pr-4 text-sm md:text-lg text-gray-900 border-none placeholder:text-gray-400 dark:text-white dark:placeholder:text-gray-500 rounded ring-indigo-600',
   submit: 'hidden',
   submitIcon: 'hidden',
   reset: 'absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400',
@@ -131,9 +132,9 @@ export const poweredByGrantsStyles = {
  * Used to wrap widgets with headers/footers
  */
 export const panelStyles = {
-  root: 'py-6',
+  root: 'py-3.5',
   noRefinementRoot: 'hidden',
-  header: 'flex w-full items-center justify-between bg-white pb-1 mb-3 text-sm border-b border-gray-200',
+  header: 'mb-3 flex w-full items-center justify-between border-b border-gray-200 bg-white pb-1 text-sm font-medium text-gray-900',
   body: '',
   footer: '',
 } as const;
@@ -144,13 +145,12 @@ export const panelStyles = {
  */
 export const refinementListStyles = {
   root: 'root',
-  list: 'pt-6 space-y-2 list',
-  item: 'flex gap-3 [&.ais-RefinementList-item>div]:w-full item', // Need to access a nested div element that does not have a cssClasses API option. Connector would be a better approach.
-  label: 'flex w-full flex-row items-center justify-between text-sm text-gray-600 label',
-  checkbox: 'checkbox',
-  labelText: 'block labelText',
-  count: 'text-gray-500 block count',
-  showMore: 'bg-transparent border-0 p-0 cursor-pointer',
+  list: 'space-y-2',
+  item: 'flex gap-3 items-center',
+  label: 'flex w-full flex-row items-center justify-between text-sm text-gray-600 cursor-pointer',
+  checkbox: 'size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600',
+  count: 'ml-2 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600',
+  selectedItem: 'font-semibold',
 } as const;
 
 /**

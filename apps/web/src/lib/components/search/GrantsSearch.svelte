@@ -374,7 +374,7 @@
             viewBox="0 0 20 20"
             fill="currentColor"
             aria-hidden="true"
-            class="pointer-events-none absolute left-8 top-1/2 z-10 size-5 -translate-y-1/2 text-gray-400 dark:text-gray-500"
+            class="pointer-events-none absolute top-1/2 left-8 z-10 size-5 -translate-y-1/2 text-gray-400 dark:text-gray-500"
           >
             <path
               fill-rule="evenodd"
@@ -392,46 +392,39 @@
       </aside>
     </div>
 
-    <div class="mx-auto max-w-7xl px-4 sm:flex sm:items-center sm:px-6 lg:px-8">
-      <div id="stats" class="text-xs"></div>
+    <div class="mx-auto max-w-7xl rounded-lg bg-slate-100 px-4 py-3 sm:flex sm:items-center sm:px-6 md:mb-8 lg:px-8">
+      <div class="text-sm font-medium text-slate-500">
+        <div id="stats" class="text-xs"></div>
+      </div>
+
+      <div aria-hidden="true" class="hidden h-5 w-px bg-slate-300 sm:ml-4 sm:block"></div>
+
+      <div class="mt-2 sm:mt-0 sm:ml-4">
+        <div id="current-refinements">
+          <div class="-m-1 flex flex-wrap items-center">
+            <span
+              class="m-1 inline-flex items-center rounded-full border border-slate-200 bg-white py-1.5 pr-2 pl-3 text-sm font-medium text-slate-900"
+            >
+              <span class="sr-only">Refinements</span>
+              <button
+                type="button"
+                class="ml-1 inline-flex size-4 shrink-0 rounded-full p-1 text-slate-400 hover:bg-gray-200 hover:text-slate-500"
+              >
+                <span class="sr-only">Remove filter for Refinements</span>
+                <svg class="size-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+                  <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7" />
+                </svg>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="flex gap-8">
       <!-- Results Section -->
       <div class="flex-1">
-        <div class="">
-          <div class="bg-slate-100">
-            <div class="mx-auto max-w-7xl px-4 py-3 sm:flex sm:items-center sm:px-6 lg:px-8">
-              <div class="text-sm font-medium text-slate-500">
-                Filters
-                <span class="sr-only">, active</span>
-              </div>
-
-              <div aria-hidden="true" class="hidden h-5 w-px bg-slate-300 sm:ml-4 sm:block"></div>
-
-              <div class="mt-2 sm:ml-4 sm:mt-0">
-                <div id="current-refinements">
-                  <div class="-m-1 flex flex-wrap items-center">
-                    <span
-                      class="m-1 inline-flex items-center rounded-full border border-slate-200 bg-white py-1.5 pl-3 pr-2 text-sm font-medium text-slate-900"
-                    >
-                      <span class="sr-only">Refinements</span>
-                      <button
-                        type="button"
-                        class="ml-1 inline-flex size-4 shrink-0 rounded-full p-1 text-slate-400 hover:bg-gray-200 hover:text-slate-500"
-                      >
-                        <span class="sr-only">Remove filter for Refinements</span>
-                        <svg class="size-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
-                          <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7" />
-                        </svg>
-                      </button>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class=""></div>
         <div class="rounded-lg bg-white p-6 shadow">
           <!-- InstantSearch Hits -->
           <div id="hits"></div>
@@ -444,11 +437,11 @@
           <div id="location"></div>
           <!-- <div id="amount">TODO</div> -->
           <!-- Static Refinements -->
-          {#each Object.entries(currentYearFacets.facets) as [facetName, values]}
+          <!-- {#each Object.entries(currentYearFacets.facets) as [facetName, values]}
             {#if showFacet(facetName)}
               {@render panel(facetName, values)}
             {/if}
-          {/each}
+          {/each} -->
         </div>
       </aside>
     </div>

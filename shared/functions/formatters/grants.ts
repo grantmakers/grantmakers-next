@@ -15,6 +15,7 @@ type NormalizedGrant = Omit<
   | 'foundation_is_likely_inactive'
 >;
 export function remapGrants(grants: Grant[]): NormalizedGrant[] {
+  if (!grants) return [];
   return grants.map((grant) => ({
     tax_year: grant.tax_year,
     grantee_name: grant.name,
