@@ -149,9 +149,10 @@ export const refinementListStyles = {
   item: 'flex w-full gap-3 items-center',
   innerItem: 'w-full',
   label: 'flex w-full grow flex-row items-center justify-between text-sm text-gray-600 cursor-pointer',
-  checkbox: 'size-4 rounded border-gray-300 text-indigo-600',
+  labelText: 'ml-2',
+  checkbox: 'size-4 rounded border-gray-300 text-indigo-600 outline-hidden focus:outline-hidden ring-0 focus:ring-0',
   count: 'ml-2 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600',
-  selectedItem: 'font-semibold',
+  selectedItem: 'font-semibold text-indigo-600',
   showMore: 'mt-4',
 } as const;
 
@@ -163,8 +164,8 @@ export const currentRefinementsStyles = {
   root: '',
   list: '',
   item: 'm-1 inline-flex items-center rounded-full border border-slate-200 bg-white py-1.5 pl-3 pr-2 text-sm font-medium text-slate-900',
-  category: 'text-sm',
-  label: 'pr-2 uppercase text-xs text-slate-400',
+  category: 'text-sm flex items-center',
+  label: 'pr-2 uppercase text-xs text-slate-600',
   delete: 'size-6 text-slate-500 mr-2',
 } as const;
 

@@ -13,7 +13,6 @@
   } from 'instantsearch.js/es/widgets';
   import { connectHits } from 'instantsearch.js/es/connectors';
   import type { HitsRenderState } from 'instantsearch.js/es/connectors/hits/connectHits';
-  import type { RefinementListItemData } from 'instantsearch.js/es/widgets/refinement-list/refinement-list';
   import { formatToCurrency, formatNumber } from '@repo/shared/functions/formatters/numbers';
   import { sanitizeHtml } from '@repo/shared/utils/sanitize';
   import {
@@ -40,7 +39,6 @@
   let { ein }: Props = $props();
 
   let algoliaInstance: AlgoliaInstance;
-  const indexName = PUBLIC_ALGOLIA_INDEX_NAME_GRANTS;
 
   // Facet configuration - defines the refinement lists to render
   const FACETS = [
@@ -74,37 +72,7 @@
       showMore: true,
       cssClasses: refinementListStyles,
       templates: {
-        item(item: RefinementListItemData, { html }: TemplateParams) {
-          const { label, count, value, isRefined } = item;
-          const checkmarkClass = isRefined ? 'opacity-100' : 'opacity-0';
-          return html`
-            <div class="${refinementListStyles.item}">
-              <div class="flex h-5 shrink-0 items-center">
-                <div class="grid size-4 grid-cols-1">
-                  <input
-                    type="checkbox"
-                    value="${value}"
-                    class="${isRefined ? 'border-indigo-600 bg-indigo-600' : (
-                      ''
-                    )} col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white"
-                  />
-                  <svg
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white"
-                  >
-                    <path d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${checkmarkClass}" />
-                  </svg>
-                </div>
-              </div>
-              <label class="${refinementListStyles.label}">
-                <span>${label}</span>
-                <span class="${refinementListStyles.count}">${count}</span>
-              </label>
-            </div>
-          `;
-        },
-        showMoreText(data, { html }) {
+        showMoreText(data: { isShowingMore: boolean }, { html }: TemplateParams) {
           return html`<span class="text-sm text-gray-700">${data.isShowingMore ? '[ - ] Show less' : '[ + ] Show more'}</span>`;
         },
       },
@@ -133,7 +101,6 @@
         <tbody class="divide-y divide-gray-200 bg-white">
           ${items
             .map((grant) => {
-              // console.log(grant);
               return `
                 <tr class="relative even:bg-gray-50 align-top">
                   <td class="px-3 py-4 text-sm text-right tabular-nums">${formatToCurrency(grant.grant_amount)}</td>
@@ -157,18 +124,22 @@
   onMount(async () => {
     const { liteClient: algoliasearch } = await import('algoliasearch/lite');
 
+    if (!PUBLIC_ALGOLIA_APP_ID_GRANTS || !PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS || !PUBLIC_ALGOLIA_INDEX_NAME_GRANTS) {
+      throw new Error('Failed to init Algolia: Missing required credentials');
+    }
+
     const searchClient = algoliasearch(PUBLIC_ALGOLIA_APP_ID_GRANTS, PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS);
 
     if (!searchClient) throw new Error('Failed to init Algolia search client');
 
     algoliaInstance = instantsearch({
-      indexName: indexName,
+      indexName: PUBLIC_ALGOLIA_INDEX_NAME_GRANTS,
       searchClient: searchClient as SearchClient,
       future: {
         preserveSharedStateOnUnmount: true,
       },
       initialUiState: {
-        [indexName]: {
+        [PUBLIC_ALGOLIA_INDEX_NAME_GRANTS]: {
           query: '',
         },
       },
@@ -219,44 +190,19 @@
         container: '#current-refinements',
         cssClasses: currentRefinementsStyles,
         transformItems(items) {
-          return items.filter((item) => {
-            return item;
-          });
+          // Map attribute names to human-readable labels
+          const labelMap = Object.fromEntries(FACETS.map((f) => [f.attribute, f.label]));
+          return items.map((item) => ({
+            ...item,
+            label: labelMap[item.attribute] || item.label,
+          }));
         },
       }),
 
       // Add all facet widgets
       ...facetWidgets,
 
-      // refinementList({
-      //   container: '#amount',
-      //   attribute: 'grant_amount',
-      //   templates: {
-      //     item(item, { html }) {
-      //       const { label, count } = item;
-      //       return html`
-      //         <div class="flex items-center justify-between text-sm/6">
-      //           <div class="font-medium text-gray-900 hover:text-indigo-500">${label}</div>
-      //           <div class="text-gray-500">${count}</div>
-      //         </div>
-      //       `;
-      //     },
-      //   },
-      //   transformItems(items) {
-      //     return items.map((item) => {
-      //       if (item.isRefined) {
-      //         console.log(item);
-      //       }
-      //       return {
-      //         ...item,
-      //       };
-      //     });
-      //   },
-      // }),
-
-      customHits({
-        //container: document.querySelector('#hits'),
-      }),
+      customHits({}),
 
       poweredBy({
         container: '#powered-by',
@@ -308,32 +254,16 @@
       </aside>
     </div>
 
-    <div class="mx-auto max-w-7xl rounded-lg bg-slate-100 px-4 py-3 sm:flex sm:items-center sm:px-6 md:mb-8 lg:px-8">
+    <!-- Stats and Current Refinements Bar-->
+    <div class="mx-auto max-w-7xl rounded-lg bg-slate-100 px-4 py-3 outline-hidden sm:flex sm:items-center sm:px-6 md:mb-8 lg:px-8">
       <div class="text-sm font-medium text-slate-500">
-        <div id="stats" class="text-xs"></div>
+        <div id="stats" class="min-w-[100px] text-xs"></div>
       </div>
 
       <div aria-hidden="true" class="hidden h-5 w-px bg-slate-300 sm:ml-4 sm:block"></div>
 
-      <div class="mt-2 sm:mt-0 sm:ml-4">
-        <div id="current-refinements">
-          <div class="-m-1 flex flex-wrap items-center">
-            <span
-              class="m-1 inline-flex items-center rounded-full border border-slate-200 bg-white py-1.5 pr-2 pl-3 text-sm font-medium text-slate-900"
-            >
-              <span class="sr-only">Refinements</span>
-              <button
-                type="button"
-                class="ml-1 inline-flex size-4 shrink-0 rounded-full p-1 text-slate-400 hover:bg-gray-200 hover:text-slate-500"
-              >
-                <span class="sr-only">Remove filter for Refinements</span>
-                <svg class="size-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
-                  <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7" />
-                </svg>
-              </button>
-            </span>
-          </div>
-        </div>
+      <div class="mt-2 flex min-h-12 items-center sm:mt-0 sm:ml-4">
+        <div id="current-refinements"></div>
       </div>
     </div>
 

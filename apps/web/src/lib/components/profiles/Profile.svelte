@@ -147,39 +147,40 @@
         </div>
 
         <!-- Grants -->
-        <div class="-mx-3 grid grid-cols-1">
-          <ContentBoxWrapper id="grants">
-            <div class="mb-4 w-full max-w-full px-3">
-              <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white break-words">
-                <div class="mb-0 bg-slate-200 p-4">
-                  <ContentBoxHeader title={'Grants'}
-                    ><img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} /></ContentBoxHeader
-                  >
-                </div>
-                <div>
-                  <!-- Static Table - this will be replaced by an Algolia table eventually -->
-                  <!-- Static Table - this will be replaced by an Algolia table eventually -->
-                  {#if profile.grant_count > 20}
-                    <GrantsSearch ein={profile.ein} />
-                  {:else}
-                    <GrantsTable
-                      grantCount={profile.grant_count}
-                      grantCountLastThreeYears={profile.grant_count_last_three_years}
-                      grantsCurrent={grantsCurrentTop20}
-                      grantsLastThreeYears={grantsLastThreeYearsTop20}
-                      grantsReferenceAttachment={profile.grants_reference_attachment}
-                    />
-                  {/if}
-                  {#if !grantsCurrentTop20}
-                    <div class="p-6">Unable to find an available free source of grants data</div>
-                  {/if}
-                  {#if grantsCurrentTop20 && grantsCurrentTop20.length === 0}
-                    <div class="p-6">No grants made.</div>
-                  {/if}
+        <!-- Full Width Breakout - this section breaks out of the standard page container width to maximize space for the faceted search experience -->
+        <div class="relative left-1/2 w-screen -translate-x-1/2">
+          <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+            <ContentBoxWrapper id="grants">
+              <div class="mb-4 w-full">
+                <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white break-words">
+                  <div class="mb-0 bg-slate-200 p-4">
+                    <ContentBoxHeader title={'Grants'}
+                      ><img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} /></ContentBoxHeader
+                    >
+                  </div>
+                  <div>
+                    {#if profile.grant_count > 20}
+                      <GrantsSearch ein={profile.ein} />
+                    {:else}
+                      <GrantsTable
+                        grantCount={profile.grant_count}
+                        grantCountLastThreeYears={profile.grant_count_last_three_years}
+                        grantsCurrent={grantsCurrentTop20}
+                        grantsLastThreeYears={grantsLastThreeYearsTop20}
+                        grantsReferenceAttachment={profile.grants_reference_attachment}
+                      />
+                    {/if}
+                    {#if !grantsCurrentTop20}
+                      <div class="p-6">Unable to find an available free source of grants data</div>
+                    {/if}
+                    {#if grantsCurrentTop20 && grantsCurrentTop20.length === 0}
+                      <div class="p-6">No grants made.</div>
+                    {/if}
+                  </div>
                 </div>
               </div>
-            </div>
-          </ContentBoxWrapper>
+            </ContentBoxWrapper>
+          </div>
         </div>
 
         <!-- Charitable Activities -->
