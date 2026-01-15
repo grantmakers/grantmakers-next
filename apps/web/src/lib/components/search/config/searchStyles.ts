@@ -60,7 +60,7 @@ export const searchBoxGrantsStyles = {
   root: '',
   form: 'relative flex flex-row-reverse rounded-md bg-white dark:bg-gray-900 border-none',
   input:
-    'block min-w-0 grow h-12 pl-11 pr-4 text-sm md:text-lg text-gray-900 border-none placeholder:text-gray-400 dark:text-white dark:placeholder:text-gray-500 rounded ring-indigo-600',
+    'block min-w-0 grow h-12 pl-11 pr-4 text-md md:text-lg text-gray-900 border-none placeholder:text-gray-400 dark:text-white dark:placeholder:text-gray-500 rounded ring-indigo-600',
   submit: 'hidden',
   submitIcon: 'hidden',
   reset: 'absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400',
@@ -132,7 +132,7 @@ export const poweredByGrantsStyles = {
  * Used to wrap widgets with headers/footers
  */
 export const panelStyles = {
-  root: 'py-3.5',
+  root: '',
   noRefinementRoot: 'hidden',
   header: 'mb-3 flex w-full items-center justify-between border-b border-gray-200 bg-white pb-1 text-sm font-medium text-gray-900',
   body: '',
@@ -145,17 +145,29 @@ export const panelStyles = {
  */
 export const refinementListStyles = {
   root: 'root',
-  list: 'space-y-2',
-  item: 'flex w-full gap-3 items-center',
+  list: 'space-y-3',
+  item: 'flex w-full gap-3',
   innerItem: 'w-full',
-  label: 'flex w-full grow flex-row items-center justify-between text-sm text-gray-600 cursor-pointer',
-  labelText: 'ml-2',
-  checkbox: 'size-4 rounded border-gray-300 text-indigo-600 outline-hidden focus:outline-hidden ring-0 focus:ring-0',
-  count: 'ml-2 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600',
+  label: 'flex w-full grow flex-row items-start justify-between text-sm text-gray-600 cursor-pointer',
+  labelText: 'ml-2 text-left break-words leading-snug',
+  checkbox: 'mt-0.5 size-4 rounded border-gray-300 text-indigo-600 outline-hidden focus:outline-hidden ring-0 focus:ring-0',
+  count: 'ml-2 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 shrink-0',
   selectedItem: 'font-semibold text-indigo-600',
   showMore: 'mt-4',
 } as const;
 
+
+/**
+ * Compact RefinementList widget styles
+ * Used for facets with lengthy text (e.g. Recipient, Purpose) to improve readability and density.
+ */
+export const refinementListCompactStyles = {
+  ...refinementListStyles,
+  list: 'space-y-1.5',
+  label: 'flex w-full grow flex-row items-start justify-between text-xs text-gray-600 cursor-pointer',
+  labelText: 'ml-2 text-left break-words leading-tight',
+  checkbox: 'mt-0.5 size-3.5 rounded border-gray-300 text-indigo-600 outline-hidden focus:outline-hidden ring-0 focus:ring-0',
+} as const;
 /**
  * CurrentRefinements widget styles
  * Shows active filters with remove buttons
@@ -186,8 +198,8 @@ export const paginationStyles = {
   list: 'flex gap-2',
   item: 'hidden sm:block',
   link: 'px-3 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50',
-  selectedItem: 'bg-indigo-600 text-white hover:bg-indigo-700 border-indigo-600',
-  disabledItem: 'opacity-50 cursor-not-allowed',
+  selectedItem: 'pointer-events-none [&_a]:bg-indigo-600 [&_a]:text-white [&_a]:border-indigo-600 [&_a]:cursor-default',
+  disabledItem: 'pointer-events-none [&_a]:opacity-50 [&_a]:cursor-not-allowed',
 } as const;
 
 /**

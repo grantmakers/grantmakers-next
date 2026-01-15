@@ -19,6 +19,7 @@
     searchBoxGrantsStyles,
     currentRefinementsStyles,
     refinementListStyles,
+    refinementListCompactStyles,
     panelStyles,
     statsStyles,
     poweredByGrantsStyles,
@@ -38,23 +39,30 @@
 
   let { ein }: Props = $props();
 
+  interface FacetConfig {
+    attribute: string;
+    label: string;
+    container: string;
+    compact?: boolean;
+  }
+
   let mobileFiltersOpen = $state(false);
 
   let algoliaInstance: AlgoliaInstance;
 
   // Facet configuration - defines the refinement lists to render
-  const FACETS = [
+  const FACETS: readonly FacetConfig[] = [
     { attribute: 'grantee_state', label: 'State', container: '#state' },
     { attribute: 'grantee_city', label: 'City', container: '#location' },
-    { attribute: 'grantee_name', label: 'Recipient', container: '#recipient' },
-    { attribute: 'grant_purpose', label: 'Purpose', container: '#purpose' },
-  ] as const;
+    { attribute: 'grantee_name', label: 'Recipient', container: '#recipient', compact: true },
+    { attribute: 'grant_purpose', label: 'Purpose', container: '#purpose', compact: true },
+  ];
 
   /**
    * Factory function to create a Panel-wrapped RefinementList widget
    * Uses shared template and styling for all facets (DRY principle)
    */
-  const createFacetWidget = (facet: (typeof FACETS)[number]) => {
+  const createFacetWidget = (facet: FacetConfig) => {
     const panelWrappedRefinementList = panelWidget({
       templates: {
         header(data, { html }) {
@@ -72,10 +80,29 @@
       attribute: facet.attribute,
       limit: 5,
       showMore: true,
-      cssClasses: refinementListStyles,
+      cssClasses: facet.compact ? refinementListCompactStyles : refinementListStyles,
       templates: {
         showMoreText(data: { isShowingMore: boolean }, { html }: TemplateParams) {
-          return html`<span class="text-sm text-gray-700">${data.isShowingMore ? '[ - ] Show less' : '[ + ] Show more'}</span>`;
+          const text = data.isShowingMore ? 'Show less' : 'Show more';
+          const chevron =
+            data.isShowingMore ?
+              html`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4">
+                <path
+                  fill-rule="evenodd"
+                  d="M9.47 5.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 1 1-1.06 1.06L10 7.56 6.28 11.28a.75.75 0 1 1-1.06-1.06l4.25-4.25Z"
+                  clip-rule="evenodd"
+                />
+              </svg>`
+            : html`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4">
+                <path
+                  fill-rule="evenodd"
+                  d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                  clip-rule="evenodd"
+                />
+              </svg>`;
+          return html`<span class="flex items-center gap-1 text-sm font-medium text-indigo-600 hover:text-indigo-500"
+            >${text} ${chevron}</span
+          >`;
         },
       },
     });
@@ -157,7 +184,7 @@
     algoliaInstance.addWidgets([
       configure({
         /* @ts-expect-error Assumes PlainSearchParameters only, which is a narrow subset of all available search parameters */
-        hitsPerPage: 10,
+        hitsPerPage: 15,
         filters: 'ein:' + ein,
       }),
 
@@ -230,122 +257,125 @@
   });
 </script>
 
-<div class="">
-  <main id="grants-search-top" class="lg:max-w-8xl mx-auto max-w-full scroll-mt-24 px-4 py-8 sm:px-6 lg:px-8">
-    <div class="mb-4 flex flex-col items-center gap-4 lg:mb-8 lg:flex-row lg:justify-between lg:gap-0">
-      <div class="w-full flex-1">
-        <!-- Search Box Section -->
-        <div class="flex gap-8">
-          <div class="grow">
-            <div class="relative rounded-lg bg-white p-4 shadow dark:bg-gray-800">
-              <svg
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
-                class="pointer-events-none absolute top-1/2 left-8 z-10 size-5 -translate-y-1/2 text-gray-400 dark:text-gray-500"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              <div id="search"></div>
-            </div>
+<main id="grants-search-top" class="lg:max-w-8xl mx-auto max-w-full scroll-mt-24 px-4 py-8 sm:px-6 lg:px-8">
+  <div class="mb-4 flex flex-col items-center gap-4 lg:mb-8 lg:flex-row lg:items-stretch lg:justify-between lg:gap-8">
+    <div class="w-full flex-1">
+      <!-- Search Box Section -->
+      <div class="flex gap-8">
+        <div class="grow">
+          <div class="relative rounded-lg bg-white p-4 shadow dark:bg-gray-800">
+            <svg
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+              class="pointer-events-none absolute top-1/2 left-8 z-10 size-5 -translate-y-1/2 text-gray-400 dark:text-gray-500"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <div id="search"></div>
           </div>
-          <!-- Desktop Powered By moves here ideally, but for now we keep layout similar -->
         </div>
       </div>
+    </div>
 
+    <!-- Mobile Layout: Filters + Powered By (Row 2 on Mobile) -->
+    <!-- Desktop Layout: Filters hidden, Powered By joins Row 1 via lg:contents -->
+    <div class="flex w-full items-center justify-between gap-4 lg:contents lg:w-auto">
       <!-- Mobile Filter Toggle -->
       <button
         type="button"
-        class="inline-flex items-center gap-x-2 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 lg:hidden"
+        class="flex items-center gap-x-2 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow hover:bg-gray-50 lg:hidden"
         onclick={() => (mobileFiltersOpen = true)}
       >
-        <svg class="-ml-0.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="-ml-0.5 h-5 w-5 text-gray-400"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          aria-hidden="true"
+        >
           <path
-            fill-rule="evenodd"
-            d="M2.628 1.601C5.028 1.206 7.49 1 10 1s4.973.206 7.372.601a.75.75 0 01.628.74v2.288a2.25 2.25 0 01-.659 1.59l-4.682 4.683a2.25 2.25 0 00-.659 1.59v3.037c0 .684-.31 1.33-.844 1.757l-1.937 1.55A.75.75 0 018 18.25v-5.757a2.25 2.25 0 00-.659-1.591L2.659 6.22A2.25 2.25 0 012 4.629V2.34a.75.75 0 01.628-.74z"
-            clip-rule="evenodd"
+            d="M18.75 12.75h1.5a.75.75 0 0 0 0-1.5h-1.5a.75.75 0 0 0 0 1.5ZM12 6a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 12 6ZM12 18a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 12 18ZM3.75 6.75h1.5a.75.75 0 1 0 0-1.5h-1.5a.75.75 0 0 0 0 1.5ZM5.25 18.75h-1.5a.75.75 0 0 1 0-1.5h1.5a.75.75 0 0 1 0 1.5ZM3 12a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 3 12ZM9 3.75a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5ZM12.75 12a2.25 2.25 0 1 1 4.5 0 2.25 2.25 0 0 1-4.5 0ZM9 15.75a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5Z"
           />
         </svg>
+
         Filters
       </button>
-    </div>
 
-    <div class="mb-8 hidden lg:flex lg:gap-8">
-      <aside class="ml-auto w-64">
-        <div class="flex items-center rounded-lg bg-white p-6 shadow">
+      <!-- Powered By -->
+      <div class="flex items-center lg:w-64 lg:shrink-0">
+        <div class="flex h-full w-full items-center justify-center rounded-lg bg-white p-4 shadow dark:bg-gray-800">
           <div id="powered-by"></div>
         </div>
-      </aside>
-    </div>
-
-    <!-- Stats and Current Refinements Bar-->
-    <div class="mx-auto mb-6 max-w-7xl rounded-lg bg-slate-100 px-4 py-3 outline-hidden sm:flex sm:items-center sm:px-6 md:mb-8 lg:px-8">
-      <div class="text-sm font-medium text-slate-500">
-        <div id="stats" class="min-w-[100px] text-xs"></div>
-      </div>
-
-      <div aria-hidden="true" class="hidden h-5 w-px bg-slate-300 sm:ml-4 sm:block"></div>
-
-      <div class="mt-2 flex min-h-12 items-center sm:mt-0 sm:ml-4">
-        <div id="current-refinements"></div>
       </div>
     </div>
+  </div>
 
-    <div class="flex gap-8">
-      <div class="min-w-0 flex-1">
-        <div class="rounded-lg bg-white p-6 shadow">
-          <!-- InstantSearch Hits -->
-          <div id="hits">
-            {@render hitsSkeleton()}
-          </div>
-          <!-- InstantSearch Pagination -->
-          <div class="max-w-full overflow-x-auto">
-            <div id="pagination"></div>
-          </div>
+  <!-- Stats and Current Refinements Bar-->
+  <div class="mx-auto mb-6 max-w-7xl rounded-lg bg-slate-100 px-4 py-3 outline-hidden sm:flex sm:items-center sm:px-6 md:mb-8 lg:px-8">
+    <div class="text-sm font-medium text-slate-500">
+      <div id="stats" class="min-w-[100px] text-xs"></div>
+    </div>
+
+    <div aria-hidden="true" class="hidden h-5 w-px bg-slate-300 sm:ml-4 sm:block"></div>
+
+    <div class="mt-2 flex min-h-12 items-center sm:mt-0 sm:ml-4">
+      <div id="current-refinements"></div>
+    </div>
+  </div>
+
+  <div class="flex gap-8">
+    <div class="min-w-0 flex-1">
+      <div class="rounded-lg bg-white p-6 shadow">
+        <!-- InstantSearch Hits -->
+        <div id="hits">
+          {@render hitsSkeleton()}
         </div>
+        <!-- InstantSearch Pagination -->
+        <div id="pagination"></div>
       </div>
+    </div>
 
-      <!-- Backdrop -->
-      {#if mobileFiltersOpen}
-        <div class="fixed inset-0 z-40 bg-black/25 lg:hidden" aria-hidden="true" onclick={() => (mobileFiltersOpen = false)}></div>
-      {/if}
+    <!-- Backdrop -->
+    {#if mobileFiltersOpen}
+      <div class="fixed inset-0 z-40 bg-black/25 lg:hidden" aria-hidden="true" onclick={() => (mobileFiltersOpen = false)}></div>
+    {/if}
 
-      <aside
-        class="
+    <aside
+      class="
           fixed inset-y-0 right-0 z-50 w-80 transform overflow-y-auto bg-white p-6 shadow-xl transition-transform duration-300 ease-in-out lg:static lg:z-0 lg:w-64 lg:transform-none lg:overflow-visible lg:bg-transparent lg:p-0 lg:shadow-none
           {mobileFiltersOpen ? 'translate-x-0' : 'hidden lg:block lg:translate-x-0'}
         "
-      >
-        <!-- Mobile Header -->
-        <div class="mb-6 flex items-center justify-between lg:hidden">
-          <h2 class="text-lg font-medium text-gray-900">Filters</h2>
-          <button
-            type="button"
-            class="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-            onclick={() => (mobileFiltersOpen = false)}
-          >
-            <span class="sr-only">Close menu</span>
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
+    >
+      <!-- Mobile Header -->
+      <div class="mb-6 flex items-center justify-between lg:hidden">
+        <h2 class="text-lg font-medium text-gray-900">Filters</h2>
+        <button
+          type="button"
+          class="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          onclick={() => (mobileFiltersOpen = false)}
+        >
+          <span class="sr-only">Close menu</span>
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
 
-        <div class="sticky top-8 space-y-6 rounded-lg lg:bg-white lg:p-6 lg:shadow">
-          <!-- InstantSearch RefinementLists -->
-          <div id="state"></div>
-          <div id="location"></div>
-          <div id="recipient"></div>
-          <div id="purpose"></div>
-        </div>
-      </aside>
-    </div>
-  </main>
-</div>
+      <div class="sticky top-8 space-y-6 rounded-lg lg:bg-white lg:p-6 lg:shadow">
+        <!-- InstantSearch RefinementLists -->
+        <div id="state"></div>
+        <div id="location"></div>
+        <div id="recipient"></div>
+        <div id="purpose"></div>
+      </div>
+    </aside>
+  </div>
+</main>
 
 {#snippet hitsSkeleton()}
   <div class="max-w-full animate-pulse overflow-x-auto">

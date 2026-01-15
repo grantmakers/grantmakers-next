@@ -154,9 +154,11 @@
               <div class="mb-4 w-full">
                 <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white break-words">
                   <div class="mb-0 bg-slate-200 p-4">
-                    <ContentBoxHeader title={'Grants'}
-                      ><img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} /></ContentBoxHeader
-                    >
+                    <div class="flex items-center justify-between">
+                      <h6 class="mb-0 text-base font-semibold text-slate-700">Grants</h6>
+                      <span class="hidden text-sm text-slate-500 sm:block">As reported on IRS Form 990-PF</span>
+                      <img src={irsLogo} alt="IRS logo" class="max-h-6" height={24} width={48} />
+                    </div>
                   </div>
                   <div>
                     {#if profile.grant_count > 20}
