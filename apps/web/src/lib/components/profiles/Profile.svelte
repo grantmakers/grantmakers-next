@@ -3,6 +3,7 @@
   import People from './people/People.svelte';
   import ContentBoxWrapper from './ContentBoxWrapper.svelte';
   import ContentBoxHeader from './ContentBoxHeader.svelte';
+  import SectionAnchor from './SectionAnchor.svelte';
   import SurpriseMe from './topnav/SurpriseMe.svelte';
   import FoundationHeader from './header/FoundationHeader.svelte';
   import GrantsTable from './grants/GrantsTable.svelte';
@@ -131,7 +132,7 @@
                 class="shadow-soft-xl relative flex h-full w-full min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words"
               >
                 <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-                  <ContentBoxHeader title={'People'} />
+                  <ContentBoxHeader title={'People'} sectionId="people" />
                 </div>
                 <!-- @ts-expect-error Mixing Svelte versions causes issues with passed in props -->
                 <People {people} />
@@ -155,8 +156,8 @@
                 <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white break-words">
                   <div class="mb-0 bg-slate-200 p-4">
                     <div class="flex items-center justify-between">
-                      <h6 class="mb-0 text-base font-semibold text-slate-700">Grants</h6>
-                      <span class="hidden text-sm text-slate-500 sm:block">As reported on IRS Form 990-PF</span>
+                      <h6 class="mb-0"><SectionAnchor title="Grants" sectionId="grants" /></h6>
+                      <span class="hidden text-sm text-slate-500 sm:block">Grants reported on IRS Form 990-PF</span>
                       <img src={irsLogo} alt="IRS logo" class="max-h-6" height={24} width={48} />
                     </div>
                   </div>
@@ -223,7 +224,7 @@
             <div class="mb-4 h-full w-full max-w-full px-3">
               <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words">
                 <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-                  <ContentBoxHeader title={'Application Guidelines'}>
+                  <ContentBoxHeader title={'Application Guidelines'} sectionId="guidelines">
                     <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} />
                   </ContentBoxHeader>
                 </div>
@@ -255,7 +256,7 @@
             <div class="mb-4 w-full max-w-full px-3">
               <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words">
                 <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-                  <ContentBoxHeader title={'Financial Overview'} />
+                  <ContentBoxHeader title={'Financial Overview'} sectionId="financials" />
                 </div>
                 <div class="p-4">
                   <BarFinancialOverview year1={profile.financial_stats[0]} {formattedTaxPeriodEnd} />

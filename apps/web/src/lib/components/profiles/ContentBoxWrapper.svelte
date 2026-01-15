@@ -25,7 +25,7 @@
 
 <div
   {id}
-  class={'scroll-mt-5 ' + classes}
+  class={'scroll-mt-20 ' + classes}
   use:inview={options}
   {...isNavItem && {
     'use:inview': options,
