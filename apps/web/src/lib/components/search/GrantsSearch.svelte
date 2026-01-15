@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
-  import instantsearch, { type InstantSearch, type SearchClient, type TemplateParams } from 'instantsearch.js';
+  import { pushState, replaceState } from '$app/navigation';
+  import instantsearch, { type InstantSearch, type SearchClient, type TemplateParams, type UiState } from 'instantsearch.js';
+  import { history } from 'instantsearch.js/es/lib/routers';
   import {
     searchBox,
     poweredBy,
@@ -44,6 +46,18 @@
     label: string;
     container: string;
     compact?: boolean;
+  }
+
+  /**
+   * Route state for URL serialization - flat structure for clean URLs
+   */
+  interface RouteState {
+    query?: string;
+    grantee_state?: string;
+    grantee_city?: string;
+    grantee_name?: string;
+    grant_purpose?: string;
+    page?: number;
   }
 
   let mobileFiltersOpen = $state(false);
@@ -163,15 +177,69 @@
 
     if (!searchClient) throw new Error('Failed to init Algolia search client');
 
-    algoliaInstance = instantsearch({
+    algoliaInstance = instantsearch<UiState, RouteState>({
       indexName: PUBLIC_ALGOLIA_INDEX_NAME_GRANTS,
       searchClient: searchClient as SearchClient,
       future: {
         preserveSharedStateOnUnmount: true,
       },
-      initialUiState: {
-        [PUBLIC_ALGOLIA_INDEX_NAME_GRANTS]: {
-          query: '',
+      routing: {
+        router: history<RouteState>({
+          cleanUrlOnDispose: false,
+          writeDelay: 400,
+          push(url) {
+            /**
+             * Use SvelteKit's shallow routing (pushState/replaceState) to update the URL
+             * without triggering load functions, which would cause unnecessary __data.json re-fetches.
+             */
+            const nextUrl = new URL(url);
+            const currentBrowserUrl = new URL(window.location.href);
+            const currentUrlSearchParams = currentBrowserUrl.searchParams;
+            const hasSearch = currentUrlSearchParams.size > 0;
+
+            // First search: PUSH to history. Subsequent refinements: REPLACE.
+            if (!hasSearch) {
+              pushState(nextUrl, {});
+            } else {
+              replaceState(nextUrl, {});
+            }
+          },
+        }),
+        stateMapping: {
+          stateToRoute(uiState: UiState): RouteState {
+            /**
+             * Convert UI state to URL route params.
+             * Uses ~ as separator for multiple facet values (readable in URLs).
+             */
+            const indexUiState = uiState[PUBLIC_ALGOLIA_INDEX_NAME_GRANTS];
+            return {
+              query: indexUiState.query,
+              grantee_state: indexUiState.refinementList?.grantee_state?.join('~'),
+              grantee_city: indexUiState.refinementList?.grantee_city?.join('~'),
+              grantee_name: indexUiState.refinementList?.grantee_name?.join('~'),
+              grant_purpose: indexUiState.refinementList?.grant_purpose?.join('~'),
+              page: indexUiState.page,
+            };
+          },
+          routeToState(routeState: RouteState): UiState {
+            /**
+             * Convert URL route params back to UI state for widgets.
+             * Only include refinements that exist in the URL to satisfy type requirements.
+             */
+            const refinementList: { [attribute: string]: string[] } = {};
+            if (routeState.grantee_state) refinementList.grantee_state = routeState.grantee_state.split('~');
+            if (routeState.grantee_city) refinementList.grantee_city = routeState.grantee_city.split('~');
+            if (routeState.grantee_name) refinementList.grantee_name = routeState.grantee_name.split('~');
+            if (routeState.grant_purpose) refinementList.grant_purpose = routeState.grant_purpose.split('~');
+
+            return {
+              [PUBLIC_ALGOLIA_INDEX_NAME_GRANTS]: {
+                query: routeState.query,
+                refinementList,
+                page: routeState.page,
+              },
+            };
+          },
         },
       },
     });
