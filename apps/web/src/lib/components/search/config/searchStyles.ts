@@ -188,11 +188,11 @@ export const currentRefinementsStyles = {
  * "Clear all" button to remove all active filters
  */
 export const clearRefinementsStyles = {
-  root: 'flex justify-center',,
+  root: 'flex justify-center',
   button:
     'w-full rounded-md bg-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-300 transition-colors cursor-pointer text-center',
-  disabledButton: 'hidden'
-  } as const;
+  disabledButton: 'hidden',
+} as const;
 
 /**
  * Stats widget styles
