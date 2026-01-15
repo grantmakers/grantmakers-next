@@ -154,8 +154,8 @@ export const refinementListStyles = {
   count: 'ml-2 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 shrink-0',
   selectedItem: 'font-semibold text-indigo-600',
   showMore: 'mt-4',
+  disabledShowMore: '[&_span]:text-slate-400 pointer-events-none cursor-default',
 } as const;
-
 
 /**
  * Compact RefinementList widget styles
@@ -167,19 +167,32 @@ export const refinementListCompactStyles = {
   label: 'flex w-full grow flex-row items-start justify-between text-xs text-gray-600 cursor-pointer',
   labelText: 'ml-2 text-left break-words leading-tight',
   checkbox: 'mt-0.5 size-3.5 rounded border-gray-300 text-indigo-600 outline-hidden focus:outline-hidden ring-0 focus:ring-0',
+  disabledShowMore: '[&_span]:text-slate-400 pointer-events-none cursor-default',
 } as const;
 /**
  * CurrentRefinements widget styles
  * Shows active filters with remove buttons
  */
 export const currentRefinementsStyles = {
-  root: '',
-  list: '',
-  item: 'm-1 inline-flex items-center rounded-full border border-slate-200 bg-white py-1.5 pl-3 pr-2 text-sm font-medium text-slate-900',
+  root: 'contents',
+  noRefinementRoot: 'hidden',
+  list: 'contents',
+  item: 'inline-flex items-center rounded-full bg-slate-100 py-1.5 pl-3 pr-2 text-sm font-medium text-slate-700',
   category: 'text-sm flex items-center',
-  label: 'pr-2 uppercase text-xs text-slate-600',
-  delete: 'size-6 text-slate-500 mr-2',
+  label: 'pr-2 uppercase text-xs text-slate-500',
+  delete: 'ml-1 size-5 text-slate-400 hover:text-slate-600 cursor-pointer',
 } as const;
+
+/**
+ * ClearRefinements widget styles
+ * "Clear all" button to remove all active filters
+ */
+export const clearRefinementsStyles = {
+  root: 'flex justify-center',,
+  button:
+    'w-full rounded-md bg-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-300 transition-colors cursor-pointer text-center',
+  disabledButton: 'hidden'
+  } as const;
 
 /**
  * Stats widget styles

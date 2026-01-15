@@ -9,6 +9,7 @@
     configure,
     refinementList,
     currentRefinements,
+    clearRefinements,
     stats,
     panel as panelWidget,
     pagination,
@@ -20,6 +21,7 @@
   import {
     searchBoxGrantsStyles,
     currentRefinementsStyles,
+    clearRefinementsStyles,
     refinementListStyles,
     refinementListCompactStyles,
     panelStyles,
@@ -114,9 +116,7 @@
                   clip-rule="evenodd"
                 />
               </svg>`;
-          return html`<span class="flex items-center gap-1 text-sm font-medium text-indigo-600 hover:text-indigo-500"
-            >${text} ${chevron}</span
-          >`;
+          return html`<span class="flex items-center gap-1 text-sm text-slate-600 hover:text-slate-800">${text} ${chevron}</span>`;
         },
       },
     });
@@ -273,11 +273,11 @@
             let count = '';
 
             if (data.hasManyResults) {
-              count += `${formatNumber(data.nbHits)} results`;
+              count += `${formatNumber(data.nbHits)} Grants`;
             } else if (data.hasOneResult) {
-              count += `1 result`;
+              count += `1 Grant`;
             } else {
-              count += `no result`;
+              count += `no Grants`;
             }
 
             return html`<span>${count}</span>`;
@@ -295,6 +295,16 @@
             ...item,
             label: labelMap[item.attribute] || item.label,
           }));
+        },
+      }),
+
+      clearRefinements({
+        container: '#clear-refinements',
+        cssClasses: clearRefinementsStyles,
+        templates: {
+          resetLabel(_data, { html }) {
+            return html`Clear All Filters`;
+          },
         },
       }),
 
@@ -383,22 +393,18 @@
     </div>
   </div>
 
-  <!-- Stats and Current Refinements Bar-->
-  <div class="mx-auto mb-6 max-w-7xl rounded-lg bg-slate-100 px-4 py-3 outline-hidden sm:flex sm:items-center sm:px-6 md:mb-8 lg:px-8">
-    <div class="text-sm font-medium text-slate-500">
-      <div id="stats" class="min-w-[100px] text-xs"></div>
-    </div>
-
-    <div aria-hidden="true" class="hidden h-5 w-px bg-slate-300 sm:ml-4 sm:block"></div>
-
-    <div class="mt-2 flex min-h-12 items-center sm:mt-0 sm:ml-4">
-      <div id="current-refinements"></div>
-    </div>
-  </div>
-
   <div class="flex gap-8">
     <div class="min-w-0 flex-1">
+      <!-- Current Refinements - Only visible when filters are active -->
+      <div class="mb-4 flex flex-wrap items-center gap-2 empty:hidden has-[.hidden]:hidden">
+        <div id="current-refinements" class="contents"></div>
+      </div>
+
       <div class="rounded-lg bg-white p-6 shadow">
+        <!-- Stats - Above results table -->
+        <div class="mb-4 border-b border-gray-100 pb-3">
+          <div id="stats" class="text-sm font-medium text-slate-600"></div>
+        </div>
         <!-- InstantSearch Hits -->
         <div id="hits">
           {@render hitsSkeleton()}
@@ -440,6 +446,8 @@
         <div id="location"></div>
         <div id="recipient"></div>
         <div id="purpose"></div>
+        <!-- Clear All Refinements -->
+        <div id="clear-refinements" class="border-t border-gray-200 pt-4"></div>
       </div>
     </aside>
   </div>
