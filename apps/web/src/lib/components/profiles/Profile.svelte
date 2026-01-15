@@ -48,11 +48,11 @@
 <div class="relative flex min-h-screen">
   <!-- Main Wrapper -->
   <div
-    class="ease-soft-in-out relative mx-auto h-full max-w-3xl grow rounded-xl px-6 transition-all duration-200 sm:px-6 lg:max-w-7xl lg:px-8"
+    class="ease-soft-in-out relative mx-auto h-full w-full max-w-3xl min-w-0 grow rounded-xl px-6 transition-all duration-200 sm:px-6 lg:max-w-7xl lg:px-8"
     id="panel"
   >
     <!-- Main Content -->
-    <div class="mx-auto w-full px-6 py-6 text-slate-500">
+    <div class="mx-auto w-full py-6 text-slate-500">
       <!-- Profile header -->
       <ContentBoxWrapper id="overview">
         <div class="relative top-2 z-20 mx-auto w-full lg:w-12/12">
@@ -148,7 +148,7 @@
 
         <!-- Grants -->
         <!-- Full Width Breakout - this section breaks out of the standard page container width to maximize space for the faceted search experience -->
-        <div class="relative left-1/2 w-screen -translate-x-1/2">
+        <div class="relative -mx-6 w-auto sm:-mx-6 lg:left-1/2 lg:mx-0 lg:w-screen lg:-translate-x-1/2">
           <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
             <ContentBoxWrapper id="grants">
               <div class="mb-4 w-full">

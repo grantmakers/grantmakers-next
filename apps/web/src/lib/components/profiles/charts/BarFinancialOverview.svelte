@@ -129,7 +129,7 @@
       </dl>
     </div>
     <Divider />
-    <div class="w-full">
+    <div class="hidden w-full sm:block">
       <canvas bind:this={chartCanvas}></canvas>
     </div>
     <Divider />

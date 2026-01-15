@@ -165,7 +165,7 @@
     </div>
     <Divider />
     {#if orgFinancialStats && orgFinancialStats.length > 1}
-      <div class="min-h-60 w-full">
+      <div class="hidden min-h-60 w-full sm:block">
         <canvas bind:this={chartCanvas}></canvas>
       </div>
       <Divider />

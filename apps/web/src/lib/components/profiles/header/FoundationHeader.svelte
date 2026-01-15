@@ -69,9 +69,11 @@
     </div>
   </div>
 
-  {#if eobmfRecognizedExempt}
-    <Approachability {noUnsolicited} {isStaffed} {hasWebsite} {hasRecentGrants} {grantCount} />
-  {/if}
+  <div class="hidden md:flex">
+    {#if eobmfRecognizedExempt}
+      <Approachability {noUnsolicited} {isStaffed} {hasWebsite} {hasRecentGrants} {grantCount} />
+    {/if}
+  </div>
 
   <!-- Right side of box: metadata -->
   <div class="ml-4 grid w-full grid-cols-2 gap-x-2 gap-y-1 text-right md:mt-0 md:ml-2 md:w-auto md:gap-x-4">

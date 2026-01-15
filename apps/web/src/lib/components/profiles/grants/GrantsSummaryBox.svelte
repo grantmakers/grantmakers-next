@@ -141,9 +141,11 @@
       </a>
     {/if}
   {:else if grantsFacets && grantsFacets[0].grant_count > 0}
-    <h2 class="mt-4 mb-2 text-sm font-bold tracking-tighter text-slate-700">Grant Clusters</h2>
-    <div class="w-full">
-      <BarGrantsSnapshot rawData={grantsFacets[0].facets.amount} {grantCount} />
+    <div class="hidden sm:block">
+      <h2 class="mt-4 mb-2 text-sm font-bold tracking-tighter text-slate-700">Grant Clusters</h2>
+      <div class="w-full min-w-0">
+        <BarGrantsSnapshot rawData={grantsFacets[0].facets.amount} {grantCount} />
+      </div>
     </div>
   {:else}
     <div class="mt-4 opacity-30">
