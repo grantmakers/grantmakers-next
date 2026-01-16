@@ -334,7 +334,15 @@
   });
 </script>
 
-<main id="grants-search-top" class="lg:max-w-8xl mx-auto max-w-full scroll-mt-24 px-4 py-8 sm:px-6 lg:px-8">
+<!--
+  Using data-sveltekit-preload-data="tap" to prevent SvelteKit from preloading data on hover for the pagination and other links.
+  This limits unnecessary calls to Cloudflare/Algolia until we have a better handle on traffic patterns.
+-->
+<main
+  id="grants-search-top"
+  class="lg:max-w-8xl mx-auto max-w-full scroll-mt-24 px-4 py-8 sm:px-6 lg:px-8"
+  data-sveltekit-preload-data="tap"
+>
   <div class="mb-4 flex flex-col items-center gap-4 lg:mb-8 lg:flex-row lg:items-stretch lg:justify-between lg:gap-8">
     <div class="w-full flex-1">
       <!-- Search Box Section -->
