@@ -200,6 +200,7 @@
                   <CharitableActivities
                     activities={profile.charitable_activities}
                     areRestatement={profile.charitable_activities_are_restatement_of_grants}
+                    totalGiving={profile.total_giving}
                   />
                 {:else}
                   <div class="p-6">No Direct Charitable Activities listed on Form 990-PF Part IX-A</div>

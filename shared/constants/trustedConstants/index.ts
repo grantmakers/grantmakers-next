@@ -229,3 +229,9 @@ export const footerNavigation = {
     { name: 'Terms', href: '/about/terms/' },
   ],
 };
+
+export const irsLinks = {
+  instructions: {
+    charitableActivities: 'https://www.irs.gov/instructions/i990pf#en_US_2024_publink11290yd0e6257',
+  },
+};

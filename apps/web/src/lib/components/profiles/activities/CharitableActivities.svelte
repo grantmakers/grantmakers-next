@@ -1,21 +1,36 @@
 <script lang="ts">
   import Eyes from '$lib/components/shared/icons/Eyes.svelte';
   import { formatToCurrency } from '@repo/shared/functions/formatters/numbers';
+  import { irsLinks } from '@repo/shared/constants/trustedConstants';
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
   import ExclamationCircle from 'svelte-heros-v2/ExclamationCircle.svelte';
 
   interface Props {
     activities: GrantmakersExtractedDataObj['charitable_activities'] | [];
     areRestatement: boolean;
+    totalGiving?: number;
   }
 
-  let { activities, areRestatement }: Props = $props();
+  let { activities, areRestatement, totalGiving }: Props = $props();
+
+  let sortedActivities = $derived(activities ? [...activities].sort((a, b) => (b.expenses ?? 0) - (a.expenses ?? 0)) : []);
+  let totalActivitiesExpenses = $derived(activities ? activities.reduce((sum, a) => sum + (a.expenses ?? 0), 0) : 0);
+  let combinedTotal = $derived((totalGiving ?? 0) + totalActivitiesExpenses);
+  let grantsPct = $derived(combinedTotal > 0 ? Math.round(((totalGiving ?? 0) / combinedTotal) * 100) : 0);
+  let activitiesPct = $derived(combinedTotal > 0 ? Math.round((totalActivitiesExpenses / combinedTotal) * 100) : 0);
 </script>
 
 <div class="mx-auto max-w-7xl px-4 pt-8 pb-2 text-sm text-slate-700 sm:px-6 lg:px-8">
   <div class="flex gap-8">
     <div class="grow">
-      <div class="flex h-full items-center rounded-lg bg-white p-4 shadow-sm">Summary of Direct Charitable Activities</div>
+      <div class="flex h-full items-center rounded-lg bg-white p-4 shadow-sm">
+        <a
+          class="mr-2 flex items-center font-semibold hover:underline"
+          target="_blank"
+          rel="external noopener"
+          href={irsLinks?.instructions?.charitableActivities}>IRS Instructions:</a
+        > "List the foundation's four largest programs...that consist of the direct active conduct of charitable activities."
+      </div>
     </div>
     <!-- <aside class="hidden w-64 md:flex md:items-stretch">
       <div class="flex grow items-center justify-center rounded-lg bg-white p-2 shadow">
@@ -45,8 +60,8 @@
           </thead>
           <tbody class="divide-y divide-gray-200 bg-white">
             {#if activities}
-              {#each activities as activity}
-                <tr class="relative even:bg-gray-50">
+              {#each sortedActivities as activity}
+                <tr class="relative">
                   <td class="px-3 py-4 text-right text-sm"
                     >{typeof activity?.expenses === 'number' ? formatToCurrency(activity.expenses) : 'N/A'}</td
                   >
@@ -62,6 +77,23 @@
               </tr>
             {/if}
           </tbody>
+          {#if activities && activities.length > 0}
+            <tfoot class="border-t border-t-gray-300 bg-gray-50">
+              <tr>
+                <td class="px-3 py-4 text-right text-sm font-semibold">
+                  {formatToCurrency(totalActivitiesExpenses)}
+                </td>
+                <td class="flex justify-between px-3 py-4 text-sm font-semibold">
+                  <div class="Total Direct Charitable Activities">Total Direct Charitable Activities</div>
+                  {#if totalGiving && totalGiving > 0}
+                    <div class="font-normal text-slate-500">
+                      Philanthropy Breakdown: Charitable Activities ({activitiesPct}%) vs Current Grantmaking ({grantsPct}%)
+                    </div>
+                  {/if}
+                </td>
+              </tr>
+            </tfoot>
+          {/if}
         </table>
       </div>
     </div>
