@@ -32,7 +32,7 @@
 
 <div class="p-6">
   {#if website && !websiteIsEmail && !grantsToPreselectedOnly}
-    <div class="mb-4 border-b pb-4">
+    <div class="mb-4 border-b border-slate-200 pb-4">
       <Tip
         title="This foundation appears to have a website."
         message="Check the website for the latest grant application information."
