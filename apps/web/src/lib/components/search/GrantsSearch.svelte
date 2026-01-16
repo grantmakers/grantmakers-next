@@ -17,7 +17,6 @@
   import { connectHits } from 'instantsearch.js/es/connectors';
   import type { HitsRenderState } from 'instantsearch.js/es/connectors/hits/connectHits';
   import { formatToCurrency, formatNumber } from '@repo/shared/functions/formatters/numbers';
-  import { sanitizeHtml } from '@repo/shared/utils/sanitize';
   import {
     searchBoxGrantsStyles,
     currentRefinementsStyles,
@@ -151,7 +150,7 @@
                     <td class="px-3 py-4 text-sm">
                       <div class="text-md font-bold text-gray-900">${grant.grantee_name}</div>
                     </td>
-                    <td class="px-3 py-4 text-sm">${sanitizeHtml(grant.grant_purpose)}</td>
+                    <td class="px-3 py-4 text-sm">${grant.grant_purpose}</td>
                     <td class="px-3 py-4 text-sm">
                       ${grant.grantee_city},<br>
                       ${grant.grantee_is_foreign && grant.grantee_state === 'Foreign' ? grant.grantee_country : grant.grantee_state}
