@@ -66,7 +66,7 @@
 
   {#if applicationInfo}
     {#if grantsToPreselectedOnly}
-      <hr class="my-4 border-gray-200" />
+      <hr class="my-4 border-t border-slate-200" />
     {/if}
     <div class="mt-4 space-y-4">
       <div class="flex items-start gap-4">
@@ -126,7 +126,7 @@
       </div>
 
       {#if 'name' in applicationContact && applicationContact.name}
-        <hr class="my-4 border-gray-200" />
+        <hr class="my-4 border-t border-slate-200" />
 
         <div class="flex items-start gap-4">
           <div
