@@ -450,7 +450,7 @@
       <!-- Search Box Section -->
       <div class="flex gap-8">
         <div class="grow">
-          <div class="relative rounded-lg bg-slate-100 p-4 shadow dark:bg-gray-800">
+          <div class="relative rounded-lg bg-slate-100 p-2 shadow md:p-4 dark:bg-gray-800">
             <svg
               viewBox="0 0 20 20"
               fill="currentColor"
@@ -510,15 +510,15 @@
       </div>
 
       <div class="rounded-lg bg-white p-6 shadow">
-        <!-- Stats + Mini-filter bar - Above results table -->
+        <!-- Stats + Mini-filter bar -->
         <div class="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-gray-100 pb-3">
           <div id="stats" class="text-sm font-medium text-slate-600"></div>
 
           <!-- Separator -->
-          <span class="text-slate-300">|</span>
+          <span class="hidden text-slate-300 md:block">|</span>
 
           <!-- Mini-filter bar -->
-          <div class="flex flex-wrap items-center gap-1.5 text-sm text-slate-600">
+          <div class="hidden flex-wrap items-center gap-1.5 text-sm text-slate-600 md:flex">
             <span>Searching grants from</span>
             <el-select
               id="ein-filter-select"
