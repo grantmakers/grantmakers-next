@@ -1,4 +1,5 @@
 <script lang="ts">
+  import '@tailwindplus/elements';
   import { onDestroy, onMount } from 'svelte';
   import { pushState, replaceState } from '$app/navigation';
   import instantsearch, { type InstantSearch, type SearchClient, type TemplateParams, type UiState } from 'instantsearch.js';
@@ -6,7 +7,6 @@
   import {
     searchBox,
     poweredBy,
-    configure,
     refinementList,
     currentRefinements,
     clearRefinements,
@@ -14,8 +14,11 @@
     panel as panelWidget,
     pagination,
   } from 'instantsearch.js/es/widgets';
-  import { connectHits } from 'instantsearch.js/es/connectors';
+  import { connectHits, connectConfigure, connectMenu } from 'instantsearch.js/es/connectors';
+  import type { ConfigureRenderState } from 'instantsearch.js/es/connectors/configure/connectConfigure';
   import type { HitsRenderState } from 'instantsearch.js/es/connectors/hits/connectHits';
+  import type { MenuRenderState } from 'instantsearch.js/es/connectors/menu/connectMenu';
+  import type { PlainSearchParameters } from 'algoliasearch-helper';
   import { formatToCurrency, formatNumber } from '@repo/shared/functions/formatters/numbers';
   import {
     searchBoxGrantsStyles,
@@ -49,29 +52,41 @@
     compact?: boolean;
   }
 
-  /**
-   * Route state for URL serialization - flat structure for clean URLs
-   */
   interface RouteState {
     query?: string;
     grantee_state?: string;
     grantee_city?: string;
     grantee_name?: string;
     grant_purpose?: string;
+    tax_year?: string;
     page?: number;
   }
 
   let mobileFiltersOpen = $state(false);
+  let searchAllFoundations = $state(false);
+  let latestTaxYear = $state<string | null>(null);
+  let taxYearFilterMode = $state<'all' | 'current'>('all');
+  let refineTaxYear: ((value: string) => void) | null = null;
 
   let algoliaInstance: AlgoliaInstance;
+  let refineConfig: ConfigureRenderState['refine'] | null = null;
 
-  // Facet configuration - defines the refinement lists to render
   const FACETS: readonly FacetConfig[] = [
     { attribute: 'grantee_state', label: 'State', container: '#state' },
     { attribute: 'grantee_city', label: 'City', container: '#location' },
     { attribute: 'grantee_name', label: 'Recipient', container: '#recipient', compact: true },
     { attribute: 'grant_purpose', label: 'Purpose', container: '#purpose', compact: true },
   ];
+
+  const EIN_FILTER_OPTIONS = [
+    { value: 'current', label: 'this foundation' },
+    { value: 'all', label: 'all foundations' },
+  ] as const;
+
+  const TAX_YEAR_FILTER_OPTIONS = [
+    { value: 'all', label: 'all available' },
+    { value: 'current', label: 'the current' },
+  ] as const;
 
   /**
    * Factory function to create a Panel-wrapped RefinementList widget
@@ -217,6 +232,7 @@
               grantee_city: indexUiState.refinementList?.grantee_city?.join('~'),
               grantee_name: indexUiState.refinementList?.grantee_name?.join('~'),
               grant_purpose: indexUiState.refinementList?.grant_purpose?.join('~'),
+              tax_year: indexUiState.menu?.tax_year,
               page: indexUiState.page,
             };
           },
@@ -231,10 +247,15 @@
             if (routeState.grantee_name) refinementList.grantee_name = routeState.grantee_name.split('~');
             if (routeState.grant_purpose) refinementList.grant_purpose = routeState.grant_purpose.split('~');
 
+            // Only include menu if tax_year is set
+            const menu: { [attribute: string]: string } = {};
+            if (routeState.tax_year) menu.tax_year = routeState.tax_year;
+
             return {
               [PUBLIC_ALGOLIA_INDEX_NAME_GRANTS]: {
                 query: routeState.query,
                 refinementList,
+                menu,
                 page: routeState.page,
               },
             };
@@ -248,11 +269,46 @@
     // Create all facet widgets using the factory
     const facetWidgets = FACETS.map((facet) => createFacetWidget(facet));
 
+    // Custom configure widget using connector pattern for dynamic filter updates
+    const renderConfigure = (renderOptions: ConfigureRenderState) => {
+      // Store the refine function so we can call it from the toggle handler
+      refineConfig = renderOptions.refine;
+    };
+    const customConfigure = connectConfigure(renderConfigure);
+
+    // Custom Tax Year menu widget using connector pattern for single-select dropdown
+    const renderTaxYearMenu = (renderOptions: MenuRenderState) => {
+      const { items, refine } = renderOptions;
+
+      // Store refine function for use in event handlers
+      refineTaxYear = refine;
+
+      // Sort items by value descending and get the latest year
+      const sortedItems = [...items].sort((a, b) => b.value.localeCompare(a.value));
+      const latest = sortedItems[0];
+
+      // Update reactive state with the latest year
+      if (latest) {
+        latestTaxYear = latest.value;
+      }
+
+      // Determine current filter mode based on refinement state
+      const refinedItem = items.find((item) => item.isRefined);
+      if (refinedItem) {
+        // If a specific year is refined, we're in 'current' mode
+        taxYearFilterMode = 'current';
+      } else {
+        taxYearFilterMode = 'all';
+      }
+    };
+    const customTaxYearMenu = connectMenu(renderTaxYearMenu);
+
     algoliaInstance.addWidgets([
-      configure({
-        /* @ts-expect-error Assumes PlainSearchParameters only, which is a narrow subset of all available search parameters */
-        hitsPerPage: 15,
-        filters: 'ein:' + ein,
+      customConfigure({
+        searchParameters: {
+          hitsPerPage: 15,
+          filters: 'ein:' + ein,
+        } as PlainSearchParameters,
       }),
 
       searchBox({
@@ -289,7 +345,10 @@
         cssClasses: currentRefinementsStyles,
         transformItems(items) {
           // Map attribute names to human-readable labels
-          const labelMap = Object.fromEntries(FACETS.map((f) => [f.attribute, f.label]));
+          const labelMap: { [key: string]: string } = {
+            ...Object.fromEntries(FACETS.map((f) => [f.attribute, f.label])),
+            tax_year: 'Tax Year',
+          };
           return items.map((item) => ({
             ...item,
             label: labelMap[item.attribute] || item.label,
@@ -309,6 +368,12 @@
 
       // Add all facet widgets
       ...facetWidgets,
+
+      customTaxYearMenu({
+        attribute: 'tax_year',
+        sortBy: ['name:desc'],
+        limit: 20,
+      }),
 
       customHits({}),
 
@@ -332,6 +397,43 @@
       algoliaInstance.dispose();
     }
   });
+
+  /**
+   * Handle search scope selection change
+   * Uses connectConfigure's refine() to dynamically update search parameters without widget replacement
+   */
+  function handleEinFilterToggle(event: Event) {
+    const select = event.target as HTMLElement & { value: string };
+    searchAllFoundations = select.value === 'all';
+
+    if (!refineConfig) return;
+
+    // Use refine() to update the filter dynamically
+    refineConfig({
+      hitsPerPage: 15,
+      filters: searchAllFoundations ? '' : 'ein:' + ein,
+    } as PlainSearchParameters);
+  }
+
+  /**
+   * Handle tax year filter selection change
+   * Uses connectMenu's refine() to toggle between all years and current year
+   */
+  function handleTaxYearFilterChange(event: Event) {
+    const select = event.target as HTMLElement & { value: string };
+    const mode = select.value as 'all' | 'current';
+    taxYearFilterMode = mode;
+
+    if (!refineTaxYear) return;
+
+    if (mode === 'all') {
+      // Clear the refinement to show all years
+      refineTaxYear('');
+    } else if (mode === 'current' && latestTaxYear) {
+      // Refine to the latest (current) year
+      refineTaxYear(latestTaxYear);
+    }
+  }
 </script>
 
 <!--
@@ -343,6 +445,138 @@
   class="lg:max-w-8xl mx-auto max-w-full scroll-mt-24 px-4 py-8 sm:px-6 lg:px-8"
   data-sveltekit-preload-data="tap"
 >
+  <!-- Filters Row  -->
+  <div class="mb-4 ml-6 flex flex-wrap items-center gap-2">
+    <!-- EIN Filter Toggle -->
+    <div class="inline-flex items-center gap-2">
+      <span class="text-sm/6 text-slate-800 dark:text-white">Searching grants from</span>
+    </div>
+    <div class="inline-flex items-center gap-2">
+      <el-select
+        id="ein-filter-select"
+        name="ein-scope"
+        value={searchAllFoundations ? 'all' : 'this'}
+        class="block"
+        onchange={handleEinFilterToggle}
+      >
+        <button
+          type="button"
+          class="grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:focus-visible:outline-indigo-500"
+        >
+          <el-selectedcontent class="col-start-1 row-start-1 truncate pr-6">
+            {EIN_FILTER_OPTIONS.find((opt) => opt.value === taxYearFilterMode)?.label}
+            {taxYearFilterMode === 'current' && latestTaxYear ? ` (${latestTaxYear})` : ''}
+          </el-selectedcontent>
+          <svg
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            data-slot="icon"
+            aria-hidden="true"
+            class="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-500 sm:size-4 dark:text-gray-400"
+          >
+            <path
+              d="M5.22 10.22a.75.75 0 0 1 1.06 0L8 11.94l1.72-1.72a.75.75 0 1 1 1.06 1.06l-2.25 2.25a.75.75 0 0 1-1.06 0l-2.25-2.25a.75.75 0 0 1 0-1.06ZM10.78 5.78a.75.75 0 0 1-1.06 0L8 4.06 6.28 5.78a.75.75 0 0 1-1.06-1.06l2.25-2.25a.75.75 0 0 1 1.06 0l2.25 2.25a.75.75 0 0 1 0 1.06Z"
+              clip-rule="evenodd"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </button>
+
+        <el-options
+          anchor="bottom start"
+          popover
+          class="max-h-60 min-w-(--button-width) overflow-auto rounded-md bg-white py-1 text-base shadow-lg outline-1 outline-black/5 [--anchor-gap:--spacing(1)] data-leave:transition data-leave:transition-discrete data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10"
+        >
+          {#each EIN_FILTER_OPTIONS as option}
+            <el-option
+              value={option.value}
+              class="group/option relative block cursor-default py-2 pr-9 pl-3 text-gray-900 select-none focus:bg-indigo-600 focus:text-white focus:outline-hidden dark:text-white dark:focus:bg-indigo-500"
+            >
+              <span class="block font-normal whitespace-nowrap group-aria-selected/option:font-semibold">{option.label}</span>
+              <span
+                class="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600 group-not-aria-selected/option:hidden group-focus/option:text-white in-[el-selectedcontent]:hidden dark:text-indigo-400"
+              >
+                <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5">
+                  <path
+                    d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                    clip-rule="evenodd"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </span>
+            </el-option>
+          {/each}
+        </el-options>
+      </el-select>
+    </div>
+
+    <div class="inline-flex items-center gap-2"><span class="text-sm/6 text-slate-800 dark:text-white">across</span></div>
+
+    <!-- Tax Years Selector -->
+    <div class="inline-flex items-center gap-2">
+      <el-select
+        id="tax-year-select"
+        name="tax-year-scope"
+        value={taxYearFilterMode}
+        class="block"
+        onchange={handleTaxYearFilterChange}
+        disabled={!latestTaxYear}
+      >
+        <button
+          type="button"
+          class="grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600 disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:focus-visible:outline-indigo-500"
+        >
+          <el-selectedcontent class="col-start-1 row-start-1 truncate pr-6">
+            {TAX_YEAR_FILTER_OPTIONS.find((opt) => opt.value === taxYearFilterMode)?.label}
+            {taxYearFilterMode === 'current' && latestTaxYear ? ` (${latestTaxYear})` : ''}
+          </el-selectedcontent>
+          <svg
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            data-slot="icon"
+            aria-hidden="true"
+            class="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-500 sm:size-4 dark:text-gray-400"
+          >
+            <path
+              d="M5.22 10.22a.75.75 0 0 1 1.06 0L8 11.94l1.72-1.72a.75.75 0 1 1 1.06 1.06l-2.25 2.25a.75.75 0 0 1-1.06 0l-2.25-2.25a.75.75 0 0 1 0-1.06ZM10.78 5.78a.75.75 0 0 1-1.06 0L8 4.06 6.28 5.78a.75.75 0 0 1-1.06-1.06l2.25-2.25a.75.75 0 0 1 1.06 0l2.25 2.25a.75.75 0 0 1 0 1.06Z"
+              clip-rule="evenodd"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </button>
+
+        <el-options
+          anchor="bottom start"
+          popover
+          class="max-h-60 min-w-(--button-width) overflow-auto rounded-md bg-white py-1 text-base shadow-lg outline-1 outline-black/5 [--anchor-gap:--spacing(1)] data-leave:transition data-leave:transition-discrete data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10"
+        >
+          {#each TAX_YEAR_FILTER_OPTIONS as option}
+            <el-option
+              value={option.value}
+              class="group/option relative block cursor-default py-2 pr-9 pl-3 text-gray-900 select-none focus:bg-indigo-600 focus:text-white focus:outline-hidden dark:text-white dark:focus:bg-indigo-500"
+            >
+              <span class="block font-normal whitespace-nowrap group-aria-selected/option:font-semibold">{option.label}</span>
+              <span
+                class="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600 group-not-aria-selected/option:hidden group-focus/option:text-white in-[el-selectedcontent]:hidden dark:text-indigo-400"
+              >
+                <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5">
+                  <path
+                    d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                    clip-rule="evenodd"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </span>
+            </el-option>
+          {/each}
+        </el-options>
+      </el-select>
+    </div>
+
+    <div class="inline-flex items-center gap-2">
+      <span class="text-sm/6 text-slate-800 dark:text-white">tax filing{taxYearFilterMode === 'all' ? 's' : ''}</span>
+    </div>
+  </div>
   <div class="mb-4 flex flex-col items-center gap-4 lg:mb-8 lg:flex-row lg:items-stretch lg:justify-between lg:gap-8">
     <div class="w-full flex-1">
       <!-- Search Box Section -->

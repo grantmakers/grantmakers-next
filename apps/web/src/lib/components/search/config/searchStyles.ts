@@ -60,7 +60,7 @@ export const searchBoxGrantsStyles = {
   root: '',
   form: 'relative flex flex-row-reverse rounded-md bg-white dark:bg-gray-900 border-none',
   input:
-    'block min-w-0 grow h-12 pl-11 pr-4 text-md md:text-lg text-gray-900 border-none placeholder:text-gray-400 dark:text-white dark:placeholder:text-gray-500 rounded ring-indigo-600',
+    'block min-w-0 grow h-12 pl-11 pr-4 text-md md:text-lg text-gray-900 border-none placeholder:text-gray-500 dark:text-white dark:placeholder:text-gray-500 rounded ring-indigo-600',
   submit: 'hidden',
   submitIcon: 'hidden',
   reset: 'absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400',
@@ -153,7 +153,7 @@ export const refinementListStyles = {
   checkbox: 'mt-0.5 size-4 rounded border-gray-300 text-indigo-600 outline-hidden focus:outline-hidden ring-0 focus:ring-0',
   count: 'ml-2 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 shrink-0',
   selectedItem: 'font-semibold text-indigo-600',
-  showMore: 'mt-4',
+  showMore: 'mt-4 w-full flex justify-end',
   disabledShowMore: '[&_span]:text-slate-400 pointer-events-none cursor-default',
 } as const;
 
@@ -223,3 +223,15 @@ export const paginationSelectedStyles = `
     @apply bg-indigo-600 text-white;
   }
 `;
+
+/**
+ * MenuSelect widget styles
+ * Used for single-select dropdown filters (e.g., Tax Year)
+ */
+export const menuSelectStyles = {
+  root: 'inline-flex items-center',
+  label: 'mr-2 text-sm text-gray-600',
+  select:
+    'rounded-md border border-gray-300 bg-white py-1.5 px-3 pr-8 text-sm text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:outline-none cursor-pointer appearance-none bg-no-repeat bg-[length:1.25rem_1.25rem] bg-[right_0.5rem_center] bg-[url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20fill%3D%27none%27%20viewBox%3D%270%200%2020%2020%27%3E%3Cpath%20stroke%3D%27%236b7280%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%20stroke-width%3D%271.5%27%20d%3D%27m6%208%204%204%204-4%27%2F%3E%3C%2Fsvg%3E")]',
+  option: '',
+} as const;
