@@ -137,11 +137,47 @@
   };
 
   const renderHits = (renderOptions: HitsRenderState) => {
-    const { items } = renderOptions;
+    const { items, results } = renderOptions;
     const hitsContainer = document.querySelector('#hits');
 
     if (!hitsContainer) {
       return 'No hits container found';
+    }
+
+    // Handle empty state with context-aware messaging
+    if (items.length === 0) {
+      const query = results?.query ?? '';
+      const hasQuery = query.length > 0;
+
+      // Check for active refinements via disjunctiveFacets in the results
+      const hasRefinements =
+        (results?.disjunctiveFacets && results.disjunctiveFacets.length > 0) ||
+        (results?.hierarchicalFacets && results.hierarchicalFacets.length > 0);
+
+      let emptyMessage: string;
+
+      if (hasQuery) {
+        // User searched, but no results found
+        const sanitizedQuery = query.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        emptyMessage = `
+          <div class="py-8 text-center">
+            <p class="text-gray-700">No results found for "<strong>${sanitizedQuery}</strong>"</p>
+            <p class="text-sm text-gray-500 mt-2">Try adjusting your search terms</p>
+          </div>`;
+      } else if (hasRefinements) {
+        // Filters applied, but no results
+        emptyMessage = `
+          <div class="py-8 text-center">
+            <p class="text-gray-700">No matching grants found</p>
+            <p class="text-sm text-gray-500 mt-2">Try adjusting or clearing your filters</p>
+          </div>`;
+      } else {
+        // Initial load with no results (could be ETL or index issue)
+        emptyMessage = `<div class="py-6">No searchable grant records found</div>`;
+      }
+
+      hitsContainer.innerHTML = emptyMessage;
+      return;
     }
 
     hitsContainer.innerHTML = `

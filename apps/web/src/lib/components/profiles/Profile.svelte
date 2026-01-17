@@ -143,42 +143,58 @@
 
         <!-- Grants -->
         <!-- Full Width Breakout - this section breaks out of the standard page container width to maximize space for the faceted search experience -->
-        <div class="relative -mx-6 w-auto sm:-mx-6 lg:left-1/2 lg:mx-0 lg:w-screen lg:-translate-x-1/2">
-          <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
-            <ContentBoxWrapper id="grants">
-              <div class="mb-4 w-full">
-                <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white break-words">
-                  <div class="mb-0 bg-slate-200 p-4">
-                    <div class="flex items-center justify-between">
-                      <h6 class="mb-0"><SectionAnchor title="Grants" sectionId="grants" /></h6>
-                      <span class="hidden text-sm text-slate-500 sm:block">Grants reported on IRS Form 990-PF</span>
-                      <img src={irsLogo} alt="IRS logo" class="max-h-6" height={24} width={48} />
+        <!-- When there are no grants, use the standard narrower layout matching Charitable Activities -->
+        {#if profile.grant_count > 0}
+          <div class="relative -mx-6 w-auto sm:-mx-6 lg:left-1/2 lg:mx-0 lg:w-screen lg:-translate-x-1/2">
+            <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+              <ContentBoxWrapper id="grants">
+                <div class="mb-4 w-full">
+                  <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white break-words">
+                    <div class="mb-0 bg-slate-200 p-4">
+                      <div class="flex items-center justify-between">
+                        <h6 class="mb-0"><SectionAnchor title="Grants" sectionId="grants" /></h6>
+                        <span class="hidden text-sm text-slate-500 sm:block">Grants reported on IRS Form 990-PF</span>
+                        <img src={irsLogo} alt="IRS logo" class="max-h-6" height={24} width={48} />
+                      </div>
+                    </div>
+                    <div>
+                      {#if profile.grant_count > 20}
+                        <GrantsSearch ein={profile.ein} />
+                      {:else}
+                        <GrantsTable
+                          grantCount={profile.grant_count}
+                          grantCountLastThreeYears={profile.grant_count_last_three_years}
+                          grantsCurrent={grantsCurrentTop20}
+                          grantsLastThreeYears={grantsLastThreeYearsTop20}
+                          grantsReferenceAttachment={profile.grants_reference_attachment}
+                        />
+                      {/if}
+                      {#if !grantsCurrentTop20}
+                        <div class="p-6">Unable to find an available free source of grants data</div>
+                      {/if}
                     </div>
                   </div>
-                  <div>
-                    {#if profile.grant_count > 20}
-                      <GrantsSearch ein={profile.ein} />
-                    {:else}
-                      <GrantsTable
-                        grantCount={profile.grant_count}
-                        grantCountLastThreeYears={profile.grant_count_last_three_years}
-                        grantsCurrent={grantsCurrentTop20}
-                        grantsLastThreeYears={grantsLastThreeYearsTop20}
-                        grantsReferenceAttachment={profile.grants_reference_attachment}
-                      />
-                    {/if}
-                    {#if !grantsCurrentTop20}
-                      <div class="p-6">Unable to find an available free source of grants data</div>
-                    {/if}
-                    {#if grantsCurrentTop20 && grantsCurrentTop20.length === 0}
-                      <div class="p-6">No grants made.</div>
-                    {/if}
-                  </div>
+                </div>
+              </ContentBoxWrapper>
+            </div>
+          </div>
+        {:else}
+          <!-- Empty state: Use narrower layout matching Charitable Activities -->
+          <div id="grants" class="-mx-3 grid grid-cols-1">
+            <div class="mb-4 w-full max-w-full px-3">
+              <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white break-words">
+                <div class="mb-0 border-b-0 bg-slate-200 p-4">
+                  <ContentBoxHeader title={'Grants'} sectionId="grants">
+                    <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} />
+                  </ContentBoxHeader>
+                </div>
+                <div>
+                  <div class="p-6">No grants listed on Form 990-PF</div>
                 </div>
               </div>
-            </ContentBoxWrapper>
+            </div>
           </div>
-        </div>
+        {/if}
 
         <!-- Charitable Activities -->
         <div id="charitable-activites" class="-mx-3 grid grid-cols-1">

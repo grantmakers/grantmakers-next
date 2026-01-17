@@ -1,6 +1,5 @@
 <script lang="ts">
   import GrantRow from './GrantRow.svelte';
-  import ExclamationCircle from 'svelte-heros-v2/ExclamationCircle.svelte';
   import type { GrantsArray, GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
   import { humanizeNumber } from '@repo/shared/functions/formatters/numbers';
   import Tip from '../alerts/Tip.svelte';
@@ -115,10 +114,7 @@
                 {/each}
               {:else}
                 <tr>
-                  <td colspan="5" class="flex items-center gap-2 px-3 py-4 text-sm">
-                    <ExclamationCircle variation="solid" />
-                    No grants {grantCount === 0 ? 'listed' : 'available for this foundation'}
-                  </td>
+                  <td colspan="5" class="px-3 py-4 text-sm"> No grants listed on Form 990-PF </td>
                 </tr>
               {/if}
             </tbody>
