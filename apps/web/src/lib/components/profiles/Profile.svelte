@@ -68,13 +68,7 @@
         <div
           class="shadow-blur relative flex min-w-0 flex-auto flex-col overflow-hidden rounded-2xl border-0 bg-white bg-clip-border bg-center p-4"
         >
-          <FoundationHeader
-            {organization_name}
-            {profile}
-            {formattedTaxPeriodEnd}
-            eobmfRecognizedExempt={profile.eobmf_recognized_exempt}
-            grantCount={profile.grant_count}
-          />
+          <FoundationHeader {organization_name} {profile} {formattedTaxPeriodEnd} eobmfRecognizedExempt={profile.eobmf_recognized_exempt} />
         </div>
       </ContentBoxWrapper>
 
