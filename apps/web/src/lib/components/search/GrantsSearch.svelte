@@ -368,7 +368,7 @@
             } else if (data.hasOneResult) {
               count += `1 Grant`;
             } else {
-              count += `no Grants`;
+              count += `0 Grants`;
             }
 
             return html`<span>${count}</span>`;
