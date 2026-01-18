@@ -72,8 +72,11 @@ export function isOutdatedYYYmm(yearMonth: string | number, monthsAgoIsOutdated:
 
 export function isOutdatedISOString(dateString: string, monthsAgoIsOutdated: number = DEFAULT_MONTHS_OUTDATED): boolean {
   const inputDate = new Date(dateString);
-  const cutoffDate = new Date();
-  cutoffDate.setMonth(cutoffDate.getMonth() - monthsAgoIsOutdated);
+  const now = new Date();
 
-  return inputDate <= cutoffDate;
+  // Use UTC year/month to avoid server/client timezone mismatches (hydration issues)
+  const inputYearMonth = inputDate.getUTCFullYear() * 12 + inputDate.getUTCMonth();
+  const cutoffYearMonth = now.getUTCFullYear() * 12 + now.getUTCMonth() - monthsAgoIsOutdated;
+
+  return inputYearMonth <= cutoffYearMonth;
 }
