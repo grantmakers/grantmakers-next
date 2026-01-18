@@ -18,11 +18,7 @@
 
   let { organization_name, profile, formattedTaxPeriodEnd, eobmfRecognizedExempt }: Props = $props();
 
-  let {
-    is_likely_staffed: isStaffed,
-    grants_to_preselected_only: noUnsolicited,
-    has_recent_grants: hasRecentGrants,
-  } = profile;
+  let { is_likely_staffed: isStaffed, grants_to_preselected_only: noUnsolicited, has_recent_grants: hasRecentGrants } = profile;
   const firstLetter = upperFirstLetter(organization_name);
 
   // Determine IRS status
