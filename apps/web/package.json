@@ -40,7 +40,8 @@
     "tailwind-variants": "^0.2.1",
     "tailwindcss": "^4.1.17",
     "tslib": "^2.4.1",
-    "vite": "^5.4.21"
+    "vite": "^5.4.21",
+    "wrangler": "^4.59.2"
   },
   "dependencies": {
     "@algolia/autocomplete-js": "^1.17.6",

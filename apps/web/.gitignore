@@ -11,3 +11,6 @@ vite.config.ts.timestamp-*
 .well-known/
 
 /src/mocks
+
+wrangler.json
+.wrangler
