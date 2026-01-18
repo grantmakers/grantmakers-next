@@ -587,7 +587,7 @@
 
               <el-options
                 anchor="bottom start"
-                popover
+                popover="manual"
                 class="max-h-60 min-w-(--button-width) overflow-auto rounded-md bg-white py-1 text-base shadow-lg outline-1 outline-black/5 [--anchor-gap:--spacing(1)] data-leave:transition data-leave:transition-discrete data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10"
               >
                 {#each EIN_FILTER_OPTIONS as option}
@@ -650,7 +650,7 @@
 
               <el-options
                 anchor="bottom start"
-                popover
+                popover="manual"
                 class="max-h-60 min-w-(--button-width) overflow-auto rounded-md bg-white py-1 text-base shadow-lg outline-1 outline-black/5 [--anchor-gap:--spacing(1)] data-leave:transition data-leave:transition-discrete data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10"
               >
                 {#each TAX_YEAR_FILTER_OPTIONS as option}
