@@ -50,17 +50,6 @@
     'No recent grants',
     hasRecentGrants ? 'Grant activity found in recent tax filings' : 'No grant activity found in recent tax filings',
   )}
-
-  <button
-    type="button"
-    class="inline-flex cursor-help items-center gap-1 text-xs text-slate-500 transition-colors hover:text-slate-700"
-    command="show-modal"
-    commandfor={DIALOG_ID}
-  >
-    About
-    <InformationCircle size="16" />
-    <span class="sr-only">Learn about approachability indicators</span>
-  </button>
 </div>
 
 <!-- Modal -->
@@ -100,8 +89,8 @@
                   positiveLabel="Likely staffed"
                   negativeLabel="Limited staffing"
                   description={isStaffed ?
-                    'Based on tax filing board and key employee listings, this foundation likely has dedicated paid staff.'
-                  : 'Based on tax filing board and key employee listings, this foundation has limited or no paid staffing.'}
+                    'Based on reported board members and key employees, this foundation likely has dedicated paid staff.'
+                  : 'Based on reported board members and key employees, this foundation likely has limited or no paid staffing.'}
                   explanation={'Tax filings include data on annual compensation and avg weekly hours. Green suggests dedicated staff, while yellow indicates limited paid staffing.'}
                   stat={'Only 7% of foundations are likely staffed'}
                 />
