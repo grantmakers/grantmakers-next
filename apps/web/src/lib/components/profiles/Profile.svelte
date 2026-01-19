@@ -71,18 +71,15 @@
         </div>
       </ContentBoxWrapper>
 
-      <ContentBoxInterstitial message="Grantmakers.io ensures equitable access to a critical information source. Forever free." />
+      <ContentBoxInterstitial
+        message="Grantmakers.io ensures equitable access to a critical information source for nonprofits. Forever free."
+      />
 
       <!-- Community Intelligence Modal Body-->
       <CiModal ein={profile.ein} />
 
-      <!-- Placeholder wrapper -->
-      <div class="shadow-soft-xl relative mt-4 flex h-full min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words">
-        <!-- Content goes here -->
-      </div>
-
       <!-- Core Body Sections -->
-      <div class="mx-auto mt-4 w-full pb-6">
+      <div class="mx-auto mt-6 w-full pb-6 lg:mt-8">
         <!-- Snapshot Boxes - 2 column layout (40/60 split) -->
         <div class="grid grid-cols-1 gap-5 lg:grid-cols-[2fr_3fr]">
           <!-- Left Column: Two stacked cards -->
@@ -119,65 +116,67 @@
           </div>
         </div>
 
-        <ContentBoxInterstitial message="Built for nonprofits. Funded by the amazing community it serves." />
+        <ContentBoxInterstitial message="Built for nonprofits. Sustained by the generosity of the nonprofits it serves." />
 
         <!-- Grants -->
         <!-- Full Width Breakout - this section breaks out of the standard page container width to maximize space for the faceted search experience -->
         <!-- When there are no grants, use the standard narrower layout matching Charitable Activities -->
-        {#if profile.grant_count > 0}
-          <div class="relative -mx-6 w-auto sm:-mx-6 lg:left-1/2 lg:mx-0 lg:w-screen lg:-translate-x-1/2">
-            <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
-              <ContentBoxWrapper id="grants">
-                <div class="mb-4 w-full">
-                  <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white break-words">
-                    <div class="mb-0 bg-slate-200 p-4">
-                      <div class="flex items-center justify-between">
-                        <h6 class="mb-0"><SectionAnchor title="Grants" sectionId="grants" /></h6>
-                        <span class="hidden text-sm text-slate-500 sm:block">Grants reported on IRS Form 990-PF</span>
-                        <img src={irsLogo} alt="IRS logo" class="max-h-6" height={24} width={48} />
+        <div class="mt-6 lg:mt-8">
+          {#if profile.grant_count > 0}
+            <div class="relative -mx-6 w-auto sm:-mx-6 lg:left-1/2 lg:mx-0 lg:w-screen lg:-translate-x-1/2">
+              <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+                <ContentBoxWrapper id="grants">
+                  <div class="mb-4 w-full">
+                    <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white break-words">
+                      <div class="mb-0 bg-slate-200 p-4">
+                        <div class="flex items-center justify-between">
+                          <h6 class="mb-0"><SectionAnchor title="Grants" sectionId="grants" /></h6>
+                          <span class="hidden text-sm text-slate-500 sm:block">Grants reported on IRS Form 990-PF</span>
+                          <img src={irsLogo} alt="IRS logo" class="max-h-6" height={24} width={48} />
+                        </div>
+                      </div>
+                      <div>
+                        {#if profile.grant_count > 20}
+                          <GrantsSearch ein={profile.ein} />
+                        {:else}
+                          <GrantsTable
+                            grantCount={profile.grant_count}
+                            grantCountLastThreeYears={profile.grant_count_last_three_years}
+                            grantsCurrent={grantsCurrentTop20}
+                            grantsLastThreeYears={grantsLastThreeYearsTop20}
+                            grantsReferenceAttachment={profile.grants_reference_attachment}
+                          />
+                        {/if}
+                        {#if !grantsCurrentTop20}
+                          <div class="p-6">Unable to find an available free source of grants data</div>
+                        {/if}
                       </div>
                     </div>
-                    <div>
-                      {#if profile.grant_count > 20}
-                        <GrantsSearch ein={profile.ein} />
-                      {:else}
-                        <GrantsTable
-                          grantCount={profile.grant_count}
-                          grantCountLastThreeYears={profile.grant_count_last_three_years}
-                          grantsCurrent={grantsCurrentTop20}
-                          grantsLastThreeYears={grantsLastThreeYearsTop20}
-                          grantsReferenceAttachment={profile.grants_reference_attachment}
-                        />
-                      {/if}
-                      {#if !grantsCurrentTop20}
-                        <div class="p-6">Unable to find an available free source of grants data</div>
-                      {/if}
-                    </div>
                   </div>
-                </div>
-              </ContentBoxWrapper>
+                </ContentBoxWrapper>
+              </div>
             </div>
-          </div>
-        {:else}
-          <!-- Empty state: Use narrower layout matching Charitable Activities -->
-          <div id="grants" class="-mx-3 grid grid-cols-1">
-            <div class="mb-4 w-full max-w-full px-3">
-              <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white break-words">
-                <div class="mb-0 border-b-0 bg-slate-200 p-4">
-                  <ContentBoxHeader title={'Grants'} sectionId="grants">
-                    <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} />
-                  </ContentBoxHeader>
-                </div>
-                <div>
-                  <div class="p-6">No grants listed on Form 990-PF</div>
+          {:else}
+            <!-- Empty state: Use narrower layout matching Charitable Activities -->
+            <div id="grants" class="-mx-3 grid grid-cols-1">
+              <div class="mb-4 w-full max-w-full px-3">
+                <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white break-words">
+                  <div class="mb-0 border-b-0 bg-slate-200 p-4">
+                    <ContentBoxHeader title={'Grants'} sectionId="grants">
+                      <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} />
+                    </ContentBoxHeader>
+                  </div>
+                  <div>
+                    <div class="p-6">No grants listed on Form 990-PF</div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        {/if}
+          {/if}
+        </div>
 
         <!-- Charitable Activities -->
-        <div id="charitable-activites" class="-mx-3 grid grid-cols-1">
+        <div id="charitable-activites" class="-mx-3 mt-6 grid grid-cols-1 lg:mt-8">
           <div class="mb-4 w-full max-w-full px-3">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white break-words">
               <div class="mb-0 border-b-0 bg-slate-200 p-4">
@@ -200,10 +199,10 @@
           </div>
         </div>
 
-        <ContentBoxInterstitial message="88% of nonprofits have budgets less than $500k. Grantmakers.io is built for them." />
+        <ContentBoxInterstitial message="88% of nonprofits have budgets less than $500k. They deserve access too." />
 
         <!-- About & Guidelines Sections -->
-        <div class="-mx-3 grid grid-cols-1 md:grid-cols-2">
+        <div class="-mx-3 mt-6 grid grid-cols-1 md:grid-cols-2 lg:mt-8">
           <!-- Guidelines -->
           <ContentBoxWrapper id="guidelines" classes="flex flex-col">
             <div class="mb-4 h-full w-full max-w-full px-3">
@@ -235,9 +234,9 @@
         </div>
 
         <!-- Financial Sections -->
-        <div class="-mx-3 grid grid-cols-1 md:grid-cols-2">
+        <div class="-mx-3 mt-6 grid grid-cols-1 md:grid-cols-2 lg:mt-8">
           <!-- Financial Overview -->
-          <ContentBoxWrapper id="financials">
+          <ContentBoxWrapper id="financials" classes="h-full">
             <div class="mb-4 w-full max-w-full px-3">
               <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words">
                 <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
@@ -267,8 +266,41 @@
           </div>
         </div>
 
-        <div class="-mx-3 grid grid-cols-1 md:grid-cols-1">
-          <!-- Research -->
+        <!-- Donation CTA -->
+        <ContentBoxWrapper id="donate">
+          <div class="my-6 hidden md:block lg:my-8">
+            <div
+              class="shadow-soft-xl relative mx-auto flex w-full max-w-2xl flex-col items-center justify-center overflow-hidden rounded-2xl bg-white p-8 text-center ring-1 ring-slate-900/5 lg:p-10"
+            >
+              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-amber-50 text-amber-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 640 512" fill="currentColor">
+                  <path
+                    d="M96 64c0-17.7 14.3-32 32-32H448h64c70.7 0 128 57.3 128 128s-57.3 128-128 128H480c0 53-43 96-96 96H192c-53 0-96-43-96-96V64zM480 224h32c35.3 0 64-28.7 64-64s-28.7-64-64-64H480V224zM32 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32z"
+                  />
+                </svg>
+              </div>
+
+              <h3 class="mb-6 text-lg font-semibold text-slate-900">If this profile helped you, why not...</h3>
+              <a
+                href="/about/donate/"
+                class="inline-flex items-center gap-x-2 rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-slate-800 hover:shadow-md active:scale-95 active:transform"
+              >
+                <span>Buy me a coffee</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </a>
+              <p class="mt-6 max-w-md text-slate-600">Grantmakers.io is entirely community-funded</p>
+            </div>
+          </div>
+        </ContentBoxWrapper>
+
+        <!-- Research -->
+        <div class="-mx-3 mt-6 grid grid-cols-1 md:grid-cols-1 lg:mt-8">
           <div class="mb-4 w-full max-w-full px-3 text-slate-700">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words">
               <Research ein={profile.ein} irsObjectId={profile.filings[0].object_id_irs} />
@@ -276,7 +308,7 @@
           </div>
         </div>
 
-        <div class="-mx-3 mt-12 grid grid-cols-1 items-center md:grid-cols-1">
+        <div class="-mx-3 mt-10 grid grid-cols-1 items-center md:grid-cols-1 lg:mt-16">
           <!-- Bottom CTA -->
           <div class="mt-2 mb-4 flex flex-row items-start justify-center gap-2 p-8">
             <!-- <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} /> -->

@@ -2,11 +2,10 @@
   import { inview, type Options } from 'svelte-inview';
   import { setActiveSection } from './sidenav/ActiveLink.svelte';
   import { slugify } from '@repo/shared/functions/formatters/names';
-  import { type SideNavIds } from '@repo/shared/constants/trustedConstants';
   import { profileNavItems } from '@repo/shared/constants/trustedConstants/withIcons';
 
   interface Props {
-    id: SideNavIds;
+    id: string;
     classes?: string;
     children?: import('svelte').Snippet;
   }
