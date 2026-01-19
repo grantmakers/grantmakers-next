@@ -17,11 +17,16 @@
 
   let { organization_name, profile, formattedTaxPeriodEnd }: Props = $props();
 
-  let { is_likely_staffed: isStaffed, grants_to_preselected_only: noUnsolicited, has_recent_grants: hasRecentGrants } = profile;
+  let {
+    is_likely_staffed: isStaffed,
+    grants_to_preselected_only: noUnsolicited,
+    has_recent_grants: hasRecentGrants,
+    filing_is_final_return: isFinalReturn,
+  } = profile;
   const firstLetter = upperFirstLetter(organization_name);
 
   // Determine IRS status
-  const hasValidIrsStatus = $derived(profile.eobmf_recognized_exempt && profile.eobmf_ruling_date);
+  const hasValidIrsStatus = $derived((profile.eobmf_recognized_exempt && profile.eobmf_ruling_date) || !profile.filing_is_final_return);
   const isDataOutdated = $derived(isOutdatedISOString(profile.last_updated_irs));
 
   // Badge styling constant
@@ -103,13 +108,29 @@
       <span class="size-1.5 shrink-0 rounded-full {isDataOutdated ? 'bg-amber-500' : 'bg-emerald-500'}"></span>
       FYE {formattedTaxPeriodEnd}
     </span>
+
+    <!-- Final Return -->
+    <!-- {#if isFinalReturn}
+      <span class="inline-flex items-center justify-start text-sm md:justify-end">Final Return</span>
+      <span class={BADGE_CLASSES}>
+        <span class="size-1.5 shrink-0 rounded-full bg-red-500"></span>
+        Filed {profile.filings[0]?.tax_year ?? ''}
+      </span>
+    {/if} -->
   </div>
 </div>
 
 <!-- Footer: Approachability -->
 <div class="-mx-4 mt-6 flex items-center justify-between gap-6 border-t border-slate-200 bg-slate-50 px-4 py-3 lg:-mx-8 lg:px-8">
   <div class="shrink-0">
-    {#if hasValidIrsStatus}
+    {#if isFinalReturn}
+      <span
+        class="inline-flex items-center gap-1.5 rounded border border-red-200 bg-red-100 px-2.5 py-1 text-xs text-red-950 transition-colors hover:bg-red-200"
+      >
+        <span class="size-1.5 shrink-0 rounded-full bg-red-700"></span>
+        <span class="font-bold">FINAL RETURN:</span> Tax Year {profile.filings[0]?.tax_year ?? ''}
+      </span>
+    {:else if hasValidIrsStatus}
       <Approachability {noUnsolicited} {isStaffed} {hasRecentGrants} />
     {:else}
       <span class="inline-flex items-center gap-1.5 rounded bg-transparent px-2.5 py-1 text-xs font-medium text-slate-600">
