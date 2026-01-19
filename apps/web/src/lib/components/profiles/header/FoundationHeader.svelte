@@ -26,8 +26,7 @@
   const isDataOutdated = $derived(isOutdatedISOString(profile.last_updated_irs));
 
   // Badge styling constant
-  const DATA_BADGE_CLASSES =
-    'inline-flex w-32 items-center justify-center gap-1.5 rounded border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-600';
+  const BADGE_CLASSES = 'inline-flex w-32 items-center justify-start gap-1.5 rounded px-2.5 py-1 text-xs font-medium text-slate-600';
 </script>
 
 <!-- Main container using flex with items-end to align bottom edges -->
@@ -93,7 +92,7 @@
 
     <!-- IRS Status -->
     <span class="inline-flex items-center justify-start text-sm md:justify-end">IRS Status</span>
-    <span class={DATA_BADGE_CLASSES}>
+    <span class={BADGE_CLASSES}>
       <span class="size-1.5 shrink-0 rounded-full {hasValidIrsStatus ? 'bg-emerald-500' : 'bg-amber-500'}"></span>
       {#if hasValidIrsStatus}
         {#if profile.eobmf_ruling_date === '000000'}
@@ -108,7 +107,7 @@
 
     <!-- Data Valid as of -->
     <span class="inline-flex items-center justify-start text-sm md:justify-end">Data Valid as of</span>
-    <span class={DATA_BADGE_CLASSES}>
+    <span class={BADGE_CLASSES}>
       <span class="size-1.5 shrink-0 rounded-full {isDataOutdated ? 'bg-amber-500' : 'bg-emerald-500'}"></span>
       FYE {formattedTaxPeriodEnd}
     </span>

@@ -1,6 +1,5 @@
 <script lang="ts">
   import '@tailwindplus/elements';
-  import InformationCircle from 'svelte-heros-v2/InformationCircle.svelte';
   import ApproachabilityInfoItem from './ApproachabilityInfoItem.svelte';
 
   interface Props {
