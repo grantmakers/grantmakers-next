@@ -69,7 +69,7 @@
     if (pct >= 90) return 'Top 10%';
     if (pct >= 75) return 'Top 25%';
     if (pct >= 50) return 'Top 50%';
-    if (pct < 50) return '<50%';
+    if (pct < 50) return 'Smallest 50%';
     return `Top ${(100 - pct).toFixed(0)}%`;
   };
 
