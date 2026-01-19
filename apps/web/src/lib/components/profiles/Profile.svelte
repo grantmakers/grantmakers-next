@@ -9,7 +9,7 @@
   import GrantsTable from './grants/GrantsTable.svelte';
   import GrantsSearch from '$lib/components/search/GrantsSearch.svelte';
   import { formatTaxPeriodDate } from '@repo/shared/functions/formatters/dates';
-  import logo from '$lib/assets/images/logo.svg';
+  import ContentBoxInterstitial from './ContentBoxInterstitial.svelte';
   import irsLogo from '$lib/assets/images/irs-logo.webp';
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
   import ApplicationGuidelines from './guidelines/ApplicationGuidelines.svelte';
@@ -71,6 +71,8 @@
         </div>
       </ContentBoxWrapper>
 
+      <ContentBoxInterstitial message="Grantmakers.io ensures equitable access to a critical information source. Forever free." />
+
       <!-- Community Intelligence Modal Body-->
       <CiModal ein={profile.ein} />
 
@@ -117,11 +119,7 @@
           </div>
         </div>
 
-        <!-- Interstitial Message -->
-        <div class="mt-2 mb-4 flex flex-row items-start justify-center gap-2 p-8">
-          <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
-          <div>Grantmakers.io ensures equitable access to a critical information source. Forever free.</div>
-        </div>
+        <ContentBoxInterstitial message="Built for nonprofits. Funded by the amazing community it serves." />
 
         <!-- Grants -->
         <!-- Full Width Breakout - this section breaks out of the standard page container width to maximize space for the faceted search experience -->
@@ -202,13 +200,7 @@
           </div>
         </div>
 
-        <!-- Interstitial Message -->
-        <div class="mt-2 mb-4 flex flex-row items-start justify-center gap-2 p-8">
-          <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
-          <div class="flex flex-col items-center justify-center gap-2">
-            <div class="font-normal">88% of nonprofits have budgets less than $500k. Grantmakers.io is built for them.</div>
-          </div>
-        </div>
+        <ContentBoxInterstitial message="88% of nonprofits have budgets less than $500k. Grantmakers.io is built for them." />
 
         <!-- About & Guidelines Sections -->
         <div class="-mx-3 grid grid-cols-1 md:grid-cols-2">
