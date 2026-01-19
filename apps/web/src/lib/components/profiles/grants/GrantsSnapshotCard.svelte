@@ -6,8 +6,7 @@
   import placeholderImage from '$lib/assets/images/placeholder-no-grants.webp';
   import irsLogo from '$lib/assets/images/irs-logo.webp';
   import Tip from '../alerts/Tip.svelte';
-  import Eyes from '$lib/components/shared/icons/Eyes.svelte';
-  import { tooltip } from '$utils/tooltip';
+
   import ContentBoxHeader from '../ContentBoxHeader.svelte';
 
   interface Props {
@@ -134,18 +133,22 @@
   {/if}
 
   <!-- Data Source Footer Band -->
-  <div class="flex items-center gap-3 border-t border-slate-200 px-5 py-3">
-    <div class="flex flex-1 flex-col">
+  <div
+    class="flex items-end justify-between gap-3 border-t border-slate-200 px-5 py-3 {isOutdatedISOString(lastUpdatedIrs) ? 'bg-yellow-50'
+    : ''}"
+  >
+    <div class="flex flex-col">
       <div class="flex items-center gap-2 text-sm font-medium text-slate-700">IRS Form 990-PF</div>
       <div class="flex items-center gap-1 text-xs text-slate-500">
         Tax Year {formatTaxYear(taxYear)} · Published {formatDateToMonthYear(lastUpdatedIrs) ?? 'N/A'}
-        {#if isOutdatedISOString(lastUpdatedIrs)}
-          <span use:tooltip={{ content: 'Published over a year ago' }} class="ml-1 inline-block">
-            <Eyes />
-          </span>
-        {/if}
       </div>
     </div>
-    <img src={irsLogo} alt="IRS logo" class="max-h-6 w-auto" height={24} width={48} />
+    {#if isOutdatedISOString(lastUpdatedIrs)}
+      <div class="hidden flex-1 text-right text-xs text-slate-500 sm:block">
+        The latest available tax filing was published over a year ago, {formatDateToMonthYear(lastUpdatedIrs) ?? 'N/A'}
+      </div>
+    {:else}
+      <img src={irsLogo} alt="IRS logo" class="max-h-6 w-auto" height={24} width={48} />
+    {/if}
   </div>
 </div>

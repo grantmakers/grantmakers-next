@@ -141,6 +141,6 @@
   </div>
 
   <div class="max-w-sm text-xs text-balance text-slate-500">
-    Foundation tax returns are public records. Grantmakers.io is an independent community project that republishes this IRS data.
+    Foundation tax returns are public records. Grantmakers.io is a free community project that republishes this IRS data.
   </div>
 </div>
