@@ -15,10 +15,9 @@
   import ApplicationGuidelines from './guidelines/ApplicationGuidelines.svelte';
   import BarFinancialTrends from './charts/BarFinancialTrends.svelte';
   import BarFinancialOverview from './charts/BarFinancialOverview.svelte';
-  import GrantsSummaryBox from './grants/GrantsSummaryBox.svelte';
+  import GrantsSnapshotCard from './grants/GrantsSnapshotCard.svelte';
+  import RankingCard from './ranking/RankingCard.svelte';
   import CharitableActivities from './activities/CharitableActivities.svelte';
-  import Rank from './ranking/Rank.svelte';
-  import DataSource from './about/DataSourceSummaryBox.svelte';
   import Research from './research/Research.svelte';
   import About from './about/AboutSummaryBox.svelte';
   import CiModal from './community/CiModal.svelte';
@@ -82,53 +81,36 @@
 
       <!-- Core Body Sections -->
       <div class="mx-auto mt-4 w-full pb-6">
-        <!-- Snapshot Boxes -->
-        <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
-          <!-- Grants Box (First on desktop, third on mobile) -->
-          <div class="order-3 xl:order-1">
-            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words">
-              <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-                <ContentBoxHeader title={'Grants Snapshot'} />
-              </div>
-              <GrantsSummaryBox
-                grantMin={profile.grant_min}
-                grantMax={profile.grant_max}
-                grantMedian={profile.grant_median}
-                grantCount={profile.grant_count}
-                {grantsFacets}
-                {grantsReferenceAttachment}
-                {hasCharitableActivities}
-                taxPeriod={profile.filings[0].tax_period}
-                eobmfStatus={profile.eobmf_recognized_exempt}
-              />
-            </div>
+        <!-- Snapshot Boxes - 2 column layout (40/60 split) -->
+        <div class="grid grid-cols-1 gap-5 lg:grid-cols-[2fr_3fr]">
+          <!-- Left Column: Two stacked cards -->
+          <div class="order-2 flex flex-col gap-5 lg:order-1">
+            <!-- Card 1: Ranking -->
+            <RankingCard rank={profile.rank} rankTotal={profile.rank_total} assets={profile.assets} />
+
+            <!-- Card 2: Grants Snapshot -->
+            <GrantsSnapshotCard
+              grantMin={profile.grant_min}
+              grantMax={profile.grant_max}
+              grantMedian={profile.grant_median}
+              grantCount={profile.grant_count}
+              {grantsFacets}
+              {grantsReferenceAttachment}
+              {hasCharitableActivities}
+              taxYear={filings[0].tax_year}
+              lastUpdatedIrs={profile.last_updated_irs}
+            />
           </div>
 
-          <!-- Ranking & Data Source Boxes (Second on desktop, first on mobile) -->
-          <div class="order-1 xl:order-2">
-            <div class="flex h-full flex-col gap-4">
-              <!-- Ranking (First on mobile) -->
-              <div class="shadow-soft-xl relative flex min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words">
-                <Rank rank={profile.rank} rankTotal={profile.rank_total} assets={profile.assets} />
-              </div>
-
-              <!-- Data Source (Second on mobile) -->
-              <div class="shadow-soft-xl relative flex min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words md:h-full">
-                <DataSource taxYear={filings[0].tax_year} {formattedTaxPeriodEnd} lastUpdatedIrs={profile.last_updated_irs} />
-              </div>
-            </div>
-          </div>
-
-          <!-- People Box (Third on desktop, fourth on mobile) -->
-          <div class="order-4 xl:order-3">
-            <ContentBoxWrapper id="people" classes="flex h-full">
+          <!-- Right Column: People Card - constrained to left column height on desktop -->
+          <div class="order-1 flex min-h-0 flex-col lg:relative lg:order-2">
+            <ContentBoxWrapper id="people" classes="flex min-h-0 flex-1 flex-col lg:absolute lg:inset-0">
               <div
-                class="shadow-soft-xl relative flex h-full w-full min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words"
+                class="shadow-soft-xl relative flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-hidden rounded-2xl border-0 bg-white bg-clip-border break-words"
               >
-                <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
+                <div class="mb-0 shrink-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
                   <ContentBoxHeader title={'People'} sectionId="people" />
                 </div>
-                <!-- @ts-expect-error Mixing Svelte versions causes issues with passed in props -->
                 <People {people} />
               </div>
             </ContentBoxWrapper>
@@ -138,7 +120,7 @@
         <!-- Interstitial Message -->
         <div class="mt-2 mb-4 flex flex-row items-start justify-center gap-2 p-8">
           <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
-          <div>Ensuring equitable access to a critical information source since 2016</div>
+          <div>Grantmakers.io ensures equitable access to a critical information source. Forever free.</div>
         </div>
 
         <!-- Grants -->
