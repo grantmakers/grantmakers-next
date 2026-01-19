@@ -108,7 +108,9 @@
                 class="shadow-soft-xl relative flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-hidden rounded-2xl border-0 bg-white bg-clip-border break-words"
               >
                 <div class="mb-0 shrink-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-                  <ContentBoxHeader title={'People'} sectionId="people" />
+                  <ContentBoxHeader title={'People'} sectionId="people">
+                    <img src={irsLogo} alt="IRS logo" class="max-h-6 w-auto" height={24} width={48} />
+                  </ContentBoxHeader>
                 </div>
                 <People {people} />
               </div>
