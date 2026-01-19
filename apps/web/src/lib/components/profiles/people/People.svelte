@@ -1,113 +1,71 @@
-<svelte:options runes={false} />
-
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { createDialog } from 'svelte-headlessui';
-  import Transition from 'svelte-transition';
   import { normalizePerson } from '@repo/shared/functions/formatters/names';
   import type { PeopleArray } from '@repo/shared/typings/grantmakers/all';
-  import type TransitionProps from 'svelte-transition';
   import PeopleTable from './PeopleTable.svelte';
-  import ArrowsPointingOut from 'svelte-heros-v2/ArrowsPointingOut.svelte';
+  import ChevronDown from 'svelte-heros-v2/ChevronDown.svelte';
+  import ChevronUp from 'svelte-heros-v2/ChevronUp.svelte';
 
-  // Svelte 5 props - can't use until svelte-headlessui and svelte-transition are Svelte 5 compatible (has to do with slots vs children)
-  // interface Props {
-  //   people: PeopleArray;
-  // }
-  // let { people }: Props = $props();
-  // let dialog = $state<ReturnType<typeof createDialog> | null>(null);
-  // let normalizedPeople: PeopleArray | undefined = $state();
-
-  // Svelte 4 HACK - required to force the Transition component to accept children when running as a Svelte 4 component via runes = false
-  interface MimicSvelte5 extends TransitionProps {
-    children?: Node | Node[];
+  interface Props {
+    people: PeopleArray;
   }
 
-  // Svelte 4 props
-  export let people: PeopleArray;
-  let dialog: ReturnType<typeof createDialog>;
-  let normalizedPeople: PeopleArray;
+  let { people }: Props = $props();
 
-  // The IRS People schemas are a hot mess. Attempt to normalize the array for presentation.
-  normalizedPeople = people.map((person) => normalizePerson(person));
+  // Normalize people data for presentation
+  let normalizedPeople: PeopleArray = $derived(people.map((person) => normalizePerson(person)));
 
-  let props = {};
+  // Mobile collapsible state
+  let mobileExpanded = $state(false);
+  let mobileVisiblePeople: PeopleArray = $derived(mobileExpanded ? normalizedPeople : normalizedPeople.slice(0, 10));
 
-  onMount(async () => {
-    // Init Dialog
-    dialog = createDialog({ label: 'Board Members and Leadership' });
-  });
+  // Desktop scroll fade state
+  let scrollContainer: HTMLDivElement | undefined = $state();
+  let showFade = $state(true);
+
+  function handleScroll() {
+    if (!scrollContainer) return;
+    const isAtBottom = scrollContainer.scrollHeight - scrollContainer.scrollTop - scrollContainer.clientHeight < 10;
+    showFade = !isAtBottom;
+  }
 </script>
 
 {#if people}
-  <div class="mb-6 flex h-full flex-col justify-between overflow-x-auto p-4">
-    <PeopleTable people={normalizedPeople} isSummary={true} />
-    {#if people?.length > 5}
-      {#if dialog}
-        <div class="flex h-full items-end justify-center">
+  <!-- Mobile view: Collapsible -->
+  <div class="lg:hidden">
+    <div class="p-4">
+      <PeopleTable people={mobileVisiblePeople} />
+      {#if normalizedPeople.length > 10}
+        <div class="mt-4 flex justify-center border-t border-slate-200 pt-4">
           <button
-            class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-slate-300 ring-inset hover:bg-slate-100"
-            onclick={dialog.open}
+            class="flex items-center gap-1 text-sm font-medium text-slate-600 hover:text-slate-900 hover:underline"
+            onclick={() => (mobileExpanded = !mobileExpanded)}
           >
-            <div class="flex flex-row items-center justify-center gap-1">
-              View All Board Members and Leaders <ArrowsPointingOut class="h-4 w-4" />
-            </div>
+            {#if mobileExpanded}
+              Show less <ChevronUp class="h-4 w-4" />
+            {:else}
+              Show all {normalizedPeople.length} people <ChevronDown class="h-4 w-4" />
+            {/if}
           </button>
-          <div class="flex justify-center">
-            <div class="flex w-full flex-col items-center justify-center">
-              <!-- The z-index is required to ensure the modal is above the hand drawn circle -->
-              <div class="relative z-30">
-                <Transition show={$dialog?.expanded} {...props as MimicSvelte5}>
-                  <Transition
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                    {...props as MimicSvelte5}
-                  >
-                    <button class="fixed inset-0 bg-black/25" onclick={dialog.close} aria-label="Close dialog"></button>
-                  </Transition>
-
-                  <div class="fixed inset-0 overflow-y-auto">
-                    <div class="flex min-h-full items-center justify-center p-4 text-center">
-                      <Transition
-                        enter="ease-out duration-300"
-                        enterFrom="opacity-0 scale-95"
-                        enterTo="opacity-100 scale-100"
-                        leave="ease-in duration-200"
-                        leaveFrom="opacity-100 scale-100"
-                        leaveTo="opacity-0 scale-95"
-                        {...props as MimicSvelte5}
-                      >
-                        <div
-                          class="shadow-soft-xl w-full max-w-md transform overflow-hidden rounded-2xl bg-white px-12 py-6 text-left align-middle transition-all lg:mt-16 lg:max-w-fit"
-                          use:dialog.modal
-                        >
-                          <!-- HACK - svelte-headlessui lacks an initialFocus ref for Dialogs https://github.com/CaptainCodeman/svelte-headlessui/issues/5 -->
-                          <input hidden />
-                          <PeopleTable {people} isSummary={false} />
-
-                          <div class="mt-4 flex justify-center">
-                            <button
-                              type="button"
-                              class="inline-flex justify-center rounded-md border border-transparent bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-200 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-slate-500 focus-visible:ring-offset-2"
-                              onclick={dialog.close}
-                            >
-                              Close
-                            </button>
-                          </div>
-                        </div>
-                      </Transition>
-                    </div>
-                  </div>
-                </Transition>
-              </div>
-            </div>
-          </div>
         </div>
       {/if}
+    </div>
+  </div>
+
+  <!-- Desktop view: Scrollable with fade -->
+  <div class="relative hidden min-h-0 flex-1 flex-col lg:flex">
+    <!-- Scrollable table area -->
+    <div bind:this={scrollContainer} onscroll={handleScroll} class="min-h-0 flex-1 overflow-y-auto px-8 pb-4">
+      <PeopleTable people={normalizedPeople} />
+    </div>
+
+    <!-- Fade overlay + scroll indicator -->
+    {#if showFade}
+      <div class="pointer-events-none absolute right-0 bottom-0 left-0">
+        <div class="h-12 bg-gradient-to-t from-white to-transparent"></div>
+        <div class="bg-white px-4 py-2 text-center">
+          <span class="text-xs text-slate-500">Scroll for more</span>
+        </div>
+      </div>
     {/if}
   </div>
 {:else}
