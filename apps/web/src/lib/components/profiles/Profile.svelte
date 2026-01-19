@@ -55,7 +55,7 @@
     <div class="mx-auto w-full py-6 text-slate-500">
       <!-- Profile header -->
       <ContentBoxWrapper id="overview">
-        <div class="relative top-2 z-20 mx-auto w-full lg:w-12/12">
+        <div class="mx-auto w-full lg:w-12/12">
           <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
             <ContentBoxHeader title={'IRS Form 990-PF'}>
               <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} />
@@ -65,9 +65,9 @@
 
         <!-- Foundation header -->
         <div
-          class="shadow-blur relative flex min-w-0 flex-auto flex-col overflow-hidden rounded-2xl border-0 bg-white bg-clip-border bg-center p-4"
+          class="shadow-blur relative flex min-w-0 flex-auto flex-col overflow-hidden rounded-b-2xl border-0 bg-white bg-clip-border bg-center px-4 pt-4 pb-0 lg:px-8 lg:pt-8"
         >
-          <FoundationHeader {organization_name} {profile} {formattedTaxPeriodEnd} eobmfRecognizedExempt={profile.eobmf_recognized_exempt} />
+          <FoundationHeader {organization_name} {profile} {formattedTaxPeriodEnd} />
         </div>
       </ContentBoxWrapper>
 

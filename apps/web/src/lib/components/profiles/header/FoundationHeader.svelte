@@ -13,10 +13,9 @@
     organization_name: GrantmakersExtractedDataObj['organization_name'];
     profile: GrantmakersExtractedDataObj;
     formattedTaxPeriodEnd: string;
-    eobmfRecognizedExempt: boolean;
   }
 
-  let { organization_name, profile, formattedTaxPeriodEnd, eobmfRecognizedExempt }: Props = $props();
+  let { organization_name, profile, formattedTaxPeriodEnd }: Props = $props();
 
   let { is_likely_staffed: isStaffed, grants_to_preselected_only: noUnsolicited, has_recent_grants: hasRecentGrants } = profile;
   const firstLetter = upperFirstLetter(organization_name);
@@ -30,7 +29,7 @@
 </script>
 
 <!-- Main container using flex with items-end to align bottom edges -->
-<div class="mt-3 flex flex-wrap items-end justify-center gap-6 sm:mt-0 md:justify-between">
+<div class="flex flex-wrap items-start justify-center gap-6 md:justify-between">
   <!-- Left Column: Avatar + Content Stack -->
   <div class="flex grow items-start gap-4 sm:grow-0">
     <!-- Avatar -->
@@ -42,7 +41,7 @@
       {/if}
     </div>
 
-    <!-- Name, Location, and Approachability stacked -->
+    <!-- Name, Location, and Website stacked -->
     <div class="flex min-w-0 flex-col gap-3">
       <!-- Name and Location (grouped) -->
       <div>
@@ -64,13 +63,6 @@
           {/if}
         </div>
       </div>
-
-      <!-- Approachability badges - directly below name, same left alignment -->
-      {#if eobmfRecognizedExempt}
-        <div class="hidden md:block">
-          <Approachability {noUnsolicited} {isStaffed} {hasRecentGrants} />
-        </div>
-      {/if}
     </div>
   </div>
 
@@ -114,9 +106,20 @@
   </div>
 </div>
 
-<!-- Mobile: Approachability at bottom -->
-{#if eobmfRecognizedExempt}
-  <div class="mt-4 w-full border-t border-slate-200 pt-4 md:hidden">
-    <Approachability {noUnsolicited} {isStaffed} {hasRecentGrants} />
+<!-- Footer: Approachability -->
+<div class="-mx-4 mt-6 flex items-center justify-between gap-6 border-t border-slate-200 bg-slate-50 px-4 py-3 lg:-mx-8 lg:px-8">
+  <div class="shrink-0">
+    {#if hasValidIrsStatus}
+      <Approachability {noUnsolicited} {isStaffed} {hasRecentGrants} />
+    {:else}
+      <span class="inline-flex items-center gap-1.5 rounded bg-transparent px-2.5 py-1 text-xs font-medium text-slate-600">
+        <span class="size-1.5 shrink-0 rounded-full bg-amber-500"></span>
+        Further research is required for this foundation. Review their IRS status.
+      </span>
+    {/if}
   </div>
-{/if}
+
+  <div class="max-w-sm text-xs text-balance text-slate-500">
+    Foundation tax returns are public records. Grantmakers.io is an independent community project that republishes this IRS data.
+  </div>
+</div>

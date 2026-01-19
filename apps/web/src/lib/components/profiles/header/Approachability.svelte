@@ -14,7 +14,7 @@
 
   const DOT_COLORS = { positive: 'bg-emerald-500', caution: 'bg-amber-500' };
   const BADGE_CLASSES =
-    'inline-flex cursor-help items-center gap-1.5 rounded border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-100';
+    'inline-flex cursor-help items-center gap-1.5 rounded bg-transparent px-2.5 py-1 text-xs font-medium text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-100';
 </script>
 
 {#snippet badge(isPositive: boolean, positiveLabel: string, negativeLabel: string, title: string)}
