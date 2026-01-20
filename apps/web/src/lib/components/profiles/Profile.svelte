@@ -71,9 +71,7 @@
         </div>
       </ContentBoxWrapper>
 
-      <ContentBoxInterstitial
-        message="Grantmakers.io ensures equitable access to a critical information source for nonprofits. Forever free."
-      />
+      <ContentBoxInterstitial message="Grantmakers.io ensures equitable access to a critical information source for nonprofits." />
 
       <!-- Community Intelligence Modal Body-->
       <CiModal ein={profile.ein} />
