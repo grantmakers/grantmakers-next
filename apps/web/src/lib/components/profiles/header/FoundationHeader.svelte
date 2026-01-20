@@ -25,8 +25,8 @@
   } = profile;
   const firstLetter = upperFirstLetter(organization_name);
 
-  // Determine IRS status
-  const hasValidIrsStatus = $derived((profile.eobmf_recognized_exempt && profile.eobmf_ruling_date) || !profile.filing_is_final_return);
+  // Determine IRS status - only depends on whether the foundation is recognized as exempt
+  const hasValidIrsStatus = $derived(profile.eobmf_recognized_exempt === true);
   const isDataOutdated = $derived(isOutdatedISOString(profile.last_updated_irs));
 
   // Badge styling constant
@@ -92,10 +92,10 @@
     <span class={BADGE_CLASSES}>
       <span class="size-1.5 shrink-0 rounded-full {hasValidIrsStatus ? 'bg-emerald-500' : 'bg-amber-500'}"></span>
       {#if hasValidIrsStatus}
-        {#if profile.eobmf_ruling_date === '000000'}
-          Recognized
-        {:else if profile.eobmf_ruling_date}
+        {#if profile.eobmf_ruling_date && profile.eobmf_ruling_date !== '000000'}
           Since {formatTaxPeriodDate(profile.eobmf_ruling_date)}
+        {:else}
+          Recognized
         {/if}
       {:else}
         Unknown
@@ -135,7 +135,7 @@
     {:else}
       <span class="inline-flex items-center gap-1.5 rounded bg-transparent px-2.5 py-1 text-xs font-medium text-slate-600">
         <span class="size-1.5 shrink-0 rounded-full bg-amber-500"></span>
-        Further research is required for this foundation. Review their IRS status.
+        Further research is recommended for this foundation. Review their IRS status.
       </span>
     {/if}
   </div>
