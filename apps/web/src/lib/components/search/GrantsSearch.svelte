@@ -4,6 +4,7 @@
   import { onDestroy, onMount } from 'svelte';
   import { pushState, replaceState } from '$app/navigation';
   import instantsearch, { type InstantSearch, type SearchClient, type TemplateParams, type UiState } from 'instantsearch.js';
+  import type { $TSFixMe } from '@repo/shared/typings/irs/all';
   import { history } from 'instantsearch.js/es/lib/routers';
   import {
     searchBox,
@@ -27,6 +28,7 @@
     clearRefinementsStyles,
     refinementListStyles,
     refinementListCompactStyles,
+    highlightStyles,
     panelStyles,
     statsStyles,
     poweredByGrantsStyles,
@@ -145,7 +147,20 @@
       return 'No hits container found';
     }
 
-    // Handle empty state with context-aware messaging
+    // Highlight hits
+    // The docs only provide example for the Hightlights widget in the context of a Hits widget. We use a Hits Connector.
+    // There are likely better ways to do this, but this works for now.
+    const replaceHighlightTags = (value: string) => {
+      if (!value) return '';
+      return value.replace(/<mark>/g, ` <span class="${highlightStyles.highlighted}">`).replace(/<\/mark>/g, '</span>');
+    };
+
+    const getHighlight = (hit: $TSFixMe, attr: string) => {
+      const value = hit._highlightResult?.[attr]?.value || hit[attr];
+      return replaceHighlightTags(value);
+    };
+
+    // --- Empty State ---
     if (items.length === 0) {
       const query = results?.query ?? '';
       const hasQuery = query.length > 0;
@@ -161,17 +176,17 @@
         // User searched, but no results found
         const sanitizedQuery = query.replace(/</g, '&lt;').replace(/>/g, '&gt;');
         emptyMessage = `
-          <div class="py-8 text-center">
-            <p class="text-gray-700">No results found for "<strong>${sanitizedQuery}</strong>"</p>
-            <p class="text-sm text-gray-500 mt-2">Try adjusting your search terms</p>
-          </div>`;
+        <div class="py-8 text-center">
+          <p class="text-gray-700">No results found for "<strong>${sanitizedQuery}</strong>"</p>
+          <p class="text-sm text-gray-500 mt-2">Try adjusting your search terms</p>
+        </div>`;
       } else if (hasRefinements) {
         // Filters applied, but no results
         emptyMessage = `
-          <div class="py-8 text-center">
-            <p class="text-gray-700">No matching grants found</p>
-            <p class="text-sm text-gray-500 mt-2">Try adjusting or clearing your filters</p>
-          </div>`;
+        <div class="py-8 text-center">
+          <p class="text-gray-700">No matching grants found</p>
+          <p class="text-sm text-gray-500 mt-2">Try adjusting or clearing your filters</p>
+        </div>`;
       } else {
         // Initial load with no results (could be ETL or index issue)
         emptyMessage = `<div class="py-6">No searchable grant records found</div>`;
@@ -182,39 +197,49 @@
     }
 
     hitsContainer.innerHTML = `
-      <div class="overflow-x-auto max-w-full">
-        <table class="min-w-full table-auto divide-y divide-gray-300">
-          <thead class="bg-slate-100 rounded">
-            <tr>
-              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 text-center">Amount</th>
-              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Grantee</th>
-              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Purpose</th>
-              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Location</th>
-              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Year</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-200 bg-white">
-            ${items
-              .map((grant) => {
-                return `
-                  <tr class="relative even:bg-gray-50 align-top">
-                    <td class="px-3 py-4 text-sm text-right tabular-nums">${formatToCurrency(grant.grant_amount)}</td>
-                    <td class="px-3 py-4 text-sm">
-                      <div class="text-md font-bold text-gray-900">${grant.grantee_name}</div>
-                    </td>
-                    <td class="px-3 py-4 text-sm">${grant.grant_purpose}</td>
-                    <td class="px-3 py-4 text-sm">
-                      ${grant.grantee_city},<br>
-                      ${grant.grantee_is_foreign && grant.grantee_state === 'Foreign' ? grant.grantee_country : grant.grantee_state}
-                    </td>
-                    <td class="px-3 py-4 text-sm">${grant.tax_year}</td>
-                  </tr>`;
-              })
-              .join('')}
-          </tbody>
-        </table>
-      </div>
-    `;
+    <div class="overflow-x-auto max-w-full">
+      <table class="min-w-full table-auto divide-y divide-gray-300">
+        <thead class="bg-slate-100 rounded">
+          <tr>
+            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 text-center">Amount</th>
+            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Grantee</th>
+            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Purpose</th>
+            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Location</th>
+            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Year</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 bg-white">
+          ${items
+            .map(
+              (grant) => `
+              <tr class="relative even:bg-gray-50 align-top">
+                <td class="px-3 py-4 text-sm text-right tabular-nums">
+                  ${formatToCurrency(grant.grant_amount)}
+                </td>
+                
+                <td class="px-3 py-4 text-sm">
+                  <div class="text-md font-bold text-gray-900">
+                    ${getHighlight(grant, 'grantee_name')}
+                  </div>
+                </td>
+                
+                <td class="px-3 py-4 text-sm">
+                  ${getHighlight(grant, 'grant_purpose')}
+                </td>
+                
+                <td class="px-3 py-4 text-sm">
+                  ${getHighlight(grant, 'grantee_city')},<br>
+                  ${grant.grantee_is_foreign && grant.grantee_state === 'Foreign' ? grant.grantee_country : grant.grantee_state}
+                </td>
+                
+                <td class="px-3 py-4 text-sm">${grant.tax_year}</td>
+              </tr>`,
+            )
+            .join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
   };
 
   onMount(async () => {

@@ -93,7 +93,7 @@ export const hitsFoundationStyles = {
  */
 export const highlightStyles = {
   root: '',
-  highlighted: 'bg-blue-100 dark:bg-blue-800',
+  highlighted: 'bg-indigo-100 text-indigo-900 rounded-sm',
   nonHighlighted: '',
   separator: '',
 } as const;
@@ -104,7 +104,7 @@ export const highlightStyles = {
  */
 export const snippetStyles = {
   root: '',
-  highlighted: 'bg-blue-100 dark:bg-blue-800',
+  highlighted: 'bg-indigo-100 text-indigo-900 rounded-sm',
   nonHighlighted: '',
 } as const;
 
