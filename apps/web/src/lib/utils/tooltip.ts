@@ -28,17 +28,18 @@ export function tooltip(node: HTMLElement, params: TooltipParams = {}) {
   // Ensure content is properly typed
   const content: Content = (custom ?? title ?? label ?? '') as Content;
 
-  // Ensure the "aria-label" attribute is set for accessibility
-  if (!label && content) {
-    node.setAttribute('aria-label', typeof content === 'string' ? content : '');
-  }
-
   // Clear the HTML title attribute to prevent default browser behavior
   node.title = '';
 
   // Create a Tippy instance with the provided content and parameters
+  // Disable ARIA attributes by default to avoid "prohibited ARIA" warnings on non-interactive elements
+  // Callers can override this via params.aria if needed for interactive elements
   const tip = tippyInstance(node as Element, {
     content,
+    aria: {
+      content: null,
+      expanded: false,
+    },
     ...params,
     animation: true,
     arrow: true,

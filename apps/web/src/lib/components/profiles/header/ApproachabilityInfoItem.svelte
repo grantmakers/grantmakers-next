@@ -58,10 +58,10 @@
 
   {#if expanded}
     <div transition:slide class="space-y-2 pl-4">
-      <p class="rounded border border-slate-100 bg-slate-50 p-2 text-sm text-slate-500 italic">
+      <p class="rounded border border-slate-100 bg-slate-50 p-2 text-sm text-slate-600 italic">
         {explanation}
       </p>
-      <p class="text-xs text-slate-400">{stat}</p>
+      <p class="text-xs text-slate-600">{stat}</p>
     </div>
   {/if}
 </div>

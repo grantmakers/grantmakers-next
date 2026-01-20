@@ -50,9 +50,9 @@
     <div class="flex min-w-0 flex-col gap-3">
       <!-- Name and Location (grouped) -->
       <div>
-        <h5 class="mb-1 w-full text-lg font-semibold text-wrap whitespace-normal text-slate-700 md:max-w-md">
+        <h1 class="mb-1 w-full text-lg font-semibold text-wrap whitespace-normal text-slate-700 md:max-w-md">
           {organization_name}
-        </h5>
+        </h1>
         <div class="flex flex-col text-sm leading-normal font-normal sm:flex-row sm:items-center">
           <strong class="text-slate-700">
             {profile.city},
@@ -140,7 +140,7 @@
     {/if}
   </div>
 
-  <div class="max-w-sm text-xs text-balance text-slate-500">
+  <div class="max-w-sm text-right text-xs text-balance text-slate-600">
     Foundation tax returns are public records. Grantmakers.io is a free community project that republishes this IRS data.
   </div>
 </div>

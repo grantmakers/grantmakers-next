@@ -118,7 +118,7 @@
     <div class="border-t border-slate-200 bg-slate-50 px-5 py-4">
       {#if grantsFacets && grantsFacets[0].grant_count > 0}
         <div class="hidden sm:block">
-          <h2 class="mb-2 text-xs font-semibold tracking-wider text-slate-900 uppercase">Grant Clusters</h2>
+          <h3 class="mb-2 text-xs font-semibold tracking-wider text-slate-900 uppercase">Grant Clusters</h3>
           <div class="w-full min-w-0">
             <BarGrantsSnapshot rawData={grantsFacets[0].facets.amount} {grantCount} />
           </div>

@@ -132,8 +132,8 @@
                     <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white break-words">
                       <div class="mb-0 bg-slate-200 p-4">
                         <div class="flex items-center justify-between">
-                          <h6 class="mb-0"><SectionAnchor title="Grants" sectionId="grants" /></h6>
-                          <span class="hidden text-sm text-slate-500 sm:block">Grants reported on IRS Form 990-PF</span>
+                          <h2 class="mb-0"><SectionAnchor title="Grants" sectionId="grants" /></h2>
+                          <span class="hidden text-sm text-slate-600 sm:block">Grants reported on IRS Form 990-PF</span>
                           <img src={irsLogo} alt="IRS logo" class="max-h-6" height={24} width={48} />
                         </div>
                       </div>
@@ -282,7 +282,7 @@
                 </svg>
               </div>
 
-              <h3 class="mb-6 text-lg font-semibold text-slate-900">If this profile helped you, why not...</h3>
+              <p class="mb-6 text-lg font-semibold text-slate-900">If this profile helped you, why not...</p>
               <a
                 href="/about/donate/"
                 class="inline-flex items-center gap-x-2 rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-slate-800 hover:shadow-md active:scale-95 active:transform"
@@ -296,7 +296,7 @@
                   />
                 </svg>
               </a>
-              <p class="mt-6 max-w-md text-slate-600">Grantmakers.io is entirely community-funded</p>
+              <h3 class="mt-6 max-w-md text-slate-600">Grantmakers.io is entirely community-funded</h3>
             </div>
           </div>
         </ContentBoxWrapper>
