@@ -203,7 +203,7 @@ export const clearRefinementsStyles = {
  * Displays search results count and timing
  */
 export const statsStyles = {
-  root: 'flex items-center text-sm font-medium text-slate-700',
+  root: 'flex items-center text-sm font-medium text-slate-700 lg:min-w-28',
   text: '',
 } as const;
 
