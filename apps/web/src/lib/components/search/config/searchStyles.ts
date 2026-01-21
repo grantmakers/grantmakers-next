@@ -130,11 +130,16 @@ export const poweredByGrantsStyles = {
 /**
  * Panel widget styles
  * Used to wrap widgets with headers/footers
+ * Includes collapsible panel support via InstantSearch's built-in collapse API
  */
 export const panelStyles = {
   root: '',
   noRefinementRoot: 'hidden',
-  header: 'mb-3 flex w-full items-center justify-between border-b border-gray-200 bg-white pb-1 text-sm font-medium text-gray-900',
+  collapsibleRoot: '',
+  collapsedRoot: '[&_.ais-Panel-body]:hidden',
+  collapseButton: 'absolute inset-0 flex items-center justify-end cursor-pointer',
+  collapseIcon: 'size-5 text-gray-400 transition-transform duration-200',
+  header: 'relative mb-3 flex w-full items-center justify-between border-b border-gray-200 bg-white pb-1 text-sm font-medium text-gray-900',
   body: '',
   footer: '',
 } as const;
@@ -185,12 +190,11 @@ export const currentRefinementsStyles = {
 
 /**
  * ClearRefinements widget styles
- * "Clear all" button to remove all active filters
+ * "Clear all" text link to remove all active filters
  */
 export const clearRefinementsStyles = {
-  root: 'flex justify-center',
-  button:
-    'w-full rounded-md bg-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-300 transition-colors cursor-pointer text-center',
+  root: '',
+  button: '!text-sm !text-indigo-700 !hover:text-indigo-900 transition-colors cursor-pointer',
   disabledButton: 'hidden',
 } as const;
 
@@ -199,7 +203,7 @@ export const clearRefinementsStyles = {
  * Displays search results count and timing
  */
 export const statsStyles = {
-  root: 'text-xs',
+  root: 'flex items-center text-sm font-medium text-slate-700',
   text: '',
 } as const;
 
@@ -207,7 +211,7 @@ export const statsStyles = {
  * Pagination widget styles
  */
 export const paginationStyles = {
-  root: 'flex justify-center mt-8',
+  root: 'flex justify-center mt-8 mb-8',
   list: 'flex gap-2',
   item: 'hidden sm:block',
   link: 'px-3 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50',

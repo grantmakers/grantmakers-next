@@ -16,10 +16,9 @@
     panel as panelWidget,
     pagination,
   } from 'instantsearch.js/es/widgets';
-  import { connectHits, connectConfigure, connectMenu } from 'instantsearch.js/es/connectors';
+  import { connectHits, connectConfigure } from 'instantsearch.js/es/connectors';
   import type { ConfigureRenderState } from 'instantsearch.js/es/connectors/configure/connectConfigure';
   import type { HitsRenderState } from 'instantsearch.js/es/connectors/hits/connectHits';
-  import type { MenuRenderState } from 'instantsearch.js/es/connectors/menu/connectMenu';
   import type { PlainSearchParameters } from 'algoliasearch-helper';
   import { formatToCurrency, formatNumber } from '@repo/shared/functions/formatters/numbers';
   import {
@@ -53,6 +52,9 @@
     label: string;
     container: string;
     compact?: boolean;
+    collapsedByDefault?: boolean;
+    showMore?: boolean;
+    sortBy?: string[];
   }
 
   interface RouteState {
@@ -67,14 +69,12 @@
 
   let mobileFiltersOpen = $state(false);
   let searchAllFoundations = $state(false);
-  let latestTaxYear = $state<string | null>(null);
-  let taxYearFilterMode = $state<'all' | 'current'>('all');
-  let refineTaxYear: ((value: string) => void) | null = null;
 
   let algoliaInstance: AlgoliaInstance;
   let refineConfig: ConfigureRenderState['refine'] | null = null;
 
   const FACETS: readonly FacetConfig[] = [
+    { attribute: 'tax_year', label: 'Tax Year', container: '#tax-year', collapsedByDefault: true, showMore: false, sortBy: ['name:desc'] },
     { attribute: 'grantee_state', label: 'State', container: '#state' },
     { attribute: 'grantee_city', label: 'City', container: '#location' },
     { attribute: 'grantee_name', label: 'Recipient', container: '#recipient', compact: true },
@@ -86,56 +86,85 @@
     { value: 'all', label: 'all foundations' },
   ] as const;
 
-  const TAX_YEAR_FILTER_OPTIONS = [
-    { value: 'all', label: 'all available' },
-    { value: 'current', label: 'the current' },
-  ] as const;
-
   /**
    * Factory function to create a Panel-wrapped RefinementList widget
-   * Uses shared template and styling for all facets (DRY principle)
+   * Supports collapsible panels with optional collapsed-by-default behavior
    */
   const createFacetWidget = (facet: FacetConfig) => {
+    const isCollapsible = facet.collapsedByDefault !== undefined;
+
     const panelWrappedRefinementList = panelWidget({
       templates: {
-        header(data, { html }) {
+        header(_data, { html }) {
           return html`<span class="font-medium text-gray-900">${facet.label}</span>`;
         },
-      },
-      hidden(options) {
-        return options.results?.nbHits === 0;
-      },
-      cssClasses: panelStyles,
-    })(refinementList);
-
-    return panelWrappedRefinementList({
-      container: facet.container,
-      attribute: facet.attribute,
-      limit: 5,
-      showMore: true,
-      cssClasses: facet.compact ? refinementListCompactStyles : refinementListStyles,
-      templates: {
-        showMoreText(data: { isShowingMore: boolean }, { html }: TemplateParams) {
-          const text = data.isShowingMore ? 'Show less' : 'Show more';
-          const chevron =
-            data.isShowingMore ?
-              html`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4">
-                <path
-                  fill-rule="evenodd"
-                  d="M9.47 5.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 1 1-1.06 1.06L10 7.56 6.28 11.28a.75.75 0 1 1-1.06-1.06l4.25-4.25Z"
-                  clip-rule="evenodd"
-                />
-              </svg>`
-            : html`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4">
+        // Render chevron icon for collapsible panels
+        ...(isCollapsible && {
+          collapseButtonText({ collapsed }: { collapsed: boolean }, { html }: TemplateParams) {
+            return html`
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                class="${collapsed ? '' : 'rotate-180'} size-5 text-gray-400 transition-transform duration-200"
+              >
                 <path
                   fill-rule="evenodd"
                   d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
                   clip-rule="evenodd"
                 />
-              </svg>`;
-          return html`<span class="flex items-center gap-1 text-sm text-slate-600 hover:text-slate-800">${text} ${chevron}</span>`;
-        },
+              </svg>
+            `;
+          },
+        }),
       },
+      hidden(options) {
+        return options.results?.nbHits === 0;
+      },
+      // Set initial collapsed state - only applies when collapsed function is defined
+      ...(isCollapsible && {
+        collapsed() {
+          return facet.collapsedByDefault ?? false;
+        },
+      }),
+      cssClasses: panelStyles,
+    })(refinementList);
+
+    // Determine showMore: default true unless explicitly set to false
+    const showMore = facet.showMore !== false;
+
+    return panelWrappedRefinementList({
+      container: facet.container,
+      attribute: facet.attribute,
+      limit: showMore ? 5 : 20,
+      showMore,
+      ...(facet.sortBy && { sortBy: facet.sortBy }),
+      cssClasses: facet.compact ? refinementListCompactStyles : refinementListStyles,
+      templates:
+        showMore ?
+          {
+            showMoreText(data: { isShowingMore: boolean }, { html }: TemplateParams) {
+              const text = data.isShowingMore ? 'Show less' : 'Show more';
+              const chevron =
+                data.isShowingMore ?
+                  html`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4">
+                    <path
+                      fill-rule="evenodd"
+                      d="M9.47 5.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 1 1-1.06 1.06L10 7.56 6.28 11.28a.75.75 0 1 1-1.06-1.06l4.25-4.25Z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>`
+                : html`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4">
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>`;
+              return html`<span class="flex items-center gap-1 text-sm text-indigo-700 hover:text-indigo-900">${text} ${chevron}</span>`;
+            },
+          }
+        : {},
     });
   };
 
@@ -148,7 +177,7 @@
     }
 
     // Highlight hits
-    // The docs only provide example for the Hightlights widget in the context of a Hits widget. We use a Hits Connector.
+    // The docs only provide example for the Highlights widget in the context of a Hits widget. We use a Hits Connector.
     // There are likely better ways to do this, but this works for now.
     const replaceHighlightTags = (value: string) => {
       if (!value) return '';
@@ -294,7 +323,7 @@
               grantee_city: indexUiState.refinementList?.grantee_city?.join('~'),
               grantee_name: indexUiState.refinementList?.grantee_name?.join('~'),
               grant_purpose: indexUiState.refinementList?.grant_purpose?.join('~'),
-              tax_year: indexUiState.menu?.tax_year,
+              tax_year: indexUiState.refinementList?.tax_year?.join('~'),
               page: indexUiState.page,
             };
           },
@@ -308,16 +337,12 @@
             if (routeState.grantee_city) refinementList.grantee_city = routeState.grantee_city.split('~');
             if (routeState.grantee_name) refinementList.grantee_name = routeState.grantee_name.split('~');
             if (routeState.grant_purpose) refinementList.grant_purpose = routeState.grant_purpose.split('~');
-
-            // Only include menu if tax_year is set
-            const menu: { [attribute: string]: string } = {};
-            if (routeState.tax_year) menu.tax_year = routeState.tax_year;
+            if (routeState.tax_year) refinementList.tax_year = routeState.tax_year.split('~');
 
             return {
               [PUBLIC_ALGOLIA_INDEX_NAME_GRANTS]: {
                 query: routeState.query,
                 refinementList,
-                menu,
                 page: routeState.page,
               },
             };
@@ -337,33 +362,6 @@
       refineConfig = renderOptions.refine;
     };
     const customConfigure = connectConfigure(renderConfigure);
-
-    // Custom Tax Year menu widget using connector pattern for single-select dropdown
-    const renderTaxYearMenu = (renderOptions: MenuRenderState) => {
-      const { items, refine } = renderOptions;
-
-      // Store refine function for use in event handlers
-      refineTaxYear = refine;
-
-      // Sort items by value descending and get the latest year
-      const sortedItems = [...items].sort((a, b) => b.value.localeCompare(a.value));
-      const latest = sortedItems[0];
-
-      // Update reactive state with the latest year
-      if (latest) {
-        latestTaxYear = latest.value;
-      }
-
-      // Determine current filter mode based on refinement state
-      const refinedItem = items.find((item) => item.isRefined);
-      if (refinedItem) {
-        // If a specific year is refined, we're in 'current' mode
-        taxYearFilterMode = 'current';
-      } else {
-        taxYearFilterMode = 'all';
-      }
-    };
-    const customTaxYearMenu = connectMenu(renderTaxYearMenu);
 
     algoliaInstance.addWidgets([
       customConfigure({
@@ -409,7 +407,6 @@
           // Map attribute names to human-readable labels
           const labelMap: { [key: string]: string } = {
             ...Object.fromEntries(FACETS.map((f) => [f.attribute, f.label])),
-            tax_year: 'Tax Year',
           };
           return items.map((item) => ({
             ...item,
@@ -418,24 +415,30 @@
         },
       }),
 
+      // Desktop Clear Refinements
       clearRefinements({
         container: '#clear-refinements',
         cssClasses: clearRefinementsStyles,
         templates: {
           resetLabel(_data, { html }) {
-            return html`Clear All Filters`;
+            return html`Clear all`;
+          },
+        },
+      }),
+
+      // Mobile Clear Refinements (same widget, different container)
+      clearRefinements({
+        container: '#clear-refinements-mobile',
+        cssClasses: clearRefinementsStyles,
+        templates: {
+          resetLabel(_data, { html }) {
+            return html`Clear all`;
           },
         },
       }),
 
       // Add all facet widgets
       ...facetWidgets,
-
-      customTaxYearMenu({
-        attribute: 'tax_year',
-        sortBy: ['name:desc'],
-        limit: 20,
-      }),
 
       customHits({}),
 
@@ -476,26 +479,6 @@
       filters: searchAllFoundations ? '' : 'ein:' + ein,
     } as PlainSearchParameters);
   }
-
-  /**
-   * Handle tax year filter selection change
-   * Uses connectMenu's refine() to toggle between all years and current year
-   */
-  function handleTaxYearFilterChange(event: Event) {
-    const select = event.target as HTMLElement & { value: string };
-    const mode = select.value as 'all' | 'current';
-    taxYearFilterMode = mode;
-
-    if (!refineTaxYear) return;
-
-    if (mode === 'all') {
-      // Clear the refinement to show all years
-      refineTaxYear('');
-    } else if (mode === 'current' && latestTaxYear) {
-      // Refine to the latest (current) year
-      refineTaxYear(latestTaxYear);
-    }
-  }
 </script>
 
 <!--
@@ -507,7 +490,7 @@
   class="lg:max-w-8xl mx-auto max-w-full scroll-mt-24 px-4 py-8 sm:px-6 lg:px-8"
   data-sveltekit-preload-data="tap"
 >
-  <div class="mb-4 flex flex-col items-center gap-4 lg:mb-8 lg:flex-row lg:items-stretch lg:justify-between lg:gap-8">
+  <div class="flex flex-col items-center gap-4 lg:flex-row lg:items-stretch lg:justify-between lg:gap-8">
     <div class="w-full flex-1">
       <!-- Search Box Section -->
       <div class="flex gap-8">
@@ -566,154 +549,79 @@
 
   <div class="flex gap-8">
     <div class="min-w-0 flex-1">
-      <!-- Current Refinements - Only visible when filters are active -->
-      <div class="mb-4 flex flex-wrap items-center gap-2 empty:hidden has-[.hidden]:hidden">
+      <!-- Mini-filter bar -->
+      <div class="hidden flex-wrap items-center gap-1.5 p-2 px-2 text-sm text-slate-500 md:flex">
+        <span>Searching grants from</span>
+        <!-- Tailwind Elements web components cause hydration mismatch during SSR; render only on client -->
+        {#if browser}
+          <el-select
+            id="ein-filter-select"
+            name="ein-scope"
+            value={searchAllFoundations ? 'all' : 'current'}
+            class="inline-block"
+            onchange={handleEinFilterToggle}
+          >
+            <button
+              type="button"
+              class="grid cursor-default grid-cols-1 rounded-md bg-white py-0.5 pr-1.5 pl-2 text-left text-sm text-slate-500 outline-1 -outline-offset-1 outline-gray-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:focus-visible:outline-indigo-500"
+            >
+              <el-selectedcontent class="col-start-1 row-start-1 truncate pr-4">
+                {EIN_FILTER_OPTIONS.find((opt) => opt.value === (searchAllFoundations ? 'all' : 'current'))?.label}
+              </el-selectedcontent>
+              <svg
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                data-slot="icon"
+                aria-hidden="true"
+                class="col-start-1 row-start-1 size-4 self-center justify-self-end text-gray-400"
+              >
+                <path
+                  d="M5.22 10.22a.75.75 0 0 1 1.06 0L8 11.94l1.72-1.72a.75.75 0 1 1 1.06 1.06l-2.25 2.25a.75.75 0 0 1-1.06 0l-2.25-2.25a.75.75 0 0 1 0-1.06ZM10.78 5.78a.75.75 0 0 1-1.06 0L8 4.06 6.28 5.78a.75.75 0 0 1-1.06-1.06l2.25-2.25a.75.75 0 0 1 1.06 0l2.25 2.25a.75.75 0 0 1 0 1.06Z"
+                  clip-rule="evenodd"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </button>
+
+            <el-options
+              anchor="bottom start"
+              popover="manual"
+              class="max-h-60 min-w-(--button-width) overflow-auto rounded-md bg-white py-1 text-base shadow-lg outline-1 outline-black/5 [--anchor-gap:--spacing(1)] data-leave:transition data-leave:transition-discrete data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10"
+            >
+              {#each EIN_FILTER_OPTIONS as option}
+                <el-option
+                  value={option.value}
+                  class="group/option relative block cursor-default py-2 pr-9 pl-3 text-slate-900 select-none focus:bg-indigo-600 focus:text-white focus:outline-hidden dark:text-white dark:focus:bg-indigo-500"
+                >
+                  <span class="block font-normal whitespace-nowrap group-aria-selected/option:font-semibold">{option.label}</span>
+                  <span
+                    class="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600 group-not-aria-selected/option:hidden group-focus/option:text-white in-[el-selectedcontent]:hidden dark:text-indigo-400"
+                  >
+                    <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5">
+                      <path
+                        d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                        clip-rule="evenodd"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                </el-option>
+              {/each}
+            </el-options>
+          </el-select>
+        {:else}
+          <span class="font-medium">this foundation</span>
+        {/if}
+        <span class="mr-2">across these fields:</span>
+      </div>
+
+      <!-- Stats + Current Refinements -->
+      <div class="hidden min-h-16 flex-wrap items-center gap-2 px-2 py-4 md:flex">
+        <div id="stats"></div>
         <div id="current-refinements" class="contents"></div>
       </div>
 
-      <div class="rounded-lg bg-white p-6 shadow">
-        <!-- Stats + Mini-filter bar -->
-        <div class="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-gray-100 pb-3">
-          <div id="stats" class="text-sm font-medium text-slate-600"></div>
-
-          <!-- Separator -->
-          <span class="hidden text-slate-300 md:block">|</span>
-
-          <!-- Mini-filter bar -->
-          <div class="hidden flex-wrap items-center gap-1.5 text-sm text-slate-600 md:flex">
-            <span>Searching grants from</span>
-            <!-- Tailwind Elements web components cause hydration mismatch during SSR; render only on client -->
-            {#if browser}
-              <el-select
-                id="ein-filter-select"
-                name="ein-scope"
-                value={searchAllFoundations ? 'all' : 'current'}
-                class="inline-block"
-                onchange={handleEinFilterToggle}
-              >
-                <button
-                  type="button"
-                  class="grid cursor-default grid-cols-1 rounded-md bg-white py-0.5 pr-1.5 pl-2 text-left text-sm text-slate-600 outline-1 -outline-offset-1 outline-gray-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:focus-visible:outline-indigo-500"
-                >
-                  <el-selectedcontent class="col-start-1 row-start-1 truncate pr-4">
-                    {EIN_FILTER_OPTIONS.find((opt) => opt.value === (searchAllFoundations ? 'all' : 'current'))?.label}
-                  </el-selectedcontent>
-                  <svg
-                    viewBox="0 0 16 16"
-                    fill="currentColor"
-                    data-slot="icon"
-                    aria-hidden="true"
-                    class="col-start-1 row-start-1 size-4 self-center justify-self-end text-gray-400"
-                  >
-                    <path
-                      d="M5.22 10.22a.75.75 0 0 1 1.06 0L8 11.94l1.72-1.72a.75.75 0 1 1 1.06 1.06l-2.25 2.25a.75.75 0 0 1-1.06 0l-2.25-2.25a.75.75 0 0 1 0-1.06ZM10.78 5.78a.75.75 0 0 1-1.06 0L8 4.06 6.28 5.78a.75.75 0 0 1-1.06-1.06l2.25-2.25a.75.75 0 0 1 1.06 0l2.25 2.25a.75.75 0 0 1 0 1.06Z"
-                      clip-rule="evenodd"
-                      fill-rule="evenodd"
-                    />
-                  </svg>
-                </button>
-
-                <el-options
-                  anchor="bottom start"
-                  popover="manual"
-                  class="max-h-60 min-w-(--button-width) overflow-auto rounded-md bg-white py-1 text-base shadow-lg outline-1 outline-black/5 [--anchor-gap:--spacing(1)] data-leave:transition data-leave:transition-discrete data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10"
-                >
-                  {#each EIN_FILTER_OPTIONS as option}
-                    <el-option
-                      value={option.value}
-                      class="group/option relative block cursor-default py-2 pr-9 pl-3 text-gray-900 select-none focus:bg-indigo-600 focus:text-white focus:outline-hidden dark:text-white dark:focus:bg-indigo-500"
-                    >
-                      <span class="block font-normal whitespace-nowrap group-aria-selected/option:font-semibold">{option.label}</span>
-                      <span
-                        class="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600 group-not-aria-selected/option:hidden group-focus/option:text-white in-[el-selectedcontent]:hidden dark:text-indigo-400"
-                      >
-                        <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5">
-                          <path
-                            d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
-                            clip-rule="evenodd"
-                            fill-rule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                    </el-option>
-                  {/each}
-                </el-options>
-              </el-select>
-            {:else}
-              <span class="font-medium">this foundation</span>
-            {/if}
-
-            <span>across</span>
-
-            <!-- Tailwind Elements web components cause hydration mismatch during SSR; render only on client -->
-            {#if browser}
-              <el-select
-                id="tax-year-select"
-                name="tax-year-scope"
-                value={taxYearFilterMode}
-                class="inline-block"
-                onchange={handleTaxYearFilterChange}
-                disabled={!latestTaxYear}
-              >
-                <button
-                  type="button"
-                  class="grid cursor-default grid-cols-1 rounded-md bg-white py-0.5 pr-1.5 pl-2 text-left text-sm text-slate-600 outline-1 -outline-offset-1 outline-gray-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:focus-visible:outline-indigo-500"
-                >
-                  <el-selectedcontent class="col-start-1 row-start-1 truncate pr-4">
-                    {TAX_YEAR_FILTER_OPTIONS.find((opt) => opt.value === taxYearFilterMode)?.label}{(
-                      taxYearFilterMode === 'current' && latestTaxYear
-                    ) ?
-                      ` (${latestTaxYear})`
-                    : ''}
-                  </el-selectedcontent>
-                  <svg
-                    viewBox="0 0 16 16"
-                    fill="currentColor"
-                    data-slot="icon"
-                    aria-hidden="true"
-                    class="col-start-1 row-start-1 size-4 self-center justify-self-end text-gray-400"
-                  >
-                    <path
-                      d="M5.22 10.22a.75.75 0 0 1 1.06 0L8 11.94l1.72-1.72a.75.75 0 1 1 1.06 1.06l-2.25 2.25a.75.75 0 0 1-1.06 0l-2.25-2.25a.75.75 0 0 1 0-1.06ZM10.78 5.78a.75.75 0 0 1-1.06 0L8 4.06 6.28 5.78a.75.75 0 0 1-1.06-1.06l2.25-2.25a.75.75 0 0 1 1.06 0l2.25 2.25a.75.75 0 0 1 0 1.06Z"
-                      clip-rule="evenodd"
-                      fill-rule="evenodd"
-                    />
-                  </svg>
-                </button>
-
-                <el-options
-                  anchor="bottom start"
-                  popover="manual"
-                  class="max-h-60 min-w-(--button-width) overflow-auto rounded-md bg-white py-1 text-base shadow-lg outline-1 outline-black/5 [--anchor-gap:--spacing(1)] data-leave:transition data-leave:transition-discrete data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10"
-                >
-                  {#each TAX_YEAR_FILTER_OPTIONS as option}
-                    <el-option
-                      value={option.value}
-                      class="group/option relative block cursor-default py-2 pr-9 pl-3 text-gray-900 select-none focus:bg-indigo-600 focus:text-white focus:outline-hidden dark:text-white dark:focus:bg-indigo-500"
-                    >
-                      <span class="block font-normal whitespace-nowrap group-aria-selected/option:font-semibold">{option.label}</span>
-                      <span
-                        class="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600 group-not-aria-selected/option:hidden group-focus/option:text-white in-[el-selectedcontent]:hidden dark:text-indigo-400"
-                      >
-                        <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5">
-                          <path
-                            d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
-                            clip-rule="evenodd"
-                            fill-rule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                    </el-option>
-                  {/each}
-                </el-options>
-              </el-select>
-            {:else}
-              <span class="font-medium">all available</span>
-            {/if}
-
-            <span>tax filing{taxYearFilterMode === 'all' ? 's' : ''}</span>
-          </div>
-        </div>
+      <div class="overflow-hidden rounded-lg bg-white shadow">
         <!-- InstantSearch Hits -->
         <div id="hits">
           {@render hitsSkeleton()}
@@ -736,7 +644,10 @@
     >
       <!-- Mobile Header -->
       <div class="mb-6 flex items-center justify-between lg:hidden">
-        <h2 class="text-lg font-medium text-gray-900">Filters</h2>
+        <div class="flex items-center gap-4">
+          <h2 class="text-lg font-medium text-gray-900">Filters</h2>
+          <div id="clear-refinements-mobile"></div>
+        </div>
         <button
           type="button"
           class="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
@@ -749,14 +660,18 @@
         </button>
       </div>
 
-      <div class="sticky top-8 space-y-6 rounded-lg lg:bg-white lg:p-6 lg:shadow">
+      <div class="sticky top-0 space-y-6 rounded-lg lg:bg-white lg:p-6 lg:shadow">
+        <!-- Desktop Header: Filters title + Clear all -->
+        <div class="hidden items-center justify-between border-b border-gray-200 pb-3 lg:flex">
+          <h2 class="text-base font-semibold text-gray-900">Filters</h2>
+          <div id="clear-refinements"></div>
+        </div>
         <!-- InstantSearch RefinementLists -->
+        <div id="tax-year"></div>
         <div id="state"></div>
         <div id="location"></div>
         <div id="recipient"></div>
         <div id="purpose"></div>
-        <!-- Clear All Refinements -->
-        <div id="clear-refinements" class="border-t border-gray-200 pt-4"></div>
       </div>
     </aside>
   </div>
