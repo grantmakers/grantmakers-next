@@ -60,7 +60,7 @@ export const searchBoxGrantsStyles = {
   root: '',
   form: 'relative flex flex-row-reverse rounded-md bg-white dark:bg-gray-900 border-none',
   input:
-    'block min-w-0 grow h-12 pl-11 pr-4 text-md bg-slate-100 focus:bg-white md:text-lg text-gray-900 border-none placeholder:text-gray-500 dark:text-white dark:placeholder:text-gray-500 rounded ring-indigo-600',
+    'block min-w-0 grow h-12 pl-11 pr-4 text-md bg-white focus:bg-white md:text-lg text-gray-900 border-none placeholder:text-gray-500 dark:text-white dark:placeholder:text-gray-500 rounded ring-indigo-600',
   submit: 'hidden',
   submitIcon: 'hidden',
   reset: 'absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400',

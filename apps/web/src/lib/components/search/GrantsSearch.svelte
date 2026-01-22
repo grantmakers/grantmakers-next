@@ -495,7 +495,7 @@
       <!-- Search Box Section -->
       <div class="flex gap-8">
         <div class="grow">
-          <div class="relative rounded-lg bg-slate-100 p-2 shadow md:p-4 dark:bg-gray-800">
+          <div class="relative flex items-center justify-between gap-2 rounded-lg bg-slate-100 p-2 shadow md:p-4 lg:gap-4 dark:bg-gray-800">
             <svg
               viewBox="0 0 20 20"
               fill="currentColor"
@@ -508,7 +508,10 @@
                 clip-rule="evenodd"
               />
             </svg>
-            <div id="search"></div>
+            <div id="search" class="grow"></div>
+            <div class="lg:flex lg:w-64 lg:shrink-0 lg:items-center lg:justify-center">
+              <div id="powered-by"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -516,7 +519,7 @@
 
     <!-- Mobile Layout: Filters + Powered By (Row 2 on Mobile) -->
     <!-- Desktop Layout: Filters hidden, Powered By joins Row 1 via lg:contents -->
-    <div class="flex w-full items-center justify-between gap-4 lg:contents lg:w-auto">
+    <div class="flex w-full items-center justify-between gap-4 lg:hidden">
       <!-- Mobile Filter Toggle -->
       <button
         type="button"
@@ -550,7 +553,7 @@
   <div class="flex gap-8">
     <div class="min-w-0 flex-1">
       <!-- Mini-filter bar -->
-      <div class="hidden flex-wrap items-center gap-1.5 p-2 px-2 text-sm text-slate-500 md:flex">
+      <div class="hidden flex-wrap items-center gap-1.5 rounded bg-slate-50 p-2 px-2 text-sm text-slate-500 md:flex">
         <span>Searching grants from</span>
         <!-- Tailwind Elements web components cause hydration mismatch during SSR; render only on client -->
         {#if browser}
@@ -612,9 +615,18 @@
         {:else}
           <span class="font-medium">this foundation</span>
         {/if}
-        <span class="mr-2">across these fields:</span>
+        <span class="mr-2">across</span>
+        {#if browser}
+          <!-- TODO Add refineSearchableAttributes dropdown here -->
+        {:else}
+          <span class="font-medium">all fields (name, city, purpose)</span>
+        {/if}
       </div>
+    </div>
+  </div>
 
+  <div class="flex gap-8">
+    <div class="min-w-0 flex-1">
       <!-- Stats + Current Refinements -->
       <div class="hidden min-h-16 flex-wrap items-center gap-2 px-2 py-4 md:flex">
         <div id="stats"></div>
