@@ -86,6 +86,24 @@
     { value: 'all', label: 'all foundations' },
   ] as const;
 
+  // Searchable fields configuration for the "Fields to Search" dropdown
+  const SEARCHABLE_FIELDS = [
+    { id: 'grantee_name', label: 'Grantee Name' },
+    { id: 'grantee_city', label: 'Grantee City' },
+    { id: 'grant_purpose', label: 'Grant Purpose' },
+  ] as const;
+
+  // Fields to Search dropdown state
+  let selectedFields = $state<string[]>(SEARCHABLE_FIELDS.map((f) => f.id));
+  let fieldsDropdownOpen = $state(false);
+  let hoveredField = $state<string | null>(null);
+  let showFieldWarning = $state(false);
+  let fieldWarningTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  // Derived state for label
+  const allFieldsSelected = $derived(selectedFields.length === SEARCHABLE_FIELDS.length);
+  const fieldsLabel = $derived(allFieldsSelected ? 'all fields' : 'selected fields');
+
   /**
    * Factory function to create a Panel-wrapped RefinementList widget
    * Supports collapsible panels with optional collapsed-by-default behavior
@@ -461,6 +479,9 @@
     if (algoliaInstance) {
       algoliaInstance.dispose();
     }
+    if (fieldWarningTimeout) {
+      clearTimeout(fieldWarningTimeout);
+    }
   });
 
   /**
@@ -473,11 +494,88 @@
 
     if (!refineConfig) return;
 
-    // Use refine() to update the filter dynamically
+    // Use refine() to update the filter dynamically, including current restrictSearchableAttributes
     refineConfig({
       hitsPerPage: 15,
       filters: searchAllFoundations ? '' : 'ein:' + ein,
+      ...(selectedFields.length < SEARCHABLE_FIELDS.length && { restrictSearchableAttributes: selectedFields }),
     } as PlainSearchParameters);
+  }
+
+  /**
+   * Update Algolia restrictSearchableAttributes based on selected fields
+   */
+  function updateRestrictSearchableAttributes() {
+    if (!refineConfig) return;
+
+    refineConfig({
+      hitsPerPage: 15,
+      filters: searchAllFoundations ? '' : 'ein:' + ein,
+      // Only pass restrictSearchableAttributes if not all fields are selected
+      ...(selectedFields.length < SEARCHABLE_FIELDS.length && { restrictSearchableAttributes: selectedFields }),
+    } as PlainSearchParameters);
+  }
+
+  /**
+   * Toggle field selection with last-field protection
+   */
+  function handleFieldToggle(fieldId: string) {
+    const isCurrentlySelected = selectedFields.includes(fieldId);
+
+    // Prevent unchecking the last field
+    if (isCurrentlySelected && selectedFields.length === 1) {
+      showFieldWarning = true;
+      // Clear any existing timeout
+      if (fieldWarningTimeout) clearTimeout(fieldWarningTimeout);
+      fieldWarningTimeout = setTimeout(() => {
+        showFieldWarning = false;
+      }, 2000);
+      return;
+    }
+
+    showFieldWarning = false;
+    if (isCurrentlySelected) {
+      selectedFields = selectedFields.filter((id) => id !== fieldId);
+    } else {
+      selectedFields = [...selectedFields, fieldId];
+    }
+
+    updateRestrictSearchableAttributes();
+  }
+
+  /**
+   * Select all fields
+   */
+  function handleSelectAllFields() {
+    showFieldWarning = false;
+    selectedFields = SEARCHABLE_FIELDS.map((f) => f.id);
+    updateRestrictSearchableAttributes();
+  }
+
+  /**
+   * Select only a specific field
+   */
+  function handleSelectOnlyField(fieldId: string) {
+    showFieldWarning = false;
+    selectedFields = [fieldId];
+    updateRestrictSearchableAttributes();
+  }
+
+  /**
+   * Close fields dropdown
+   */
+  function closeFieldsDropdown() {
+    fieldsDropdownOpen = false;
+    hoveredField = null;
+  }
+
+  /**
+   * Handle keyboard events for the fields dropdown
+   */
+  function handleFieldsDropdownKeydown(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      closeFieldsDropdown();
+    }
   }
 </script>
 
@@ -617,7 +715,118 @@
         {/if}
         <span class="mr-2">across</span>
         {#if browser}
-          <!-- TODO Add refineSearchableAttributes dropdown here -->
+          <!-- Fields to Search Dropdown -->
+          <div class="relative" onkeydown={handleFieldsDropdownKeydown}>
+            <!-- Trigger Button -->
+            <button
+              type="button"
+              onclick={() => (fieldsDropdownOpen = !fieldsDropdownOpen)}
+              aria-haspopup="listbox"
+              aria-expanded={fieldsDropdownOpen}
+              aria-label="Fields to search"
+              class="grid cursor-default grid-cols-1 rounded-md bg-white py-0.5 pr-1.5 pl-2 text-left text-sm text-slate-500 outline-1 -outline-offset-1 outline-gray-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:focus-visible:outline-indigo-500"
+            >
+              <span class="col-start-1 row-start-1 truncate pr-4">{fieldsLabel}</span>
+              <svg
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                aria-hidden="true"
+                class="col-start-1 row-start-1 size-4 self-center justify-self-end text-gray-400"
+              >
+                <path
+                  d="M5.22 10.22a.75.75 0 0 1 1.06 0L8 11.94l1.72-1.72a.75.75 0 1 1 1.06 1.06l-2.25 2.25a.75.75 0 0 1-1.06 0l-2.25-2.25a.75.75 0 0 1 0-1.06ZM10.78 5.78a.75.75 0 0 1-1.06 0L8 4.06 6.28 5.78a.75.75 0 0 1-1.06-1.06l2.25-2.25a.75.75 0 0 1 1.06 0l2.25 2.25a.75.75 0 0 1 0 1.06Z"
+                  clip-rule="evenodd"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </button>
+
+            <!-- Dropdown Panel -->
+            {#if fieldsDropdownOpen}
+              <!-- Backdrop for outside click -->
+              <div class="fixed inset-0 z-10" onclick={closeFieldsDropdown}></div>
+
+              <div
+                class="absolute top-full left-0 z-20 mt-1 min-w-[200px] rounded-lg border border-slate-200 bg-white shadow-lg dark:border-white/10 dark:bg-gray-800"
+                role="listbox"
+                aria-label="Fields to search"
+              >
+                <!-- Select All Link -->
+                {#if !allFieldsSelected}
+                  <div class="border-b border-slate-100 px-3 py-2 dark:border-white/10">
+                    <button
+                      type="button"
+                      onclick={handleSelectAllFields}
+                      class="text-xs text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
+                    >
+                      Select all
+                    </button>
+                  </div>
+                {/if}
+
+                <!-- Checkbox List -->
+                <div class="py-1">
+                  {#each SEARCHABLE_FIELDS as field (field.id)}
+                    {@const isSelected = selectedFields.includes(field.id)}
+                    {@const isLastSelected = isSelected && selectedFields.length === 1}
+                    <div
+                      class="group flex items-center justify-between px-3 py-2 hover:bg-slate-50 dark:hover:bg-white/5"
+                      role="option"
+                      aria-selected={isSelected}
+                      onmouseenter={() => (hoveredField = field.id)}
+                      onmouseleave={() => (hoveredField = null)}
+                    >
+                      <!-- Checkbox with label -->
+                      <label class="flex flex-1 cursor-pointer items-center gap-2.5">
+                        <div class="group/checkbox grid size-4 grid-cols-1">
+                          <input
+                            type="checkbox"
+                            checked={isSelected}
+                            onchange={() => handleFieldToggle(field.id)}
+                            class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-blue-600 checked:bg-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:border-gray-300 disabled:bg-gray-100 dark:border-white/20 dark:bg-white/5 dark:checked:border-blue-500 dark:checked:bg-blue-500"
+                            class:opacity-60={isLastSelected}
+                          />
+                          <svg
+                            viewBox="0 0 14 14"
+                            fill="none"
+                            class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white"
+                          >
+                            <path
+                              d="M3 8L6 11L11 3.5"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="opacity-0"
+                              class:opacity-100={isSelected}
+                            />
+                          </svg>
+                        </div>
+                        <span class="text-sm text-slate-700 dark:text-slate-200">{field.label}</span>
+                      </label>
+
+                      <!-- "Only" link on hover -->
+                      {#if hoveredField === field.id && !isLastSelected}
+                        <button
+                          type="button"
+                          onclick={() => handleSelectOnlyField(field.id)}
+                          class="ml-2 text-xs text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
+                        >
+                          only
+                        </button>
+                      {/if}
+                    </div>
+                  {/each}
+                </div>
+
+                <!-- Warning Message -->
+                {#if showFieldWarning}
+                  <div class="border-t border-slate-100 bg-amber-50 px-3 py-2 dark:border-white/10 dark:bg-amber-900/20" role="alert">
+                    <p class="text-xs text-amber-700 dark:text-amber-400">At least one field required</p>
+                  </div>
+                {/if}
+              </div>
+            {/if}
+          </div>
         {:else}
           <span class="font-medium">all fields (name, city, purpose)</span>
         {/if}
