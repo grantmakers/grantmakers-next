@@ -1,11 +1,9 @@
 <script lang="ts">
-  import type { Component } from 'svelte';
   import { getActiveSection, setActiveSection } from './ActiveLink.svelte';
   import { slugify } from '@repo/shared/functions/formatters/names';
 
   interface NavItem {
     title: string;
-    icon: Component;
   }
 
   interface Props {
@@ -37,11 +35,7 @@
       class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg text-center {isActive ? 'bg-slate-700 text-white' : (
         'bg-white fill-current stroke-0 text-slate-900'
       )}"
-    >
-      {#if item.icon}
-        <item.icon size="16" variation="solid" />
-      {/if}
-    </div>
+    ></div>
     <span class="ease-soft pointer-events-none ml-1 opacity-100 duration-300">{item.title}</span>
   </a>
 </li>

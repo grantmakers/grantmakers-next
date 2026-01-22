@@ -46,7 +46,6 @@ export interface SecondaryNavItems {
   title: string;
   id: string;
   link: string;
-  icon?: Component;
 }
 
 /**

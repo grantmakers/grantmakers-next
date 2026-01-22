@@ -5,10 +5,6 @@ import {
   BookOpen,
   ClipboardDocumentCheck,
   Server,
-  ChartBar,
-  ClipboardDocumentList,
-  CurrencyDollar,
-  Users,
 } from 'svelte-heros-v2';
 import type { SecondaryNavItems } from './index.js';
 
@@ -17,25 +13,21 @@ export const profileNavItems: SecondaryNavItems[] = [
     title: 'People',
     id: 'people',
     link: '#people',
-    icon: Users,
   },
   {
     title: 'Grants',
     id: 'grants',
     link: '#grants',
-    icon: CurrencyDollar,
   },
   {
     title: 'Guidelines',
     id: 'guidelines',
     link: '#guidelines', // This is '#application-info' on legacy profiles
-    icon: ClipboardDocumentList,
   },
   {
     title: 'Financials',
     id: 'financials',
     link: '#financials',
-    icon: ChartBar,
   },
 ];
 
