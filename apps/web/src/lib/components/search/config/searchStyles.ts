@@ -147,6 +147,9 @@ export const panelStyles = {
 /**
  * RefinementList widget styles
  * Used for faceted search filters
+ *
+ * Checkbox styling uses appearance-none with a CSS-based checkmark to match
+ * the Tailwind Plus pattern used in the Fields to Search dropdown.
  */
 export const refinementListStyles = {
   root: 'root',
@@ -155,7 +158,12 @@ export const refinementListStyles = {
   innerItem: 'w-full',
   label: 'flex w-full grow flex-row items-start text-sm text-gray-600 cursor-pointer',
   labelText: 'ml-2 text-left break-words leading-snug',
-  checkbox: 'mt-0.5 size-4 rounded border-gray-300 text-indigo-600 outline-hidden focus:outline-hidden ring-0 focus:ring-0',
+  checkbox: `mt-0.5 size-4 appearance-none rounded-sm border border-gray-300 bg-white
+    checked:border-indigo-600 checked:bg-indigo-600
+    focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600
+    dark:border-white/20 dark:bg-white/5 dark:checked:border-indigo-500 dark:checked:bg-indigo-500
+    checked:bg-[url('data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2014%2014%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M3%208L6%2011L11%203.5%22%20stroke%3D%22white%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')]
+    checked:bg-center checked:bg-no-repeat`,
   count: 'ml-auto rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 shrink-0',
   selectedItem: 'font-semibold text-indigo-600',
   showMore: 'mt-4 w-full flex justify-end',
@@ -171,7 +179,12 @@ export const refinementListCompactStyles = {
   list: 'space-y-1.5',
   label: 'flex w-full grow flex-row items-start justify-between text-xs text-gray-600 cursor-pointer',
   labelText: 'ml-2 text-left break-words leading-tight',
-  checkbox: 'mt-0.5 size-3.5 rounded border-gray-300 text-indigo-600 outline-hidden focus:outline-hidden ring-0 focus:ring-0',
+  checkbox: `mt-0.5 size-3.5 appearance-none rounded-sm border border-gray-300 bg-white
+    checked:border-indigo-600 checked:bg-indigo-600
+    focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600
+    dark:border-white/20 dark:bg-white/5 dark:checked:border-indigo-500 dark:checked:bg-indigo-500
+    checked:bg-[url('data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2014%2014%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M3%208L6%2011L11%203.5%22%20stroke%3D%22white%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')]
+    checked:bg-center checked:bg-no-repeat`,
   disabledShowMore: '[&_span]:text-slate-400 pointer-events-none cursor-default',
 } as const;
 /**

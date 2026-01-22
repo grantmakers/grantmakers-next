@@ -545,20 +545,24 @@
 
   /**
    * Select all fields
+   * UX: Auto-closes the dropdown as this is a terminal action
    */
   function handleSelectAllFields() {
     showFieldWarning = false;
     selectedFields = SEARCHABLE_FIELDS.map((f) => f.id);
     updateRestrictSearchableAttributes();
+    closeFieldsDropdown();
   }
 
   /**
    * Select only a specific field
+   * UX: Auto-closes the dropdown as this is a terminal action
    */
   function handleSelectOnlyField(fieldId: string) {
     showFieldWarning = false;
     selectedFields = [fieldId];
     updateRestrictSearchableAttributes();
+    closeFieldsDropdown();
   }
 
   /**
@@ -570,14 +574,16 @@
   }
 
   /**
-   * Handle keyboard events for the fields dropdown
+   * Handle keyboard events for the fields dropdown (global Escape key)
    */
   function handleFieldsDropdownKeydown(event: KeyboardEvent) {
-    if (event.key === 'Escape') {
+    if (fieldsDropdownOpen && event.key === 'Escape') {
       closeFieldsDropdown();
     }
   }
 </script>
+
+<svelte:window onkeydown={handleFieldsDropdownKeydown} />
 
 <!--
   Using data-sveltekit-preload-data="tap" to prevent SvelteKit from preloading data on hover for the pagination and other links.
@@ -713,10 +719,10 @@
         {:else}
           <span class="font-medium">this foundation</span>
         {/if}
-        <span class="mr-2">across</span>
+        <span>across</span>
         {#if browser}
           <!-- Fields to Search Dropdown -->
-          <div class="relative" onkeydown={handleFieldsDropdownKeydown}>
+          <div class="relative">
             <!-- Trigger Button -->
             <button
               type="button"
@@ -744,25 +750,30 @@
             <!-- Dropdown Panel -->
             {#if fieldsDropdownOpen}
               <!-- Backdrop for outside click -->
-              <div class="fixed inset-0 z-10" onclick={closeFieldsDropdown}></div>
+              <button
+                type="button"
+                class="fixed inset-0 z-10 cursor-default"
+                onclick={closeFieldsDropdown}
+                aria-label="Close dropdown"
+                tabindex="-1"
+              ></button>
 
               <div
                 class="absolute top-full left-0 z-20 mt-1 min-w-[200px] rounded-lg border border-slate-200 bg-white shadow-lg dark:border-white/10 dark:bg-gray-800"
-                role="listbox"
-                aria-label="Fields to search"
               >
                 <!-- Select All Link -->
-                {#if !allFieldsSelected}
-                  <div class="border-b border-slate-100 px-3 py-2 dark:border-white/10">
-                    <button
-                      type="button"
-                      onclick={handleSelectAllFields}
-                      class="text-xs text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
-                    >
-                      Select all
-                    </button>
-                  </div>
-                {/if}
+                <div class="border-b border-slate-100 px-3 py-2 dark:border-white/10">
+                  <button
+                    type="button"
+                    onclick={handleSelectAllFields}
+                    disabled={allFieldsSelected}
+                    class="text-xs {allFieldsSelected
+                      ? 'cursor-not-allowed text-slate-400 dark:text-slate-500'
+                      : 'text-indigo-600 hover:text-indigo-800 hover:underline dark:text-indigo-400 dark:hover:text-indigo-300'}"
+                  >
+                    Select all
+                  </button>
+                </div>
 
                 <!-- Checkbox List -->
                 <div class="py-1">
@@ -771,20 +782,18 @@
                     {@const isLastSelected = isSelected && selectedFields.length === 1}
                     <div
                       class="group flex items-center justify-between px-3 py-2 hover:bg-slate-50 dark:hover:bg-white/5"
-                      role="option"
-                      aria-selected={isSelected}
+                      role="group"
                       onmouseenter={() => (hoveredField = field.id)}
                       onmouseleave={() => (hoveredField = null)}
                     >
                       <!-- Checkbox with label -->
-                      <label class="flex flex-1 cursor-pointer items-center gap-2.5">
+                      <label class="flex flex-1 items-center gap-2.5 {isLastSelected ? 'cursor-not-allowed' : 'cursor-pointer'}">
                         <div class="group/checkbox grid size-4 grid-cols-1">
                           <input
                             type="checkbox"
                             checked={isSelected}
                             onchange={() => handleFieldToggle(field.id)}
-                            class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-blue-600 checked:bg-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:border-gray-300 disabled:bg-gray-100 dark:border-white/20 dark:bg-white/5 dark:checked:border-blue-500 dark:checked:bg-blue-500"
-                            class:opacity-60={isLastSelected}
+                            class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:border-white/20 dark:bg-white/5 dark:checked:border-indigo-500 dark:checked:bg-indigo-500 {isLastSelected ? 'cursor-not-allowed' : ''}"
                           />
                           <svg
                             viewBox="0 0 14 14"
@@ -809,7 +818,7 @@
                         <button
                           type="button"
                           onclick={() => handleSelectOnlyField(field.id)}
-                          class="ml-2 text-xs text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
+                          class="ml-2 text-xs text-indigo-600 hover:text-indigo-800 hover:underline dark:text-indigo-400 dark:hover:text-indigo-300"
                         >
                           only
                         </button>
