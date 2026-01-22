@@ -35,7 +35,7 @@
       {/if}
 
       <!-- Nav links -->
-      {#each config?.secondaryNavLinks as item, index}
+      {#each config.secondaryNavLinks ?? [] as item, index}
         <a
           href={item.link}
           class="rounded-lg px-3 py-1.5 text-[14px] font-medium text-slate-600! transition-all duration-200 hover:bg-slate-50! hover:text-slate-900!"
