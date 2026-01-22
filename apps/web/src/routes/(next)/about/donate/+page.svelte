@@ -62,7 +62,6 @@
 <!-- https://tailwindui.com/components/application-ui/application-shells/stacked -->
 
 <div class="min-h-full">
-  <!-- @ts-expect-error paypalExpress option is a valid DonorBox attribute-->
   <main class="relative -mt-24 pb-8">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
       <h1 class="sr-only">Support Open Data</h1>
@@ -86,23 +85,22 @@
             <div class="h-full lg:col-span-2">
               <section aria-labelledby="faq">
                 {#if browser}
-                  <!-- @ts-expect-error paypalExpress attribute is a valid DonorBox attribute-->
-                  <script src="https://donorbox.org/widget.js" paypalExpress="false"></script>
+                  <!-- Note: The provided DonorBox embed snippets throw typescript errors
+                  Use spread syntax to resolve the errors (here and in the iframe below) -->
+                  <script src="https://donorbox.org/widget.js" {...{ paypalExpress: 'false' }}></script>
                   {#if !isLoaded}
                     {@render skeleton()}
                   {/if}
 
-                  <!-- @ts-expect-error seamless attribute is a valid DonorBox attribute-->
                   <iframe
                     onload={handleLoader}
                     class:hidden={!isLoaded}
                     title="Donation form"
-                    allowpaymentrequest=""
                     frameborder="0"
                     height="1050px"
                     name="donorbox"
                     scrolling="no"
-                    seamless="seamless"
+                    {...{ allowpaymentrequest: '', seamless: true }}
                     src="https://donorbox.org/embed/grantmakersio"
                     style="max-width: 500px; min-width: 310px; max-height:none!important; border: none !important"
                     width="100%"
