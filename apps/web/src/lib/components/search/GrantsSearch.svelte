@@ -767,9 +767,9 @@
                     type="button"
                     onclick={handleSelectAllFields}
                     disabled={allFieldsSelected}
-                    class="text-xs {allFieldsSelected
-                      ? 'cursor-not-allowed text-slate-400 dark:text-slate-500'
-                      : 'text-indigo-600 hover:text-indigo-800 hover:underline dark:text-indigo-400 dark:hover:text-indigo-300'}"
+                    class="text-xs {allFieldsSelected ?
+                      'cursor-not-allowed text-slate-400 dark:text-slate-500'
+                    : 'text-indigo-600 hover:text-indigo-800 hover:underline dark:text-indigo-400 dark:hover:text-indigo-300'}"
                   >
                     Select all
                   </button>
@@ -793,7 +793,11 @@
                             type="checkbox"
                             checked={isSelected}
                             onchange={() => handleFieldToggle(field.id)}
-                            class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:border-white/20 dark:bg-white/5 dark:checked:border-indigo-500 dark:checked:bg-indigo-500 {isLastSelected ? 'cursor-not-allowed' : ''}"
+                            class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:border-white/20 dark:bg-white/5 dark:checked:border-indigo-500 dark:checked:bg-indigo-500 {(
+                              isLastSelected
+                            ) ?
+                              'cursor-not-allowed'
+                            : ''}"
                           />
                           <svg
                             viewBox="0 0 14 14"
@@ -843,6 +847,7 @@
     </div>
   </div>
 
+  <!-- Main Results Element -->
   <div class="flex gap-8">
     <div class="min-w-0 flex-1">
       <!-- Stats + Current Refinements -->
