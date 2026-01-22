@@ -1,6 +1,7 @@
 import { liteClient as algoliasearch } from 'algoliasearch/lite';
 import type { SearchClient } from 'instantsearch.js';
 import type { FacetHits, SearchResponses } from '@algolia/client-search';
+import type { AutocompleteHit } from '@repo/shared/typings/algolia/profiles';
 import { PUBLIC_ALGOLIA_APP_ID, PUBLIC_ALGOLIA_SEARCH_ONLY_KEY, PUBLIC_ALGOLIA_INDEX_NAME } from '$env/static/public';
 import placeholderHits from '@repo/shared/data/public/autocomplete-static-data.json';
 
@@ -16,7 +17,7 @@ interface CustomSearchRequest {
 type T = Record<string, unknown> | FacetHits;
 
 export const PLACEHOLDER_HITS_COUNT = 5;
-const limitedHits = placeholderHits.slice(0, 5).map((hit) => ({
+const limitedHits = (placeholderHits as AutocompleteHit[]).slice(0, 5).map((hit) => ({
   ...hit,
   // Ensure _highlightResult exists for all hits to support highlighting
   _highlightResult: hit._highlightResult || {

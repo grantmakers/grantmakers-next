@@ -23,6 +23,25 @@ export interface HighlightResult {
   fullyHighlighted?: boolean;
 }
 
+/**
+ * Type for autocomplete placeholder hits (matches static JSON data)
+ */
+export interface AutocompleteHit {
+  ein: string;
+  organization_name: string;
+  organization_name_slug: string;
+  city: string;
+  state: string;
+  assets: number;
+  rank: number;
+  rank_total: number;
+  objectID: string;
+  _highlightResult?: {
+    organization_name?: HighlightResult;
+    [key: string]: HighlightResult | undefined;
+  };
+}
+
 // Legacy response
 export interface AlgoliaProfilesResponseLegacy {
   objectID: string;
