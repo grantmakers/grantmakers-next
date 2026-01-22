@@ -1,3 +1,7 @@
+// @ts-nocheck
+// Legacy JS ported from the previous version of Grantmakers.io.
+// Added to suppress type checking errors while maintaining original functionality.
+
 import { browser } from '$app/environment';
 import { pushState, replaceState } from '$app/navigation';
 import { algoliasearch } from 'algoliasearch';

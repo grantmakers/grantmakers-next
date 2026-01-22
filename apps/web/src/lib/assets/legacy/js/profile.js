@@ -1,3 +1,7 @@
+// @ts-nocheck
+// Legacy JS ported from the previous version of Grantmakers.io.
+// Added to suppress type checking errors while maintaining original functionality.
+
 // Move Materialize Plugin instantiation outisde init function, so it can be cleaned up via the destroy function
 let instances = {
   dropdown: null,

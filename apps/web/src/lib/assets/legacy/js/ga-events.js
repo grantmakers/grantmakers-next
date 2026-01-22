@@ -1,3 +1,7 @@
+// @ts-nocheck
+// Legacy JS ported from the previous version of Grantmakers.io.
+// Added to suppress type checking errors while maintaining original functionality.
+
 /*global gtag*/
 export function initGaEvents() {
   if (typeof gtag === 'function') {
