@@ -657,7 +657,7 @@
   <div class="flex gap-8">
     <div class="min-w-0 flex-1">
       <!-- Mini-filter bar -->
-      <div class="hidden flex-wrap items-center gap-1.5 rounded bg-slate-50 p-2 px-2 text-sm text-slate-500 md:flex">
+      <div class="hidden flex-wrap items-center gap-1.5 rounded bg-slate-50 px-2 py-3 text-sm text-slate-500 md:flex">
         <span>Searching grants from</span>
         <!-- Tailwind Elements web components cause hydration mismatch during SSR; render only on client -->
         {#if browser}
