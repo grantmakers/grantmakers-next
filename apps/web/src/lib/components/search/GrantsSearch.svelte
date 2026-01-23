@@ -158,6 +158,7 @@
         ...(isCollapsible && {
           collapseButtonText({ collapsed }: { collapsed: boolean }, { html }: TemplateParams) {
             return html`
+              <span class="sr-only">${collapsed ? 'Expand' : 'Collapse'} ${label}</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
