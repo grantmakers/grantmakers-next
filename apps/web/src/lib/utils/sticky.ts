@@ -40,7 +40,8 @@ export function sticky(node: HTMLElement, options: StickyOptions = {}) {
   let resizeTimeout: number | null = null;
 
   function calculateDimensions() {
-    const rect = node.getBoundingClientRect();
+    const measureNode = isSticky && placeholderEl ? placeholderEl : node;
+    const rect = measureNode.getBoundingClientRect();
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     triggerPoint = rect.top + scrollTop - offset;
     nodeHeight = node.offsetHeight;
@@ -140,56 +141,28 @@ export function sticky(node: HTMLElement, options: StickyOptions = {}) {
   }
 
   function performResize() {
-    const wasSticky = isSticky;
+    // Calculate new dimensions (Read phase)
+    // Uses placeholder if sticky to avoid layout thrashing
+    calculateDimensions();
 
-    if (wasSticky) {
-      // Temporarily remove styles to get accurate measurements
-      // but keep the element in place to prevent flicker
-      const savedPosition = node.style.position;
-      const savedTop = node.style.top;
-      const savedLeft = node.style.left;
-      const savedRight = node.style.right;
-      const savedWidth = node.style.width;
-      const savedZIndex = node.style.zIndex;
+    // Update styles if currently sticky (Write phase)
+    if (isSticky) {
+      node.style.top = `${offset}px`;
 
-      node.style.position = '';
-      node.style.top = '';
-      node.style.left = '';
-      node.style.right = '';
-      node.style.width = '';
-      node.style.zIndex = '';
-
-      calculateDimensions();
-
-      // Restore saved styles
-      node.style.position = savedPosition;
-      node.style.top = savedTop;
-      node.style.left = savedLeft;
-      node.style.right = savedRight;
-      node.style.width = savedWidth;
-      node.style.zIndex = savedZIndex;
-
-      // Update the sticky styles with new dimensions
-      if (isSticky) {
-        node.style.top = `${offset}px`;
-        if (fullWidth) {
-          node.style.left = '0';
-          node.style.right = '0';
-          node.style.width = '';
-        } else {
-          node.style.left = `${nodeLeft}px`;
-          node.style.width = `${nodeWidth}px`;
-          node.style.right = '';
-        }
+      if (fullWidth) {
+        node.style.left = '0';
+        node.style.right = '0';
+        node.style.width = '';
+      } else {
+        node.style.left = `${nodeLeft}px`;
+        node.style.width = `${nodeWidth}px`;
+        node.style.right = '';
       }
 
-      // Update placeholder if it exists
+      // Update placeholder to match new node height
       if (placeholderEl) {
         placeholderEl.style.height = `${nodeHeight}px`;
       }
-    } else {
-      // Not sticky, safe to recalculate normally
-      calculateDimensions();
     }
 
     // Check if sticky state should change based on new dimensions
