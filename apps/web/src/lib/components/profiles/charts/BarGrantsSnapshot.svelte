@@ -2,7 +2,13 @@
   import { onMount, onDestroy } from 'svelte';
   import type { Chart } from 'chart.js';
 
-  let { rawData, grantCount }: { rawData: RawData; grantCount: number } = $props();
+  /**
+   * Svelte can't infer props when using let props = $props(), aka non-destructured.
+   * This matters only for custom elements/web components, which we do not use.
+   * It's safe to ignore the warning
+   */
+  // eslint-disable-next-line svelte/valid-compile
+  let props: { rawData: RawData; grantCount: number } = $props();
 
   type RawData = {
     [key: string]: number;
@@ -27,7 +33,7 @@
   };
   // Chart.js will generate an unlimited amount of ticks if stepSize set to 1
   // Causes a performance hit, and a console warning, when the number of ticks is over 1k
-  if (grantCount > 5) {
+  if (props.grantCount > 5) {
     delete ticksConfig.stepSize;
   }
 
@@ -103,7 +109,7 @@
   let chartCanvas: HTMLCanvasElement | undefined = $state();
   let chart: Chart;
 
-  const data = prepareAndReduceChartData(rawData);
+  const data = $derived(prepareAndReduceChartData(props.rawData));
 
   onMount(async () => {
     if (!chartCanvas) return;

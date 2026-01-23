@@ -6,12 +6,22 @@
     initialExpanded: boolean;
   }
 
-  let { label, content, initialExpanded }: Props = $props();
+  /**
+   * Svelte can't infer props when using let props = $props(), aka non-destructured.
+   * This matters only for custom elements/web components, which we do not use.
+   * It's safe to ignore the warning
+   */
+  // eslint-disable-next-line svelte/valid-compile
+  let props: Props = $props();
 
   const disclosure = createDisclosure({
-    label,
-    expanded: initialExpanded,
+    label: props.label,
+    expanded: props.initialExpanded,
   });
+
+  // Derived for template usage to maintain cleaner template
+  let label = $derived(props.label);
+  let content = $derived(props.content);
 </script>
 
 <div class="pt-6">

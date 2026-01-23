@@ -6,9 +6,6 @@
 
   import { inview } from 'svelte-inview';
 
-  // const id = nanoid();
-  const id = Symbol();
-
   let isInView = $state();
 
   interface Props {
@@ -20,7 +17,20 @@
     format?: boolean;
   }
 
-  let { value, initial = 0, duration = 3000, step = $bindable(1), roundto = 1, format = true }: Props = $props();
+  /**
+   * Svelte can't infer props when using let props = $props(), aka non-destructured.
+   * This matters only for custom elements/web components, which we do not use.
+   * It's safe to ignore the warning
+   */
+  // eslint-disable-next-line svelte/valid-compile
+  let props: Props = $props();
+
+  let initial = $derived(props.initial ?? 0);
+  let duration = $derived(props.duration ?? 3000);
+  let step = $derived(props.step ?? 1);
+  let roundto = $derived(props.roundto ?? 1);
+  let format = $derived(props.format ?? true);
+  let value = $derived(props.value);
 
   function formatNumber(input) {
     if (format) {
@@ -29,28 +39,44 @@
     return input;
   }
 
-  const counterResult = $state([]);
-  const timers = [];
+  let counter = $state(props.initial ?? 0);
 
-  const max = parseInt(value);
-  while (duration / ((max - initial) / step) < 2) {
-    step++;
-  }
+  const max = $derived(parseInt(value.toString()));
 
-  counterResult[id] = initial;
-  timers[id] = setInterval(
-    () => {
-      if (isInView) {
-        if (counterResult[id] <= max) {
-          counterResult[id] += step;
+  let currentStep = $state(props.step ?? 1);
+
+  $effect(() => {
+    let s = step;
+    let init = initial;
+    let dur = duration;
+    let m = max;
+
+    // Safety check for infinite loop potential if params are weird
+    if (m - init === 0) return;
+
+    while (dur / ((m - init) / s) < 2) {
+      s++;
+    }
+    currentStep = s;
+  });
+
+  $effect(() => {
+    if (!isInView) return;
+
+    const timer = setInterval(
+      () => {
+        if (counter <= max) {
+          counter += currentStep;
         } else {
-          clearInterval(timers[id]);
-          counterResult[id] = Math.round(max / roundto) * roundto;
+          clearInterval(timer);
+          counter = Math.round(max / roundto) * roundto;
         }
-      }
-    },
-    duration / ((max - initial) / step),
-  );
+      },
+      duration / ((max - initial) / currentStep),
+    );
+
+    return () => clearInterval(timer);
+  });
 </script>
 
 <span
@@ -58,5 +84,5 @@
   oninview_change={(event) => {
     const { inView } = event.detail;
     isInView = inView;
-  }}>{formatNumber(counterResult[id])}</span
+  }}>{formatNumber(counter)}</span
 >

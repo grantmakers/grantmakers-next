@@ -29,18 +29,15 @@
 
   let { profile, hasSurpriseMeAccess = false }: Props = $props();
 
-  let {
-    organization_name,
-    filings,
-    people,
-    has_website: hasWebsite,
-    grants_facets: grantsFacets,
-    grants_reference_attachment: grantsReferenceAttachment,
-    has_charitable_activities: hasCharitableActivities,
-    grants_current_year_top_20: grantsCurrentTop20,
-    grants_last_three_years_top_20: grantsLastThreeYearsTop20,
-  } = profile;
-
+  let organization_name = $derived(profile.organization_name);
+  let filings = $derived(profile.filings);
+  let people = $derived(profile.people);
+  let hasWebsite = $derived(profile.has_website);
+  let grantsFacets = $derived(profile.grants_facets);
+  let grantsReferenceAttachment = $derived(profile.grants_reference_attachment);
+  let hasCharitableActivities = $derived(profile.has_charitable_activities);
+  let grantsCurrentTop20 = $derived(profile.grants_current_year_top_20);
+  let grantsLastThreeYearsTop20 = $derived(profile.grants_last_three_years_top_20);
   let formattedTaxPeriodEnd: string = $derived(formatTaxPeriodDate(filings[0].tax_period) || 'N/A');
 </script>
 

@@ -35,8 +35,8 @@
         const errorData = await response.json();
         statusMessage = `Error: ${errorData.message}`;
       }
-    } catch (error: any) {
-      statusMessage = `Error: ${error.message}`;
+    } catch (error) {
+      statusMessage = `Error: ${error instanceof Error ? error.message : 'Unknown error'}`;
     }
   }
 </script>

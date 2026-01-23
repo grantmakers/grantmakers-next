@@ -12,10 +12,10 @@
 
   let { id, classes = '', children }: Props = $props();
 
-  let options: Options = {
+  let options: Options = $derived({
     threshold: id === 'overview' || id === 'people' ? 1 : 0.6,
     unobserveOnEnter: false,
-  };
+  });
 
   // Not all section headers have sidenav links
   // Only activate scrollspy if the section is also a sidenav link

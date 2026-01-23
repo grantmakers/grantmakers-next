@@ -12,9 +12,9 @@
 
   let { item }: Props = $props();
 
-  let uppercaseTitle = item.title.toUpperCase();
-  let lowercaseTitle = slugify(item.title.toLowerCase());
-  let href = `#${lowercaseTitle}`;
+  let uppercaseTitle = $derived(item.title.toUpperCase());
+  let lowercaseTitle = $derived(slugify(item.title.toLowerCase()));
+  let href = $derived(`#${lowercaseTitle}`);
   let isActive = $derived(getActiveSection() === lowercaseTitle);
 
   function handleClick(id: string): void {

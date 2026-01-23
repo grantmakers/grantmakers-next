@@ -26,11 +26,11 @@
     chartsColorTertiary = '#009688',
   }: Props = $props();
 
-  const assets = orgFinancialStats.map((value: FinancialStats) => value.assets).reverse();
-  const distributions = orgFinancialStats.map((value: FinancialStats) => value.distributions).reverse();
-  const contributions = orgFinancialStats.map((value: FinancialStats) => value.contributions).reverse();
+  const assets = $derived(orgFinancialStats.map((value: FinancialStats) => value.assets).reverse());
+  const distributions = $derived(orgFinancialStats.map((value: FinancialStats) => value.distributions).reverse());
+  const contributions = $derived(orgFinancialStats.map((value: FinancialStats) => value.contributions).reverse());
   // Use Set to remove duplicates, e.g. from an amended return
-  const years = [...new Set(orgFinancialStats.map((value: FinancialStats) => value.tax_year))].reverse();
+  const years = $derived([...new Set(orgFinancialStats.map((value: FinancialStats) => value.tax_year))].reverse());
 
   let chartCanvas: HTMLCanvasElement | undefined = $state();
   let chart: Chart;

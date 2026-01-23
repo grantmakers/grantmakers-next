@@ -5,7 +5,6 @@
   import PrimaryNavLink from '$lib/components/nav/PrimaryNavLink.svelte';
   import { aboutLinks, type SecondaryNavItems } from '@repo/shared/constants/trustedConstants';
   import { profileNavItems } from '@repo/shared/constants/trustedConstants/withIcons';
-  import SecondaryNavLink from '$lib/components/nav/SecondaryNavLink.svelte';
   import PrimaryNavLinkMobile from '$lib/components/nav/PrimaryNavLinkMobile.svelte';
   import SecondaryNavLinkMobile from '$lib/components/nav/SecondaryNavLinkMobile.svelte';
   import PrimarySearchNavLink from './PrimarySearchNavLink.svelte';

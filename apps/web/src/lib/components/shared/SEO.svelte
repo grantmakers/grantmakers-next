@@ -12,10 +12,14 @@
   }
 
   let { profile }: Props = $props();
-  const { organization_name, city, state, ein, filings } = profile;
+  let organization_name = $derived(profile.organization_name);
+  let city = $derived(profile.city);
+  let state = $derived(profile.state);
+  let ein = $derived(profile.ein);
+  let filings = $derived(profile.filings);
 
-  const title = createTitle(organization_name);
-  const description = createDescription({ organization_name, city, state, ein, filings });
+  let title = $derived(createTitle(organization_name));
+  let description = $derived(createDescription({ organization_name, city, state, ein, filings }));
   const pathname = $derived(page.url.pathname);
   const canonicalUrl = $derived(createCanonical(pathname, originProd, profilesVersionProd));
 

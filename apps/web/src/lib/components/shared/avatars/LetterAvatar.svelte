@@ -27,8 +27,8 @@
     'bg-lime-500',
   ];
 
-  const colorIndex = letter.charCodeAt(0) % colors.length;
-  const bgColor = colors[colorIndex];
+  const colorIndex = $derived(letter.charCodeAt(0) % colors.length);
+  const bgColor = $derived(colors[colorIndex]);
 </script>
 
 <div class={`${sizes[size]} ${bgColor} md:shadow-soft-sm flex items-center justify-center rounded-full font-thin text-white ${classes}`}>

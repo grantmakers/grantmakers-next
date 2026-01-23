@@ -17,13 +17,11 @@
 
   let { organization_name, profile, formattedTaxPeriodEnd }: Props = $props();
 
-  let {
-    is_likely_staffed: isStaffed,
-    grants_to_preselected_only: noUnsolicited,
-    has_recent_grants: hasRecentGrants,
-    filing_is_final_return: isFinalReturn,
-  } = profile;
-  const firstLetter = upperFirstLetter(organization_name);
+  let isStaffed = $derived(profile.is_likely_staffed);
+  let noUnsolicited = $derived(profile.grants_to_preselected_only);
+  let hasRecentGrants = $derived(profile.has_recent_grants);
+  let isFinalReturn = $derived(profile.filing_is_final_return);
+  const firstLetter = $derived(upperFirstLetter(organization_name));
 
   // Determine IRS status - only depends on whether the foundation is recognized as exempt
   const hasValidIrsStatus = $derived(profile.eobmf_recognized_exempt === true);

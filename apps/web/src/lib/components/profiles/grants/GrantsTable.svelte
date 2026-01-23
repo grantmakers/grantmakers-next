@@ -13,7 +13,19 @@
 
   type ViewMode = 'last-three-years' | 'latest';
 
-  let { grantsLastThreeYears, grantsCurrent, grantCount, grantCountLastThreeYears, grantsReferenceAttachment = false }: Props = $props();
+  /**
+   * Svelte can't infer props when using let props = $props(), aka non-destructured.
+   * This matters only for custom elements/web components, which we do not use.
+   * It's safe to ignore the warning
+   */
+  // eslint-disable-next-line svelte/valid-compile
+  let props: Props = $props();
+  // Derived values for safer access
+  let grantsLastThreeYears = $derived(props.grantsLastThreeYears);
+  let grantsCurrent = $derived(props.grantsCurrent);
+  let grantCount = $derived(props.grantCount);
+  let grantCountLastThreeYears = $derived(props.grantCountLastThreeYears);
+  let grantsReferenceAttachment = $derived(props.grantsReferenceAttachment ?? false);
 
   const numberOfGrantsToDisplay = 10;
 
@@ -26,7 +38,7 @@
     return grantCount >= 3 ? 'latest' : 'last-three-years';
   }
 
-  let viewMode = $state<ViewMode>(determineInitialViewMode(grantCount, grantCountLastThreeYears));
+  let viewMode = $state<ViewMode>(determineInitialViewMode(props.grantCount, props.grantCountLastThreeYears));
   let grants = $derived(viewMode === 'last-three-years' ? grantsLastThreeYears : grantsCurrent);
 
   // $inspect('View Mode', viewMode);
