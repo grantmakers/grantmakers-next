@@ -253,7 +253,9 @@
           <div class="mb-4 w-full max-w-full px-3">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words">
               <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
-                <ContentBoxHeader title={'Financial Trends'} />
+                <ContentBoxHeader title={'Financial Trends'}>
+                  <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} />
+                </ContentBoxHeader>
               </div>
               <div class="grow p-4">
                 <BarFinancialTrends
