@@ -10,6 +10,7 @@
     searchBox,
     poweredBy,
     refinementList,
+    numericMenu,
     currentRefinements,
     clearRefinements,
     stats,
@@ -20,7 +21,7 @@
   import type { ConfigureRenderState } from 'instantsearch.js/es/connectors/configure/connectConfigure';
   import type { HitsRenderState } from 'instantsearch.js/es/connectors/hits/connectHits';
   import type { PlainSearchParameters } from 'algoliasearch-helper';
-  import { formatToCurrency, formatNumber } from '@repo/shared/functions/formatters/numbers';
+  import { formatToCurrency, formatNumber, humanizeCurrency } from '@repo/shared/functions/formatters/numbers';
   import {
     searchBoxGrantsStyles,
     currentRefinementsStyles,
@@ -32,6 +33,7 @@
     statsStyles,
     poweredByGrantsStyles,
     paginationStyles,
+    numericMenuStyles,
   } from './config/searchStyles';
   import {
     PUBLIC_ALGOLIA_APP_ID_GRANTS,
@@ -64,8 +66,20 @@
     grantee_name?: string;
     grant_purpose?: string;
     tax_year?: string;
+    grant_amount?: string;
     page?: number;
   }
+
+  // Grant amount range options matching the Grants Summary chart buckets
+  const GRANT_AMOUNT_RANGES = [
+    { label: 'All amounts' },
+    { label: 'Under $500', end: 499 },
+    { label: '$500 – $5k', start: 500, end: 4999 },
+    { label: '$5k – $25k', start: 5000, end: 24999 },
+    { label: '$25k – $100k', start: 25000, end: 99999 },
+    { label: '$100k – $500k', start: 100000, end: 499999 },
+    { label: '$500k+', start: 500000 },
+  ] as const;
 
   let mobileFiltersOpen = $state(false);
   let searchAllFoundations = $state(false);
@@ -93,6 +107,28 @@
     { id: 'grant_purpose', label: 'Grant Purpose' },
   ] as const;
 
+  // Map attribute names to human-readable labels for currentRefinements
+  const FACET_LABEL_MAP: { [key: string]: string } = {
+    ...Object.fromEntries(FACETS.map((f) => [f.attribute, f.label])),
+    grant_amount: 'Amount',
+  };
+
+  /**
+   * Format grant_amount refinements to human-readable labels
+   * Transforms numeric values like 25000 to "$25K" using the shared humanizeCurrency helper
+   */
+  const formatGrantAmountRefinements = <T extends { label: string; value: number | string; operator?: string }>(refinements: T[]): T[] => {
+    return refinements.map((ref) => {
+      const numValue = typeof ref.value === 'number' ? ref.value : parseFloat(String(ref.value));
+      if (!isNaN(numValue)) {
+        const formattedValue = humanizeCurrency(numValue);
+        const label = ref.operator ? `${ref.operator} ${formattedValue}` : formattedValue;
+        return { ...ref, label };
+      }
+      return ref;
+    });
+  };
+
   // Fields to Search dropdown state
   let selectedFields = $state<string[]>(SEARCHABLE_FIELDS.map((f) => f.id));
   let fieldsDropdownOpen = $state(false);
@@ -105,16 +141,15 @@
   const fieldsLabel = $derived(allFieldsSelected ? 'all fields' : 'selected fields');
 
   /**
-   * Factory function to create a Panel-wrapped RefinementList widget
-   * Supports collapsible panels with optional collapsed-by-default behavior
+   * Create panel widget configuration with optional collapsible behavior
+   * Shared helper used for both createFacetWidget and standalone panel-wrapped widgets
    */
-  const createFacetWidget = (facet: FacetConfig) => {
-    const isCollapsible = facet.collapsedByDefault !== undefined;
-
-    const panelWrappedRefinementList = panelWidget({
+  const createPanelConfig = (label: string, collapsedByDefault?: boolean) => {
+    const isCollapsible = collapsedByDefault !== undefined;
+    return {
       templates: {
-        header(_data, { html }) {
-          return html`<span class="font-medium text-gray-900">${facet.label}</span>`;
+        header(_data: unknown, { html }: TemplateParams) {
+          return html`<span class="font-medium text-gray-900">${label}</span>`;
         },
         // Render chevron icon for collapsible panels
         ...(isCollapsible && {
@@ -136,17 +171,26 @@
           },
         }),
       },
-      hidden(options) {
+      hidden(options: $TSFixMe) {
         return options.results?.nbHits === 0;
       },
       // Set initial collapsed state - only applies when collapsed function is defined
       ...(isCollapsible && {
         collapsed() {
-          return facet.collapsedByDefault ?? false;
+          return collapsedByDefault ?? false;
         },
       }),
       cssClasses: panelStyles,
-    })(refinementList);
+    };
+  };
+
+  /**
+   * Factory function to create a Panel-wrapped RefinementList widget
+   * Supports collapsible panels with optional collapsed-by-default behavior
+   */
+  const createFacetWidget = (facet: FacetConfig) => {
+    const panelConfig = createPanelConfig(facet.label, facet.collapsedByDefault);
+    const panelWrappedRefinementList = panelWidget(panelConfig)(refinementList);
 
     // Determine showMore: default true unless explicitly set to false
     const showMore = facet.showMore !== false;
@@ -342,6 +386,7 @@
               grantee_name: indexUiState.refinementList?.grantee_name?.join('~'),
               grant_purpose: indexUiState.refinementList?.grant_purpose?.join('~'),
               tax_year: indexUiState.refinementList?.tax_year?.join('~'),
+              grant_amount: indexUiState.numericMenu?.grant_amount?.replace(':', '~'),
               page: indexUiState.page,
             };
           },
@@ -357,10 +402,15 @@
             if (routeState.grant_purpose) refinementList.grant_purpose = routeState.grant_purpose.split('~');
             if (routeState.tax_year) refinementList.tax_year = routeState.tax_year.split('~');
 
+            // Build numericMenu state if grant_amount exists
+            const numericMenuState: { [attribute: string]: string } = {};
+            if (routeState.grant_amount) numericMenuState.grant_amount = routeState.grant_amount.replace('~', ':');
+
             return {
               [PUBLIC_ALGOLIA_INDEX_NAME_GRANTS]: {
                 query: routeState.query,
                 refinementList,
+                numericMenu: numericMenuState,
                 page: routeState.page,
               },
             };
@@ -422,14 +472,20 @@
         container: '#current-refinements',
         cssClasses: currentRefinementsStyles,
         transformItems(items) {
-          // Map attribute names to human-readable labels
-          const labelMap: { [key: string]: string } = {
-            ...Object.fromEntries(FACETS.map((f) => [f.attribute, f.label])),
-          };
-          return items.map((item) => ({
-            ...item,
-            label: labelMap[item.attribute] || item.label,
-          }));
+          return items.map((item) => {
+            // For grant_amount refinements, transform to human-readable labels
+            if (item.attribute === 'grant_amount' && item.refinements?.length > 0) {
+              return {
+                ...item,
+                label: FACET_LABEL_MAP[item.attribute] || item.label,
+                refinements: formatGrantAmountRefinements(item.refinements),
+              };
+            }
+            return {
+              ...item,
+              label: FACET_LABEL_MAP[item.attribute] || item.label,
+            };
+          });
         },
       }),
 
@@ -453,6 +509,15 @@
             return html`Clear all`;
           },
         },
+      }),
+
+      // Grant Amount uses numericMenu (radio buttons for numeric ranges) instead of refinementList,
+      // so it's handled separately from the FACETS array which uses createFacetWidget for refinementList widgets
+      panelWidget(createPanelConfig('Amount', true))(numericMenu)({
+        container: '#grant-amount',
+        attribute: 'grant_amount',
+        items: GRANT_AMOUNT_RANGES as unknown as Array<{ label: string; start?: number; end?: number }>,
+        cssClasses: numericMenuStyles,
       }),
 
       // Add all facet widgets
@@ -903,6 +968,7 @@
         </div>
         <!-- InstantSearch RefinementLists -->
         <div id="tax-year"></div>
+        <div id="grant-amount"></div>
         <div id="state"></div>
         <div id="location"></div>
         <div id="recipient"></div>

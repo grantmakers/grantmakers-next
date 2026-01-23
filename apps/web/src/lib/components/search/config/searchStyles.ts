@@ -252,3 +252,23 @@ export const menuSelectStyles = {
     'rounded-md border border-gray-300 bg-white py-1.5 px-3 pr-8 text-sm text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:outline-none cursor-pointer appearance-none bg-no-repeat bg-[length:1.25rem_1.25rem] bg-[right_0.5rem_center] bg-[url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20fill%3D%27none%27%20viewBox%3D%270%200%2020%2020%27%3E%3Cpath%20stroke%3D%27%236b7280%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%20stroke-width%3D%271.5%27%20d%3D%27m6%208%204%204%204-4%27%2F%3E%3C%2Fsvg%3E")]',
   option: '',
 } as const;
+
+/**
+ * NumericMenu widget styles
+ * Used for Grant Amount range filter with radio button pattern
+ */
+export const numericMenuStyles = {
+  root: '',
+  list: 'space-y-3',
+  item: 'flex items-center',
+  selectedItem: '',
+  label: 'flex items-center cursor-pointer',
+  radio: `size-4 appearance-none rounded-full border border-gray-300 bg-white
+    checked:border-indigo-600 checked:bg-indigo-600
+    checked:bg-[url('data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22white%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Ccircle%20cx%3D%228%22%20cy%3D%228%22%20r%3D%223%22%2F%3E%3C%2Fsvg%3E')]
+    checked:bg-center checked:bg-no-repeat
+    focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600
+    dark:border-white/10 dark:bg-white/5
+    dark:checked:border-indigo-500 dark:checked:bg-indigo-500`,
+  labelText: 'ml-3 text-sm text-gray-600',
+} as const;
