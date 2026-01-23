@@ -22,7 +22,7 @@
   import type { HitsRenderState } from 'instantsearch.js/es/connectors/hits/connectHits';
   import type { PlainSearchParameters } from 'algoliasearch-helper';
   import { formatToCurrency, formatNumber, humanizeCurrency } from '@repo/shared/functions/formatters/numbers';
-  import { escapeAttr } from '@repo/shared/utils/sanitize';
+  import { escapeAttr } from '@repo/shared/utils/strings';
   import {
     searchBoxGrantsStyles,
     currentRefinementsStyles,
