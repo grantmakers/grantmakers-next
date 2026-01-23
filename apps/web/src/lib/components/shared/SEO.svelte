@@ -17,6 +17,10 @@
   let state = $derived(profile.state);
   let ein = $derived(profile.ein);
   let filings = $derived(profile.filings);
+  let website = $derived(profile.website);
+  let zip = $derived(profile.zip);
+  let street = $derived(profile.street);
+  let street2 = $derived(profile.street2);
 
   let title = $derived(createTitle(organization_name));
   let description = $derived(createDescription({ organization_name, city, state, ein, filings }));
@@ -44,15 +48,15 @@
   const jsonld = $derived({
     '@context': 'https://schema.org/',
     '@type': 'NGO',
-    legalName: profile.organization_name,
-    taxID: profile.ein,
-    ...(profile.website && { url: profile.website }),
+    legalName: organization_name,
+    taxID: ein,
+    ...(website && { url: website }),
     address: {
       '@type': 'PostalAddress',
-      addressLocality: profile.city,
-      addressRegion: profile.state,
-      postalCode: profile.zip,
-      streetAddress: `${profile.street} ${profile.street2 ? profile.street2 : ''}`,
+      addressLocality: city,
+      addressRegion: state,
+      postalCode: zip,
+      streetAddress: `${street} ${street2 ? street2 : ''}`,
     },
   });
 
@@ -81,7 +85,7 @@
         position: 3,
         item: {
           '@id': canonicalUrl,
-          name: profile.organization_name,
+          name: organization_name,
         },
       },
     ],
