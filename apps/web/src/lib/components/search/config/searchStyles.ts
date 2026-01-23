@@ -195,6 +195,7 @@ export const refinementListCompactStyles = {
     checked:bg-center checked:bg-no-repeat`,
   disabledShowMore: '[&_span]:text-slate-400 pointer-events-none cursor-default',
 } as const;
+
 /**
  * CurrentRefinements widget styles
  * Shows active filters with remove buttons
@@ -203,10 +204,16 @@ export const currentRefinementsStyles = {
   root: 'contents',
   noRefinementRoot: 'hidden',
   list: 'contents',
-  item: 'inline-flex items-center rounded-full bg-slate-100 py-1.5 pl-3 pr-2 text-sm font-medium text-slate-700',
-  category: 'text-sm flex items-center',
+  item: 'inline-flex items-center rounded-full bg-slate-100 py-1.5 pl-3 pr-2 text-sm font-medium text-slate-500',
+  category: [
+    'text-sm flex items-center',
+    'relative px-2.5',
+    'before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-4 before:w-px before:bg-slate-300',
+    'first:pl-0 first:before:hidden',
+  ].join(' '),
+  categoryLabel: 'text-slate-700',
   label: 'pr-2 uppercase text-xs text-slate-500',
-  delete: 'ml-1 size-5 text-slate-400 hover:text-slate-600 cursor-pointer',
+  delete: 'ml-1.5 size-5 rounded-full text-slate-500 hover:text-slate-700 hover:bg-slate-200 cursor-pointer transition-colors',
 } as const;
 
 /**
