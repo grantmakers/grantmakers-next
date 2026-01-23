@@ -54,8 +54,8 @@
               </p>
               <h5>Transparency</h5>
               <p>
-                If you haven't done so already, <a href="/about/">read more</a> about the costs behind this site (hint: it's mostly coffee).
-                If you have any questions, I'd love to hear from you, or if you're in Chicago, let's grab a coffee!
+                If you haven't done so already, <a href="/about/">read more</a> about the costs behind this site (hint: it's mostly coffee). If
+                you have any questions, I'd love to hear from you, or if you're in Chicago, let's grab a coffee!
               </p>
               <h5>A sincere thank you 💖</h5>
               <p><img src="/assets/img/signature.png" alt="Chad" /></p>

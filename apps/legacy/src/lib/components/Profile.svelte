@@ -842,8 +842,8 @@
                                           <div class="card-content">
                                             <p>
                                               <i class="material-icons">warning</i> The IRS does not currently provide attachments in the electronic
-                                              dataset from which this site is based. However, occasionally these attachments can be found in
-                                              the PDF version of the filing which you can find below.
+                                              dataset from which this site is based. However, occasionally these attachments can be found in the
+                                              PDF version of the filing which you can find below.
                                             </p>
                                           </div>
                                         </div>
