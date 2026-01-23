@@ -22,6 +22,7 @@
   import type { HitsRenderState } from 'instantsearch.js/es/connectors/hits/connectHits';
   import type { PlainSearchParameters } from 'algoliasearch-helper';
   import { formatToCurrency, formatNumber, humanizeCurrency } from '@repo/shared/functions/formatters/numbers';
+  import { escapeAttr } from '@repo/shared/utils/sanitize';
   import {
     searchBoxGrantsStyles,
     currentRefinementsStyles,
@@ -29,6 +30,7 @@
     refinementListStyles,
     refinementListCompactStyles,
     highlightStyles,
+    clickableTextStyles,
     panelStyles,
     statsStyles,
     poweredByGrantsStyles,
@@ -86,6 +88,7 @@
 
   let algoliaInstance: AlgoliaInstance;
   let refineConfig: ConfigureRenderState['refine'] | null = null;
+  let hitsContainer: HTMLElement | null = null;
 
   const FACETS: readonly FacetConfig[] = [
     { attribute: 'tax_year', label: 'Tax Year', container: '#tax-year', collapsedByDefault: true, showMore: false, sortBy: ['name:desc'] },
@@ -230,6 +233,23 @@
     });
   };
 
+  /**
+   * Handle click-to-filter on table cells
+   * Uses InstantSearch's helper API to toggle facet refinements
+   */
+  const handleCellClick = (event: Event) => {
+    const target = event.target as HTMLElement;
+    const cell = target.closest('td[data-facet]') as HTMLElement | null;
+    if (!cell || !algoliaInstance?.helper) return;
+
+    const facet = cell.dataset.facet;
+    const value = cell.dataset.facetValue;
+
+    if (facet && value) {
+      algoliaInstance.helper.toggleFacetRefinement(facet, value).search();
+    }
+  };
+
   const renderHits = (renderOptions: HitsRenderState) => {
     const { items, results } = renderOptions;
     const hitsContainer = document.querySelector('#hits');
@@ -308,22 +328,26 @@
                   ${formatToCurrency(grant.grant_amount)}
                 </td>
                 
-                <td class="px-3 py-4 text-sm">
+                <td class="px-3 py-4 text-sm" data-facet="grantee_name" data-facet-value="${escapeAttr(grant.grantee_name)}">
                   <div class="text-md font-bold text-gray-900">
-                    ${getHighlight(grant, 'grantee_name')}
+                    <span class="${clickableTextStyles.base}">${getHighlight(grant, 'grantee_name')}</span>
                   </div>
                 </td>
                 
-                <td class="px-3 py-4 text-sm">
-                  ${getHighlight(grant, 'grant_purpose')}
+                <td class="px-3 py-4 text-sm" data-facet="grant_purpose" data-facet-value="${escapeAttr(grant.grant_purpose)}">
+                  <span class="${clickableTextStyles.base}">${getHighlight(grant, 'grant_purpose')}</span>
                 </td>
                 
-                <td class="px-3 py-4 text-sm">
-                  ${getHighlight(grant, 'grantee_city')},<br>
-                  ${grant.grantee_is_foreign && grant.grantee_state === 'Foreign' ? grant.grantee_country : grant.grantee_state}
+                <td class="px-3 py-4 text-sm" data-facet="grantee_city" data-facet-value="${escapeAttr(grant.grantee_city)}">
+                  <span class="${clickableTextStyles.base}">
+                    ${getHighlight(grant, 'grantee_city')},<br>
+                    ${grant.grantee_is_foreign && grant.grantee_state === 'Foreign' ? grant.grantee_country : grant.grantee_state}
+                  </span>
                 </td>
                 
-                <td class="px-3 py-4 text-sm">${grant.tax_year}</td>
+                <td class="px-3 py-4 text-sm" data-facet="tax_year" data-facet-value="${escapeAttr(grant.tax_year)}">
+                  <span class="${clickableTextStyles.base}">${grant.tax_year}</span>
+                </td>
               </tr>`,
             )
             .join('')}
@@ -539,6 +563,12 @@
     ]);
 
     algoliaInstance.start();
+
+    // Attach single click handler via event delegation
+    hitsContainer = document.querySelector('#hits');
+    if (hitsContainer) {
+      hitsContainer.addEventListener('click', handleCellClick);
+    }
   });
   onDestroy(() => {
     if (algoliaInstance) {
@@ -546,6 +576,9 @@
     }
     if (fieldWarningTimeout) {
       clearTimeout(fieldWarningTimeout);
+    }
+    if (hitsContainer) {
+      hitsContainer.removeEventListener('click', handleCellClick);
     }
   });
 

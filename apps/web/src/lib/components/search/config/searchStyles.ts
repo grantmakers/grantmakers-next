@@ -99,6 +99,14 @@ export const highlightStyles = {
 } as const;
 
 /**
+ * Clickable text styles for click-to-filter feature
+ * Applied to table cells that trigger facet refinements when clicked
+ */
+export const clickableTextStyles = {
+  base: 'cursor-pointer hover:text-indigo-600 transition-colors',
+} as const;
+
+/**
  * Snippet component styles
  * Used for highlighting search terms in snippets via components.Snippet()
  */
