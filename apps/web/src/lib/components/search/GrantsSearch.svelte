@@ -235,18 +235,35 @@
 
   /**
    * Handle click-to-filter on table cells
-   * Uses InstantSearch's helper API to toggle facet refinements
+   * Uses InstantSearch's helper API to add facet refinements (additive only)
+   * Note: This uses addFacetRefinement (not toggle) so clicking a cell always adds the filter.
    */
   const handleCellClick = (event: Event) => {
     const target = event.target as HTMLElement;
     const cell = target.closest('td[data-facet]') as HTMLElement | null;
     if (!cell || !algoliaInstance?.helper) return;
 
-    const facet = cell.dataset.facet;
-    const value = cell.dataset.facetValue;
+    const facets = cell.dataset.facet?.split(',') ?? [];
+    const values = cell.dataset.facetValue?.split(',') ?? [];
 
-    if (facet && value) {
-      algoliaInstance.helper.toggleFacetRefinement(facet, value).search();
+    if (facets.length > 0 && facets.length === values.length) {
+      let hasNewRefinements = false;
+
+      // Add refinements only if they don't already exist
+      // Uses disjunctive refinements since refinementList widgets use disjunctive facets
+      facets.forEach((facet, index) => {
+        const value = values[index]?.trim();
+        const facetTrimmed = facet.trim();
+        if (facetTrimmed && value && !algoliaInstance.helper!.state.isDisjunctiveFacetRefined(facetTrimmed, value)) {
+          algoliaInstance.helper!.addDisjunctiveFacetRefinement(facetTrimmed, value);
+          hasNewRefinements = true;
+        }
+      });
+
+      // Only trigger search if we added new refinements
+      if (hasNewRefinements) {
+        algoliaInstance.helper.search();
+      }
     }
   };
 
@@ -338,7 +355,7 @@
                   <span class="${clickableTextStyles.base}">${getHighlight(grant, 'grant_purpose')}</span>
                 </td>
                 
-                <td class="px-3 py-4 text-sm" data-facet="grantee_city" data-facet-value="${escapeAttr(grant.grantee_city)}">
+                <td class="px-3 py-4 text-sm" data-facet="grantee_city,grantee_state" data-facet-value="${escapeAttr(grant.grantee_city)},${escapeAttr(grant.grantee_is_foreign && grant.grantee_state === 'Foreign' ? grant.grantee_country : grant.grantee_state)}">
                   <span class="${clickableTextStyles.base}">
                     ${getHighlight(grant, 'grantee_city')},<br>
                     ${grant.grantee_is_foreign && grant.grantee_state === 'Foreign' ? grant.grantee_country : grant.grantee_state}
