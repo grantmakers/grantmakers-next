@@ -50,7 +50,7 @@
       </div>
 
       <div class="flex flex-col items-end gap-2">
-        <div class="{getColorClasses(percentile)} rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset">
+        <div class="{getColorClasses(percentile)} rounded-full px-3 py-1 text-sm font-semibold ring-1 ring-inset">
           {getLabel(percentile)}
         </div>
         <div class="text-sm text-slate-500">
