@@ -174,7 +174,7 @@
         </div>
 
         <!-- Charitable Activities -->
-        <div id="charitable-activites" class="-mx-3 mt-6 grid grid-cols-1 lg:mt-8">
+        <div id="charitable-activities" class="-mx-3 mt-6 grid grid-cols-1 lg:mt-8">
           <div class="mb-4 w-full max-w-full px-3">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white break-words">
               <div class="mb-0 border-b-0 bg-slate-200 p-4">
