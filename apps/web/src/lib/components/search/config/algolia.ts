@@ -1,6 +1,6 @@
 import { liteClient as algoliasearch } from 'algoliasearch/lite';
 import type { SearchClient } from 'instantsearch.js';
-import type { FacetHits, SearchResponses } from '@algolia/client-search';
+import type { FacetHits, SearchResponses, Hit } from '@algolia/client-search';
 import type { AutocompleteHit } from '@repo/shared/typings/algolia/profiles';
 import { PUBLIC_ALGOLIA_APP_ID, PUBLIC_ALGOLIA_SEARCH_ONLY_KEY, PUBLIC_ALGOLIA_INDEX_NAME } from '$env/static/public';
 import placeholderHits from '@repo/shared/data/public/autocomplete-static-data.json';
@@ -43,7 +43,7 @@ export const searchClient = {
     if (requests.every(({ params }) => !params.query)) {
       return Promise.resolve<SearchResponses<T>>({
         results: requests.map(() => ({
-          hits: limitedHits as any,
+          hits: limitedHits as Hit<AutocompleteHit & Record<string, unknown>>[],
           query: '',
           params: '',
           nbHits: limitedHits.length,

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 // Legacy JS ported from the previous version of Grantmakers.io.
 // Added to suppress type checking errors while maintaining original functionality.
@@ -13,38 +14,6 @@ export async function initProfileJs(M, orgFinancialStats) {
   // BROWSER CHECKS
   // =======================================================
   const isMobile = window.matchMedia('only screen and (max-width: 992px)');
-
-  // NAVBAR
-  // =======================================================
-  const header = document.querySelector('.header');
-  const navbar = document.querySelector('.navbar-profile');
-  const navbarHeight = 64;
-
-  // Set header opacity on page load
-  //setHeaderOpacity();
-
-  // Adjust opacity after scrolling
-  window.addEventListener('scroll', function () {
-    //setHeaderOpacity();
-  });
-
-  function setHeaderOpacity() {
-    let scrollTop = window.pageYOffset | document.body.scrollTop;
-    let height = header.offsetHeight;
-    let offset = height / 2;
-    let calc = 1 - (scrollTop - offset + navbarHeight) / navbarHeight;
-    header.style.opacity = calc;
-
-    if (calc > 1) {
-      header.style.opacity = '1';
-      navbar.classList.add('affix-top');
-      navbar.classList.remove('affix');
-    } else if (calc < 0) {
-      header.style.opacity = '0';
-      navbar.classList.add('affix');
-      navbar.classList.remove('affix-top');
-    }
-  }
 
   // INIT MATERIALIZE COMPONENTS
   // =======================================================

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 // Legacy JS ported from the previous version of Grantmakers.io.
 // Added to suppress type checking errors while maintaining original functionality.
@@ -55,9 +56,6 @@ export async function initSearchJs(M) {
   const targetEIN = document.querySelector('h1.org-name').dataset.ein;
   const targetOrgName = document.querySelector('h1.org-name').dataset.name;
   const targetTaxYearOnlyOne = document.querySelector('h1.org-name').dataset.taxYearOnlyOne === 'true'; // resolves to boolean true or false
-
-  const scrollAnchor = document.querySelector('#grants');
-  // Note - fixed grants header handled by profile.js
 
   // Initialize Materialize components
   // =======================================================
@@ -350,7 +348,6 @@ export async function initSearchJs(M) {
           event.preventDefault();
           event.stopPropagation();
           refine(event.currentTarget.dataset.value);
-          //scrollToGrants();
         });
       });
     }
@@ -605,14 +602,6 @@ export async function initSearchJs(M) {
     showSortByDropdown();
   });
 
-  /**
-   * Helper function to auto scroll back to the top of the search box
-   * Use sparingly, if at all - scrolljacking is an anti-pattern
-   */
-  // search.on('render', async function () {
-  //   scrollToGrants();
-  // })
-
   search.on('error', function (e) {
     if (e.status === 429) {
       renderRateLimit();
@@ -662,22 +651,6 @@ export async function initSearchJs(M) {
 
   // Helper functions
   // =======================================================
-  function scrollToGrants() {
-    console.log('Scroll To Grants called');
-    const grantsElement = document.getElementById('grants');
-
-    if (grantsElement) {
-      const elementPosition = grantsElement.getBoundingClientRect().top;
-      const offsetPosition = window.scrollY;
-      const offset = 64;
-      const targetPosition = elementPosition + offsetPosition - offset;
-
-      window.scrollTo({
-        top: targetPosition,
-        behavior: 'smooth',
-      });
-    }
-  }
 
   function hideSeoPlaceholders() {
     const target = document.getElementById('ais-widget-refinement-list--seo-placeholder');
