@@ -10,6 +10,7 @@
   import GrantsSearch from '$lib/components/search/GrantsSearch.svelte';
   import { formatTaxPeriodDate } from '@repo/shared/functions/formatters/dates';
   import ContentBoxInterstitial from './ContentBoxInterstitial.svelte';
+  import logo from '$lib/assets/images/logo.svg';
   import irsLogo from '$lib/assets/images/irs-logo.webp';
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
   import ApplicationGuidelines from './guidelines/ApplicationGuidelines.svelte';
@@ -272,19 +273,15 @@
               class="shadow-soft-xl relative mx-auto flex w-full max-w-2xl flex-col items-center justify-center overflow-hidden rounded-2xl bg-white p-8 text-center ring-1 ring-slate-900/5 lg:p-10"
             >
               <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-amber-50 text-amber-600">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 640 512" fill="currentColor">
-                  <path
-                    d="M96 64c0-17.7 14.3-32 32-32H448h64c70.7 0 128 57.3 128 128s-57.3 128-128 128H480c0 53-43 96-96 96H192c-53 0-96-43-96-96V64zM480 224h32c35.3 0 64-28.7 64-64s-28.7-64-64-64H480V224zM32 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32z"
-                  />
-                </svg>
+                <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
               </div>
 
-              <p class="mb-6 text-lg font-semibold text-slate-900">If this profile helped you, why not...</p>
+              <p class="mb-6 text-lg font-semibold text-slate-900">Grantmakers.io is entirely community-funded</p>
               <a
                 href="/about/donate/"
                 class="inline-flex items-center gap-x-2 rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-slate-800 hover:shadow-md active:scale-95 active:transform"
               >
-                <span>Buy me a coffee</span>
+                <span>Support Open Data</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                   <path
                     fill-rule="evenodd"
@@ -293,7 +290,7 @@
                   />
                 </svg>
               </a>
-              <h3 class="mt-6 max-w-md text-slate-600">Grantmakers.io is entirely community-funded</h3>
+              <h3 class="mt-6 max-w-md text-slate-600">Ensuring equitable access since 2016</h3>
             </div>
           </div>
         </ContentBoxWrapper>
