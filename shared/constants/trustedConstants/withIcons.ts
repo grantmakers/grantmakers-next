@@ -29,6 +29,11 @@ export const profileNavItems: SecondaryNavItems[] = [
     id: 'financials',
     link: '#financials',
   },
+  {
+    title: 'Data',
+    id: 'data',
+    link: '#data',
+  },
 ];
 
 export const features = [

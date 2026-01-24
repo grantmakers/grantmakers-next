@@ -267,41 +267,54 @@
         </div>
 
         <!-- Donation CTA -->
-        <ContentBoxWrapper id="donate">
-          <div class="my-6 hidden md:block lg:my-8">
-            <div
-              class="shadow-soft-xl relative mx-auto flex w-full max-w-2xl flex-col items-center justify-center overflow-hidden rounded-2xl bg-white p-8 text-center ring-1 ring-slate-900/5 lg:p-10"
-            >
-              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-amber-50 text-amber-600">
-                <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
-              </div>
-
-              <p class="mb-6 text-lg font-semibold text-slate-900">Grantmakers.io is entirely community-funded</p>
-              <a
-                href="/about/donate/"
-                class="inline-flex items-center gap-x-2 rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-slate-800 hover:shadow-md active:scale-95 active:transform"
+        <div class="-mx-3 mt-6 grid grid-cols-1 pb-4 md:grid-cols-1 lg:mt-8">
+          <ContentBoxWrapper id="donate">
+            <div class="my-6 hidden md:block lg:my-8">
+              <div
+                class="shadow-soft-xl relative mx-auto flex w-full max-w-2xl flex-col items-center justify-center overflow-hidden rounded-2xl bg-white p-8 text-center ring-1 ring-slate-900/5 lg:p-10"
               >
-                <span>Support Open Data</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                  <path
-                    fill-rule="evenodd"
-                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </a>
-              <h3 class="mt-6 max-w-md text-slate-600">Ensuring equitable access since 2016</h3>
-            </div>
-          </div>
-        </ContentBoxWrapper>
+                <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-amber-50 text-amber-600">
+                  <img src={logo} class="inline-block h-6 w-6 rounded-full" alt="Grantmakers.io Logo" height={36} width={36} />
+                </div>
 
-        <!-- Research -->
-        <div class="-mx-3 mt-6 grid grid-cols-1 md:grid-cols-1 lg:mt-8">
-          <div class="mb-4 w-full max-w-full px-3 text-slate-700">
-            <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words">
-              <Research ein={profile.ein} irsObjectId={profile.filings[0].object_id_irs} />
+                <p class="mb-6 text-lg font-semibold text-slate-900">Grantmakers.io is entirely community-funded</p>
+                <a
+                  href="/about/donate/"
+                  class="inline-flex items-center gap-x-2 rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-slate-800 hover:shadow-md active:scale-95 active:transform"
+                >
+                  <span>Support Open Data</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path
+                      fill-rule="evenodd"
+                      d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </a>
+                <h3 class="mt-6 max-w-md text-slate-600">Ensuring equitable access since 2016</h3>
+              </div>
             </div>
-          </div>
+          </ContentBoxWrapper>
+        </div>
+
+        <!-- Data -->
+        <div class="-mx-3 mt-6 grid grid-cols-1 md:grid-cols-1 lg:mt-8">
+          <ContentBoxWrapper id="data">
+            <div class="mb-4 w-full max-w-full px-3 text-slate-700">
+              <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col rounded-2xl border-0 bg-white bg-clip-border break-words">
+                <div class="mb-0 rounded-t-2xl border-b-0 bg-slate-200 p-4">
+                  <ContentBoxHeader title={'Further Research'} sectionId="data">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                      <path
+                        d="M21.721 12.752a9.711 9.711 0 0 0-.945-5.003 12.754 12.754 0 0 1-4.339 2.708 18.991 18.991 0 0 1-.214 4.772 17.165 17.165 0 0 0 5.498-2.477ZM14.634 15.55a17.324 17.324 0 0 0 .332-4.647c-.952.227-1.945.347-2.966.347-1.021 0-2.014-.12-2.966-.347a17.515 17.515 0 0 0 .332 4.647 17.385 17.385 0 0 0 5.268 0ZM9.772 17.119a18.963 18.963 0 0 0 4.456 0A17.182 17.182 0 0 1 12 21.724a17.18 17.18 0 0 1-2.228-4.605ZM7.777 15.23a18.87 18.87 0 0 1-.214-4.774 12.753 12.753 0 0 1-4.34-2.708 9.711 9.711 0 0 0-.944 5.004 17.165 17.165 0 0 0 5.498 2.477ZM21.356 14.752a9.765 9.765 0 0 1-7.478 6.817 18.64 18.64 0 0 0 1.988-4.718 18.627 18.627 0 0 0 5.49-2.098ZM2.644 14.752c1.682.971 3.53 1.688 5.49 2.099a18.64 18.64 0 0 0 1.988 4.718 9.765 9.765 0 0 1-7.478-6.816ZM13.878 2.43a9.755 9.755 0 0 1 6.116 3.986 11.267 11.267 0 0 1-3.746 2.504 18.63 18.63 0 0 0-2.37-6.49ZM12 2.276a17.152 17.152 0 0 1 2.805 7.121c-.897.23-1.837.353-2.805.353-.968 0-1.908-.122-2.805-.353A17.151 17.151 0 0 1 12 2.276ZM10.122 2.43a18.629 18.629 0 0 0-2.37 6.49 11.266 11.266 0 0 1-3.746-2.504 9.754 9.754 0 0 1 6.116-3.985Z"
+                      />
+                    </svg>
+                  </ContentBoxHeader>
+                </div>
+                <Research ein={profile.ein} irsObjectId={profile.filings[0].object_id_irs} />
+              </div>
+            </div>
+          </ContentBoxWrapper>
         </div>
 
         <div class="-mx-3 mt-10 grid grid-cols-1 items-center md:grid-cols-1 lg:mt-16">
