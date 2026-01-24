@@ -79,7 +79,7 @@
   <div class="flex flex-col items-start gap-2 p-8">
     <div class="flex h-8 items-end gap-1">
       <img src={grantmakersLogo} alt="Grantmakers.io logo" class="h-6 w-auto" height={24} width={24} />
-      <span class="text-base font-semibold">Get the data to go</span>
+      <span class="text-base font-semibold">Grantmakers.io data to go</span>
     </div>
     <p class="text-sm text-slate-700">Generate an AI-optimized profile for your favorite LLM (Claude, Gemini, ChatGPT, etc.)</p>
     <div class="mt-8 flex w-full flex-wrap items-center justify-start gap-4 rounded-md bg-slate-100 p-4 md:mt-auto">
