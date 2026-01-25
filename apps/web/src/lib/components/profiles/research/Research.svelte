@@ -9,6 +9,7 @@
   import MagnifyingGlassCircle from 'svelte-heros-v2/MagnifyingGlassCircle.svelte';
   import ClipboardDocument from 'svelte-heros-v2/ClipboardDocument.svelte';
   import grantmakersLogo from '$lib/assets/images/logo.svg';
+  import { tooltip } from '$utils/tooltip';
 
   interface Props {
     ein: string;
@@ -79,19 +80,20 @@
   <div class="flex flex-col items-start gap-2 p-8">
     <div class="flex h-8 items-end gap-1">
       <img src={grantmakersLogo} alt="Grantmakers.io logo" class="h-6 w-auto" height={24} width={24} />
-      <span class="text-base font-semibold">Grantmakers.io data to go</span>
+      <div class="text-base font-semibold">Grantmakers.io</div>
     </div>
-    <p class="text-sm text-slate-700">Generate an AI-optimized profile for your favorite LLM (Claude, Gemini, ChatGPT, etc.)</p>
+    <p class="text-sm text-slate-700">Generate an LLM-optimized profile for your favorite AI tool.</p>
     <div class="mt-8 flex w-full flex-wrap items-center justify-start gap-4 rounded-md bg-slate-100 p-4 md:mt-auto">
-      <button
-        disabled
-        type="button"
-        class="inline-flex cursor-not-allowed items-center gap-x-1.5 rounded-md bg-slate-300 px-3 py-2 text-sm font-semibold text-white shadow-sm"
-      >
-        <Sparkles variation={'solid'} class={'h-4 w-4'} />
-        Generate LLM Profile
-      </button>
-      <span class="text-xs font-medium tracking-wide text-slate-400 uppercase">Coming Soon</span>
+      <span class="cursor-not-allowed" use:tooltip={{ content: 'Coming soon' }}>
+        <button
+          disabled
+          type="button"
+          class="pointer-events-none inline-flex cursor-not-allowed items-center gap-x-1.5 rounded-md bg-slate-300 px-3 py-2 text-sm font-semibold text-white shadow-sm"
+        >
+          <Sparkles variation={'solid'} class={'h-4 w-4'} />
+          Generate AI-Optimized Profile
+        </button>
+      </span>
     </div>
   </div>
 
