@@ -44,7 +44,7 @@
     </svg>
 
     <div class="text-base leading-7">
-      <div class="text-xl font-semibold text-white">Historical Grants</div>
+      <div class="text-xl font-semibold text-white">Grantee Search</div>
       <p class="mt-2 text-gray-300">Insights into a foundation's giving patterns. Find your next funder.</p>
     </div>
   </div>
