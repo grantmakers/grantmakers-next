@@ -3,6 +3,7 @@
   import { browser } from '$app/environment';
   import { onDestroy, onMount } from 'svelte';
   import { pushState, replaceState } from '$app/navigation';
+  import { page } from '$app/state';
   import instantsearch, { type InstantSearch, type SearchClient, type TemplateParams, type UiState } from 'instantsearch.js';
   import type { $TSFixMe } from '@repo/shared/typings/irs/all';
   import { history } from 'instantsearch.js/es/lib/routers';
@@ -66,6 +67,7 @@
     grantee_state?: string;
     grantee_city?: string;
     grantee_name?: string;
+    organization_name?: string;
     grant_purpose?: string;
     tax_year?: string;
     grant_amount?: string;
@@ -114,6 +116,7 @@
   const FACET_LABEL_MAP: { [key: string]: string } = {
     ...Object.fromEntries(FACETS.map((f) => [f.attribute, f.label])),
     grant_amount: 'Amount',
+    organization_name: 'Funder',
   };
 
   /**
@@ -332,6 +335,7 @@
           <tr>
             <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 text-center">Amount</th>
             <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Grantee</th>
+            ${searchAllFoundations ? '<th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Funder</th>' : ''}
             <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Purpose</th>
             <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Location</th>
             <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Year</th>
@@ -351,6 +355,14 @@
                     <span class="${clickableTextStyles.base}">${getHighlight(grant, 'grantee_name')}</span>
                   </div>
                 </td>
+                
+                ${
+                  searchAllFoundations ?
+                    `<td class="px-3 py-4 text-sm" data-facet="organization_name" data-facet-value="${escapeAttr(grant.organization_name)}">
+                  <span class="${clickableTextStyles.base}">${grant.organization_name}</span>
+                </td>`
+                  : ''
+                }
                 
                 <td class="px-3 py-4 text-sm" data-facet="grant_purpose" data-facet-value="${escapeAttr(grant.grant_purpose)}">
                   <span class="${clickableTextStyles.base}">${getHighlight(grant, 'grant_purpose')}</span>
@@ -426,6 +438,7 @@
               grantee_state: indexUiState.refinementList?.grantee_state?.join('~'),
               grantee_city: indexUiState.refinementList?.grantee_city?.join('~'),
               grantee_name: indexUiState.refinementList?.grantee_name?.join('~'),
+              organization_name: indexUiState.refinementList?.organization_name?.join('~'),
               grant_purpose: indexUiState.refinementList?.grant_purpose?.join('~'),
               tax_year: indexUiState.refinementList?.tax_year?.join('~'),
               grant_amount: indexUiState.numericMenu?.grant_amount?.replace(':', '~'),
@@ -441,6 +454,7 @@
             if (routeState.grantee_state) refinementList.grantee_state = routeState.grantee_state.split('~');
             if (routeState.grantee_city) refinementList.grantee_city = routeState.grantee_city.split('~');
             if (routeState.grantee_name) refinementList.grantee_name = routeState.grantee_name.split('~');
+            if (routeState.organization_name) refinementList.organization_name = routeState.organization_name.split('~');
             if (routeState.grant_purpose) refinementList.grant_purpose = routeState.grant_purpose.split('~');
             if (routeState.tax_year) refinementList.tax_year = routeState.tax_year.split('~');
 
@@ -603,12 +617,36 @@
   /**
    * Handle search scope selection change
    * Uses connectConfigure's refine() to dynamically update search parameters without widget replacement
+   * Also manages the Funder facet widget: adds when switching to "all foundations", removes when switching back
    */
   function handleEinFilterToggle(event: Event) {
     const select = event.target as HTMLElement & { value: string };
+    const wasSearchingAllFoundations = searchAllFoundations;
     searchAllFoundations = select.value === 'all';
 
-    if (!refineConfig) return;
+    if (!refineConfig || !algoliaInstance) return;
+
+    // Manage Funder widget based on mode
+    if (searchAllFoundations && !wasSearchingAllFoundations) {
+      // Switching TO "all foundations" - add Funder widget
+      if (!funderWidget) {
+        funderWidget = createFacetWidget({
+          attribute: 'organization_name',
+          label: 'Funder',
+          container: '#funder',
+        });
+      }
+      algoliaInstance.addWidgets([funderWidget]);
+    } else if (!searchAllFoundations && wasSearchingAllFoundations) {
+      // Switching FROM "all foundations" - remove Funder widget and clear refinements
+      if (funderWidget) {
+        algoliaInstance.removeWidgets([funderWidget]);
+      }
+      // Clear any organization_name refinements
+      if (algoliaInstance.helper) {
+        algoliaInstance.helper.clearRefinements('organization_name');
+      }
+    }
 
     // Use refine() to update the filter dynamically, including current restrictSearchableAttributes
     refineConfig({
@@ -770,197 +808,223 @@
     </div>
   </div>
 
-  <div class="flex gap-8">
-    <div class="min-w-0 flex-1">
-      <!-- Mini-filter bar -->
-      <div class="hidden flex-wrap items-center gap-1.5 rounded bg-slate-50 px-2 py-3 text-sm text-slate-500 md:flex">
-        <span>Searching grants from</span>
-        <!-- Tailwind Elements web components cause hydration mismatch during SSR; render only on client -->
-        {#if browser}
-          <el-select
-            id="ein-filter-select"
-            name="ein-scope"
-            value={searchAllFoundations ? 'all' : 'current'}
-            class="inline-block"
-            onchange={handleEinFilterToggle}
+  <!-- Mini-filter bar -->
+  <div class="hidden w-full flex-wrap items-center gap-1.5 rounded bg-slate-50 px-2 py-3 text-sm text-slate-500 md:flex md:min-h-[52px]">
+    <span>Searching grants from</span>
+    <!-- Tailwind Elements web components cause hydration mismatch during SSR; render only on client -->
+    {#if browser}
+      <el-select
+        id="ein-filter-select"
+        name="ein-scope"
+        value={searchAllFoundations ? 'all' : 'current'}
+        class="inline-block"
+        onchange={handleEinFilterToggle}
+      >
+        <button
+          type="button"
+          class="grid cursor-default grid-cols-1 rounded-md bg-white py-0.5 pr-1.5 pl-2 text-left text-sm text-slate-500 outline-1 -outline-offset-1 outline-gray-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:focus-visible:outline-indigo-500"
+        >
+          <el-selectedcontent class="col-start-1 row-start-1 truncate pr-4">
+            {EIN_FILTER_OPTIONS.find((opt) => opt.value === (searchAllFoundations ? 'all' : 'current'))?.label}
+          </el-selectedcontent>
+          <svg
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            data-slot="icon"
+            aria-hidden="true"
+            class="col-start-1 row-start-1 size-4 self-center justify-self-end text-gray-400"
           >
-            <button
-              type="button"
-              class="grid cursor-default grid-cols-1 rounded-md bg-white py-0.5 pr-1.5 pl-2 text-left text-sm text-slate-500 outline-1 -outline-offset-1 outline-gray-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:focus-visible:outline-indigo-500"
-            >
-              <el-selectedcontent class="col-start-1 row-start-1 truncate pr-4">
-                {EIN_FILTER_OPTIONS.find((opt) => opt.value === (searchAllFoundations ? 'all' : 'current'))?.label}
-              </el-selectedcontent>
-              <svg
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                data-slot="icon"
-                aria-hidden="true"
-                class="col-start-1 row-start-1 size-4 self-center justify-self-end text-gray-400"
-              >
-                <path
-                  d="M5.22 10.22a.75.75 0 0 1 1.06 0L8 11.94l1.72-1.72a.75.75 0 1 1 1.06 1.06l-2.25 2.25a.75.75 0 0 1-1.06 0l-2.25-2.25a.75.75 0 0 1 0-1.06ZM10.78 5.78a.75.75 0 0 1-1.06 0L8 4.06 6.28 5.78a.75.75 0 0 1-1.06-1.06l2.25-2.25a.75.75 0 0 1 1.06 0l2.25 2.25a.75.75 0 0 1 0 1.06Z"
-                  clip-rule="evenodd"
-                  fill-rule="evenodd"
-                />
-              </svg>
-            </button>
+            <path
+              d="M5.22 10.22a.75.75 0 0 1 1.06 0L8 11.94l1.72-1.72a.75.75 0 1 1 1.06 1.06l-2.25 2.25a.75.75 0 0 1-1.06 0l-2.25-2.25a.75.75 0 0 1 0-1.06ZM10.78 5.78a.75.75 0 0 1-1.06 0L8 4.06 6.28 5.78a.75.75 0 0 1-1.06-1.06l2.25-2.25a.75.75 0 0 1 1.06 0l2.25 2.25a.75.75 0 0 1 0 1.06Z"
+              clip-rule="evenodd"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </button>
 
-            <el-options
-              anchor="bottom start"
-              popover="manual"
-              class="max-h-60 min-w-(--button-width) overflow-auto rounded-md bg-white py-1 text-base shadow-lg outline-1 outline-black/5 [--anchor-gap:--spacing(1)] data-leave:transition data-leave:transition-discrete data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10"
+        <el-options
+          anchor="bottom start"
+          popover="manual"
+          class="max-h-60 min-w-(--button-width) overflow-auto rounded-md bg-white py-1 text-base shadow-lg outline-1 outline-black/5 [--anchor-gap:--spacing(1)] data-leave:transition data-leave:transition-discrete data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10"
+        >
+          {#each EIN_FILTER_OPTIONS as option}
+            <el-option
+              value={option.value}
+              class="group/option relative block cursor-default py-2 pr-9 pl-3 text-slate-900 select-none focus:bg-indigo-600 focus:text-white focus:outline-hidden dark:text-white dark:focus:bg-indigo-500"
             >
-              {#each EIN_FILTER_OPTIONS as option}
-                <el-option
-                  value={option.value}
-                  class="group/option relative block cursor-default py-2 pr-9 pl-3 text-slate-900 select-none focus:bg-indigo-600 focus:text-white focus:outline-hidden dark:text-white dark:focus:bg-indigo-500"
-                >
-                  <span class="block font-normal whitespace-nowrap group-aria-selected/option:font-semibold">{option.label}</span>
-                  <span
-                    class="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600 group-not-aria-selected/option:hidden group-focus/option:text-white in-[el-selectedcontent]:hidden dark:text-indigo-400"
-                  >
-                    <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5">
-                      <path
-                        d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
-                        clip-rule="evenodd"
-                        fill-rule="evenodd"
-                      />
-                    </svg>
-                  </span>
-                </el-option>
-              {/each}
-            </el-options>
-          </el-select>
-        {:else}
-          <span class="font-medium">this foundation</span>
-        {/if}
-        <span>across</span>
-        {#if browser}
-          <!-- Fields to Search Dropdown -->
-          <div class="relative">
-            <!-- Trigger Button -->
-            <button
-              type="button"
-              onclick={() => (fieldsDropdownOpen = !fieldsDropdownOpen)}
-              aria-haspopup="listbox"
-              aria-expanded={fieldsDropdownOpen}
-              aria-label="Fields to search"
-              class="grid cursor-default grid-cols-1 rounded-md bg-white py-0.5 pr-1.5 pl-2 text-left text-sm text-slate-500 outline-1 -outline-offset-1 outline-gray-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:focus-visible:outline-indigo-500"
-            >
-              <span class="col-start-1 row-start-1 truncate pr-4">{fieldsLabel}</span>
-              <svg
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                aria-hidden="true"
-                class="col-start-1 row-start-1 size-4 self-center justify-self-end text-gray-400"
+              <span class="block font-normal whitespace-nowrap group-aria-selected/option:font-semibold">{option.label}</span>
+              <span
+                class="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600 group-not-aria-selected/option:hidden group-focus/option:text-white in-[el-selectedcontent]:hidden dark:text-indigo-400"
               >
-                <path
-                  d="M5.22 10.22a.75.75 0 0 1 1.06 0L8 11.94l1.72-1.72a.75.75 0 1 1 1.06 1.06l-2.25 2.25a.75.75 0 0 1-1.06 0l-2.25-2.25a.75.75 0 0 1 0-1.06ZM10.78 5.78a.75.75 0 0 1-1.06 0L8 4.06 6.28 5.78a.75.75 0 0 1-1.06-1.06l2.25-2.25a.75.75 0 0 1 1.06 0l2.25 2.25a.75.75 0 0 1 0 1.06Z"
-                  clip-rule="evenodd"
-                  fill-rule="evenodd"
-                />
-              </svg>
-            </button>
+                <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5">
+                  <path
+                    d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                    clip-rule="evenodd"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </span>
+            </el-option>
+          {/each}
+        </el-options>
+      </el-select>
+    {:else}
+      <span class="font-medium">this foundation</span>
+    {/if}
+    <span>across</span>
+    {#if browser}
+      <!-- Fields to Search Dropdown -->
+      <div class="relative">
+        <!-- Trigger Button -->
+        <button
+          type="button"
+          onclick={() => (fieldsDropdownOpen = !fieldsDropdownOpen)}
+          aria-haspopup="listbox"
+          aria-expanded={fieldsDropdownOpen}
+          aria-label="Fields to search"
+          class="grid cursor-default grid-cols-1 rounded-md bg-white py-0.5 pr-1.5 pl-2 text-left text-sm text-slate-500 outline-1 -outline-offset-1 outline-gray-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:focus-visible:outline-indigo-500"
+        >
+          <span class="col-start-1 row-start-1 truncate pr-4">{fieldsLabel}</span>
+          <svg
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            aria-hidden="true"
+            class="col-start-1 row-start-1 size-4 self-center justify-self-end text-gray-400"
+          >
+            <path
+              d="M5.22 10.22a.75.75 0 0 1 1.06 0L8 11.94l1.72-1.72a.75.75 0 1 1 1.06 1.06l-2.25 2.25a.75.75 0 0 1-1.06 0l-2.25-2.25a.75.75 0 0 1 0-1.06ZM10.78 5.78a.75.75 0 0 1-1.06 0L8 4.06 6.28 5.78a.75.75 0 0 1-1.06-1.06l2.25-2.25a.75.75 0 0 1 1.06 0l2.25 2.25a.75.75 0 0 1 0 1.06Z"
+              clip-rule="evenodd"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </button>
 
-            <!-- Dropdown Panel -->
-            {#if fieldsDropdownOpen}
-              <!-- Backdrop for outside click -->
+        <!-- Dropdown Panel -->
+        {#if fieldsDropdownOpen}
+          <!-- Backdrop for outside click -->
+          <button
+            type="button"
+            class="fixed inset-0 z-10 cursor-default"
+            onclick={closeFieldsDropdown}
+            aria-label="Close dropdown"
+            tabindex="-1"
+          ></button>
+
+          <div
+            class="absolute top-full left-0 z-20 mt-1 min-w-[200px] rounded-lg border border-slate-200 bg-white shadow-lg dark:border-white/10 dark:bg-gray-800"
+          >
+            <!-- Select All Link -->
+            <div class="border-b border-slate-100 px-3 py-2 dark:border-white/10">
               <button
                 type="button"
-                class="fixed inset-0 z-10 cursor-default"
-                onclick={closeFieldsDropdown}
-                aria-label="Close dropdown"
-                tabindex="-1"
-              ></button>
-
-              <div
-                class="absolute top-full left-0 z-20 mt-1 min-w-[200px] rounded-lg border border-slate-200 bg-white shadow-lg dark:border-white/10 dark:bg-gray-800"
+                onclick={handleSelectAllFields}
+                disabled={allFieldsSelected}
+                class="text-xs {allFieldsSelected ?
+                  'cursor-not-allowed text-slate-400 dark:text-slate-500'
+                : 'text-indigo-600 hover:text-indigo-800 hover:underline dark:text-indigo-400 dark:hover:text-indigo-300'}"
               >
-                <!-- Select All Link -->
-                <div class="border-b border-slate-100 px-3 py-2 dark:border-white/10">
-                  <button
-                    type="button"
-                    onclick={handleSelectAllFields}
-                    disabled={allFieldsSelected}
-                    class="text-xs {allFieldsSelected ?
-                      'cursor-not-allowed text-slate-400 dark:text-slate-500'
-                    : 'text-indigo-600 hover:text-indigo-800 hover:underline dark:text-indigo-400 dark:hover:text-indigo-300'}"
-                  >
-                    Select all
-                  </button>
-                </div>
+                Select all
+              </button>
+            </div>
 
-                <!-- Checkbox List -->
-                <div class="py-1">
-                  {#each SEARCHABLE_FIELDS as field (field.id)}
-                    {@const isSelected = selectedFields.includes(field.id)}
-                    {@const isLastSelected = isSelected && selectedFields.length === 1}
-                    <div
-                      class="group flex items-center justify-between px-3 py-2 hover:bg-slate-50 dark:hover:bg-white/5"
-                      role="group"
-                      onmouseenter={() => (hoveredField = field.id)}
-                      onmouseleave={() => (hoveredField = null)}
-                    >
-                      <!-- Checkbox with label -->
-                      <label class="flex flex-1 items-center gap-2.5 {isLastSelected ? 'cursor-not-allowed' : 'cursor-pointer'}">
-                        <div class="group/checkbox grid size-4 grid-cols-1">
-                          <input
-                            type="checkbox"
-                            checked={isSelected}
-                            onchange={() => handleFieldToggle(field.id)}
-                            class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:border-white/20 dark:bg-white/5 dark:checked:border-indigo-500 dark:checked:bg-indigo-500 {(
-                              isLastSelected
-                            ) ?
-                              'cursor-not-allowed'
-                            : ''}"
-                          />
-                          <svg
-                            viewBox="0 0 14 14"
-                            fill="none"
-                            class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white"
-                          >
-                            <path
-                              d="M3 8L6 11L11 3.5"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              class="opacity-0"
-                              class:opacity-100={isSelected}
-                            />
-                          </svg>
-                        </div>
-                        <span class="text-sm text-slate-700 dark:text-slate-200">{field.label}</span>
-                      </label>
-
-                      <!-- "Only" link on hover -->
-                      {#if hoveredField === field.id && !isLastSelected}
-                        <button
-                          type="button"
-                          onclick={() => handleSelectOnlyField(field.id)}
-                          class="ml-2 text-xs text-indigo-600 hover:text-indigo-800 hover:underline dark:text-indigo-400 dark:hover:text-indigo-300"
-                        >
-                          only
-                        </button>
-                      {/if}
+            <!-- Checkbox List -->
+            <div class="py-1">
+              {#each SEARCHABLE_FIELDS as field (field.id)}
+                {@const isSelected = selectedFields.includes(field.id)}
+                {@const isLastSelected = isSelected && selectedFields.length === 1}
+                <div
+                  class="group flex items-center justify-between px-3 py-2 hover:bg-slate-50 dark:hover:bg-white/5"
+                  role="group"
+                  onmouseenter={() => (hoveredField = field.id)}
+                  onmouseleave={() => (hoveredField = null)}
+                >
+                  <!-- Checkbox with label -->
+                  <label class="flex flex-1 items-center gap-2.5 {isLastSelected ? 'cursor-not-allowed' : 'cursor-pointer'}">
+                    <div class="group/checkbox grid size-4 grid-cols-1">
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onchange={() => handleFieldToggle(field.id)}
+                        class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:border-white/20 dark:bg-white/5 dark:checked:border-indigo-500 dark:checked:bg-indigo-500 {(
+                          isLastSelected
+                        ) ?
+                          'cursor-not-allowed'
+                        : ''}"
+                      />
+                      <svg
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white"
+                      >
+                        <path
+                          d="M3 8L6 11L11 3.5"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="opacity-0"
+                          class:opacity-100={isSelected}
+                        />
+                      </svg>
                     </div>
-                  {/each}
-                </div>
+                    <span class="text-sm text-slate-700 dark:text-slate-200">{field.label}</span>
+                  </label>
 
-                <!-- Warning Message -->
-                {#if showFieldWarning}
-                  <div class="border-t border-slate-100 bg-amber-50 px-3 py-2 dark:border-white/10 dark:bg-amber-900/20" role="alert">
-                    <p class="text-xs text-amber-700 dark:text-amber-400">At least one field required</p>
-                  </div>
-                {/if}
+                  <!-- "Only" link on hover -->
+                  {#if hoveredField === field.id && !isLastSelected}
+                    <button
+                      type="button"
+                      onclick={() => handleSelectOnlyField(field.id)}
+                      class="ml-2 text-xs text-indigo-600 hover:text-indigo-800 hover:underline dark:text-indigo-400 dark:hover:text-indigo-300"
+                    >
+                      only
+                    </button>
+                  {/if}
+                </div>
+              {/each}
+            </div>
+
+            <!-- Warning Message -->
+            {#if showFieldWarning}
+              <div class="border-t border-slate-100 bg-amber-50 px-3 py-2 dark:border-white/10 dark:bg-amber-900/20" role="alert">
+                <p class="text-xs text-amber-700 dark:text-amber-400">At least one field required</p>
               </div>
             {/if}
           </div>
-        {:else}
-          <span class="font-medium">all fields (name, city, purpose)</span>
         {/if}
       </div>
-    </div>
+    {:else}
+      <span class="font-medium">all fields (name, city, purpose)</span>
+    {/if}
+    {#if searchAllFoundations}
+      <div class="ml-auto flex items-center gap-1 rounded-lg bg-slate-800 px-4 py-1.5 text-xs text-white">
+        <span class="font-bold text-white">TIP: </span>
+        <span>Use the</span>
+        <a
+          href={`/search/grants/${page.url.search}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-grantmakers-blue-dark-bg flex items-center gap-1 font-bold hover:underline"
+        >
+          Grants</a
+        >
+        <span>search tool</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="ml-1 size-4 text-white"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+          />
+        </svg>
+      </div>
+    {/if}
   </div>
 
   <!-- Main Results Element -->
@@ -1018,6 +1082,7 @@
           <div id="clear-refinements"></div>
         </div>
         <!-- InstantSearch RefinementLists -->
+        <div id="funder"></div>
         <div id="tax-year"></div>
         <div id="grant-amount"></div>
         <div id="state"></div>
