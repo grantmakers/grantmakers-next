@@ -850,7 +850,9 @@
       >
         <button
           type="button"
-          class="grid cursor-default grid-cols-1 rounded-md bg-white py-0.5 pr-1.5 pl-2 text-left text-sm text-slate-500 outline-1 -outline-offset-1 outline-gray-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:focus-visible:outline-indigo-500"
+          class="{!searchAllFoundations ?
+            'bg-white text-slate-500 outline-gray-300'
+          : 'bg-indigo-700 text-slate-100 outline-indigo-700'} grid cursor-default grid-cols-1 rounded-md py-0.5 pr-1.5 pl-2 text-left text-sm outline-1 -outline-offset-1 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:focus-visible:outline-indigo-500"
         >
           <el-selectedcontent class="col-start-1 row-start-1 truncate pr-4">
             {EIN_FILTER_OPTIONS.find((opt) => opt.value === (searchAllFoundations ? 'all' : 'current'))?.label}
@@ -910,9 +912,9 @@
           aria-haspopup="listbox"
           aria-expanded={fieldsDropdownOpen}
           aria-label="Fields to search"
-          class="grid cursor-default grid-cols-1 rounded-md {allFieldsSelected ? 'bg-white' : (
-            'bg-indigo-200'
-          )} py-0.5 pr-1.5 pl-2 text-left text-sm text-slate-500 outline-1 -outline-offset-1 outline-gray-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:focus-visible:outline-indigo-500"
+          class="grid cursor-default grid-cols-1 rounded-md {allFieldsSelected ?
+            'bg-white text-slate-500 outline-gray-300'
+          : 'bg-indigo-700 text-slate-100 outline-indigo-700'} py-0.5 pr-1.5 pl-2 text-left text-sm outline-1 -outline-offset-1 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:focus-visible:outline-indigo-500"
         >
           <span class="col-start-1 row-start-1 truncate pr-4">{fieldsLabel}</span>
           <svg
