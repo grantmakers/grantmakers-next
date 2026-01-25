@@ -81,7 +81,7 @@
           toast.success('Copied EIN');
         },
       }}
-      class="inline-flex cursor-copy items-center justify-center justify-self-end rounded-md px-2 py-1 text-sm font-medium text-slate-700 tabular-nums"
+      class="inline-flex cursor-copy items-center justify-center justify-self-center rounded-md px-2 py-1 text-sm font-medium text-slate-700 tabular-nums"
     >
       {formatEin(profile.ein)}
     </span>
