@@ -3,7 +3,6 @@
   import { browser } from '$app/environment';
   import { onDestroy, onMount } from 'svelte';
   import { pushState, replaceState } from '$app/navigation';
-  import { page } from '$app/state';
   import instantsearch, { type InstantSearch, type SearchClient, type TemplateParams, type UiState } from 'instantsearch.js';
   import type { $TSFixMe } from '@repo/shared/typings/irs/all';
   import { history } from 'instantsearch.js/es/lib/routers';
@@ -71,6 +70,7 @@
     grant_purpose?: string;
     tax_year?: string;
     grant_amount?: string;
+    fields?: string;
     page?: number;
   }
 
@@ -142,12 +142,12 @@
   let hoveredField = $state<string | null>(null);
   let showFieldWarning = $state(false);
   let fieldWarningTimeout: ReturnType<typeof setTimeout> | null = null;
-  // Local state to track URL search params for the "Tip" CTA link
-  let currentSearchParams = $state(page.url.search);
+  // Track URL search params for the "Tip" CTA link (synced from InstantSearch router)
+  let currentSearchParams = $state('');
 
   // Derived state for label
   const allFieldsSelected = $derived(selectedFields.length === SEARCHABLE_FIELDS.length);
-  const fieldsLabel = $derived(allFieldsSelected ? 'all fields' : 'selected fields');
+  const fieldsLabel = $derived(allFieldsSelected ? 'all fields' : `selected fields (${selectedFields.length})`);
 
   /**
    * Create panel widget configuration with optional collapsible behavior
@@ -421,7 +421,7 @@
             const currentUrlSearchParams = currentBrowserUrl.searchParams;
             const hasSearch = currentUrlSearchParams.size > 0;
 
-            // Update local state for the "Tip" CTA link
+            // Sync search params for the "Tip" CTA link
             currentSearchParams = nextUrl.search;
 
             // First search: PUSH to history. Subsequent refinements: REPLACE.
@@ -448,6 +448,10 @@
               grant_purpose: indexUiState.refinementList?.grant_purpose?.join('~'),
               tax_year: indexUiState.refinementList?.tax_year?.join('~'),
               grant_amount: indexUiState.numericMenu?.grant_amount?.replace(':', '~'),
+              // Only include fields if not all selected (cleaner default URLs)
+              ...(selectedFields.length < SEARCHABLE_FIELDS.length && {
+                fields: selectedFields.join('~'),
+              }),
               page: indexUiState.page,
             };
           },
@@ -464,6 +468,18 @@
             if (routeState.grant_purpose) refinementList.grant_purpose = routeState.grant_purpose.split('~');
             if (routeState.tax_year) refinementList.tax_year = routeState.tax_year.split('~');
 
+            // Restore selectedFields from URL (validates against known fields)
+            if (routeState.fields) {
+              const validFieldIds: string[] = SEARCHABLE_FIELDS.map((f) => f.id);
+              selectedFields = routeState.fields.split('~').filter((f) => validFieldIds.includes(f));
+              // Fallback to all fields if none valid
+              if (selectedFields.length === 0) {
+                selectedFields = SEARCHABLE_FIELDS.map((f) => f.id);
+              }
+            } else {
+              selectedFields = SEARCHABLE_FIELDS.map((f) => f.id);
+            }
+
             // Build numericMenu state if grant_amount exists
             const numericMenuState: { [attribute: string]: string } = {};
             if (routeState.grant_amount) numericMenuState.grant_amount = routeState.grant_amount.replace('~', ':');
@@ -473,6 +489,12 @@
                 query: routeState.query,
                 refinementList,
                 numericMenu: numericMenuState,
+                // Apply restrictSearchableAttributes via configure widget state
+                ...(selectedFields.length < SEARCHABLE_FIELDS.length && {
+                  configure: {
+                    restrictSearchableAttributes: selectedFields,
+                  },
+                }),
                 page: routeState.page,
               },
             };
