@@ -85,12 +85,13 @@
     { label: '$500k+', start: 500000 },
   ] as const;
 
-  let mobileFiltersOpen = $state(false);
-  let searchAllFoundations = $state(false);
-
   let algoliaInstance: AlgoliaInstance;
   let refineConfig: ConfigureRenderState['refine'] | null = null;
   let hitsContainer: HTMLElement | null = null;
+
+  let mobileFiltersOpen = $state(false);
+  let searchAllFoundations = $state(false);
+  let funderWidget: ReturnType<typeof createFacetWidget> | null = null;
 
   const FACETS: readonly FacetConfig[] = [
     { attribute: 'tax_year', label: 'Tax Year', container: '#tax-year', collapsedByDefault: true, showMore: false, sortBy: ['name:desc'] },
@@ -141,6 +142,8 @@
   let hoveredField = $state<string | null>(null);
   let showFieldWarning = $state(false);
   let fieldWarningTimeout: ReturnType<typeof setTimeout> | null = null;
+  // Local state to track URL search params for the "Tip" CTA link
+  let currentSearchParams = $state(page.url.search);
 
   // Derived state for label
   const allFieldsSelected = $derived(selectedFields.length === SEARCHABLE_FIELDS.length);
@@ -417,6 +420,9 @@
             const currentBrowserUrl = new URL(window.location.href);
             const currentUrlSearchParams = currentBrowserUrl.searchParams;
             const hasSearch = currentUrlSearchParams.size > 0;
+
+            // Update local state for the "Tip" CTA link
+            currentSearchParams = nextUrl.search;
 
             // First search: PUSH to history. Subsequent refinements: REPLACE.
             if (!hasSearch) {
@@ -1000,7 +1006,7 @@
         <span class="font-bold text-white">TIP: </span>
         <span>Use the</span>
         <a
-          href={`/search/grants/${page.url.search}`}
+          href={`/search/grants/${currentSearchParams}`}
           target="_blank"
           rel="noopener noreferrer"
           class="text-grantmakers-blue-dark-bg flex items-center gap-1 font-bold hover:underline"
