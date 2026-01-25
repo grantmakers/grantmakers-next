@@ -15,9 +15,9 @@ export const profileNavItems: SecondaryNavItems[] = [
     link: '#people',
   },
   {
-    title: 'Grants',
-    id: 'grants',
-    link: '#grants',
+    title: 'Grantees',
+    id: 'grantees',
+    link: '#grantees',
   },
   {
     title: 'Guidelines',

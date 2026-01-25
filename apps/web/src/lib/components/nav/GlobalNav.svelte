@@ -142,10 +142,6 @@
                   <Logo variation={'sticky'} />
                 </a>
               </div>
-
-              <div class="shrink-0 whitespace-nowrap text-white">
-                <PrimarySearchNavLink href={'/search/profiles/'} title={'Foundations'} />
-              </div>
             </div>
             <!-- Secondary Nav Links -->
             <nav class="flex items-center space-x-4 transition-all duration-700">
@@ -170,6 +166,10 @@
             class="flex w-0 items-center gap-4 overflow-hidden opacity-0 transition-[width,opacity] duration-0 ease-out group-data-[sticky=true]:w-auto group-data-[sticky=true]:opacity-100 group-data-[sticky=true]:duration-700"
           >
             <div class="flex items-center gap-6 text-white">
+              <div class="hidden items-center gap-6 xl:flex">
+                <PrimarySearchNavLink href={'/search/grants/'} title={'Grants'} />
+                <PrimarySearchNavLink href={'/search/profiles/'} title={'Foundations'} />
+              </div>
               <IconTrigger disabled={isLegacySearchRoute} />
             </div>
           </div>

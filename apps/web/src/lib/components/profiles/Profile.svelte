@@ -123,12 +123,12 @@
           {#if profile.grant_count > 0}
             <div class="relative -mx-6 w-auto sm:-mx-6 lg:left-1/2 lg:mx-0 lg:w-screen lg:-translate-x-1/2">
               <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
-                <ContentBoxWrapper id="grants">
+                <ContentBoxWrapper id="grantees">
                   <div class="mb-4 w-full">
                     <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white break-words">
                       <div class="mb-0 bg-slate-200 p-4">
                         <div class="flex items-center justify-between">
-                          <h2 class="mb-0"><SectionAnchor title="Grants" sectionId="grants" /></h2>
+                          <h2 class="mb-0"><SectionAnchor title="Grantees" sectionId="grantees" /></h2>
                           <span class="hidden text-sm text-slate-600 sm:block">Grants reported on IRS Form 990-PF</span>
                           <img src={irsLogo} alt="IRS logo" class="max-h-6" height={24} width={48} />
                         </div>
@@ -156,11 +156,11 @@
             </div>
           {:else}
             <!-- Empty state: Use narrower layout matching Charitable Activities -->
-            <div id="grants" class="-mx-3 grid grid-cols-1">
+            <div id="grantees" class="-mx-3 grid grid-cols-1">
               <div class="mb-4 w-full max-w-full px-3">
                 <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white break-words">
                   <div class="mb-0 border-b-0 bg-slate-200 p-4">
-                    <ContentBoxHeader title={'Grants'} sectionId="grants">
+                    <ContentBoxHeader title={'Grantees'} sectionId="grantees">
                       <img src={irsLogo} alt="IRS logo" class="max-h-6 w-full" height={24} width={48} />
                     </ContentBoxHeader>
                   </div>
