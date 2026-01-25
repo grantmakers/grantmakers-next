@@ -28,7 +28,8 @@
   const isDataOutdated = $derived(isOutdatedISOString(profile.last_updated_irs));
 
   // Badge styling constant
-  const BADGE_CLASSES = 'inline-flex w-32 items-center justify-start gap-1.5 rounded px-2.5 py-1 text-xs font-medium text-slate-600';
+  const BADGE_CLASSES =
+    'justify-self-end inline-flex w-32 items-center justify-start gap-1.5 rounded px-2.5 py-1 text-xs font-medium text-slate-600';
 </script>
 
 <!-- Main container using flex with items-end to align bottom edges -->
@@ -70,9 +71,9 @@
   </div>
 
   <!-- Right Column: Metadata -->
-  <div class="ml-4 grid w-full grid-cols-2 gap-x-2 gap-y-2 text-right md:mt-0 md:ml-2 md:w-auto md:gap-x-4">
+  <div class="ml-4 grid w-full grid-cols-2 gap-x-2 gap-y-2 md:mt-0 md:ml-2 md:w-auto md:gap-x-4">
     <!-- EIN -->
-    <span class="inline-flex items-center justify-start text-sm md:justify-end">EIN</span>
+    <span class="inline-flex items-center justify-start justify-self-start text-sm md:justify-end md:justify-self-end">EIN</span>
     <span
       use:copy={{
         text: profile.ein,
@@ -80,13 +81,13 @@
           toast.success('Copied EIN');
         },
       }}
-      class="inline-flex cursor-copy items-center justify-center rounded-md px-2 py-1 text-sm font-medium text-slate-700 tabular-nums"
+      class="inline-flex cursor-copy items-center justify-center justify-self-end rounded-md px-2 py-1 text-sm font-medium text-slate-700 tabular-nums"
     >
       {formatEin(profile.ein)}
     </span>
 
     <!-- IRS Status -->
-    <span class="inline-flex items-center justify-start text-sm md:justify-end">IRS Status</span>
+    <span class="inline-flex items-center justify-start justify-self-start text-sm md:justify-end md:justify-self-end">IRS Status</span>
     <span class={BADGE_CLASSES}>
       <span class="size-1.5 shrink-0 rounded-full {hasValidIrsStatus ? 'bg-emerald-500' : 'bg-amber-500'}"></span>
       {#if hasValidIrsStatus}
@@ -101,7 +102,9 @@
     </span>
 
     <!-- Data Valid as of -->
-    <span class="inline-flex items-center justify-start text-sm md:justify-end">Data Valid as of</span>
+    <span class="inline-flex items-center justify-start justify-self-start text-sm md:justify-end md:justify-self-end"
+      >Data Valid as of</span
+    >
     <span class={BADGE_CLASSES}>
       <span class="size-1.5 shrink-0 rounded-full {isDataOutdated ? 'bg-amber-500' : 'bg-emerald-500'}"></span>
       FYE {formattedTaxPeriodEnd}
@@ -119,7 +122,9 @@
 </div>
 
 <!-- Footer: Approachability -->
-<div class="-mx-4 mt-6 flex items-center justify-between gap-6 border-t border-slate-200 bg-slate-50 px-4 py-3 lg:-mx-8 lg:px-8">
+<div
+  class="-mx-4 mt-6 flex flex-col items-start gap-4 border-t border-slate-200 bg-slate-50 px-4 py-3 lg:-mx-8 lg:flex-row lg:items-center lg:justify-between lg:px-8"
+>
   <div class="shrink-0">
     {#if isFinalReturn}
       <span
@@ -138,7 +143,7 @@
     {/if}
   </div>
 
-  <div class="max-w-sm text-right text-xs text-balance text-slate-600">
+  <div class="max-w-sm text-left text-xs text-balance text-slate-600 lg:text-right">
     Foundation tax returns are public records. Grantmakers.io is a free community project that republishes this IRS data.
   </div>
 </div>

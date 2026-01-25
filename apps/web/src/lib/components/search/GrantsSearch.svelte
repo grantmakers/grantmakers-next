@@ -805,7 +805,7 @@
 
     <!-- Mobile Layout: Filters + Powered By (Row 2 on Mobile) -->
     <!-- Desktop Layout: Filters hidden, Powered By joins Row 1 via lg:contents -->
-    <div class="flex w-full items-center justify-between gap-4 lg:hidden">
+    <div class="mb-4 flex w-full items-center justify-between gap-4 lg:hidden">
       <!-- Mobile Filter Toggle -->
       <button
         type="button"
@@ -826,13 +826,6 @@
 
         Filters
       </button>
-
-      <!-- Powered By -->
-      <div class="flex items-center lg:w-64 lg:shrink-0">
-        <div class="flex h-full w-full items-center justify-center rounded-lg bg-white p-4 shadow sm:shadow-none dark:bg-gray-800">
-          <div id="powered-by"></div>
-        </div>
-      </div>
     </div>
   </div>
 

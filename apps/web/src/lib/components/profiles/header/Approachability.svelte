@@ -26,7 +26,7 @@
 
 <!-- Badges + About trigger -->
 <!-- Note: All Badges are triggers as well - see badge #snippet -->
-<div class="flex flex-wrap items-center gap-2">
+<div class="flex flex-col items-start gap-2 lg:flex-row lg:items-center">
   {@render badge(
     !noUnsolicited,
     'Possibly open to applications',

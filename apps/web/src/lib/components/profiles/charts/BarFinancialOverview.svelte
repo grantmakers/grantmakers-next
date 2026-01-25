@@ -132,7 +132,9 @@
     <div class="hidden w-full sm:block">
       <canvas bind:this={chartCanvas}></canvas>
     </div>
-    <Divider />
+    <div class="hidden sm:block">
+      <Divider />
+    </div>
     <p class="flex justify-end gap-1 text-xs">
       Tax Year {orgCurrentTaxYear} ended {formattedTaxPeriodEnd ? formattedTaxPeriodEnd : 'N/A'}
     </p>

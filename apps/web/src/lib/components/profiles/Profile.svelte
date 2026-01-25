@@ -46,7 +46,7 @@
 <div class="relative flex min-h-screen">
   <!-- Main Wrapper -->
   <div
-    class="ease-soft-in-out relative mx-auto h-full w-full max-w-3xl min-w-0 grow rounded-xl px-6 transition-all duration-200 sm:px-6 lg:max-w-7xl lg:px-8"
+    class="ease-soft-in-out relative mx-auto h-full w-full max-w-3xl min-w-0 grow rounded-xl px-2 transition-all duration-200 sm:px-6 lg:max-w-7xl lg:px-8"
     id="panel"
   >
     <!-- Main Content -->
@@ -122,7 +122,7 @@
         <div class="mt-6 lg:mt-8">
           {#if profile.grant_count > 0}
             <div class="relative -mx-6 w-auto sm:-mx-6 lg:left-1/2 lg:mx-0 lg:w-screen lg:-translate-x-1/2">
-              <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+              <div class="mx-auto max-w-screen-2xl px-2 sm:px-6 lg:px-8">
                 <ContentBoxWrapper id="grantees">
                   <div class="mb-4 w-full">
                     <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white break-words">
