@@ -360,4 +360,7 @@
       </div>
     </div>
   </div>
+  {#if hasSurpriseMeAccess}
+    <SurpriseMe variant="fab" />
+  {/if}
 </div>
