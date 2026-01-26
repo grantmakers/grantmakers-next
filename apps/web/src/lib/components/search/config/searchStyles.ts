@@ -166,7 +166,7 @@ export const refinementListStyles = {
   innerItem: 'w-full',
   label: 'flex w-full grow flex-row items-start text-sm text-gray-600 cursor-pointer',
   labelText: 'ml-2 text-left break-words leading-snug',
-  checkbox: `mt-0.5 size-4 appearance-none rounded-sm border border-gray-300 bg-white
+  checkbox: `mt-0.5 size-4 shrink-0 appearance-none rounded-sm border border-gray-300 bg-white
     checked:border-indigo-600 checked:bg-indigo-600
     focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600
     dark:border-white/20 dark:bg-white/5 dark:checked:border-indigo-500 dark:checked:bg-indigo-500
@@ -187,7 +187,7 @@ export const refinementListCompactStyles = {
   list: 'space-y-1.5',
   label: 'flex w-full grow flex-row items-start justify-between text-xs text-gray-600 cursor-pointer',
   labelText: 'ml-2 text-left break-words leading-tight',
-  checkbox: `mt-0.5 size-3.5 appearance-none rounded-sm border border-gray-300 bg-white
+  checkbox: `mt-0.5 size-3.5 shrink-0 appearance-none rounded-sm border border-gray-300 bg-white
     checked:border-indigo-600 checked:bg-indigo-600
     focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600
     dark:border-white/20 dark:bg-white/5 dark:checked:border-indigo-500 dark:checked:bg-indigo-500
