@@ -247,7 +247,7 @@ export function initSearchJs(M) {
     </div>
     <div class="card">
       <div class="card-content">
-        <p>You conducted a Grants Search across keywords, locations, and organization names</p>
+        <p>You conducted a Grantee Search across keywords, locations, and organization names</p>
       </div>
     </div>
     <div class="card z-depth-0 grey lighten-4">
@@ -789,7 +789,7 @@ export function initSearchJs(M) {
     /**
      * There is only one select element - the search toggle in the search box element
      */
-    const elem = document.getElementById('toggle-search-type-grants');
+    const elem = document.getElementById('toggle-search-type-grantees');
     if (!elem) return;
 
     // Skip Materialize initialization if element has browser-default class

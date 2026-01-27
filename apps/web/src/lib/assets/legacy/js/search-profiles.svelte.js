@@ -753,7 +753,7 @@ export function initSearchJs(M) {
             <div class="card z-depth-0 grey lighten-4">
               <div class="card-content">
                 <div class="card-title">Not looking for a specific funder?</div>
-                <p>Try your query using a <a href="{{ site.baseurl }}/search/grants/?query={{ query }}" data-ga="Grants Search">Grants Search</a></p>
+                <p>Try your query using a <a href="{{ site.baseurl }}/search/grantees/?query={{ query }}" data-ga="Grantees Search">Grantees Search</a></p>
               </div>
             </div>
             <div class="card z-depth-0 grey lighten-4">

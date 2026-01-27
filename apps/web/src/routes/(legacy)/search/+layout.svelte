@@ -27,7 +27,7 @@
 
 {#if pathname.includes('/profiles')}
   <ProfilesHero />
-{:else if pathname.includes('/grants')}
+{:else if pathname.includes('/grantees')}
   <GrantsHero />
 {/if}
 

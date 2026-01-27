@@ -93,7 +93,7 @@
         <!-- Right section on desktop -->
         <div class="hidden lg:ml-4 lg:flex lg:items-center lg:justify-end">
           <div class="flex items-center gap-6 text-white">
-            <PrimarySearchNavLink href={'/search/grants/'} title={'Grants'} />
+            <PrimarySearchNavLink href={'/search/grantees/'} title={'Grantees'} />
             <PrimarySearchNavLink href={'/search/profiles/'} title={'Foundations'} />
             <IconTrigger disabled={isLegacySearchRoute} />
           </div>
@@ -167,7 +167,7 @@
           >
             <div class="flex items-center gap-6 text-white">
               <div class="hidden items-center gap-6 xl:flex">
-                <PrimarySearchNavLink href={'/search/grants/'} title={'Grants'} />
+                <PrimarySearchNavLink href={'/search/grantees/'} title={'Grantees'} />
                 <PrimarySearchNavLink href={'/search/profiles/'} title={'Foundations'} />
               </div>
               <IconTrigger disabled={isLegacySearchRoute} />
@@ -222,7 +222,7 @@
                 <!-- Primary Mobile Nav Links -->
                 <div class="space-y-1 pt-2 pb-1">
                   <PrimaryNavLinkMobile href={'/search/profiles/'} title={'Foundations'} />
-                  <PrimaryNavLinkMobile href={'/search/grants/'} title={'Grants'} />
+                  <PrimaryNavLinkMobile href={'/search/grantees/'} title={'Grantees'} />
                   <PrimaryNavLinkMobile href={'/about/'} title={'About'} />
                 </div>
                 <div class="mt-3 space-y-1 px-4 pb-3">

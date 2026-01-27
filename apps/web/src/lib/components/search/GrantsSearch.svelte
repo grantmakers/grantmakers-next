@@ -540,11 +540,11 @@
             let count = '';
 
             if (data.hasManyResults) {
-              count += `${formatNumber(data.nbHits)} Grants`;
+              count += `${formatNumber(data.nbHits)} Results`;
             } else if (data.hasOneResult) {
-              count += `1 Grant`;
+              count += `1 Result`;
             } else {
-              count += `0 Grants`;
+              count += `0 Results`;
             }
 
             return html`<span>${count}</span>`;
@@ -1025,12 +1025,12 @@
         <span class="font-bold text-white">TIP: </span>
         <span>Use the</span>
         <a
-          href={`/search/grants/${currentSearchParams}`}
+          href={`/search/grantees/${currentSearchParams}`}
           target="_blank"
           rel="noopener noreferrer"
           class="text-grantmakers-blue-dark-bg flex items-center gap-1 font-bold hover:underline"
         >
-          Grants</a
+          Grantee</a
         >
         <span>search tool</span>
         <svg

@@ -36,7 +36,7 @@
       <div class="col s4 m3 l3">
         <h6 class="mb-2 text-base font-semibold text-slate-700">Search</h6>
         <p><a href="/search/profiles/" title="Find a foundation profile">Foundation Search</a></p>
-        <p><a href="/search/grants/" title="See who foundations are funding">Grants Search</a></p>
+        <p><a href="/search/grantees/" title="See who foundations are funding">Grantee Search</a></p>
       </div>
       <div class="col s4 m3 l3 hide-on-small-only">
         <h6 class="valign-wrapper mb-2 text-base font-semibold text-slate-700">

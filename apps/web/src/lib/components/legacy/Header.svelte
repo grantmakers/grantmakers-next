@@ -29,9 +29,9 @@
                   </a>
                 </li>
                 <li class="collection-item avatar">
-                  <a href="/search/grants/" title="Grants Search">
-                    <i class="material-icons circle blue-grey">search</i> <span class="title">Search all Grants</span>
-                    <p class="blue-grey-text text-lighten-1">Grants Search</p>
+                  <a href="/search/grantees/" title="Grantees Search">
+                    <i class="material-icons circle blue-grey">search</i> <span class="title">Search all Grantees</span>
+                    <p class="blue-grey-text text-lighten-1">Grantee Search</p>
                   </a>
                 </li>
                 <li class="collection-item avatar">
@@ -78,7 +78,7 @@
     <a href="/search/profiles/" class="waves-effect waves-light"> Find a Foundation Profile </a>
   </li>
   <li>
-    <a href="/search/grants" class="waves-effect waves-light"> Search all Grants </a>
+    <a href="/search/grantees" class="waves-effect waves-light"> Search all Grantees </a>
   </li>
   <li><hr class="divider" /></li>
   <li class="disabled"><a href={'#'} class="title grey-text">The Project</a></li>

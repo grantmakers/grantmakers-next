@@ -11,7 +11,7 @@
         Learn More
         <span class="sr-only">about Grantmakers.io</span>
       </a>
-      <a href="/search/grants/" class="text-sm/6 font-semibold text-gray-900">Or, start searching <span aria-hidden="true">→</span></a>
+      <a href="/search/grantees/" class="text-sm/6 font-semibold text-gray-900">Or, start searching <span aria-hidden="true">→</span></a>
     </div>
   </div>
 </div>

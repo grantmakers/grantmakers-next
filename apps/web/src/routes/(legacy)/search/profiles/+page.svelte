@@ -72,8 +72,8 @@
                   <optgroup class="disabled" label="Research a foundation">
                     <option value="profiles">Foundations</option>
                   </optgroup>
-                  <optgroup class="disabled" label="Search all grants">
-                    <option value="grants">Grants</option>
+                  <optgroup class="disabled" label="Search all Grantees">
+                    <option value="grantees">Grantees</option>
                   </optgroup>
                 </select>
               </div>

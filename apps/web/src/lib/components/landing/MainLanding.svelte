@@ -58,8 +58,8 @@
             <div class="hidden sm:mb-8 sm:flex sm:justify-center">
               <div class="relative rounded-full px-3 py-1 text-sm/6 text-gray-400 ring-1 ring-white/10 hover:ring-white/20">
                 Find foundations by who they've funded
-                <a href="/search/grants/" class="ml-2 font-semibold text-indigo-400"
-                  ><span aria-hidden="true" class="absolute inset-0"></span>Grants Search <span aria-hidden="true">&rarr;</span></a
+                <a href="/search/grantees/" class="ml-2 font-semibold text-indigo-400"
+                  ><span aria-hidden="true" class="absolute inset-0"></span>Grantee Search <span aria-hidden="true">&rarr;</span></a
                 >
               </div>
             </div>

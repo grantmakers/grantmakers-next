@@ -6,14 +6,14 @@
 
   const site = {
     baseurl: '',
-    title: 'Search Foundation Grants - Grantmakers.io',
+    title: 'Search Foundation Grantees - Grantmakers.io',
   };
 
   // Search box sticky header
   let searchAnchor: HTMLElement;
 
   // Initial search-type toggle state
-  let currentSearch = 'grants';
+  let currentSearch = 'grantees';
 
   function handleSearchChange(event: Event) {
     const target = event.target;
@@ -78,17 +78,17 @@
             <div class="col l2 hide-on-med-and-down">
               <div id="search-toggle" class="input-field valign-wrapper">
                 <select
-                  id="toggle-search-type-grants"
+                  id="toggle-search-type-grantees"
                   class="browser-default grants-search white-text"
-                  aria-label="Grants"
+                  aria-label="Grantees"
                   bind:value={currentSearch}
                   on:change={handleSearchChange}
                 >
                   <optgroup class="disabled" label="Research a foundation">
                     <option value="profiles">Foundations</option>
                   </optgroup>
-                  <optgroup class="disabled" label="Search all grants">
-                    <option value="grants" selected>Grants</option>
+                  <optgroup class="disabled" label="Search all Grantees">
+                    <option value="grantees" selected>Grantees</option>
                   </optgroup>
                 </select>
               </div>
@@ -320,7 +320,7 @@
             <div class="col s12 m6 flex-direction-column flex">
               <ul class="search-details-header">
                 <li class="text-bold">
-                  <a class="blue-grey-text" href="/search/grants/"><i class="material-icons left">find_in_page</i> Grants Search</a>
+                  <a class="blue-grey-text" href="/search/grantees/"><i class="material-icons left">find_in_page</i> Grantees Search</a>
                 </li>
                 <li class="small">Discover new prospects</li>
               </ul>

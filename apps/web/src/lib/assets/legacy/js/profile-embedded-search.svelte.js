@@ -259,7 +259,7 @@ export async function initSearchJs(M) {
             <div class="card-content">
               <div class="card-title">Not finding what you're looking for?</div>
               <p>Search for a <a href="https://www.grantmakers.io/search/profiles/" class="grantmakers-text" data-ga="Foundation Search">different foundation</a></p>
-              <p>Search for your query across the entire <a href="https://www.grantmakers.io/search/grants/?query=${results.query}" class="grantmakers-text" data-ga="Grants Search">grants dataset</a></p>
+              <p>Search for your query across the entire <a href="https://www.grantmakers.io/search/grantees/?query=${results.query}" class="grantmakers-text" data-ga="Grantees Search">grantees dataset</a></p>
             </div>
           </div>
 

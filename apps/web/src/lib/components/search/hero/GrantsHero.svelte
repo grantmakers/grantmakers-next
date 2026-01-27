@@ -4,7 +4,7 @@
 <section class="sm:dot-pattern relative isolate overflow-hidden py-24 sm:py-32">
   <div class="relative mx-auto max-w-4xl px-6 lg:px-8">
     <div class="rounded-3xl bg-white/90 p-10 text-center ring-1 ring-black/5 backdrop-blur-xl dark:bg-gray-900/90">
-      <h2 class="text-base/7 font-semibold text-indigo-600 dark:text-indigo-400">Grants Search</h2>
+      <h2 class="text-base/7 font-semibold text-indigo-600 dark:text-indigo-400">Grantee Search</h2>
 
       <!-- Title with hand-drawn underline -->
       <div class="relative inline-block">

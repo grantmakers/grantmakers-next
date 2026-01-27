@@ -212,7 +212,7 @@ export const faqData: EachFAQ[] = [
 export const footerNavigation = {
   search: [
     { name: 'Foundation Search', href: '/search/profiles/' },
-    { name: 'Grants Search', href: '/search/grants/' },
+    { name: 'Grantee Search', href: '/search/grantees/' },
   ],
   getInvolved: [
     { name: 'Support Open Data', href: '/about/donate/' },

@@ -49,8 +49,8 @@
           class="relative rounded-full bg-white/70 px-3 py-1 text-sm/6 text-gray-500 ring-1 ring-gray-300 ring-inset hover:ring-white/20"
         >
           Find foundations by who they've funded
-          <a href="/search/grants/" class="ml-2 font-semibold text-indigo-600"
-            ><span aria-hidden="true" class="absolute inset-0"></span>Grants Search <span aria-hidden="true">&rarr;</span></a
+          <a href="/search/grantees/" class="ml-2 font-semibold text-indigo-600"
+            ><span aria-hidden="true" class="absolute inset-0"></span>Grantee Search <span aria-hidden="true">&rarr;</span></a
           >
         </div>
       </div>
