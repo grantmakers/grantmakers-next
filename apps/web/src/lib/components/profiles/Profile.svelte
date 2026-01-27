@@ -134,7 +134,7 @@
                         </div>
                       </div>
                       <div>
-                        {#if profile.grant_count > 20 && profile.enable_algolia_search}
+                        {#if profile.enable_algolia_search}
                           <GrantsSearch ein={profile.ein} />
                         {:else}
                           <GrantsTable
