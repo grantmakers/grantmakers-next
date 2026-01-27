@@ -5,6 +5,7 @@
   import SearchTypesModal from '$src/lib/components/legacy/modals/SearchTypesModal.svelte';
   import IrsExcludeModal from '$src/lib/components/legacy/modals/IrsExcludeModal.svelte';
   import RateLimit from '$src/lib/components/search/RateLimit.svelte';
+  import OriginForbidden from '$src/lib/components/search/OriginForbidden.svelte';
 
   const site = {
     baseurl: '',
@@ -140,21 +141,7 @@
       <div id="forbidden-message" class="hidden">
         <div class="row">
           <div class="col s12">
-            <div class="card">
-              <div class="card-content">
-                <span class="card-title"
-                  ><strong>Check your url</strong> <br />Search results are only available at
-                  <a href="/">Grantmakers.io</a></span
-                >
-                <p>
-                  We limit search results to Grantmakers.io to allow the maximum number of people access to this free service. The page you
-                  landed on is not Grantmakers.io.
-                </p>
-              </div>
-              <div class="card-action">
-                <a class="btn-flat blue-grey white-text" href="https://www.grantmakers.io/">Go to Grantmakers</a>
-              </div>
-            </div>
+            <OriginForbidden />
           </div>
         </div>
       </div>

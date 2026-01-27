@@ -67,7 +67,6 @@
     // Add widgets
     searchInstance.addWidgets([
       configure({
-        /* @ts-expect-error Assumes PlainSearchParameters only, which is a narrow subset of all available search parameters*/
         hitsPerPage: placeholderHitsPerPage,
       }),
 

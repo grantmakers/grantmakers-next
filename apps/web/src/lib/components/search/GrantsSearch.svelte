@@ -43,6 +43,7 @@
     PUBLIC_ALGOLIA_INDEX_NAME_GRANTS,
   } from '$env/static/public';
   import RateLimit from './RateLimit.svelte';
+  import OriginForbidden from './OriginForbidden.svelte';
 
   type AlgoliaInstance = InstantSearch;
 
@@ -94,6 +95,7 @@
   let searchAllFoundations = $state(false);
   let funderWidget: ReturnType<typeof createFacetWidget> | null = null;
   let rateLimitReached = $state(false);
+  let originForbidden = $state(false);
 
   const FACETS: readonly FacetConfig[] = [
     { attribute: 'tax_year', label: 'Tax Year', container: '#tax-year', collapsedByDefault: true, showMore: false, sortBy: ['name:desc'] },
@@ -289,8 +291,8 @@
       rateLimitReached = false;
     }
 
-    // Don't render hits if rate limit was reached
-    if (rateLimitReached) {
+    // Don't render hits if rate limit was reached or origin is forbidden
+    if (rateLimitReached || originForbidden) {
       return;
     }
 
@@ -636,13 +638,16 @@
 
     algoliaInstance.start();
 
-    // Handle Algolia errors (rate limiting, etc.)
+    // Handle Algolia errors (rate limiting, origin forbidden, etc.)
     algoliaInstance.on('error', ({ error }) => {
       console.error('Algolia search error:', error);
       // Check various possible error status properties
       const status = error?.status || error?.statusCode;
       if (status === 429) {
         rateLimitReached = true;
+      }
+      if (status === 403) {
+        originForbidden = true;
       }
     });
 
@@ -1084,8 +1089,10 @@
       </div>
 
       <div class="overflow-hidden rounded-lg bg-white shadow">
-        <!-- Rate Limit Message -->
-        {#if rateLimitReached}
+        <!-- Error Messages -->
+        {#if originForbidden}
+          <OriginForbidden />
+        {:else if rateLimitReached}
           <RateLimit />
         {:else}
           <!-- InstantSearch Hits -->
@@ -1127,7 +1134,7 @@
         </button>
       </div>
 
-      <div class="sticky top-0 space-y-6 rounded-lg lg:min-h-64 lg:bg-white lg:p-6 {rateLimitReached ? 'lg:hidden' : 'lg:shadow'}">
+      <div class="sticky top-0 space-y-6 rounded-lg lg:min-h-64 lg:bg-white lg:p-6 {rateLimitReached || originForbidden ? 'lg:hidden' : 'lg:shadow'}">
         <!-- Desktop Header: Filters title + Clear all -->
         <div class="hidden items-center justify-between border-b border-gray-200 pb-3 lg:flex">
           <h2 class="text-base font-semibold text-gray-900">Filters</h2>
