@@ -42,6 +42,7 @@
     PUBLIC_ALGOLIA_SEARCH_ONLY_KEY_GRANTS,
     PUBLIC_ALGOLIA_INDEX_NAME_GRANTS,
   } from '$env/static/public';
+  import RateLimit from './RateLimit.svelte';
 
   type AlgoliaInstance = InstantSearch;
 
@@ -92,6 +93,7 @@
   let mobileFiltersOpen = $state(false);
   let searchAllFoundations = $state(false);
   let funderWidget: ReturnType<typeof createFacetWidget> | null = null;
+  let rateLimitReached = $state(false);
 
   const FACETS: readonly FacetConfig[] = [
     { attribute: 'tax_year', label: 'Tax Year', container: '#tax-year', collapsedByDefault: true, showMore: false, sortBy: ['name:desc'] },
@@ -280,6 +282,16 @@
 
     if (!hitsContainer) {
       return 'No hits container found';
+    }
+
+    // Reset rate limit flag on successful search (handles cooldown period expiry)
+    if (rateLimitReached && results) {
+      rateLimitReached = false;
+    }
+
+    // Don't render hits if rate limit was reached
+    if (rateLimitReached) {
+      return;
     }
 
     // Highlight hits
@@ -623,6 +635,16 @@
     ]);
 
     algoliaInstance.start();
+
+    // Handle Algolia errors (rate limiting, etc.)
+    algoliaInstance.on('error', ({ error }) => {
+      console.error('Algolia search error:', error);
+      // Check various possible error status properties
+      const status = error?.status || error?.statusCode;
+      if (status === 429) {
+        rateLimitReached = true;
+      }
+    });
 
     // Attach single click handler via event delegation
     hitsContainer = document.querySelector('#hits');
@@ -1062,12 +1084,17 @@
       </div>
 
       <div class="overflow-hidden rounded-lg bg-white shadow">
-        <!-- InstantSearch Hits -->
-        <div id="hits">
-          {@render hitsSkeleton()}
-        </div>
-        <!-- InstantSearch Pagination -->
-        <div id="pagination"></div>
+        <!-- Rate Limit Message -->
+        {#if rateLimitReached}
+          <RateLimit />
+        {:else}
+          <!-- InstantSearch Hits -->
+          <div id="hits">
+            {@render hitsSkeleton()}
+          </div>
+          <!-- InstantSearch Pagination -->
+          <div id="pagination"></div>
+        {/if}
       </div>
     </div>
 
@@ -1100,7 +1127,7 @@
         </button>
       </div>
 
-      <div class="sticky top-0 space-y-6 rounded-lg lg:min-h-64 lg:bg-white lg:p-6 lg:shadow">
+      <div class="sticky top-0 space-y-6 rounded-lg lg:min-h-64 lg:bg-white lg:p-6 {rateLimitReached ? 'lg:hidden' : 'lg:shadow'}">
         <!-- Desktop Header: Filters title + Clear all -->
         <div class="hidden items-center justify-between border-b border-gray-200 pb-3 lg:flex">
           <h2 class="text-base font-semibold text-gray-900">Filters</h2>

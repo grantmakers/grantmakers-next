@@ -3,6 +3,7 @@
   import { goto } from '$app/navigation';
   import { sticky } from '$src/lib/utils/sticky';
   import SearchTypesModal from '$src/lib/components/legacy/modals/SearchTypesModal.svelte';
+  import RateLimit from '$src/lib/components/search/RateLimit.svelte';
 
   const site = {
     baseurl: '',
@@ -153,24 +154,7 @@
       <div id="rate-limit-message" class="hidden">
         <div class="row">
           <div class="col s12">
-            <div class="card">
-              <div class="card-content">
-                <h5>You have reached the hourly search limit</h5>
-                <p>
-                  We place limits on the number of searches to allow the maximum number of people access to this free service. You and/or
-                  your colleagues have reached this limit. Please try again in one hour. If you feel this was in error, please <a
-                    href="mailto:opensource@grantmakers.io">get in touch</a
-                  >.
-                </p>
-              </div>
-              <div class="card-action">
-                <p>
-                  If you are trying to capture data using automated means, the data is freely available on <a
-                    href="https://github.com/grantmakers/grantmakers.github.io/">Github</a
-                  >
-                </p>
-              </div>
-            </div>
+            <RateLimit />>
           </div>
         </div>
       </div>
