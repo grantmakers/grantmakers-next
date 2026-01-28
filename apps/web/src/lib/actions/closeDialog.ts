@@ -16,6 +16,6 @@ export function closeDialog(node: HTMLElement) {
   return {
     destroy() {
       node.removeEventListener('click', handleClick);
-    }
+    },
   };
 }
