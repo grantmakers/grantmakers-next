@@ -25,9 +25,6 @@
   const path = $derived(page.url.pathname);
   const config = $derived(getNavConfig(path));
 
-  // Disable search icon on legacy search routes
-  const isLegacySearchRoute = $derived(path.startsWith('/search/profiles'));
-
   /**
    * Capture the height of the primary nav to pass to the sticky Svelte Action
    * Making it NOT reactive is a feature, not a bug
@@ -95,7 +92,7 @@
           <div class="flex items-center gap-6 text-white">
             <PrimarySearchNavLink href={'/search/grantees/'} title={'Grantees'} />
             <PrimarySearchNavLink href={'/search/profiles/'} title={'Foundations'} />
-            <IconTrigger disabled={isLegacySearchRoute} />
+            <IconTrigger />
           </div>
         </div>
 
@@ -170,7 +167,7 @@
                 <PrimarySearchNavLink href={'/search/grantees/'} title={'Grantees'} />
                 <PrimarySearchNavLink href={'/search/profiles/'} title={'Foundations'} />
               </div>
-              <IconTrigger disabled={isLegacySearchRoute} />
+              <IconTrigger />
             </div>
           </div>
         </div>
