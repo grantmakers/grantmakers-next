@@ -11,6 +11,8 @@
   import { formatEin } from '@repo/shared/functions/formatters/ein';
   import { badgeStyles } from '$src/lib/utils/badgeStyles';
   import { searchBoxModalStyles, hitsStyles, poweredByStyles, highlightStyles } from '$src/lib/components/search/config/searchStyles';
+  import RateLimit from './RateLimit.svelte';
+  import OriginForbidden from './OriginForbidden.svelte';
 
   interface Props {
     profilesVersion: string;
@@ -23,6 +25,8 @@
   let searchInstance: InstantSearch | null = null;
   let searchInputRef: HTMLElement | null = $state(null);
   let dialogElement: HTMLDialogElement | null = null;
+  let rateLimitReached = $state(false);
+  let originForbidden = $state(false);
 
   // Close the modal when navigation occurs (e.g., clicking a search result link)
   beforeNavigate(() => {
@@ -155,6 +159,19 @@
     // Start InstantSearch
     searchInstance.start();
 
+    // Handle Algolia errors (rate limiting, origin forbidden, etc.)
+    searchInstance.on('error', ({ error }) => {
+      console.error('Algolia search error:', error);
+      // Check various possible error status properties
+      const status = error?.status || error?.statusCode;
+      if (status === 429) {
+        rateLimitReached = true;
+      }
+      if (status === 403) {
+        originForbidden = true;
+      }
+    });
+
     return () => {
       if (searchInstance) {
         searchInstance.dispose();
@@ -266,7 +283,13 @@
               <!-- <div class="flex items-center justify-start border-y border-b-gray-100 border-t-gray-100 bg-gray-50 px-4 py-2">
               <div class="text-xs font-semibold uppercase text-gray-500">Quick Search</div>
             </div> -->
-              <div id="hits-profiles-compact" class="px-4" data-sveltekit-preload-data="tap"></div>
+              {#if originForbidden}
+                <OriginForbidden />
+              {:else if rateLimitReached}
+                <RateLimit />
+              {:else}
+                <div id="hits-profiles-compact" class="px-4" data-sveltekit-preload-data="tap"></div>
+              {/if}
             </div>
           </div>
 
