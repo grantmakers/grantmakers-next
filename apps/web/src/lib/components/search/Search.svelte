@@ -11,6 +11,7 @@
   import { formatEin } from '@repo/shared/functions/formatters/ein';
   import { badgeStyles } from '$src/lib/utils/badgeStyles';
   import { searchBoxModalStyles, hitsStyles, poweredByStyles, highlightStyles } from '$src/lib/components/search/config/searchStyles';
+  import { arrowNavigation } from '$src/lib/actions/focusNavigation';
   import RateLimit from './RateLimit.svelte';
   import OriginForbidden from './OriginForbidden.svelte';
 
@@ -24,6 +25,7 @@
 
   let searchInstance: InstantSearch | null = null;
   let searchInputRef: HTMLElement | null = $state(null);
+  let algoliaInput: HTMLElement | null = $state(null); // Reference to the actual input injected by Algolia
   let dialogElement: HTMLDialogElement | null = null;
   let rateLimitReached = $state(false);
   let originForbidden = $state(false);
@@ -77,7 +79,7 @@
       searchBox({
         container: '#searchbox-profiles-compact',
         placeholder: 'Search by Foundation Name or EIN...',
-        autofocus: false,
+        autofocus: true,
         cssClasses: searchBoxModalStyles,
       }),
 
@@ -161,6 +163,13 @@
     // Start InstantSearch
     searchInstance.start();
 
+    // Capture the input element for keyboard navigation once rendered
+    searchInstance.on('render', () => {
+      if (!algoliaInput && searchInputRef) {
+        algoliaInput = searchInputRef.querySelector('.ais-SearchBox-input') as HTMLElement;
+      }
+    });
+
     // Handle Algolia errors (rate limiting, origin forbidden, etc.)
     searchInstance.on('error', ({ error }) => {
       console.error('Algolia search error:', error);
@@ -180,83 +189,12 @@
       }
     };
   });
-
-  /* Focus management for dialog open */
-  $effect(() => {
-    if (dialogElement) {
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (mutation.type === 'attributes' && mutation.attributeName === 'open') {
-            if (dialogElement?.open) {
-              // Dialog opened, focus the search input
-              // We use a small timeout to ensure Algolia (or the browser transition) is ready
-              const input = searchInputRef?.querySelector('.ais-SearchBox-input') as HTMLElement;
-              input?.focus();
-            }
-          }
-        });
-      });
-
-      observer.observe(dialogElement, { attributes: true });
-      return () => observer.disconnect();
-    }
-  });
-
-  const handleKeydown = (event: KeyboardEvent) => {
-    const hitsContainer = document.getElementById('hits-profiles-compact');
-    const searchInput = searchInputRef?.querySelector('.ais-SearchBox-input') as HTMLElement;
-
-    if (!hitsContainer || !searchInputRef) return;
-
-    // Get all focusable result items
-    const hits = hitsContainer.querySelectorAll('a');
-
-    // If no hits yet, we can't navigate, but we shouldn't error.
-    if (hits.length === 0) return;
-
-    const currentFocus = document.activeElement as HTMLElement;
-    const isInputFocused = currentFocus === searchInput || searchInputRef.contains(currentFocus);
-
-    // Find index of currently focused item
-    let focusIndex = -1;
-    hits.forEach((hit, index) => {
-      if (hit === currentFocus) {
-        focusIndex = index;
-      }
-    });
-
-    if (event.key === 'ArrowDown') {
-      event.preventDefault();
-
-      if (isInputFocused) {
-        hits[0]?.focus();
-      } else if (focusIndex !== -1 && focusIndex < hits.length - 1) {
-        hits[focusIndex + 1]?.focus();
-      }
-    } else if (event.key === 'ArrowUp') {
-      event.preventDefault();
-
-      if (focusIndex === 0) {
-        searchInput?.focus();
-        if (searchInput instanceof HTMLInputElement) {
-          setTimeout(() => {
-            const len = searchInput.value.length;
-            searchInput.setSelectionRange(len, len);
-          }, 0);
-        }
-      } else if (focusIndex > 0) {
-        // Previous hit
-        hits[focusIndex - 1]?.focus();
-      }
-    }
-  };
 </script>
 
 <!-- Modal Dialog -->
 <el-dialog>
   <dialog
     bind:this={dialogElement}
-    onkeydown={handleKeydown}
     id="search-dialog-profiles-compact"
     class="m-0 p-0 backdrop:bg-gray-500/25 backdrop:backdrop-blur-sm dark:backdrop:bg-gray-900/50"
   >
@@ -361,7 +299,12 @@
               {:else if rateLimitReached}
                 <RateLimit />
               {:else}
-                <div id="hits-profiles-compact" class="px-4" data-sveltekit-preload-data="tap"></div>
+                <div
+                  use:arrowNavigation={{ inputElement: algoliaInput }}
+                  id="hits-profiles-compact"
+                  class="px-4"
+                  data-sveltekit-preload-data="tap"
+                ></div>
               {/if}
             </div>
           </div>
