@@ -10,8 +10,8 @@
     </svg>
 
     <div class="text-base leading-7">
-      <div class="text-xl font-semibold text-white">Instant Search</div>
-      <p class="mt-2 text-gray-300">Free and open doesn't mean inferior. Powerful search tools, zero barriers.</p>
+      <div class="text-xl font-semibold text-white">Community Supported</div>
+      <p class="mt-2 text-gray-300">Forever free thanks to nonprofit changemakers just like you.</p>
     </div>
   </div>
 
