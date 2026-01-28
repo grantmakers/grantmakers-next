@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state';
+  import { closeDialog } from '$lib/actions/closeDialog';
 
   interface Props {
     href: string;
@@ -15,6 +16,9 @@
   );
 </script>
 
-<a {href} class="block py-2 pr-4 pl-3 text-base font-medium sm:pr-6 sm:pl-5 {linkClasses}" aria-current={isActive ? 'page' : undefined}
-  >{href === '/about' ? 'The Project' : title}</a
+<a
+  {href}
+  use:closeDialog
+  class="block py-2 pr-4 pl-3 text-base font-medium sm:pr-6 sm:pl-5 {linkClasses}"
+  aria-current={isActive ? 'page' : undefined}>{href === '/about' ? 'The Project' : title}</a
 >

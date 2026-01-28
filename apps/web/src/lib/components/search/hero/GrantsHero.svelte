@@ -1,7 +1,7 @@
 <script lang="ts">
 </script>
 
-<section class="sm:dot-pattern relative isolate overflow-hidden py-24 sm:py-32">
+<section class="dot-pattern relative isolate overflow-hidden pt-28 pb-12 sm:py-32">
   <div class="relative mx-auto max-w-4xl px-6 lg:px-8">
     <div class="rounded-3xl bg-white/90 p-10 text-center ring-1 ring-black/5 backdrop-blur-xl dark:bg-gray-900/90">
       <h2 class="text-base/7 font-semibold text-indigo-600 dark:text-indigo-400">Grantee Search</h2>
