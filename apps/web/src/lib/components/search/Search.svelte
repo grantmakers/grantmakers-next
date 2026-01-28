@@ -11,7 +11,7 @@
   import { formatEin } from '@repo/shared/functions/formatters/ein';
   import { badgeStyles } from '$src/lib/utils/badgeStyles';
   import { searchBoxModalStyles, hitsStyles, poweredByStyles, highlightStyles } from '$src/lib/components/search/config/searchStyles';
-  import { arrowNavigation } from '$src/lib/actions/focusNavigation';
+  import { searchResultsNavigation } from '$src/lib/actions/focusNavigation';
   import RateLimit from './RateLimit.svelte';
   import OriginForbidden from './OriginForbidden.svelte';
 
@@ -300,7 +300,7 @@
                 <RateLimit />
               {:else}
                 <div
-                  use:arrowNavigation={{ inputElement: algoliaInput }}
+                  use:searchResultsNavigation={algoliaInput}
                   id="hits-profiles-compact"
                   class="px-4"
                   data-sveltekit-preload-data="tap"
