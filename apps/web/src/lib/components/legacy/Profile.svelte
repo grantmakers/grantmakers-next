@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { browser } from '$app/environment';
   import { onMount, onDestroy } from 'svelte';
 
   import legacyLogo from '$lib/assets/legacy/images/logo.png';
@@ -14,6 +13,7 @@
   import { upperFirstLetter } from '@repo/shared/functions/formatters/names';
   import FinalReturn from './FinalReturn.svelte';
   import RateLimit from '../search/RateLimit.svelte';
+  import OriginForbidden from '../search/OriginForbidden.svelte';
 
   interface Props {
     profile: GrantmakersExtractedDataObj;
@@ -28,9 +28,6 @@
 
   let hasInsights = false;
   let insight = undefined;
-  // let hasInsights = true;
-  // let insight =
-  //   'It appears this funder changed its name and EIN in 2013. For the current org, see the profile for "Edward M & Henrietta M Knabusch Tr 2 011894"';
 
   // Mimic Jekyll
   const site = {
@@ -50,9 +47,6 @@
   const displayedFilingIsAmendment = $derived(profile.filings.some((f) => f.filing_is_amendment));
 
   let algolia = $derived(profile.enable_algolia_search);
-  const hostname = browser ? window.location.hostname : '';
-  const allowedDomain = 'www.grantmakers.io';
-  let isAllowedDomain = $derived(hostname === allowedDomain);
 
   let filingCount = $derived(profile.grants_facets.filter((filing) => filing.grant_count > 0).length);
 
@@ -563,29 +557,7 @@
                     <div id="forbidden-message" class="hidden">
                       <div class="row">
                         <div class="col s12">
-                          <div class="card">
-                            <div class="card-content">
-                              {#if isAllowedDomain}
-                                <span class="card-title"
-                                  ><strong>Coming soon</strong> <br />We're working with our search partner to deploy millions of new
-                                  grants!</span
-                                >
-                                <p>Please check back tomorrow.</p>
-                              {:else}
-                                <span class="card-title"
-                                  ><strong>Check your url</strong> <br />Search results are only available at
-                                  <a href="/">Grantmakers.io</a></span
-                                >
-                                <p>
-                                  We limit search results to Grantmakers.io to allow the maximum number of people access to this free
-                                  service. The page you landed on is not Grantmakers.io.
-                                </p>
-                                <div class="card-action">
-                                  <p><a class="btn-flat blue-grey white-text" href="https://www.grantmakers.io/">Go to Grantmakers</a></p>
-                                </div>
-                              {/if}
-                            </div>
-                          </div>
+                          <OriginForbidden />
                         </div>
                       </div>
                     </div>
