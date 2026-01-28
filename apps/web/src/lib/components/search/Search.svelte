@@ -89,16 +89,18 @@
             const url = `/profiles/${profilesVersion}/${item.ein}-${item.organization_name_slug}`;
             const percentile: number | 'N/A' = item.rank !== undefined ? ((item.rank_total - item.rank) / item.rank_total) * 100 : 'N/A';
 
-            return html`<a href="${url}">
-              <div
-                class="block cursor-pointer rounded-lg border-b! border-slate-100 px-4 py-3 transition-colors duration-150 last:border-0 hover:bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:outline-hidden"
-              >
+            return html`<a
+              href="${url}"
+              class="group relative block cursor-pointer rounded-lg border-b border-slate-100 px-4 py-3 transition-all duration-150 last:border-0 hover:bg-slate-50 focus:z-10 focus:bg-slate-50 focus:ring-2 focus:ring-indigo-500 focus:outline-hidden focus:ring-inset"
+            >
+              <div>
                 <div class="flex items-center justify-between gap-3">
                   <div class="w-full min-w-0">
                     <div class="flex items-start justify-between gap-x-3">
-                      <div class="text-base font-semibold text-gray-900">
+                      <!-- Added group-focus:text-indigo-600 to highlight the title when selected -->
+                      <div class="text-base font-semibold text-gray-900 group-focus:text-indigo-600">
                         ${
-                          /* @ts-expect-error - Placeholder hits is missing required "__position" field, but works fine with normal results */
+                          /* @ts-expect-error - Placeholder hits is missing required "__position" field */
                           components.Highlight({ attribute: 'organization_name', hit: item, cssClasses: highlightStyles })
                         }
                       </div>
@@ -178,12 +180,83 @@
       }
     };
   });
+
+  /* Focus management for dialog open */
+  $effect(() => {
+    if (dialogElement) {
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'open') {
+            if (dialogElement?.open) {
+              // Dialog opened, focus the search input
+              // We use a small timeout to ensure Algolia (or the browser transition) is ready
+              const input = searchInputRef?.querySelector('.ais-SearchBox-input') as HTMLElement;
+              input?.focus();
+            }
+          }
+        });
+      });
+
+      observer.observe(dialogElement, { attributes: true });
+      return () => observer.disconnect();
+    }
+  });
+
+  const handleKeydown = (event: KeyboardEvent) => {
+    const hitsContainer = document.getElementById('hits-profiles-compact');
+    const searchInput = searchInputRef?.querySelector('.ais-SearchBox-input') as HTMLElement;
+
+    if (!hitsContainer || !searchInputRef) return;
+
+    // Get all focusable result items
+    const hits = hitsContainer.querySelectorAll('a');
+
+    // If no hits yet, we can't navigate, but we shouldn't error.
+    if (hits.length === 0) return;
+
+    const currentFocus = document.activeElement as HTMLElement;
+    const isInputFocused = currentFocus === searchInput || searchInputRef.contains(currentFocus);
+
+    // Find index of currently focused item
+    let focusIndex = -1;
+    hits.forEach((hit, index) => {
+      if (hit === currentFocus) {
+        focusIndex = index;
+      }
+    });
+
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+
+      if (isInputFocused) {
+        hits[0]?.focus();
+      } else if (focusIndex !== -1 && focusIndex < hits.length - 1) {
+        hits[focusIndex + 1]?.focus();
+      }
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault();
+
+      if (focusIndex === 0) {
+        searchInput?.focus();
+        if (searchInput instanceof HTMLInputElement) {
+          setTimeout(() => {
+            const len = searchInput.value.length;
+            searchInput.setSelectionRange(len, len);
+          }, 0);
+        }
+      } else if (focusIndex > 0) {
+        // Previous hit
+        hits[focusIndex - 1]?.focus();
+      }
+    }
+  };
 </script>
 
 <!-- Modal Dialog -->
 <el-dialog>
   <dialog
     bind:this={dialogElement}
+    onkeydown={handleKeydown}
     id="search-dialog-profiles-compact"
     class="m-0 p-0 backdrop:bg-gray-500/25 backdrop:backdrop-blur-sm dark:backdrop:bg-gray-900/50"
   >
