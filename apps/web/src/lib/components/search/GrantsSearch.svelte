@@ -1134,7 +1134,11 @@
         </button>
       </div>
 
-      <div class="sticky top-0 space-y-6 rounded-lg lg:min-h-64 lg:bg-white lg:p-6 {rateLimitReached || originForbidden ? 'lg:hidden' : 'lg:shadow'}">
+      <div
+        class="sticky top-0 space-y-6 rounded-lg lg:min-h-64 lg:bg-white lg:p-6 {rateLimitReached || originForbidden ? 'lg:hidden' : (
+          'lg:shadow'
+        )}"
+      >
         <!-- Desktop Header: Filters title + Clear all -->
         <div class="hidden items-center justify-between border-b border-gray-200 pb-3 lg:flex">
           <h2 class="text-base font-semibold text-gray-900">Filters</h2>
