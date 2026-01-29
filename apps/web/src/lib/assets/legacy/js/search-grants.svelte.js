@@ -923,15 +923,12 @@ export function initSearchJs(M) {
 
   function syncSearchBoxUI() {
     const inputs = document.querySelectorAll('input.ais-SearchBox-input');
-    const triggerEl = document.getElementById('search-box-dropdown-trigger')
-                      ?.querySelector('.search-box-dropdown-trigger-wrapper');
+    const triggerEl = document.getElementById('search-box-dropdown-trigger')?.querySelector('.search-box-dropdown-trigger-wrapper');
 
     if (!inputs.length) return;
 
     const isFiltered = selectedSearchableFields.length !== validFieldIds.length;
-    const nextPlaceholder = isFiltered 
-      ? 'Search by custom fields selected'
-      : 'Search by keywords, location, or grantee name';
+    const nextPlaceholder = isFiltered ? 'Search by custom fields selected' : 'Search by keywords, location, or grantee name';
 
     // 1. Handle the Trigger UI
     triggerEl?.classList.toggle('adjusted', isFiltered);
