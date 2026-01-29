@@ -112,8 +112,9 @@
 
   // Searchable fields configuration for the "Fields to Search" dropdown
   const SEARCHABLE_FIELDS = [
-    { id: 'grantee_name', label: 'Grantee Name' },
-    { id: 'grantee_city', label: 'Grantee City' },
+    // { id: 'organization_name', label: 'Funder' },
+    { id: 'grantee_name', label: 'Recipient Name' },
+    // { id: 'grantee_city', label: 'Recipient City' },
     { id: 'grant_purpose', label: 'Grant Purpose' },
   ] as const;
 
@@ -147,7 +148,7 @@
   let showFieldWarning = $state(false);
   let fieldWarningTimeout: ReturnType<typeof setTimeout> | null = null;
   // Track URL search params for the "Tip" CTA link (synced from InstantSearch router)
-  let currentSearchParams = $state('');
+  let currentSearchParams = $state(browser ? window.location.search : '');
 
   // Derived state for label
   const allFieldsSelected = $derived(selectedFields.length === SEARCHABLE_FIELDS.length);
@@ -435,14 +436,16 @@
             const currentUrlSearchParams = currentBrowserUrl.searchParams;
             const hasSearch = currentUrlSearchParams.size > 0;
 
-            // Sync search params for the "Tip" CTA link
-            currentSearchParams = nextUrl.search;
-
             // First search: PUSH to history. Subsequent refinements: REPLACE.
             if (!hasSearch) {
               pushState(nextUrl, {});
             } else {
               replaceState(nextUrl, {});
+            }
+
+            // Sync search params for the "Tip" CTA link
+            if (browser) {
+              currentSearchParams = window.location.search;
             }
           },
         }),
