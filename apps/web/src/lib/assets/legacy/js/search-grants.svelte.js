@@ -89,6 +89,13 @@ export function initSearchJs(M) {
   const rangeMin = 0;
   const rangeMax = 1051049025;
 
+  // Valid field IDs for restrictSearchableAttributes URL sync
+  const validFieldIds = ['organization_name', 'grantee_name', 'grantee_city', 'grant_purpose'];
+
+  // Track selected searchable fields (for UI state, independent of widget params)
+  // This follows the same pattern as GrantsSearch.svelte's selectedFields state
+  let selectedSearchableFields = $state([...validFieldIds]); // Start with all fields selected
+
   // Toogle Advanced Search tools
   // Advanced search features are hidden by default via css
   // Could handle initial show/hide directly in Instantsearch via cssClasses, but too many side effects
@@ -149,6 +156,8 @@ export function initSearchJs(M) {
            * We use the character ~ as it is one that is rarely present in data and renders well in URLs
            */
           const indexUiState = uiState[algoliaIndex];
+          const restrictedFields = indexUiState.configure?.restrictSearchableAttributes;
+          const validRestrictedFields = restrictedFields?.filter((f) => validFieldIds.includes(f));
           return {
             query: indexUiState.query,
             grantee_name:
@@ -164,6 +173,10 @@ export function initSearchJs(M) {
               indexUiState.refinementList.grantee_state &&
               indexUiState.refinementList.grantee_state.join('~'),
             grant_amount: indexUiState.range && indexUiState.range.grant_amount && indexUiState.range.grant_amount.replace(':', '~'),
+            fields:
+              validRestrictedFields?.length > 0 && validRestrictedFields.length < validFieldIds.length ?
+                validRestrictedFields.join('~')
+              : undefined,
             page: indexUiState.page,
           };
         },
@@ -172,6 +185,9 @@ export function initSearchJs(M) {
            * Route to State takes the url and parses it
            * The object it creates is sent to the widgets
            */
+          const selectedFields = routeState.fields && routeState.fields.split('~').filter((f) => validFieldIds.includes(f));
+          console.log('routeToState selectedFields', selectedFields);
+          console.log('Should updated configure', selectedFields && selectedFields.length > 0);
           return {
             [algoliaIndex]: {
               query: routeState.query,
@@ -184,6 +200,7 @@ export function initSearchJs(M) {
               range: {
                 grant_amount: routeState.grant_amount && routeState.grant_amount.replace('~', ':'),
               },
+              configure: selectedFields && selectedFields.length > 0 ? { restrictSearchableAttributes: selectedFields } : undefined,
               page: routeState.page,
             },
           };
@@ -271,25 +288,45 @@ export function initSearchJs(M) {
     [ + ] Show top 20 results
   {{/isShowingMore}}`;
 
-  // Define default search parameters
-  const defaultSearchableAttributes = ['organization_name', 'grantee_name', 'grantee_city', 'grantee_state', 'grant_purpose'];
-
   /* ---------------------------- */
   /* Connector - Configure Widget */
   /* ---------------------------- */
   const renderConfigure = (renderOptions, isFirstRender) => {
-    const { refine, widgetParams } = renderOptions;
-    const arr = widgetParams.searchParameters.restrictSearchableAttributes;
+    /**
+     * We use the Configure Connector to hande the "fields to search" feature
+     * It uses the restrictSearchableAttributes field to narrow the fields to search
+     * By default, there are no restrictions - all default fields are searched
+     */
+    const { refine } = renderOptions;
 
     if (isFirstRender) {
+      // On the first rendering, ensure the checkboxes reflect searchState
+      // It also sets up the event listeners
+      const uiState = search.getUiState();
+      const routeConfigureState = uiState[algoliaIndex]?.configure;
+      const currentAttributes = routeConfigureState?.restrictSearchableAttributes;
+
+      if (currentAttributes?.length > 0 && currentAttributes.length < validFieldIds.length) {
+        // Checkbox UI - Update to match state
+        const dropdownBody = document.getElementById('dropdown-body');
+        if (dropdownBody) {
+          dropdownBody.querySelectorAll('input').forEach((el) => {
+            el.checked = currentAttributes.includes(el.id);
+          });
+        }
+
+        // Update module-level state to match InstantSearch uiState
+        selectedSearchableFields = [...currentAttributes];
+      }
+
       const searchDropdownItems = document.getElementById('dropdown-body');
       const searchDropDownOnlyButtons = document.querySelectorAll('.checkbox-only');
 
-      // Create event listener for "Only" link clicks
+      // Only - event listener
       searchDropDownOnlyButtons.forEach((element) => {
         element.addEventListener('click', (e) => {
           e.preventDefault(); // Prevent Materialize Dropdown from taking over
-          const attribute = e.target.dataset.attribute;
+          const attribute = e.currentTarget.dataset.attribute;
 
           // Mimic default Materialize Dropdown functionality
           searchDropdownItems.querySelectorAll('input').forEach((el) => {
@@ -306,71 +343,59 @@ export function initSearchJs(M) {
             readyToSearchScrollPosition();
           });
 
+          // Update module-level state to match InstantSearch uiState
+          selectedSearchableFields = [attribute];
+
           // Refine Algolia parameters
-          // TODO Add logic to handle city + state
-          // Currently assumes state will always remain in searchable attributes
           refine({
-            restrictSearchableAttributes: [attribute, 'grantee_state'],
+            restrictSearchableAttributes: [attribute],
           });
         });
       });
 
-      // Create event listener for "Select All" link clicks
+      // Select All - event listener
       document.getElementById('select-all').addEventListener('click', (e) => {
         e.preventDefault(); // Prevent Materialize Dropdown from taking over
 
         // Mimic default Materialize Dropdown functionality
         searchDropdownItems.querySelectorAll('input').forEach((el) => {
           el.checked = true;
-
-          // Hide Materialize after selection
-          // Materialize default for dropdowns requires clicking off dropdown wrapper
-          const instance = M.Dropdown.getInstance(elSearchBoxDropdown);
-          instance.close();
-          readyToSearchScrollPosition();
         });
+
+        // Hide Materialize after selection
+        // Materialize default for dropdowns requires clicking off dropdown wrapper
+        const instance = M.Dropdown.getInstance(elSearchBoxDropdown);
+        instance.close();
+        readyToSearchScrollPosition();
+
+        // Reset state to all fields
+        selectedSearchableFields = [...validFieldIds];
+
+        // Clear restriction in Algolia (all fields selected = no restriction)
         refine({
-          restrictSearchableAttributes: defaultSearchableAttributes,
+          restrictSearchableAttributes: undefined,
         });
       });
 
-      // Create event listener for individual checkbox selections
+      // Checkbox selections - event listener
       searchDropdownItems.addEventListener('change', (e) => {
         const attribute = e.target.id;
         const isChecked = e.target.checked; // Note: this is the status AFTER the change
-        // Note: grantee_state will always remain in searchable attributes
-        // thus array.length should at least be 2, not 1
-        if (widgetParams.searchParameters.restrictSearchableAttributes.length === 2 && isChecked === false) {
+        if (selectedSearchableFields.length === 1 && isChecked === false) {
           e.target.checked = !isChecked;
           M.Toast.dismissAll();
           M.toast({ html: 'At least one item needs to be searchable' });
           return;
         }
-        // TODO Add logic to handle city + state
-        // Currently assumes state will always remain in searchable attributes
+
+        const updatedAttributes = addOrRemoveSearchableAttributes(selectedSearchableFields, attribute);
+        selectedSearchableFields = updatedAttributes;
+        // When all fields selected, send undefined to Algolia to indicate "no restriction"
         refine({
-          restrictSearchableAttributes: addOrRemoveSearchableAttributes(arr, attribute),
+          restrictSearchableAttributes: updatedAttributes.length === validFieldIds.length ? undefined : updatedAttributes,
         });
         readyToSearchScrollPosition();
       });
-    }
-
-    // Adjust UI based on selections
-    // Add or remove visual cue implying a customization was made
-    // Change input placeholder text => default is somewhat redundant as also declared in searchBox widget
-    const inputEl = document.querySelector('input.ais-SearchBox-input');
-    const triggerEl = document.getElementById('search-box-dropdown-trigger')?.querySelector('.search-box-dropdown-trigger-wrapper');
-
-    if (inputEl && triggerEl) {
-      if (widgetParams.searchParameters.restrictSearchableAttributes.length === 5) {
-        triggerEl.classList.remove('adjusted');
-        // TODO This is reached but doesn't do anything
-        inputEl.placeholder = 'Search by keywords, location, or grantee name';
-      } else {
-        triggerEl.classList.add('adjusted');
-        // TODO This is reached but doesn't do anything
-        inputEl.placeholder = 'Search by custom fields selected';
-      }
     }
   };
 
@@ -665,7 +690,6 @@ export function initSearchJs(M) {
       container: document.querySelector('#search-box-dropdown'),
       searchParameters: {
         hitsPerPage: 12,
-        restrictSearchableAttributes: ['grantee_name', 'grant_purpose', 'grantee_city', 'grantee_state', 'organization_name'],
       },
     }),
 
@@ -751,6 +775,8 @@ export function initSearchJs(M) {
   search.on('render', function () {
     // Initialize dynamic Materialize JS components created by Instantsearch widgets
     initHitsDropdowns();
+    // Update Search box elements per "fields to search" state
+    syncSearchBoxUI();
   });
 
   search.on('error', function (e) {
@@ -879,21 +905,44 @@ export function initSearchJs(M) {
   // MISC HELPER FUNCTIONS
   // ==============
   function addOrRemoveSearchableAttributes(array, value) {
-    const tmpArr = array;
-    let index = array.indexOf(value);
+    const index = array.indexOf(value);
 
+    // If the value isn't there, add it and return a new array
     if (index === -1) {
-      array.push(value);
-    } else {
-      array.splice(index, 1);
+      return [...array, value];
     }
-    // Ensure at least one item is checked
-    if (array.length < 2) {
-      // grantee_state will always be there
-      return tmpArr;
-    } else {
+
+    // Ensure there is always at least one item
+    if (array.length <= 1) {
       return array;
     }
+
+    // Else, return a new array with the item filtered out
+    return array.filter((item) => item !== value);
+  }
+
+  function syncSearchBoxUI() {
+    const inputs = document.querySelectorAll('input.ais-SearchBox-input');
+    const triggerEl = document.getElementById('search-box-dropdown-trigger')
+                      ?.querySelector('.search-box-dropdown-trigger-wrapper');
+
+    if (!inputs.length) return;
+
+    const isFiltered = selectedSearchableFields.length !== validFieldIds.length;
+    const nextPlaceholder = isFiltered 
+      ? 'Search by custom fields selected'
+      : 'Search by keywords, location, or grantee name';
+
+    // 1. Handle the Trigger UI
+    triggerEl?.classList.toggle('adjusted', isFiltered);
+
+    // 2. Sync all inputs (Mobile + Desktop)
+    inputs.forEach((input, index) => {
+      // Update Placeholder only if it changed
+      if (input.placeholder !== nextPlaceholder) {
+        input.placeholder = nextPlaceholder;
+      }
+    });
   }
 
   function getLabel(item) {
