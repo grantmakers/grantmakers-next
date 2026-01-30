@@ -279,12 +279,17 @@
     }
   };
 
-  const renderHits = (renderOptions: HitsRenderState) => {
+  const renderHits = (renderOptions: HitsRenderState, isFirstRender: boolean) => {
     const { items, results } = renderOptions;
     const hitsContainer = document.querySelector('#hits');
 
     if (!hitsContainer) {
       return 'No hits container found';
+    }
+
+    // Prevent clearing the skeleton on initial load before results are ready
+    if (isFirstRender) {
+      return;
     }
 
     // Reset rate limit flag on successful search (handles cooldown period expiry)
@@ -811,7 +816,9 @@
       <!-- Search Box Section -->
       <div class="flex gap-8">
         <div class="grow">
-          <div class="relative flex items-center justify-between gap-2 rounded-lg bg-slate-100 p-2 shadow md:p-4 lg:gap-4 dark:bg-gray-800">
+          <div
+            class="relative flex items-center justify-between gap-2 rounded-lg bg-slate-100 p-2 shadow md:p-4 lg:min-h-16 lg:gap-4 dark:bg-gray-800"
+          >
             <svg
               viewBox="0 0 20 20"
               fill="currentColor"
@@ -1174,7 +1181,7 @@
       </thead>
       <tbody class="divide-y divide-gray-200 bg-white">
         <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
-        {#each { length: 10 } as _}
+        {#each { length: 15 } as _}
           <tr class="relative align-top even:bg-gray-50">
             <td class="px-3 py-4 text-right text-sm">
               <div class="ml-auto h-4 w-20 rounded bg-gray-200"></div>
