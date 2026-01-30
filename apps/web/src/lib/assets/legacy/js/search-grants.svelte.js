@@ -93,8 +93,9 @@ export function initSearchJs(M) {
   const validFieldIds = ['organization_name', 'grantee_name', 'grantee_city', 'grant_purpose'];
 
   // Track selected searchable fields (for UI state, independent of widget params)
-  // This follows the same pattern as GrantsSearch.svelte's selectedFields state
-  let selectedSearchableFields = $state([...validFieldIds]); // Start with all fields selected
+  // We are purposefully NOT using the InstantSearch uiState for this
+  let selectedSearchableFields = [...validFieldIds]; // Start with all fields selected
+
 
   // Toogle Advanced Search tools
   // Advanced search features are hidden by default via css
@@ -372,8 +373,9 @@ export function initSearchJs(M) {
         selectedSearchableFields = [...validFieldIds];
 
         // Clear restriction in Algolia (all fields selected = no restriction)
+        // Pass in the default fields to force a new query
         refine({
-          restrictSearchableAttributes: undefined,
+          restrictSearchableAttributes: validFieldIds,
         });
       });
 
@@ -390,9 +392,9 @@ export function initSearchJs(M) {
 
         const updatedAttributes = addOrRemoveSearchableAttributes(selectedSearchableFields, attribute);
         selectedSearchableFields = updatedAttributes;
-        // When all fields selected, send undefined to Algolia to indicate "no restriction"
+
         refine({
-          restrictSearchableAttributes: updatedAttributes.length === validFieldIds.length ? undefined : updatedAttributes,
+          restrictSearchableAttributes: updatedAttributes,
         });
         readyToSearchScrollPosition();
       });
