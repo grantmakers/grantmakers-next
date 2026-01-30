@@ -40,7 +40,7 @@
 
   function createCanonical(pathname: string, targetOrigin: string, profilesVersion: string) {
     const profileId = pathname.split('/').slice(-2)[0];
-    const canonicalUrl = `${targetOrigin}/profiles/${profilesVersion}/${profileId}`;
+    const canonicalUrl = `${targetOrigin}/profiles/${profilesVersion}/${profileId}/`;
 
     return canonicalUrl;
   }

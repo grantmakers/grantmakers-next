@@ -21,7 +21,6 @@
   import CharitableActivities from './activities/CharitableActivities.svelte';
   import Research from './research/Research.svelte';
   import About from './about/AboutSummaryBox.svelte';
-  import CiModal from './community/CiModal.svelte';
 
   interface Props {
     profile: GrantmakersExtractedDataObj;
