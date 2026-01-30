@@ -96,7 +96,6 @@ export function initSearchJs(M) {
   // We are purposefully NOT using the InstantSearch uiState for this
   let selectedSearchableFields = [...validFieldIds]; // Start with all fields selected
 
-
   // Toogle Advanced Search tools
   // Advanced search features are hidden by default via css
   // Could handle initial show/hide directly in Instantsearch via cssClasses, but too many side effects
