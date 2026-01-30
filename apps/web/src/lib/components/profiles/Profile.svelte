@@ -71,9 +71,6 @@
 
       <ContentBoxInterstitial message="Grantmakers.io ensures equitable access to a critical information source for nonprofits." />
 
-      <!-- Community Intelligence Modal Body-->
-      <CiModal ein={profile.ein} />
-
       <!-- Core Body Sections -->
       <div class="mx-auto mt-6 w-full pb-6 lg:mt-8">
         <!-- Snapshot Boxes - 2 column layout (40/60 split) -->
