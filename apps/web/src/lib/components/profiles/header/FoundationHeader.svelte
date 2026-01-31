@@ -49,7 +49,7 @@
     <div class="flex min-w-0 flex-col gap-3">
       <!-- Name and Location (grouped) -->
       <div>
-        <h1 class="mb-1 w-full text-lg font-semibold text-wrap whitespace-normal text-slate-700 md:max-w-md">
+        <h1 class="mb-1 w-full text-lg font-semibold text-wrap whitespace-normal text-slate-700 md:max-w-md lg:text-xl">
           {organization_name}
         </h1>
         <div class="flex flex-col text-sm leading-normal font-normal sm:flex-row sm:items-center">
