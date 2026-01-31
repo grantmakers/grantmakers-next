@@ -1,5 +1,6 @@
 <script lang="ts">
   import Approachability from './Approachability.svelte';
+  import WebsiteWarning from './WebsiteWarning.svelte';
   import { copy } from 'svelte-copy';
   import toast from 'svelte-french-toast';
   import Dot from '$lib/components/shared/icons/Dot.svelte';
@@ -59,10 +60,9 @@
           </strong>
           <Dot />
           {#if profile.has_website}
-            <a href={profile.website} target="_blank" rel="external noopener" class="text-slate-500 hover:text-indigo-600">
-              {profile.website_verbatim?.toLowerCase()}
-            </a>
+            <WebsiteWarning websiteUrl={profile.contact?.website?.cleaned} websiteVerbatim={profile.contact?.website?.original} />
           {:else}
+            <!-- TODO: Handle other types of links, e.g. email present, etc -->
             <span class="text-slate-500">No website listed</span>
           {/if}
         </div>

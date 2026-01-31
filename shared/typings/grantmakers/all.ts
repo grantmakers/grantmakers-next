@@ -1,16 +1,4 @@
-/**
- * Local type definition to avoid external dependency on @google/genai
- * Matches the structure of GenerateContentResponseUsageMetadata from Google GenAI SDK
- */
-interface GenerateContentResponseUsageMetadata {
-  cacheTokensDetails?: Array<{ modality?: string; tokenCount?: number }>;
-  cachedContentTokenCount?: number;
-  candidatesTokenCount?: number;
-  candidatesTokensDetails?: Array<{ modality?: string; tokenCount?: number }>;
-  promptTokenCount?: number;
-  totalTokenCount?: number;
-  thinkingTokenCount?: number;
-}
+import type { GenerateContentResponseUsageMetadata } from '@google/genai';
 
 /** Common */
 /**
@@ -56,11 +44,14 @@ export interface GrantmakersExtractedDataObj {
   financial_stats: FinancialStats[];
   filings: Filing[]; // TODO Ensure flows through new additions to monorepo
   part_v: PartV | null;
-  website: WebsiteObj['website'];
-  website_good_crowdsource_candidate: WebsiteObj['goodCrowdsourceCandidate']; // TASK Remove from script. This is no longer needed.
-  website_is_an_email: WebsiteObj['websiteIsAnEmail'];
-  website_verbatim: WebsiteObj['verbatim'];
-  website_modified: WebsiteObj['websiteWasModified'];
+  website: WebsiteLegacyObj['website'];
+  website_good_crowdsource_candidate: WebsiteLegacyObj['goodCrowdsourceCandidate']; // TASK Remove from script. This is no longer needed.
+  website_is_an_email: WebsiteLegacyObj['websiteIsAnEmail'];
+  website_verbatim: WebsiteLegacyObj['verbatim'];
+  website_modified: WebsiteLegacyObj['websiteWasModified'];
+  contact: {
+    website: WebsiteObj;
+  };
   is_foreign: boolean;
   street: string;
   street2: string | null;
@@ -77,7 +68,7 @@ export interface GrantmakersExtractedDataObj {
   eobmf_ruling_date: string | undefined; // yyyymm
   is_likely_staffed: boolean;
   is_likely_inactive: boolean;
-  has_website: WebsiteObj['filingHasValidWebsite'];
+  has_website: WebsiteLegacyObj['filingHasValidWebsite'];
   has_charitable_activities: boolean;
   charitable_activities_count: number;
   charitable_activities_are_restatement_of_grants: boolean; // TASK Is this still useful?
@@ -180,13 +171,30 @@ export interface SummaryGrantsData extends GrantmakersExtractedDataObj {
   grants_smallest: SummaryGrant[];
 }
 
-export interface WebsiteObj {
+export interface WebsiteLegacyObj {
   verbatim: string | undefined | null; // Note: MongoDB serializes undefined to null upon insert https://www.mongodb.com/docs/drivers/node/current/fundamentals/bson/undefined-values/
   website: string | null;
   websiteWasModified: boolean;
   websiteIsAnEmail: boolean;
   filingHasValidWebsite: boolean;
   goodCrowdsourceCandidate: boolean;
+}
+
+/**
+ * Represents the structured result of the website cleaning process.
+ * See etl/src/processors/rawFilings/website/index.ts
+ */
+export interface WebsiteObj {
+  /** The original, untouched input string. */
+  original: string | null;
+  /** The cleaned and formatted URL or mailto link. Null if invalid. */
+  cleaned: string | null;
+  /** The final status of the cleaning attempt. */
+  status: 'VALID' | 'REPAIRED' | 'INVALID' | 'NEEDS_REVIEW';
+  /** The detected type of the input string. */
+  type: 'URL' | 'EMAIL' | 'PHONE-US' | 'NULL' | 'UNKNOWN';
+  /** An array of notes detailing the transformations applied. */
+  notes: string[];
 }
 
 // cspell:disable
