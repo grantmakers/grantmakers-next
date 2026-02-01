@@ -7,7 +7,7 @@ export const GET: RequestHandler = async () => {
 
   return new Response(
     `<?xml version="1.0" encoding="UTF-8" ?>
-    <sitemapindex xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+    <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       <sitemap>
         <loc>${url}/sitemaps/sitemap-main.xml</loc>
         <lastmod>${lastmod}</lastmod>
