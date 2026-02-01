@@ -935,7 +935,7 @@ export function initSearchJs(M) {
     triggerEl?.classList.toggle('adjusted', isFiltered);
 
     // 2. Sync all inputs (Mobile + Desktop)
-    inputs.forEach((input, index) => {
+    inputs.forEach((input) => {
       // Update Placeholder only if it changed
       if (input.placeholder !== nextPlaceholder) {
         input.placeholder = nextPlaceholder;
