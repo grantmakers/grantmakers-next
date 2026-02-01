@@ -33,8 +33,6 @@
     "rollup-plugin-visualizer": "^6.0.5",
     "svelte": "^5.0.0",
     "svelte-check": "^4.0.0",
-    "svelte-headlessui": "^0.0.44",
-    "svelte-transition": "^0.0.17",
     "tailwind-merge": "^2.5.4",
     "tailwind-variants": "^0.2.1",
     "tailwindcss": "^4.1.17",

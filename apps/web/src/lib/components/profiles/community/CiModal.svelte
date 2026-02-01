@@ -1,56 +1,37 @@
 <script lang="ts">
-  import { createDialog } from 'svelte-headlessui';
-  import Transition from 'svelte-transition';
+  import '@tailwindplus/elements';
   import CommunityIntelligence from './CommunityIntelligence.svelte';
 
   let { ein } = $props();
 
-  let dialog = createDialog({ label: 'Community Intelligence' });
+  const DIALOG_ID = 'community-intelligence-modal';
 </script>
 
-<div class="">
-  <div class="relative z-10">
-    <Transition show={$dialog.expanded}>
-      <Transition
-        enter="ease-out duration-300"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="ease-in duration-200"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-      >
-        <button class="fixed inset-0 bg-black/25" onclick={dialog.close} aria-label="Close"></button>
-      </Transition>
+<el-dialog>
+  <dialog id={DIALOG_ID} class="m-0 p-0 backdrop:bg-transparent">
+    <el-dialog-backdrop
+      class="fixed inset-0 bg-black/50 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in dark:bg-gray-900/80"
+    ></el-dialog-backdrop>
 
-      <div class="fixed inset-0 overflow-y-auto">
-        <div class="flex min-h-full items-center justify-center p-4 text-center">
-          <Transition
-            enter="ease-out duration-300"
-            enterFrom="opacity-0 scale-95"
-            enterTo="opacity-100 scale-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100 scale-100"
-            leaveTo="opacity-0 scale-95"
-          >
-            <div
-              class="shadow-soft-xl w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle transition-all"
-              use:dialog.modal
+    <div class="fixed inset-0 overflow-y-auto p-4">
+      <div class="flex min-h-full items-center justify-center text-center">
+        <el-dialog-panel
+          class="shadow-soft-xl w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle transition-all data-closed:scale-95 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
+        >
+          <CommunityIntelligence {ein} />
+
+          <div class="mt-4">
+            <button
+              command="close"
+              commandfor={DIALOG_ID}
+              type="button"
+              class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
             >
-              <CommunityIntelligence {ein} />
-
-              <div class="mt-4">
-                <button
-                  type="button"
-                  class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                  onclick={dialog.close}
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </Transition>
-        </div>
+              Close
+            </button>
+          </div>
+        </el-dialog-panel>
       </div>
-    </Transition>
-  </div>
-</div>
+    </div>
+  </dialog>
+</el-dialog>
