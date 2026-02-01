@@ -1,5 +1,3 @@
-import type { Component } from 'svelte';
-
 export interface EachFAQ {
   question: string;
   answer: string;
@@ -37,127 +35,12 @@ export const rankTotal = datasetStats.profiles;
 export const articleLinks = {
   whyAlgolia: 'https://stories.algolia.com/why-hosted-search-made-sense-for-grantmakers-io-8974f5ed6bd6',
 };
-export const anecdote =
-  'Grantmakers.io is the espresso shot of grants research &ndash; small, powerful, and exactly what you need when you need it most. No login required.';
-
-export type SideNavIds = 'overview' | 'people' | 'grants' | 'guidelines' | 'financials';
 
 export interface SecondaryNavItems {
   title: string;
   id: string;
   link: string;
 }
-
-/**
- * Profiles root route e.g /profiles
- */
-
-export const profileRootLinks = [
-  {
-    title: 'Demo Links',
-    id: 'demo-links',
-    link: '#demo-links',
-  },
-
-  {
-    title: 'Popular',
-    id: 'popular',
-    link: '#popular',
-  },
-  {
-    title: 'Research-Ready 990s',
-    id: 'digital-ready-990s',
-    link: '#digital-ready-990s',
-  },
-  {
-    title: 'Grantmakers 10k',
-    id: 'grantmakers-10k',
-    link: '#grantmakers-10k',
-  },
-  {
-    title: 'All Active',
-    id: 'all-active',
-    link: '#all-active',
-  },
-  {
-    title: 'Search',
-    id: 'foundation-search',
-    link: '/profiles',
-  },
-];
-
-export const demoLinks = [
-  {
-    name: 'Thierer Family Foundation',
-    ein: '810718077',
-    category: 'Typical',
-  },
-  {
-    name: 'Harnisch Family Foundation',
-    ein: '510381959',
-    category: 'Typical',
-  },
-  {
-    name: 'Ford Foundation',
-    ein: '131684331',
-    category: 'Typical',
-  },
-  {
-    name: 'The Clarence E Mulford Trust',
-    ein: '010247548',
-    category: 'Typical',
-  },
-  // Unique Orgs
-  {
-    name: 'Every Org',
-    ein: '611913297',
-    category: 'Unique Orgs',
-  },
-  {
-    name: 'Expa Org',
-    ein: '832856275',
-    category: 'Unique Orgs',
-  },
-  // Direct Activities
-  {
-    name: 'McArthur Home for Aged People Assoc',
-    ein: '010212437',
-    category: 'Direct Activities',
-  },
-  {
-    name: 'Plant Memorial Home',
-    ein: '010131950',
-    category: 'Direct Activities',
-  },
-  // Edge Cases
-  {
-    name: 'Margaret A Cargill Foundation (old EIN)',
-    ein: '205434405',
-    category: 'Edge Cases',
-  },
-  {
-    name: 'Margaret A Cargill Foundation (new EIN)',
-    ein: '371758406',
-    category: 'Edge Cases',
-  },
-  {
-    name: 'Cape Elizabeth Home',
-    ein: '010238086',
-    category: 'Edge Cases',
-  },
-  // Large people array
-  {
-    name: 'Coastal Virginia Building Industry Association Scholarship Foundation',
-    ein: '546057730',
-    category: 'Large People Array',
-  },
-  // See Attached, but high rank
-  {
-    name: 'Morton-Kelly Charitable Tr',
-    ein: '010442078',
-    category: 'See Attached',
-  },
-];
 
 export const aboutLinks = [
   {
