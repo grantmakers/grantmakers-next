@@ -2,8 +2,6 @@
   import { normalizePerson } from '@repo/shared/functions/formatters/names';
   import type { PeopleArray } from '@repo/shared/typings/grantmakers/all';
   import PeopleTable from './PeopleTable.svelte';
-  import ChevronDown from 'svelte-heros-v2/ChevronDown.svelte';
-  import ChevronUp from 'svelte-heros-v2/ChevronUp.svelte';
 
   interface Props {
     people: PeopleArray;
@@ -13,10 +11,6 @@
 
   // Normalize people data for presentation
   let normalizedPeople: PeopleArray = $derived(people.map((person) => normalizePerson(person)));
-
-  // Mobile collapsible state
-  let mobileExpanded = $state(false);
-  let mobileVisiblePeople: PeopleArray = $derived(mobileExpanded ? normalizedPeople : normalizedPeople.slice(0, 10));
 
   // Desktop scroll fade state
   let scrollContainer: HTMLDivElement | undefined = $state();
@@ -30,31 +24,9 @@
 </script>
 
 {#if people}
-  <!-- Mobile view: Collapsible -->
-  <div class="lg:hidden">
-    <div class="p-4">
-      <PeopleTable people={mobileVisiblePeople} />
-      {#if normalizedPeople.length > 10}
-        <div class="mt-4 flex justify-center border-t border-slate-200 pt-4">
-          <button
-            class="flex items-center gap-1 text-sm font-medium text-slate-600 hover:text-slate-900 hover:underline"
-            onclick={() => (mobileExpanded = !mobileExpanded)}
-          >
-            {#if mobileExpanded}
-              Show less <ChevronUp class="h-4 w-4" />
-            {:else}
-              Show all {normalizedPeople.length} people <ChevronDown class="h-4 w-4" />
-            {/if}
-          </button>
-        </div>
-      {/if}
-    </div>
-  </div>
-
-  <!-- Desktop view: Scrollable with fade -->
-  <div class="relative hidden min-h-0 flex-1 flex-col lg:flex">
-    <!-- Scrollable table area -->
-    <div bind:this={scrollContainer} onscroll={handleScroll} class="min-h-0 flex-1 overflow-y-auto px-8 pb-4">
+  <!-- Responsive scrollable table area -->
+  <div class="relative flex min-h-0 flex-1 flex-col">
+    <div bind:this={scrollContainer} onscroll={handleScroll} class="min-h-0 flex-1 overflow-x-auto overflow-y-auto px-4 pb-4 lg:px-8">
       <PeopleTable people={normalizedPeople} />
     </div>
 

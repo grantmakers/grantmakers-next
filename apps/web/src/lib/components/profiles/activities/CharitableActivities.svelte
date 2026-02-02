@@ -84,7 +84,7 @@
                   {formatToCurrency(totalActivitiesExpenses)}
                 </td>
                 <td class="flex justify-between px-3 py-4 text-sm font-semibold">
-                  <div class="Total Direct Charitable Activities">Total Direct Charitable Activities</div>
+                  <div class="hidden sm:block">Total Direct Charitable Activities</div>
                   {#if totalGiving && totalGiving > 0}
                     <div class="font-normal text-slate-500">
                       Philanthropy Breakdown: Charitable Activities ({activitiesPct}%) vs Current Grantmaking ({grantsPct}%)

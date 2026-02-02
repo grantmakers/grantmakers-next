@@ -19,17 +19,17 @@
       >
       <th
         scope="col"
-        class="xs:hidden sticky top-0 z-10 border-b border-gray-300 bg-white px-3 pt-12 pb-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
+        class="sticky top-0 z-10 border-b border-gray-300 bg-white px-3 pt-12 pb-3.5 text-left text-sm font-semibold text-gray-900"
         >Title</th
       >
       <th
         scope="col"
-        class="sticky top-0 z-10 hidden cursor-help border-b border-gray-300 bg-white px-3 pt-12 pb-3.5 text-right text-xs text-gray-900 sm:table-cell"
+        class="sticky top-0 z-10 cursor-help border-b border-gray-300 bg-white px-3 pt-12 pb-3.5 text-right text-xs text-gray-900"
         title="Hours per Week">Hours/Wk</th
       >
       <th
         scope="col"
-        class="sticky top-0 z-10 hidden cursor-help border-b border-gray-300 bg-white px-3 pt-12 pb-3.5 text-right text-xs text-gray-900 sm:table-cell"
+        class="sticky top-0 z-10 cursor-help border-b border-gray-300 bg-white px-3 pt-12 pb-3.5 text-right text-xs text-gray-900"
         title="Annual Compensation">Comp/Yr</th
       >
     </tr>
