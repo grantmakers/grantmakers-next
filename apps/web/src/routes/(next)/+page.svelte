@@ -4,7 +4,7 @@
    * Svelte components can easily be moved (e.g. to Astro), but not SvelteKit-specific page and layouts
    */
   import MainLanding from '$lib/components/landing/MainLanding.svelte';
-  import { meta } from '@repo/shared/constants/trustedConstants';
+  import { meta, originProd } from '@repo/shared/constants/trustedConstants';
 
   const {
     defaults: { title },
@@ -13,6 +13,7 @@
 
 <svelte:head>
   <title>{title}</title>
+  <link rel="canonical" href="{originProd}/" />
 </svelte:head>
 
 <MainLanding />

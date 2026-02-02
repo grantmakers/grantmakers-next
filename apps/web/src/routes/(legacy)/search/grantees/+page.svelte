@@ -5,6 +5,7 @@
   import SearchTypesModal from '$src/lib/components/legacy/modals/SearchTypesModal.svelte';
   import RateLimit from '$src/lib/components/search/RateLimit.svelte';
   import OriginForbidden from '$src/lib/components/search/OriginForbidden.svelte';
+  import { originProd } from '@repo/shared/constants/trustedConstants';
 
   const site = {
     baseurl: '',
@@ -63,6 +64,7 @@
 
 <svelte:head>
   <title>{site.title}</title>
+  <link rel="canonical" href="{originProd}/search/grantees/" />
 </svelte:head>
 
 <div class="unified-search pb-8" data-sveltekit-preload-data="false">
