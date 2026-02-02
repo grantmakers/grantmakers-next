@@ -12,11 +12,24 @@ type Redirects = { [key: string]: string };
 const deprecatedProfileSearchHelper = /^\/profiles\/(\d{9})\/?$/;
 const profileRoutes = (ein: string) => `/profiles/v0/${ein}`;
 
-const deprecatedProfilesIndexRoute = '/profiles/';
-const profilesIndexRedirect = '/search/profiles/';
+const legacyRedirects: Record<string, string> = {
+  // Legacy Grants Search
+  '/search/grants': '/search/grantees/',
+  '/search/grants/': '/search/grantees/',
+  '/grants-search': '/search/grantees/',
+  '/grants-search/': '/search/grantees/',
 
-const deprecatedGrantsSearchRoute = '/search/grants/';
-const grantsSearchRedirect = '/search/grantees/';
+  // Legacy Profiles Search
+  '/profiles-search': '/search/profiles/',
+  '/profiles-search/': '/search/profiles/',
+  '/profiles/': '/search/profiles/',
+
+  // Info Pages
+  '/faq': '/about/faq/',
+  '/faq/': '/about/faq/',
+  '/donate/buy-chad-a-coffee': '/about/buy-chad-a-coffee/',
+  '/donate/buy-chad-a-coffee/': '/about/buy-chad-a-coffee/',
+};
 
 const legacySitemapRedirects: Redirects = {
   '/sitemap-main.xml': '/sitemaps/sitemap-main.xml',
@@ -36,14 +49,9 @@ export async function handle({ event, resolve }) {
     redirect(301, profileRoutes(ein));
   }
 
-  // Handle deprecated profiles full index route
-  if (event.url.pathname === deprecatedProfilesIndexRoute) {
-    redirect(301, profilesIndexRedirect);
-  }
-
-  // Handle deprecated grants search route
-  if (event.url.pathname === deprecatedGrantsSearchRoute) {
-    redirect(301, grantsSearchRedirect);
+  // Handle legacy redirects
+  if (legacyRedirects[path]) {
+    redirect(301, legacyRedirects[path]);
   }
 
   // Handle legacy sitemap redirect
