@@ -41,17 +41,18 @@ const donationRoutes = ['/donate', '/buy-chad-a-coffee'];
 
 export async function handle({ event, resolve }) {
   const path = event.url.pathname;
+  const queryString = event.url.search; // Preserve query parameters for redirects
 
   // Handle deprecated profile search helper redirect
   const legacyProfileHelperMatch = path.match(deprecatedProfileSearchHelper);
   if (legacyProfileHelperMatch) {
     const ein = legacyProfileHelperMatch[1];
-    redirect(301, profileRoutes(ein));
+    redirect(301, profileRoutes(ein) + queryString);
   }
 
   // Handle legacy redirects
   if (legacyRedirects[path]) {
-    redirect(301, legacyRedirects[path]);
+    redirect(301, legacyRedirects[path] + queryString);
   }
 
   // Handle legacy sitemap redirect
