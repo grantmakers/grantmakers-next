@@ -12,7 +12,9 @@ type Redirects = { [key: string]: string };
 const deprecatedProfileSearchHelper = /^\/profiles\/(\d{9})\/?$/;
 const profileRoutes = (ein: string) => `/profiles/v0/${ein}`;
 
-const legacyRedirects: Record<string, string> = {
+// Redirect search-related pages that might have url search parameters
+// These are SSR generated
+const legacySearchRedirects: Record<string, string> = {
   // Legacy Grants Search
   '/search/grants': '/search/grantees/',
   '/search/grants/': '/search/grantees/',
@@ -23,7 +25,10 @@ const legacyRedirects: Record<string, string> = {
   '/profiles-search': '/search/profiles/',
   '/profiles-search/': '/search/profiles/',
   '/profiles/': '/search/profiles/',
+};
 
+// Redirect static/pre-rendered pages
+const legacyStaticRedirects: Record<string, string> = {
   // Info Pages
   '/faq': '/about/faq/',
   '/faq/': '/about/faq/',
@@ -49,9 +54,16 @@ export async function handle({ event, resolve }) {
     redirect(301, profileRoutes(ein));
   }
 
-  // Handle legacy redirects
-  if (legacyRedirects[path]) {
-    redirect(301, legacyRedirects[path]);
+  // Handle legacy search redirects
+  // These preserve search query parameters
+  if (legacySearchRedirects[path]) {
+    redirect(301, legacySearchRedirects[path] + event.url.search);
+  }
+
+  // Handle legacy static redirects
+  // These are pre-rendered and have no need to preserve search query parameters
+  if (legacyStaticRedirects[path]) {
+    redirect(301, legacyStaticRedirects[path]);
   }
 
   // Handle legacy sitemap redirect
