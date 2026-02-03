@@ -247,35 +247,38 @@
 
   /**
    * Handle click-to-filter on table cells
-   * Uses InstantSearch's helper API to add facet refinements (additive only)
-   * Note: This uses addFacetRefinement (not toggle) so clicking a cell always adds the filter.
+   * Uses InstantSearch's helper API to add facet refinements
+   * Note: Clicking a cell always adds the filter, it does not toggle the filter.
+   * The assumed UX is the user will use the Current Refinements to remove filters.
    */
   const handleCellClick = (event: Event) => {
     const target = event.target as HTMLElement;
     const cell = target.closest('td[data-facet]') as HTMLElement | null;
     if (!cell || !algoliaInstance?.helper) return;
 
-    const facets = cell.dataset.facet?.split(',') ?? [];
-    const values = cell.dataset.facetValue?.split(',') ?? [];
+    const facet = cell.dataset.facet;
+    const value = cell.dataset.facetValue;
+    if (!facet || !value) return;
 
-    if (facets.length > 0 && facets.length === values.length) {
-      let hasNewRefinements = false;
+    let hasNewRefinements = false;
 
-      // Add refinements only if they don't already exist
-      // Uses disjunctive refinements since refinementList widgets use disjunctive facets
-      facets.forEach((facet, index) => {
-        const value = values[index]?.trim();
-        const facetTrimmed = facet.trim();
-        if (facetTrimmed && value && !algoliaInstance.helper!.state.isDisjunctiveFacetRefined(facetTrimmed, value)) {
-          algoliaInstance.helper!.addDisjunctiveFacetRefinement(facetTrimmed, value);
-          hasNewRefinements = true;
-        }
-      });
+    // Add primary facet refinement if not already refined
+    if (!algoliaInstance.helper!.state.isDisjunctiveFacetRefined(facet, value)) {
+      algoliaInstance.helper!.addDisjunctiveFacetRefinement(facet, value);
+      hasNewRefinements = true;
+    }
 
-      // Only trigger search if we added new refinements
-      if (hasNewRefinements) {
-        algoliaInstance.helper.search();
-      }
+    // Handle location column: also add state facet if present
+    const stateFacet = cell.dataset.stateFacet;
+    const stateValue = cell.dataset.stateValue;
+    if (stateFacet && stateValue && !algoliaInstance.helper!.state.isDisjunctiveFacetRefined(stateFacet, stateValue)) {
+      algoliaInstance.helper!.addDisjunctiveFacetRefinement(stateFacet, stateValue);
+      hasNewRefinements = true;
+    }
+
+    // Only trigger search if we added new refinements
+    if (hasNewRefinements) {
+      algoliaInstance.helper.search();
     }
   };
 
@@ -391,7 +394,7 @@
                   <span class="${clickableTextStyles.base}">${getHighlight(grant, 'grant_purpose')}</span>
                 </td>
                 
-                <td class="px-3 py-4 text-sm" data-facet="grantee_city,grantee_state" data-facet-value="${escapeAttr(grant.grantee_city)},${escapeAttr(grant.grantee_is_foreign && grant.grantee_state === 'Foreign' ? grant.grantee_country : grant.grantee_state)}">
+                <td class="px-3 py-4 text-sm" data-facet="grantee_city" data-facet-value="${escapeAttr(grant.grantee_city)}" data-state-facet="grantee_state" data-state-value="${escapeAttr(grant.grantee_is_foreign && grant.grantee_state === 'Foreign' ? grant.grantee_country : grant.grantee_state)}">
                   <span class="${clickableTextStyles.base}">
                     ${getHighlight(grant, 'grantee_city')},<br>
                     ${grant.grantee_is_foreign && grant.grantee_state === 'Foreign' ? grant.grantee_country : grant.grantee_state}
