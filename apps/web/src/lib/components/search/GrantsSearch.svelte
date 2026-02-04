@@ -1096,9 +1096,9 @@
   <div class="flex gap-8">
     <div class="min-w-0 flex-1">
       <!-- Stats + Current Refinements -->
-      <div class="hidden min-h-16 flex-wrap items-center gap-2 px-2 py-4 md:flex">
-        <div id="stats"></div>
-        <div id="current-refinements" class="contents"></div>
+      <div class="hidden min-h-16 items-start gap-2 px-2 py-4 md:flex">
+        <div id="stats" class="shrink-0 py-1.5"></div>
+        <div id="current-refinements" class="flex flex-1 flex-wrap gap-2"></div>
       </div>
 
       <div class="overflow-hidden rounded-lg bg-white shadow">
