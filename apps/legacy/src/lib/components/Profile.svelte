@@ -94,7 +94,7 @@
       console.log(error);
     }
     if (algolia) {
-      const { initSearchJs } = await import('$src/lib/assets/legacy/js/profile-embedded-search.svelte');
+      const { initSearchJs } = await import('$src/lib/assets/legacy/js/profile-embedded-search.svelte.js');
       try {
         //initSearchJs(M, handleEmptySearch);
         initSearchJs(M);
