@@ -96,7 +96,7 @@
       console.log(error);
     }
     if (algolia) {
-      const { initSearchJs, destroySearchJs } = await import('$src/lib/assets/legacy/js/profile-embedded-search.svelte');
+      const { initSearchJs, destroySearchJs } = await import('$src/lib/assets/legacy/js/profile-embedded-search.svelte.js');
       destroySearch = destroySearchJs;
 
       try {
