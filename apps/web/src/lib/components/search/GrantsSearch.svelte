@@ -367,7 +367,7 @@
             <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Year</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-gray-200 bg-white">
+        <tbody class="divide-y divide-gray-200 bg-white text-gray-500 dark:text-gray-400">
           ${items
             .map(
               (grant) => `
@@ -377,7 +377,7 @@
                 </td>
                 
                 <td class="px-3 py-4 text-sm" data-facet="grantee_name" data-facet-value="${escapeAttr(grant.grantee_name)}">
-                  <div class="text-md font-bold text-gray-900">
+                  <div class="text-md font-medium text-gray-900 dark:text-gray-200">
                     <span class="${clickableTextStyles.base}">${getHighlight(grant, 'grantee_name')}</span>
                   </div>
                 </td>
@@ -870,7 +870,9 @@
   </div>
 
   <!-- Mini-filter bar -->
-  <div class="hidden w-full flex-wrap items-center gap-1.5 rounded bg-slate-50 px-2 py-3 text-sm text-slate-500 md:flex md:min-h-[52px]">
+  <div
+    class="hidden w-full flex-wrap items-center gap-1.5 rounded bg-slate-50 px-2 py-3 text-sm text-gray-500 md:flex md:min-h-[52px] dark:text-gray-400"
+  >
     <span>Searching grants from</span>
     <!-- Tailwind Elements web components cause hydration mismatch during SSR; render only on client -->
     {#if browser}
