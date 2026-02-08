@@ -29,7 +29,7 @@
         Search was the first search tool created and is optimized to quickly find a funder's profile (if one exists).
       </p>
       <p class="mt-6">
-        The Grants Search tool was developed to allow fundraisers to do basic prospecting by exploring which foundations have donated to
+        The Grantee Search tool was developed to allow fundraisers to do basic prospecting by exploring which foundations have donated to
         similar grantees in the past.
       </p>
 
@@ -41,9 +41,9 @@
         these updates. Updates are typically live on Grantmakers.io within a week of being published by the IRS.
       </p>
       <p class="mt-6">
-        When using the Grant Search tool for basic prospecting, be mindful of the delay from the time a foundation makes a grant to the time
-        it makes its way through the tax filing and IRS publication process. "New" grants that appear in Grant Search results were likely
-        actually funded 9-18+ months before first appearing in results.
+        When using the Grantee Search tool for basic prospecting, be mindful of the delay from the time a foundation makes a grant to the
+        time it makes its way through the tax filing and IRS publication process. "New" grants that appear in Grantee Search results were
+        likely actually funded 9-18+ months before first appearing in results.
       </p>
 
       <h2 id="toc-quirks" class="mt-16 text-3xl font-semibold tracking-tight text-pretty text-gray-900">Foundations control the content</h2>
