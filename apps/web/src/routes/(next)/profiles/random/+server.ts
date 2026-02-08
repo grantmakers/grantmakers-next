@@ -1,5 +1,6 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import data from '@repo/shared/data/public/ein.json';
+import { profilesVersionProd } from '@repo/shared/constants/trustedConstants';
 
 type Data = number[];
 
@@ -20,7 +21,7 @@ export const GET: RequestHandler = async () => {
   return new Response(null, {
     status: 307,
     headers: {
-      Location: `/profiles/v1/${paddedEIN}/`,
+      Location: `/profiles/${profilesVersionProd}/${paddedEIN}/`,
       'Cache-Control': 'no-store',
     },
   });

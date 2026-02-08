@@ -1,5 +1,6 @@
 <script lang="ts">
   import { badgeStyles } from '$utils/badgeStyles';
+  import { profilesVersionProd } from '@repo/shared/constants/trustedConstants';
   interface Props {
     name: string;
     ein: string;
@@ -18,7 +19,7 @@
     return badgeStyles.default;
   });
 
-  let url = $derived('/profiles/v1/' + ein);
+  let url = $derived(`/profiles/${profilesVersionProd}/` + ein);
 </script>
 
 <!-- https://tailwindui.com/components/application-ui/lists/stacked-lists -->

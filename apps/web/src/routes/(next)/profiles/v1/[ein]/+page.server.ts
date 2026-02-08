@@ -5,6 +5,7 @@ import { fetchProfileFromR2Binding, fetchRemoteProfile, fetchLocalProfile } from
 import { isValidEin } from '@repo/shared/utils/validators';
 import type { PageServerLoad } from './$types';
 import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
+import { profilesVersionNext } from '@repo/shared/constants/trustedConstants';
 
 const remoteUrl = WORKER_URL + PROFILES_API_ENDPOINT + '/';
 
@@ -61,7 +62,7 @@ export const load: PageServerLoad = async ({ params, url, platform }) => {
 
   // Maintain existing SEO link equity by throwing a proper 301
   // This results in an extra round trip, but that's OK as Cloudflare is fast and we can add aggressive caching at the API level
-  const canonicalPath = `/profiles/v1/${ein}-${profile.organization_name_slug}/`;
+  const canonicalPath = `/profiles/${profilesVersionNext}/${ein}-${profile.organization_name_slug}/`;
   const canonicalUrl = new URL(canonicalPath, url.origin).toString();
   if (url.pathname !== canonicalPath) {
     return redirect(301, canonicalUrl);

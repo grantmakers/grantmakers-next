@@ -22,6 +22,7 @@ import {
 import { connectRange, connectCurrentRefinements, connectConfigure } from 'instantsearch.js/es/connectors';
 
 import { PUBLIC_ALGOLIA_APP_ID, PUBLIC_ALGOLIA_SEARCH_ONLY_KEY, PUBLIC_ALGOLIA_INDEX_NAME } from '$env/static/public';
+import { profilesVersionProd } from '@repo/shared/constants/trustedConstants';
 
 if (!PUBLIC_ALGOLIA_APP_ID || !PUBLIC_ALGOLIA_SEARCH_ONLY_KEY || !PUBLIC_ALGOLIA_INDEX_NAME) {
   throw new Error('Missing required Algolia public keys. Please ensure environment variables are set.');
@@ -259,10 +260,10 @@ export function initSearchJs(M) {
       </div>
       <span class="card-title">
         {{#_highlightResult.organization_name}}
-        <a class="hit-name" href="/profiles/v0/{{ ein }}-{{ organization_name_slug }}/" title="View Profile">{{#helpers.highlight}}{ "attribute": "organization_name" }{{/helpers.highlight}}</a>
+        <a class="hit-name" href="/profiles/${profilesVersionProd}/{{ ein }}-{{ organization_name_slug }}/" title="View Profile">{{#helpers.highlight}}{ "attribute": "organization_name" }{{/helpers.highlight}}</a>
         {{/_highlightResult.organization_name}}
         {{^_highlightResult.organization_name}}
-        <a class="hit-name" href="/profiles/v0/{{ ein }}-{{ organization_name_slug }}/" title="View Profile">{{{organization_name}}}</a>
+        <a class="hit-name" href="/profiles/${profilesVersionProd}/{{ ein }}-{{ organization_name_slug }}/" title="View Profile">{{{organization_name}}}</a>
         {{/_highlightResult.organization_name}}
       </span>
       {{#_highlightResult.city}}
