@@ -7,10 +7,12 @@
 import { redirect } from '@sveltejs/kit';
 import type { HandleServerError } from '@sveltejs/kit';
 
+import { profilesVersionLegacy, profilesVersionNext } from '@repo/shared/constants/trustedConstants';
+ 
 type Redirects = { [key: string]: string };
 
 const deprecatedProfileSearchHelper = /^\/profiles\/(\d{9})\/?$/;
-const profileRoutes = (ein: string) => `/profiles/v0/${ein}`;
+const profileRoutes = (ein: string) => `/profiles/${profilesVersionLegacy}/${ein}`;
 
 const deprecatedProfilesIndexRoute = '/profiles/';
 const profilesIndexRedirect = '/search/profiles/';
@@ -22,7 +24,7 @@ const legacySitemapRedirects: Redirects = {
   '/sitemap-main.xml': '/sitemaps/sitemap-main.xml',
 };
 
-const surpriseMeRoutes = ['/profiles/v0', '/profiles/v1', '/profiles/random'];
+const surpriseMeRoutes = [`/profiles/${profilesVersionLegacy}`, `/profiles/${profilesVersionNext}`, '/profiles/random'];
 
 const donationRoutes = ['/donate', '/buy-chad-a-coffee'];
 

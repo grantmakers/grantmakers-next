@@ -13,7 +13,7 @@
   import algoliaLogo from '$lib/assets/images/Algolia-logo-blue.svg';
   import { formatEin } from '@repo/shared/functions/formatters/ein';
   import { badgeStyles } from '$utils/badgeStyles';
-  import { datasetStats } from '@repo/shared/constants/trustedConstants';
+  import { datasetStats, profilesVersionProd } from '@repo/shared/constants/trustedConstants';
   import staticData from '@repo/shared/data/public/autocomplete-static-data.json';
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
   import type { BaseItem } from '@algolia/autocomplete-core';
@@ -40,7 +40,7 @@
 
   interface Props {
     size?: 'large' | undefined;
-    profilesVersion?: 'v0' | 'v1';
+    profilesVersion?: string;
     placeholderVersion?: 'foundation' | 'quick';
     onAutocompleteInit: (instance: AutocompleteInstance) => void;
   }
@@ -51,7 +51,12 @@
 
   let profilesCount = $derived(formatNumber(datasetStats?.profiles));
 
-  let { size = undefined, profilesVersion = 'v0', placeholderVersion = 'quick', onAutocompleteInit = () => {} }: Props = $props();
+  let {
+    size = undefined,
+    profilesVersion = profilesVersionProd,
+    placeholderVersion = 'quick',
+    onAutocompleteInit = () => {},
+  }: Props = $props();
 
   let placeholderText = $derived(placeholderVersion === 'foundation' ? 'Search by Name or EIN...' : 'Quick search...');
 

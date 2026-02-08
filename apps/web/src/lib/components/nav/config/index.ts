@@ -1,4 +1,4 @@
-import { aboutLinks, type SecondaryNavItems } from '@repo/shared/constants/trustedConstants';
+import { aboutLinks, type SecondaryNavItems, profilesVersionLegacy, profilesVersionNext } from '@repo/shared/constants/trustedConstants';
 import { profileNavItems } from '@repo/shared/constants/trustedConstants/withIcons';
 
 export interface NavConfig {
@@ -18,7 +18,7 @@ export const defaultConfig: NavConfig = {
 };
 
 export function getNavConfig(path: string): NavConfig {
-  if (path.startsWith('/profiles/v0')) {
+  if (path.startsWith(`/profiles/${profilesVersionLegacy}`)) {
     return {
       route: 'profiles',
       transparentBg: false,
@@ -28,7 +28,7 @@ export function getNavConfig(path: string): NavConfig {
       sticky: true,
     };
   }
-  if (path.startsWith('/profiles/v1')) {
+  if (path.startsWith(`/profiles/${profilesVersionNext}`)) {
     return {
       route: 'profiles',
       transparentBg: false,
