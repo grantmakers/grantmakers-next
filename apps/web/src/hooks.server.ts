@@ -8,7 +8,7 @@ import { redirect } from '@sveltejs/kit';
 import type { HandleServerError } from '@sveltejs/kit';
 
 import { profilesVersionLegacy, profilesVersionNext } from '@repo/shared/constants/trustedConstants';
- 
+
 type Redirects = { [key: string]: string };
 
 const deprecatedProfileSearchHelper = /^\/profiles\/(\d{9})\/?$/;
