@@ -1,4 +1,5 @@
 <script lang="ts">
+  import logo from '$lib/assets/images/logo.svg';
   import Approachability from './Approachability.svelte';
   import WebsiteWarning from './WebsiteWarning.svelte';
   import { copy } from 'svelte-copy';
@@ -143,7 +144,23 @@
     {/if}
   </div>
 
-  <div class="max-w-sm text-left text-xs text-balance text-slate-600 lg:text-right">
-    Foundation tax returns are public records. Grantmakers.io is a free community project that republishes this IRS data.
-  </div>
+  <a
+    href="/about/"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Learn more about Grantmakers.io — opens in a new window"
+    class="group flex items-center justify-end gap-4 rounded-md text-inherit no-underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-slate-400"
+  >
+    <p class="max-w-sm text-left text-xs text-balance text-slate-600 lg:text-right">
+      Foundation tax returns are public records. Grantmakers.io republishes this IRS data as a free community resource.
+    </p>
+    <img
+      src={logo}
+      class="inline-block h-6 w-6 shrink-0 rounded-full opacity-40 grayscale transition-all duration-300 group-hover:opacity-100 group-hover:grayscale-0"
+      alt="Grantmakers.io Logo"
+      aria-hidden="true"
+      height={36}
+      width={36}
+    />
+  </a>
 </div>

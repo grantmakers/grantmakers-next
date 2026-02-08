@@ -68,8 +68,6 @@
         </div>
       </ContentBoxWrapper>
 
-      <ContentBoxInterstitial message="Grantmakers.io ensures equitable access to a critical information source for nonprofits." />
-
       <!-- Core Body Sections -->
       <div class="mx-auto mt-6 w-full pb-6 lg:mt-8">
         <!-- Snapshot Boxes - 2 column layout (40/60 split) -->
@@ -110,7 +108,7 @@
           </div>
         </div>
 
-        <ContentBoxInterstitial message="Built for nonprofits. Sustained by the generosity of the nonprofits it serves." />
+        <ContentBoxInterstitial message="Built for nonprofits. Sustained by the community." />
 
         <!-- Grants -->
         <!-- Full Width Breakout - this section breaks out of the standard page container width to maximize space for the faceted search experience -->
@@ -170,7 +168,7 @@
         </div>
 
         <!-- Charitable Activities -->
-        <div id="charitable-activities" class="-mx-3 mt-6 grid grid-cols-1 lg:mt-8">
+        <div id="charitable-activities" class="-mx-3 mt-6 grid grid-cols-1 lg:mt-20">
           <div class="mb-4 w-full max-w-full px-3">
             <div class="shadow-soft-xl relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white break-words">
               <div class="mb-0 border-b-0 bg-slate-200 p-4">
@@ -287,7 +285,6 @@
                     />
                   </svg>
                 </a>
-                <h3 class="mt-6 max-w-md text-slate-600">Ensuring equitable access since 2016</h3>
               </div>
             </div>
           </ContentBoxWrapper>
