@@ -22,6 +22,7 @@
   import { meta } from '@repo/shared/constants/trustedConstants';
   import GlobalNav from '$lib/components/nav/GlobalNav.svelte';
   import Footer from '$lib/components/footer/Footer.svelte';
+  import ProfileVersionToggle from '$lib/components/shared/ProfileVersionToggle.svelte';
   interface Props {
     children?: import('svelte').Snippet;
   }
@@ -72,4 +73,5 @@
   {@render children?.()}
 
   <Footer />
+  <ProfileVersionToggle />
 </div>
