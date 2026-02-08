@@ -396,7 +396,7 @@
                 
                 <td class="px-3 py-4 text-sm" data-facet="grantee_city" data-facet-value="${escapeAttr(grant.grantee_city)}" data-state-facet="grantee_state" data-state-value="${escapeAttr(grant.grantee_is_foreign && grant.grantee_state === 'Foreign' ? grant.grantee_country : grant.grantee_state)}">
                   <span class="${clickableTextStyles.base}">
-                    ${getHighlight(grant, 'grantee_city')},<br>
+                    ${getHighlight(grant, 'grantee_city')},
                     ${grant.grantee_is_foreign && grant.grantee_state === 'Foreign' ? grant.grantee_country : grant.grantee_state}
                   </span>
                 </td>
