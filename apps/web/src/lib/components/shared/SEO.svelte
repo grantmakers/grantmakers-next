@@ -1,7 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { originProd, profilesVersionProd } from '@repo/shared/constants/trustedConstants';
-  import { upperFirstLetter } from '@repo/shared/functions/formatters/names';
   import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmakers/all';
 
   type Title = GrantmakersExtractedDataObj['organization_name'];
@@ -98,7 +97,7 @@
 
 <meta name="format-detection" content="telephone=no" />
 
-<meta property="og:image" content="https://www.grantmakers.io/assets/img/og-image.png" />
+<meta property="og:image" content="https://www.grantmakers.io/og-image.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:title" content={profile.organization_name} />
@@ -113,7 +112,7 @@
 <meta name="twitter:description" content={description} />
 <meta name="twitter:site" content="@grantmakersio" />
 <meta name="twitter:creator" content="@chadkruser" />
-<meta name="twitter:image:src" content="{originProd}/assets/img/icons-letters/{upperFirstLetter(profile.organization_name)}.png" />
+<meta name="twitter:image:src" content="{originProd}/og-image.png" />
 
 <!-- Schema.org -->
 <!-- eslint-disable svelte/no-at-html-tags -->
