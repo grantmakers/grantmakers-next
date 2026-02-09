@@ -27,7 +27,7 @@ export const originProd = 'https://www.grantmakers.io';
 
 export const profilesVersionLegacy = 'v0';
 export const profilesVersionNext = 'v1';
-export const profilesVersionProd = 'v0';
+export const profilesVersionProd = 'v1';
 
 export const cutoverDate = new Date('2025-01-18').toISOString().replace(/\.\d{3}Z$/, 'Z');
 export const rankTotal = datasetStats.profiles;
