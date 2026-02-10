@@ -2,16 +2,13 @@
   import { page } from '$app/state';
   import ArrowPath from 'svelte-heros-v2/ArrowPath.svelte';
 
-  // There is no need to track url state as a user interacts with the page
-  // IF they click the toggle, we take a snapshot of the full URL
-  // We swap the version and send the user on their way
   const v0 = '/profiles/v0/';
   const v1 = '/profiles/v1/';
 
-  const isV0 = page.url.pathname.includes(v0);
-  const showToggle = isV0 || page.url.pathname.includes(v1);
+  const isV0 = $derived(page.url.pathname.includes(v0));
+  const showToggle = $derived(isV0 || page.url.pathname.includes(v1));
 
-  const label = isV0 ? 'Try new layout' : 'Back to classic layout';
+  const label = $derived(isV0 ? 'Try new layout' : 'Back to classic layout');
 
   let isNavigating = $state(false);
 
