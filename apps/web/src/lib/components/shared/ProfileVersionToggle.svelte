@@ -2,34 +2,29 @@
   import { page } from '$app/state';
   import ArrowPath from 'svelte-heros-v2/ArrowPath.svelte';
 
-  type ProfileVersion = 'v0' | 'v1';
+  // There is no need to track url state as a user interacts with the page
+  // IF they click the toggle, we take a snapshot of the full URL
+  // We swap the version and send the user on their way
+  const v0 = '/profiles/v0/';
+  const v1 = '/profiles/v1/';
+
+  const isV0 = page.url.pathname.includes(v0);
+  const showToggle = isV0 || page.url.pathname.includes(v1);
+
+  const label = isV0 ? 'Try new layout' : 'Back to classic layout';
 
   let isNavigating = $state(false);
 
-  function getCurrentVersion(pathname: string): ProfileVersion | null {
-    if (pathname.includes('/profiles/v0/')) return 'v0';
-    if (pathname.includes('/profiles/v1/')) return 'v1';
-    return null;
-  }
-
   function toggle() {
-    if (isNavigating) return; // Prevent rapid clicks
-
-    const pathname = page.url.pathname;
-    const current = getCurrentVersion(pathname);
-    if (!current) return;
-
+    if (isNavigating) return;
     isNavigating = true;
-    const target: ProfileVersion = current === 'v0' ? 'v1' : 'v0';
-    window.location.href = pathname.replace(`/profiles/${current}/`, `/profiles/${target}/`);
-  }
 
-  const version = $derived(getCurrentVersion(page.url.pathname));
-  const label = $derived(version === 'v0' ? 'Try new layout' : 'Back to classic layout');
-  const isVisible = $derived(version !== null);
+    const href = window.location.href;
+    window.location.href = isV0 ? href.replace(v0, v1) : href.replace(v1, v0);
+  }
 </script>
 
-{#if isVisible}
+{#if showToggle}
   <button
     onclick={toggle}
     disabled={isNavigating}
@@ -65,7 +60,7 @@
       disabled:active:scale-100
     "
   >
-    <ArrowPath class={`h-3.5 w-3.5 ${isNavigating ? 'animate-spin' : ''}`} />
+    <ArrowPath class="h-3.5 w-3.5 {isNavigating ? 'animate-spin' : ''}" />
     <span>{isNavigating ? 'Loading...' : label}</span>
   </button>
 {/if}
