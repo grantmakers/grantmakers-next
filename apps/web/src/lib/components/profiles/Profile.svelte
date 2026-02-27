@@ -129,7 +129,9 @@
                       </div>
                       <div>
                         {#if profile.enable_algolia_search}
-                          <GrantsSearch ein={profile.ein} />
+                          {#key profile.ein}
+                            <GrantsSearch ein={profile.ein} />
+                          {/key}
                         {:else}
                           <GrantsTable
                             grantCount={profile.grant_count}
