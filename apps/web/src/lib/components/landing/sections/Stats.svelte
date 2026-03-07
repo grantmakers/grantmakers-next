@@ -1,3 +1,8 @@
+<script lang="ts">
+  import { allTimeSectorRetained } from '@repo/shared/constants/trustedConstants';
+  import { humanizeCurrency } from '@repo/shared/functions/formatters/numbers';
+</script>
+
 <div class="bg-gray-900 py-24 sm:py-32">
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
     <div class="mx-auto max-w-2xl lg:max-w-none">
@@ -23,7 +28,7 @@
           <dd
             class="order-first inline-block bg-linear-to-r from-indigo-100 to-indigo-400 bg-clip-text text-5xl font-semibold tracking-tight text-transparent"
           >
-            $3.7M
+            {humanizeCurrency(allTimeSectorRetained)}
           </dd>
         </div>
       </dl>

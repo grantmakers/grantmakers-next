@@ -10,6 +10,7 @@ export const datasetStats = {
 };
 
 export const allTimeSearchCount = 12_223_941;
+export const allTimeSectorRetained = 3_748_675; // $$'s retained by sector
 
 export const meta = {
   defaults: {
