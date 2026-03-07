@@ -4,17 +4,17 @@ export interface EachFAQ {
 }
 
 export const datasetStats = {
-  profiles: 159550,
-  grants: 14618786,
-  grants_searchable: 5_726_879,
+  profiles: 159619,
+  grants: 14630338,
+  grants_searchable: 4_929_800,
 };
 
-export const allTimeSearchCount = 11_908_841;
+export const allTimeSearchCount = 12_223_941;
 
 export const meta = {
   defaults: {
     title: 'Grantmakers.io - Unlocking Foundation Research for Nonprofits',
-    description: 'Quickly find data on 159,000 grantmaking institutions in the US. A free, open source project.',
+    description: 'Quickly find data on 160,000 grantmaking institutions in the US. A free, open source project.',
   },
   emails: {
     support: 'help@grantmakers.io',
