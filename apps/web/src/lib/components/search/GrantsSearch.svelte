@@ -252,6 +252,12 @@
    * The assumed UX is the user will use the Current Refinements to remove filters.
    */
   const handleCellClick = (event: Event) => {
+    // Ignore click events that result in text selection (highlighting)
+    const selection = window.getSelection();
+    if (selection && !selection.isCollapsed) {
+      return;
+    }
+
     const target = event.target as HTMLElement;
     const cell = target.closest('td[data-facet]') as HTMLElement | null;
     if (!cell || !algoliaInstance?.helper) return;
