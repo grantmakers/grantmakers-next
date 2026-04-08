@@ -13,19 +13,7 @@
 
   type ViewMode = 'last-three-years' | 'latest';
 
-  /**
-   * Svelte can't infer props when using let props = $props(), aka non-destructured.
-   * This matters only for custom elements/web components, which we do not use.
-   * It's safe to ignore the warning
-   */
-  // eslint-disable-next-line svelte/valid-compile
-  let props: Props = $props();
-  // Derived values for safer access
-  let grantsLastThreeYears = $derived(props.grantsLastThreeYears);
-  let grantsCurrent = $derived(props.grantsCurrent);
-  let grantCount = $derived(props.grantCount);
-  let grantCountLastThreeYears = $derived(props.grantCountLastThreeYears);
-  let grantsReferenceAttachment = $derived(props.grantsReferenceAttachment ?? false);
+  let { grantsLastThreeYears, grantsCurrent, grantCount, grantCountLastThreeYears, grantsReferenceAttachment = false }: Props = $props();
 
   const numberOfGrantsToDisplay = 10;
 
@@ -38,7 +26,10 @@
     return grantCount >= 3 ? 'latest' : 'last-three-years';
   }
 
-  let viewMode = $state<ViewMode>(determineInitialViewMode(props.grantCount, props.grantCountLastThreeYears));
+  let initialView = $derived(determineInitialViewMode(grantCount, grantCountLastThreeYears));
+  let selectedView = $state<ViewMode | null>(null);
+  let viewMode = $derived(selectedView ?? initialView);
+
   let grants = $derived(viewMode === 'last-three-years' ? grantsLastThreeYears : grantsCurrent);
 
   // $inspect('View Mode', viewMode);
@@ -80,7 +71,7 @@
             <div class="inline-flex p-1 hover:cursor-default">
               {#if grantsCurrent}
                 <button
-                  onclick={() => (viewMode = 'latest')}
+                  onclick={() => (selectedView = 'latest')}
                   class="cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium {viewMode === 'latest' ?
                     'bg-slate-200 text-slate-700 hover:cursor-default'
                   : 'text-slate-700 hover:text-slate-900'}"
@@ -89,7 +80,7 @@
                 </button>
               {/if}
               <button
-                onclick={() => (viewMode = 'last-three-years')}
+                onclick={() => (selectedView = 'last-three-years')}
                 class="cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium {viewMode === 'last-three-years' ?
                   'bg-slate-200 text-slate-700 hover:cursor-default'
                 : 'text-slate-700 hover:text-slate-900'}"

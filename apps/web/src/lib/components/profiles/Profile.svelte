@@ -128,19 +128,19 @@
                         </div>
                       </div>
                       <div>
-                        {#if profile.enable_algolia_search}
-                          {#key profile.ein}
+                        {#key profile.ein}
+                          {#if profile.enable_algolia_search}
                             <GrantsSearch ein={profile.ein} />
-                          {/key}
-                        {:else}
-                          <GrantsTable
-                            grantCount={profile.grant_count}
-                            grantCountLastThreeYears={profile.grant_count_last_three_years}
-                            grantsCurrent={grantsCurrentTop20}
-                            grantsLastThreeYears={grantsLastThreeYearsTop20}
-                            grantsReferenceAttachment={profile.grants_reference_attachment}
-                          />
-                        {/if}
+                          {:else}
+                            <GrantsTable
+                              grantCount={profile.grant_count}
+                              grantCountLastThreeYears={profile.grant_count_last_three_years}
+                              grantsCurrent={grantsCurrentTop20}
+                              grantsLastThreeYears={grantsLastThreeYearsTop20}
+                              grantsReferenceAttachment={profile.grants_reference_attachment}
+                            />
+                          {/if}
+                        {/key}
                         {#if !grantsCurrentTop20}
                           <div class="p-6">Unable to find an available free source of grants data</div>
                         {/if}
