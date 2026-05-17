@@ -1,5 +1,7 @@
-// Updated as of Nov 5, 2025
+// DEPRECATED - downloaded IRS Zip files are now saved to MongoDB Atlas
+// Keeping only for posterity - DO NOT USE
 export const filingZipUrls = [
+  'https://apps.irs.gov/pub/epostcard/990/xml/2026/2026_TEOS_XML_03A.zip',
   'https://apps.irs.gov/pub/epostcard/990/xml/2026/2026_TEOS_XML_02A.zip',
   'https://apps.irs.gov/pub/epostcard/990/xml/2026/2026_TEOS_XML_01A.zip',
   'https://apps.irs.gov/pub/epostcard/990/xml/2025/2025_TEOS_XML_12A.zip',
