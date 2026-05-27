@@ -4,13 +4,13 @@ export interface EachFAQ {
 }
 
 export const datasetStats = {
-  profiles: 160918,
-  grants: 15037475,
-  grants_searchable: 4640215,
+  profiles: 161314,
+  grants: 15115354,
+  grants_searchable: 4662161,
 };
 
-export const allTimeSearchCount = 12_484_641;
-export const allTimeSectorRetained = 3_828_623; // $$'s retained by sector
+export const allTimeSearchCount = 12_971_141;
+export const allTimeSectorRetained = 3_977_817; // $$'s retained by sector
 
 export const meta = {
   defaults: {
