@@ -5,7 +5,7 @@
  * All other requests receive security headers before being returned to the client.
  */
 import { redirect } from '@sveltejs/kit';
-import type { HandleServerError } from '@sveltejs/kit';
+import type { Handle, HandleServerError } from '@sveltejs/kit';
 
 import { profilesVersionLegacy, profilesVersionNext } from '@repo/shared/constants/trustedConstants';
 
@@ -46,7 +46,7 @@ const surpriseMeRoutes = [`/profiles/${profilesVersionLegacy}`, `/profiles/${pro
 
 const donationRoutes = ['/donate', '/buy-chad-a-coffee'];
 
-export async function handle({ event, resolve }) {
+export const handle: Handle = async ({ event, resolve }) => {
   const path = event.url.pathname;
 
   // Handle deprecated profile search helper redirect
@@ -128,7 +128,7 @@ export async function handle({ event, resolve }) {
   response.headers.set('Permissions-Policy', 'geolocation=(), microphone=(), camera=(), usb=(), interest-cohort=()');
 
   return response;
-}
+};
 
 /**
  * Utility to improve error logging

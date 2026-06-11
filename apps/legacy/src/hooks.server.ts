@@ -1,4 +1,4 @@
-import { redirect, type HandleServerError } from '@sveltejs/kit';
+import { redirect, type Handle, type HandleServerError } from '@sveltejs/kit';
 
 type Redirects = { [key: string]: string };
 
@@ -14,7 +14,7 @@ const legacySitemapRedirects: Redirects = {
 
 const surpriseMeRoutes = ['/profiles/v0'];
 
-export async function handle({ event, resolve }) {
+export const handle: Handle = async ({ event, resolve }) => {
   const path = event.url.pathname;
 
   // Handle deprecated profile search helper redirect
@@ -51,7 +51,7 @@ export async function handle({ event, resolve }) {
   }
 
   return resolve(event);
-}
+};
 
 /**
  * Utility to improve error logging

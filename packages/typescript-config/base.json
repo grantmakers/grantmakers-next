@@ -11,6 +11,7 @@
     "module": "NodeNext",
     "moduleDetection": "force",
     "moduleResolution": "NodeNext",
+    "verbatimModuleSyntax": true,
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": false,
     "resolveJsonModule": true,

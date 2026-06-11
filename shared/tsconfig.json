@@ -1,15 +1,12 @@
 {
   "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
-    "target": "es2021",
+    "target": "es2022",
     "module": "es2022",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "allowJs": true,
-    "isolatedModules": true,
-    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "strict": true
+    "noEmit": true
   },
   "exclude": ["./node_modules/**"]
 }

@@ -1,4 +1,4 @@
-import { Grant, GrantInCollection } from '@repo/shared/typings/grantmakers/all';
+import type { Grant, GrantInCollection } from '@repo/shared/typings/grantmakers/all';
 type NormalizedGrant = Omit<
   GrantInCollection,
   | '_id'
@@ -12,6 +12,7 @@ type NormalizedGrant = Omit<
   | 'grant_number'
   | 'grantee_state_displayed'
   | 'grants_to_preselected_only'
+  | 'grantee_labeled_as_person'
   | 'foundation_is_likely_inactive'
 >;
 export function remapGrants(grants: Grant[]): NormalizedGrant[] {

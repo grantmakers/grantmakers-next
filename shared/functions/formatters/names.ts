@@ -135,5 +135,35 @@ const extractFirstLetter = (organization_name: string): string => {
 
 const upperFirstLetter = (name: string) => extractFirstLetter(name).toUpperCase();
 
+const normalizeEntityName = (name: string): string => {
+  if (!name || typeof name !== 'string') return '';
+  return name
+    .toLowerCase()
+    .trim()
+    .replace(/'/g, '')
+    .replace(/\./g, '')
+    .replace(/,?\s?inc$/g, '')
+    .replace(/^the\s/g, '');
+};
+
+const removeAllParentheses = (name: string): string => {
+  return name.replace(/\s*\([^)]*\)/g, '').trim();
+};
+
+const extractDbaAkaNameAtEnd = (name: string): string | null => {
+  const match = name.match(/\((dba|d\.b\.a\.|aka|a\.k\.a\.|fka|f\.k\.a\.)[\s:]*(.*)\)$/i);
+  return match ? (match[2]?.trim() ?? null) : null;
+};
+
 // ESM export
-export { convertToCapitalCase, normalizePerson, slugify, toTitleCase, extractFirstLetter, upperFirstLetter };
+export {
+  convertToCapitalCase,
+  extractDbaAkaNameAtEnd,
+  extractFirstLetter,
+  normalizePerson,
+  normalizeEntityName,
+  removeAllParentheses,
+  slugify,
+  toTitleCase,
+  upperFirstLetter,
+};
