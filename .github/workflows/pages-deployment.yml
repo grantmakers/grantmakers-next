@@ -80,16 +80,14 @@ jobs:
           PUBLIC_ALGOLIA_INDEX_NAME_GRANTS: ${{ secrets.PUBLIC_ALGOLIA_INDEX_NAME_GRANTS }}
 
       - name: Publish Web App
-        uses: cloudflare/pages-action@1
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN_PAGES }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: './apps/web'
-          directory: '.svelte-kit/cloudflare'
-          projectName: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           wranglerVersion: '4'
-          branch: ${{ (github.event_name == 'push' || github.event.inputs.environment == 'staging') && 'staging' || 'production' }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          command: pages deploy .svelte-kit/cloudflare --project-name=${{ secrets.CLOUDFLARE_PROJECT_NAME }} --branch=${{ (github.event_name == 'push' || github.event.inputs.environment == 'staging') && 'staging' || 'production' }}
 
       # The Legacy app is considered fully deprecated as of Jan 2026
       # - name: Publish Legacy Web App
