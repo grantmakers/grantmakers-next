@@ -9,8 +9,8 @@ export const datasetStats = {
   grants_searchable: 4969613,
 };
 
-export const allTimeSearchCount = 12_971_141;
-export const allTimeSectorRetained = 3_977_817; // $$'s retained by sector
+export const allTimeSearchCount = 13_218_741;
+export const allTimeSectorRetained = 4_053_747; // $$'s retained by sector
 
 export const meta = {
   defaults: {
