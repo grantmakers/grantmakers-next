@@ -7,7 +7,7 @@
 import { redirect } from '@sveltejs/kit';
 import type { Handle, HandleServerError } from '@sveltejs/kit';
 
-import { profilesVersionLegacy, profilesVersionNext } from '@repo/shared/constants/trustedConstants';
+import { profilesVersionLegacy } from '@repo/shared/constants/trustedConstants';
 
 type Redirects = { [key: string]: string };
 
@@ -41,8 +41,6 @@ const legacyStaticRedirects: Record<string, string> = {
 const legacySitemapRedirects: Redirects = {
   '/sitemap-main.xml': '/sitemaps/sitemap-main.xml',
 };
-
-const surpriseMeRoutes = [`/profiles/${profilesVersionLegacy}`, `/profiles/${profilesVersionNext}`, '/profiles/random'];
 
 const donationRoutes = ['/donate', '/buy-chad-a-coffee'];
 
@@ -79,25 +77,6 @@ export const handle: Handle = async ({ event, resolve }) => {
     redirect(302, redirectTo);
   }
 
-  // Handle Surprise Me feature
-  if (surpriseMeRoutes.some((route) => path.startsWith(route))) {
-    const accessToken = event.url.searchParams.get('access');
-
-    if (accessToken === 'welcome-friend') {
-      event.cookies.set('surprise-me-access', 'granted', {
-        path: '/',
-        maxAge: 60 * 60 * 24 * 30, // 30 days
-        httpOnly: true,
-        secure: true,
-        sameSite: 'lax',
-      });
-
-      // Clean the query param
-      const redirectTo = event.url.pathname;
-      redirect(302, redirectTo);
-    }
-  }
-
   // Preload fonts - only needed during legacy to NEXT transition
   // https://svelte.dev/docs/kit/performance#Optimizing-assets-Fonts
   const response = await resolve(event, {
@@ -115,7 +94,7 @@ export const handle: Handle = async ({ event, resolve }) => {
    */
 
   if (event.request.method === 'GET') {
-    if (path.startsWith('/profiles/') && !path.startsWith('/profiles/random')) {
+    if (path.startsWith('/profiles/')) {
       response.headers.set('Cache-Control', 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800');
     }
   }

@@ -8,11 +8,10 @@
 
   let { data }: Props = $props();
   const profile = $derived(data.profile);
-  const hasSurpriseMeAccess = $derived(data.hasSurpriseMeAccess);
 </script>
 
 {#if profile}
-  <Profile {profile} {hasSurpriseMeAccess} />
+  <Profile {profile} />
 {:else}
   <p>No profile data available</p>
 {/if}

@@ -4,7 +4,6 @@
   import ContentBoxWrapper from './ContentBoxWrapper.svelte';
   import ContentBoxHeader from './ContentBoxHeader.svelte';
   import SectionAnchor from './SectionAnchor.svelte';
-  import SurpriseMe from './topnav/SurpriseMe.svelte';
   import FoundationHeader from './header/FoundationHeader.svelte';
   import GrantsTable from './grants/GrantsTable.svelte';
   import GrantsSearch from '$lib/components/search/GrantsSearch.svelte';
@@ -24,10 +23,9 @@
 
   interface Props {
     profile: GrantmakersExtractedDataObj;
-    hasSurpriseMeAccess?: boolean;
   }
 
-  let { profile, hasSurpriseMeAccess = false }: Props = $props();
+  let { profile }: Props = $props();
 
   let organization_name = $derived(profile.organization_name);
   let filings = $derived(profile.filings);
@@ -337,14 +335,6 @@
 
                   Foundation search
                 </button>
-                {#if hasSurpriseMeAccess}
-                  <button
-                    type="button"
-                    class="inline-flex items-center gap-x-1.5 rounded-md bg-white px-4 py-3 text-sm font-semibold text-white shadow-sm hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    <SurpriseMe />
-                  </button>
-                {/if}
                 <div class="flex flex-row items-center gap-2"></div>
               </div>
             </div>
@@ -355,7 +345,4 @@
       </div>
     </div>
   </div>
-  {#if hasSurpriseMeAccess}
-    <SurpriseMe variant="fab" />
-  {/if}
 </div>
