@@ -26,7 +26,7 @@ const config = {
       $utils: './src/lib/utils', // Svelte utils
     },
     csp: {
-      mode: 'auto',
+      mode: 'hash', // was 'auto' — 'auto' emits a per-render nonce that gets cached and shared
       directives: {
         'script-src': [
           'self',

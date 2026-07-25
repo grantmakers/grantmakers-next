@@ -93,9 +93,13 @@ export const handle: Handle = async ({ event, resolve }) => {
    * TODO No differentiation between API calls and static assets
    */
 
-  if (event.request.method === 'GET') {
-    if (path.startsWith('/profiles/')) {
+  const isCacheableMethod = event.request.method === 'GET' || event.request.method === 'HEAD';
+
+  if (isCacheableMethod && path.startsWith('/profiles/')) {
+    if (response.status < 400) {
       response.headers.set('Cache-Control', 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800');
+    } else {
+      response.headers.set('Cache-Control', 'private, no-store');
     }
   }
 

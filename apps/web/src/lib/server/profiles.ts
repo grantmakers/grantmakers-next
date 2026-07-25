@@ -3,7 +3,6 @@ import type { GrantmakersExtractedDataObj } from '@repo/shared/typings/grantmake
 import type { R2Bucket } from '@cloudflare/workers-types';
 
 export const fetchProfileFromR2Binding = async (bucket: R2Bucket, ein: string): Promise<GrantmakersExtractedDataObj | null> => {
-  console.log(`Fetching profile for ${ein} via R2 binding`);
   const key = `profiles/${ein}.json`;
   const object = await bucket.get(key);
 
