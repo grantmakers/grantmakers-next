@@ -13,11 +13,19 @@ export const GET: RequestHandler = async () => {
         <lastmod>${lastmod}</lastmod>
       </sitemap>
       <sitemap>
-        <loc>${url}/sitemaps/sitemap-profiles-ein-0-2.xml</loc>
+        <loc>${url}/sitemaps/sitemap-profiles-ein-0-1.xml</loc>
         <lastmod>${lastmod}</lastmod>
       </sitemap>
       <sitemap>
-        <loc>${url}/sitemaps/sitemap-profiles-ein-3-5.xml</loc>
+        <loc>${url}/sitemaps/sitemap-profiles-ein-2.xml</loc>
+        <lastmod>${lastmod}</lastmod>
+      </sitemap>
+      <sitemap>
+        <loc>${url}/sitemaps/sitemap-profiles-ein-3.xml</loc>
+        <lastmod>${lastmod}</lastmod>
+      </sitemap>
+      <sitemap>
+        <loc>${url}/sitemaps/sitemap-profiles-ein-4-5.xml</loc>
         <lastmod>${lastmod}</lastmod>
       </sitemap>
       <sitemap>

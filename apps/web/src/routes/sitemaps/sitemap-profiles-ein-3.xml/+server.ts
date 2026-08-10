@@ -7,7 +7,7 @@ export const prerender = true;
 
 const data: Profile[] = sitemapData as Profile[];
 
-const targets = ['0', '1', '2'];
+const targets = ['3'];
 
 export const GET: RequestHandler = async () => {
   const filteredProfiles = data.filter((profile) => targets.includes(profile.ein.charAt(0)));
