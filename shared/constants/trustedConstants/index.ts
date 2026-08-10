@@ -85,7 +85,7 @@ export const faqData: EachFAQ[] = [
   {
     question: 'Do you exclude any data?',
     answer:
-      'Due to the high number of very small grants, two donor-advised-fund providers (Bank of American Charitable Foundation and JPMorgan Chase Foundation) and one now-closed corporate giving program (Amazonsmile Foundation) do not appear on the site.',
+      'Due to the high number of very small grants, two donor-advised-fund providers (Bank of America Charitable Foundation and JPMorgan Chase Foundation) and one now-closed corporate giving program (Amazonsmile Foundation) do not appear on the site.',
   },
   {
     question: 'Why is Grantmakers.io free?',
