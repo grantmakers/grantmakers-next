@@ -90,7 +90,7 @@
         An open window into a critically important dataset
       </h2>
       <p class="mt-6">
-        Grantmakers.io was created by me, Chad Kruse 👋. I originally <a
+        Grantmakers.io was created ten years ago by me, Chad Kruse 👋. I originally <a
           class="text-grantmakers-orange hover:text-slate-700"
           href="https://medium.com/@chadkruser/building-grantmakers-io-d1f78326a0b5"
           target="_blank"
@@ -99,28 +99,22 @@
         searches meant more time to run her nonprofit.
       </p>
       <p class="mt-6">
-        The amazing folks at <a
+        Our friends at <a
           class="text-grantmakers-orange hover:text-slate-700"
           href="https://www.algolia.com/?utm_source=grantmakersio&utm_medium=referral"
           target="_blank"
           rel="noopener">Algolia</a
         >
-        stepped in shortly after launch and provided an expanded free tier to their search service which made the 990-PF portion of the dataset
-        entirely searchable. The speed and accuracy of their search is truly remarkable -
-        <a
-          class="text-grantmakers-orange hover:text-slate-700"
-          href="https://medium.com/@chadkruser/unlocking-irs-form-990-pf-data-through-hosted-search-f1bfecac2d5e"
-          target="_blank"
-          rel="noopener noreferrer">it's the search nonprofits deserve</a
-        >.
+        provide the project an expanded free tier to their world-class search service. Thanks to their generosity, every grant in the dataset
+        is instantly searchable and filterable.
       </p>
 
       <h2 id="toc-freedom" class="mt-16 text-3xl font-semibold tracking-tight text-pretty text-gray-900">
         Free as in freedom and free as in food
       </h2>
       <p class="mt-6">
-        Grantmakers.io serves as an example of the power of Free and Open Source Software (FOSS). Anyone can access it without paying (free
-        as in food), and anyone can leverage the code to continue innovating in however they please (free as in freedom).
+        Grantmakers.io is Free and Open Source Software (FOSS). Anyone can use it without paying (free as in food), and anyone can take the
+        code and build on it however they please (free as in freedom).
       </p>
 
       <figure class="mt-10 border-l border-indigo-600 pl-9">
@@ -135,17 +129,16 @@
           <div class="text-sm/6"><strong class="font-semibold text-gray-900">Candice Miles</strong> – Fmr. Board Chair</div>
         </figcaption>
       </figure>
-      <p class="mt-10">
-        I'm proud to work on Grantmakers.io and support all the amazing nonprofit professionals in their important work. Saying I "donate"
-        my time doesn't feel right. Creating and running the site has been one of the most rewarding experiences of my career, and the
-        countless thank you messages I receive from nonprofits truly warms my heart. Grantmakers.io will remain free and open forever. 💕
-      </p>
     </div>
     <div class="mt-16 max-w-2xl">
       <h2 id="toc-transparency" class="text-3xl font-semibold tracking-tight text-pretty text-gray-900">Transparency 💯</h2>
       <p class="mt-6">
         Grantmakers.io leads by example: fully transparent and self-sustaining. Every line of code and every dollar spent is open for
         everyone to see, learn from, and build upon.
+      </p>
+      <p class="mt-6">
+        The total annual budget is just ~$200 per year. These direct costs are covered by voluntary gifts from the community, akin to a
+        Patreon model.
       </p>
       <p class="mt-6"></p>
       <div class="mt-8 min-h-64 w-full">
@@ -162,15 +155,14 @@
     <div class="mt-16 max-w-2xl">
       <h2 id="toc-chad" class="text-3xl font-semibold tracking-tight text-pretty text-gray-900">Meet Chad</h2>
       <p class="mt-6">
-        Before launching my own ventures and teaching myself to code, I was often brought on as the first "business hire" at startups of all
-        shapes and sizes, online and offline. I've run development teams, owned product strategy, raised venture, seed, debt, and
-        philanthropic capital, and closed business development deals with organizations both large and small. I'm a generalist through and
-        through.
+        Digital innovation is what I do. I've spent my career helping organizations of all sizes figure out what to build with new
+        technology, and then building it. On a personal level, I'm an open data advocate, my glass is half full, and I <em>always</em> assume
+        positive intent.
       </p>
       <p class="mt-8">
-        My career started as a strategist and dealmaker for large tech companies, and I'm often told I have a unique ability to talk shop
-        with programmers, VC's, designers, boards of directors, philanthropists and everyone in between. My head is in SF, my heart is in
-        Bend (OR), and my body is currently in Chicago. <img
+        I started out as a strategist and dealmaker for large tech companies, and I'm often told I have a unique ability to talk shop with
+        programmers, funders, designers, boards of directors, philanthropists and everyone in between. My head is in SF, my heart is in Bend
+        (OR), and my body is currently in Chicago. <img
           class="inline-flex w-6"
           width={231}
           height={167}
