@@ -13,7 +13,7 @@
     "@repo/prettier-config": "^0.0.0",
     "@repo/shared": "*",
     "@repo/typescript-config": "*",
-    "turbo": "^2.3.3"
+    "turbo": "^2.10.12"
   },
   "packageManager": "npm@10.2.3",
   "workspaces": [
@@ -26,6 +26,6 @@
   },
   "overrides": {
     "cookie": "^0.7.2",
-    "qs": "^6.14.1"
+    "qs": "^6.16.0"
   }
 }
