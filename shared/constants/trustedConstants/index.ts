@@ -4,7 +4,7 @@ export interface EachFAQ {
 }
 
 export const datasetStats = {
-  profiles: 163767,
+  profiles: 163764,
   grants: 15725607,
   grants_searchable: 4886372,
 };
