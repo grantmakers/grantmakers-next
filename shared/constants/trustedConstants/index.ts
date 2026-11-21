@@ -4,9 +4,9 @@ export interface EachFAQ {
 }
 
 export const datasetStats = {
-  profiles: 164127,
-  grants: 15783294,
-  grants_searchable: 4889033,
+  profiles: 164521,
+  grants: 15894912,
+  grants_searchable: 4900291,
 };
 
 export const allTimeSearchCount = 13_218_741;
